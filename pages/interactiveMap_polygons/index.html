@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<link rel="shortcut icon" href="data/stork.svg">
+
+		<title>KCCA - UNICEF Interactive Map - Polygons</title>
+
+		<link href='css_/L.css' rel='stylesheet'/>
+		<link rel="stylesheet" href="css_/font-awesome.css" />
+		<link rel="stylesheet" href="css_/MarkerCluster.Default.css" />
+		<link rel="stylesheet" href="css_/leaflet.css" />
+		<link rel="stylesheet" href="css_/easy-button.css" />
+		<link href='css_/icontext.css' rel='stylesheet'/>
+		<link href='css_/L.Control.Sidebar.css' rel='stylesheet'/>
+		<link rel="stylesheet" href="css_/leaflet-tag-filter-button.css" />
+		<link rel="stylesheet" href="css_/bootstrap.css" />
+		<link rel="stylesheet" href="css_/MarkerCluster.css" />
+		
+		
+		<link rel="stylesheet" href="../../assets/web/assets/mobirise-icons/mobirise-icons.css">
+		<link rel="stylesheet" href="../../assets/tether/tether.min.css">
+<!--		<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css">-->
+<!--		<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap-grid.min.css">-->
+<!--		<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap-reboot.min.css">-->
+<!--		<link rel="stylesheet" href="../../assets/dropdown/css/style.css">-->
+<!--		<link rel="stylesheet" href="../../assets/theme/css/style.css">-->
+		<link rel="stylesheet" href="../../assets/mobirise/css/mbr-additional.css" type="text/css">
+
+
+		<style>
+			body {
+				overflow-y: hidden;
+				padding: 0;
+				margin: 0;
+			}
+
+			html,
+			body{
+				height: 100%;
+				width: 100%;
+			}
+			#map {
+				height: 95%;
+				width: 100%;
+				bottom: 0;
+			}
+		</style>
+		<script src="js_/d3.v3.min.js"></script>
+		<script type="text/javascript" src="js_/leaflet.js"></script>
+		<script type="text/javascript" src="js_/L.js"></script>
+		<script type="text/javascript" src="js_/L.Control.Sidebar.js"></script>
+		<script src="js_/RadarChart.js"></script>
+		<script src="js_/leaflet-easy-button.js"></script>
+		<script src="js_/leaflet-tag-filter-button.js"></script>
+		<script type="text/javascript" src="js_/leaflet.markercluster.js"></script>
+		<script src="js_/jquery-2.1.1.js"></script>
+		<script type="text/javascript" src="js_/bootstrap.js"></script>
+
+		<!--// styling of filter button-->
+		<style>
+			.leaflet-map {
+				height: 500px;
+				width: 100%;
+			}
+
+			.easy-button-button {
+				display: block !important;
+			}
+
+			.tag-filter-tags-container {
+				left: 30px;
+			}
+		</style>
+
+
+
+
+	</head>
+
+	<body>
+
+		<section class="menu cid-r4L3ICns9c" once="menu" id="menu1-c">
+
+
+
+			<nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm bg-color transparent">
+				<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<div class="hamburger">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+				</button>
+				<div class="menu-logo">
+					<div class="navbar-brand">
+
+
+					</div>
+				</div>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav nav-dropdown nav-right navbar-nav-top-padding" data-app-modern-menu="true"><li class="nav-item">
+						<a class="nav-link link text-white display-4" href="../../index.html">
+							<span class="mbri-home mbr-iconfont mbr-iconfont-btn"></span>
+							Home
+						</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link link text-white display-4" href="#">
+								<span class="mbri-search mbr-iconfont mbr-iconfont-btn"></span>
+								About Us
+							</a>
+						</li></ul>
+
+				</div>
+			</nav>
+		</section>
+
+<!--		<section class="engine"><a href="https://mobiri.se/s">bootstrap themes</a></section><section class="features8 cid-r4E3Ns5sVs mbr-parallax-background" id="features8-8">-->
+
+
+
+		<div class="mbr-overlay" style="opacity: 0.2; background-color: rgb(35, 35, 35);">
+		</div>
+
+
+		<div id="map" style="position: absolute;"> 
+
+		<div id="sidebar">
+			<h1>Spider Chart </h1>
+			<p><strong>Selected Parish: </strong><span id='parish'></span>
+				<br>
+				<strong>Selected SubCounty: </strong><span id='subCounty'></span></p>
+
+
+
+		</div></div>
+
+<!--		</section>-->
+		
+		<script src="../../assets/web/assets/jquery/jquery.min.js"></script>
+		<script src="../../assets/popper/popper.min.js"></script>
+		<script src="../../assets/tether/tether.min.js"></script>
+<!--		<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>-->
+		<script src="../../assets/smoothscroll/smooth-scroll.js"></script>
+		<script src="../../assets/dropdown/js/script.min.js"></script>
+		<script src="../../assets/touchswipe/jquery.touch-swipe.min.js"></script>
+		<script src="../../assets/parallax/jarallax.min.js"></script>
+		<script src="../../assets/theme/js/script.js"></script>
+		
+		<script>       
+
+			$.fn.center = function () {
+				this.css("position","absolute");
+				this.css("bottom", "-5em"
+						);
+				this.css("right", "0px"
+						);
+				return this;
+			}
+
+
+
+			var storkmap = {};
+
+
+			function makeMarkers() {
+				var rightSidebar = L.control.sidebar('sidebar', {
+					position: 'right',
+					closeButton: true
+				});
+				storkmap.map.addControl(rightSidebar);
+				rightSidebar.toggle();
+				rightSidebar.on('click', function(){
+				});
+
+				$.getJSON('./data/kampalaParishes.geojson', function(data){
+					function style(feature) {
+						return {
+							color: '#00c5ff',
+							fillOpacity: 0,
+							opacity: 1,
+							weight: 0.8
+						};
+					}
+
+
+					var datalayer;
+					function selectedStyle(feature) {
+						return {
+							color: '#ff5500',
+							fillOpacity: 0,
+							zIndex:10000,
+							opacity: 1,
+							weight: 2
+						};
+					}
+					var selected;
+					function parishOnEachFeature(feature, featureLayer){
+
+						var popup = L.popup()
+						.setContent("<b>" + feature.properties.s + " Division</b></br>" +
+									"<b>Parish: </b>" + feature.properties.pname + "</br>");
+
+
+						featureLayer.on('mouseover', function (e) {
+							this.openPopup();
+						});
+						featureLayer.on('mouseout', function (e) {
+							this.closePopup();
+						});
+
+
+						featureLayer.on({
+							click: function(e) {
+								datalayer.setStyle(style());
+								selected = [];
+								selected.push(e.target.feature.properties.pname);
+								e.target.feature.properties.selected = true;
+								e.target.setStyle(selectedStyle());
+								e.target.bringToFront();
+
+								//L.DomEvent.stopPropagation(e); // stop click event from being propagated further
+							}
+						});
+
+						featureLayer.bindPopup(popup);
+					}
+
+
+					// function that renders a spider chart on to the slide bar
+
+
+					datalayer = L.geoJson(data, {
+						style: style,
+						onEachFeature: parishOnEachFeature
+
+					}).on('click', function () {
+						if(!rightSidebar.isVisible()) {
+							rightSidebar.toggle();
+						}
+
+						d3.select('#sidebar').select('svg').remove();
+
+						for (var i = 0; i < data.features.length; i++) {
+							if(selected[0] === data.features[i].properties.pname) {
+								document.getElementById('parish').innerHTML = data.features[i].properties.pname;
+								document.getElementById('subCounty').innerHTML = data.features[i].properties.s;
+
+
+								var d = [
+									[
+										{axis:" Male Population ",value: data.features[i].properties.mpopn / 100},
+										{axis:" Female Population ",value: data.features[i].properties.fpopn / 100}, 
+										{axis:" Sex Ratio ",value: data.features[i].properties.sexratio / 100},
+										{axis:" Total Population ",value: data.features[i].properties.tpopn / 100},
+										{axis:" Area ",value: data.features[i].properties.Area / 100},
+										{axis:" Green Space 2016 ",value: data.features[i].properties.greenSpace_20161206 / 100},
+										{axis:" Green space 2018 ",value: data.features[i].properties.greenSpace_20180204 / 100},
+										{axis:" Percentage 2016 ",value: data.features[i].properties.percentage_20161206 / 100},
+										{axis:" Percentage 2018 ",value: data.features[i].properties.percentage_20180204 / 100},
+										{axis:" Difference ",value: data.features[i].properties.Difference / 100}
+
+									],[
+
+										{axis:"Male Population",value:0.48127},
+										{axis:"Female Population",value:0.5139583333},
+										{axis:"Sex Ratio",value:0.4826041667},
+										{axis:"Total Population",value:0.4865625},
+										{axis:"Area",value:0.5177083333},
+										{axis:"Green Space 2016",value:0.5144791667},
+										{axis:"Green Space 2018",value:0.4865625},
+										{axis:"Percentage 2016",value:0.2783305738},
+										{axis:"Percentage 2018",value:0.9181135307},
+										{axis:"Difference",value:0.1865192207}
+									]
+								]
+
+
+								var w = +(d3.select("#sidebar").style('width').slice(0, -2)) /2.5,
+									h = +(d3.select("#sidebar").style('width').slice(0, -2)) /2.5;
+
+
+								var mycfg = {
+									w: w,
+									h: h,
+									maxValue: 1,
+									levels: 6,
+								}
+
+
+								RadarChart.draw("#sidebar", d, mycfg);
+
+								////////////////////////////////////////////
+								/////////// Initiate legend ////////////////
+								////////////////////////////////////////////
+
+								var svg = d3.select('#body')
+								.selectAll('svg')
+								.append('svg')
+								.attr("width", w)
+								.attr("height", h)
+
+								//Create the title for the legend
+								var text = svg.append("text")
+								.attr("class", "title")
+								.attr('transform', 'translate(90,0)') 
+								.attr("x", w - 70)
+								.attr("y", 10)
+								.attr("font-size", "12px")
+								.attr("fill", "#404040")
+								.text("What % of owners use a specific service in a week");
+
+								//Initiate Legend	
+								var legend = svg.append("g")
+								.attr("class", "legend")
+								.attr("height", 100)
+								.attr("width", 200)
+								.attr('transform', 'translate(90,20)') 
+								;
+								//Create colour squares
+								legend.selectAll('rect')
+									.data(LegendOptions)
+									.enter()
+									.append("rect")
+									.attr("x", w - 65)
+									.attr("y", function(d, i){ return i * 20;})
+									.attr("width", 10)
+									.attr("height", 10)
+									.style("fill", function(d, i){ return colorscale(i);})
+								;
+								//Create text next to squares
+								legend.selectAll('text')
+									.data(LegendOptions)
+									.enter()
+									.append("text")
+									.attr("x", w - 52)
+									.attr("y", function(d, i){ return i * 20 + 9;})
+									.attr("font-size", "11px")
+									.attr("fill", "#737373")
+									.text(function(d) { return d; })
+								;
+
+
+							}
+						}
+					});
+
+
+
+					storkmap.map.addLayer(datalayer);
+
+					storkmap.map.on('click', function () {
+						rightSidebar.hide();
+						datalayer.setStyle(style());
+					});
+
+				});
+
+				var w = +(d3.select("#sidebar").style('width').slice(0, -2)) /2.5,
+					h = +(d3.select("#sidebar").style('width').slice(0, -2)) /2.5;
+				console.log(w);
+				console.log(h);
+
+
+				var colorscale = d3.scale.category10();
+
+				//Legend titles
+				var LegendOptions = ['Smartphone','Tablet'];
+
+
+				var d = [
+					[
+						{axis:"Male Population",value:0.48127},
+						{axis:"Female Population",value:0.5139583333},
+						{axis:"Sex Ratio",value:0.4826041667},
+						{axis:"Total Population",value:0.4865625},
+						{axis:"Area",value:0.5177083333},
+						{axis:"Green Space 2016",value:0.5144791667},
+						{axis:"Green Space 2018",value:0.4865625},
+						{axis:"Percentage 2016",value:0.2783305738},
+						{axis:"Percentage 2018",value:0.09181135307},
+						{axis:"Difference",value:0.1865192207}
+
+					],[
+						{axis:"Male Population",value:0.48127},
+						{axis:"Female Population",value:0.5139583333},
+						{axis:"Sex Ratio",value:0.4826041667},
+						{axis:"Total Population",value:0.4865625},
+						{axis:"Area",value:0.5177083333},
+						{axis:"Green Space 2016",value:0.5144791667},
+						{axis:"Green Space 2018",value:0.4865625},
+						{axis:"Percentage 2016",value:0.2783305738},
+						{axis:"Percentage 2018",value:0.09181135307},
+						{axis:"Difference",value:0.1865192207}
+
+					]
+				];
+
+
+				var mycfg = {
+					w: w,
+					h: h,
+					maxValue: 1,
+					levels: 6,
+				}
+
+				//Call function to draw the Radar chart
+				//Will expect that data is in %'s
+				RadarChart.draw("#sidebar", d, mycfg);
+
+				////////////////////////////////////////////
+				/////////// Initiate legend ////////////////
+				////////////////////////////////////////////
+
+				var svg = d3.select('#body')
+				.selectAll('svg')
+				.append('svg')
+				.attr("width", w)
+				.attr("height", h)
+
+				//Create the title for the legend
+				var text = svg.append("text")
+				.attr("class", "title")
+				.attr('transform', 'translate(90,0)') 
+				.attr("x", w + 70)
+				.attr("y", 10)
+				.attr("font-size", "12px")
+				.attr("fill", "#404040")
+				.text("What % of owners use a specific service in a week");
+
+				//Initiate Legend	
+				var legend = svg.append("g")
+				.attr("class", "legend")
+				.attr("height", 100)
+				.attr("width", 200)
+				.attr('transform', 'translate(90,20)') 
+				;
+				//Create colour squares
+				legend.selectAll('rect')
+					.data(LegendOptions)
+					.enter()
+					.append("rect")
+					.attr("x", w - 65)
+					.attr("y", function(d, i){ return i * 20;})
+					.attr("width", 10)
+					.attr("height", 10)
+					.style("fill", function(d, i){ return colorscale(i);})
+				;
+				//Create text next to squares
+				legend.selectAll('text')
+					.data(LegendOptions)
+					.enter()
+					.append("text")
+					.attr("x", w - 52)
+					.attr("y", function(d, i){ return i * 20 + 9;})
+					.attr("font-size", "11px")
+					.attr("fill", "#737373")
+					.text(function(d) { return d; });
+			};
+
+			function queryOverpass() {
+				//var bbString = formatBBox(),
+				//overpassQuery = encodeURIComponent("node" + '[birds_nest=stork]' + bbString + ";out body;"),
+				overpassURL = './json/interpreter.json'
+
+				$.ajax({
+					url: overpassURL,
+					type: 'GET',
+					crossDomain: true,
+					success: function (data) {
+						storkmap.osmJson = data.elements;
+						makeMarkers();						
+					},
+				});
+			};
+
+			function onMapViewReset(e) {
+				queryOverpass();
+			};
+
+			function onMapMoveEnd(e) {
+				queryOverpass();
+			};
+
+			function makeMap() {
+
+				var map = storkmap.map;
+
+				queryOverpass();
+
+				map.setView([0.3193, 32.5953], 12);
+
+
+			};
+
+			var attr_osm = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+			var attr_nests = 'data via <a href="http://www.overpass-api.de/" target=”_blank”>Overpass API</a>';
+			var attr_dev = 'web map funded by <a href="https://www.giz.de/en/worldwide/310.html" target=”_blank”>GIZ-Uganda</a> and created by <a href="http://geogecko.com" target=”_blank”>GeoGecko</a>';
+
+			var layerOSM = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}.png', {
+				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+				subdomains: 'abcd',
+				maxZoom: 19
+			});
+
+			storkmap.map = L.map('map', {
+				attributionControl: false,
+				layers: [layerOSM],
+				zoomControl: false,
+				minZoom: 6
+			});
+
+
+
+
+			//			L.control.attribution({position: 'bottomleft'}).addTo(storkmap.map);
+			storkmap.currentTag = "water_point";
+
+			storkmap.osmJson = {};
+			makeMap();
+
+
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,71 @@
+#mapid {
+  height: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+  position: absolute;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+}
+
+
+.Borehole{
+  background: #1b9e77;
+}
+
+.Water_Tap{
+  background: #d95f02;
+}
+
+.Water_Tank{
+  background: #7570b3;
+}
+
+.Protected_Spring{
+  background: #e7298a;
+}
+
+.Rain_Water{
+  background: #66a61e;
+}
+
+.Well{
+  background: #e6ab02;
+}
+
+.Other{
+  background: #a6761d;
+}
+
+.tableTitle {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.tableText {
+  font-size: 1em;
+  font-weight: 400;
+}
+
+.imgContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.clusterIcons{
+  border: 2px solid rgba(255,255,255,0.5);
+  opacity: 0.85;
+	text-align: center;
+	font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+	line-height: 100%;
+  width: 24px !important;
+  height: 24px !important;
+  border-radius: 50%;
+}
+
+.clusterIcons > div {
+  margin-top: 6px;
+}
