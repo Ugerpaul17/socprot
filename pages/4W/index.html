@@ -25,6 +25,7 @@ crossorigin=""/>
 <!--		<link rel="stylesheet" href="../../assets/dropdown/css/style.css">-->
 <!--		<link rel="stylesheet" href="../../assets/theme/css/style.css">-->
 		<link rel="stylesheet" href="../../assets/mobirise/css/mbr-additional.css" type="text/css">
+		
 
 
 		<!--
@@ -67,6 +68,7 @@ crossorigin=""></script>
 			*/
 			table { 
 				width: 100%;
+				overflow-x: hidden;
 			}
 			thead tr {
 				border: 2px solid #13988E;
@@ -327,7 +329,7 @@ crossorigin=""></script>
 		<div class="right-panel col-md-12 col-sm-12">
 			<div id="d3-map-container">
 				<div style="background:#f5f5f5; position:absolute; top:0px; width:100%;">
-					<a href="https://www.geogecko.com/" target="_blank"><img style="z-index: 10000; left: 270px; position: fixed; bottom: 2%; border: 0; width: 10em;" src="data/logo-full-no-text.svg" alt="GeoGecko"></a>
+					<a href="https://www.geogecko.com/" target="_blank"><img style="z-index: 10000; left: 1em; position: fixed; bottom: 2%; border: 0; width: 10em;" src="data/kcca_logo.svg" alt="GeoGecko"><img style="z-index: 10000; left: 11em; position: fixed; bottom: 2%; border: 0; width: 10em;" src="data/logo-full-no-text.svg" alt="GeoGecko"><img style="z-index: 10000; left: 21em; position: fixed; bottom: 2%; border: 0; width: 10em;" src="data/unicef_for-every-child_EN.png" alt="GeoGecko"></a>
 				</div>
 				<div id="d3-map-wrapper"></div>
 			</div>
@@ -347,7 +349,8 @@ crossorigin=""></script>
 
 
 
-		<script src="./js/jquery.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+<link href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
 		<script src="./js/d3.v3.min.js"></script>
 		<script src="./js/L.D3SvgOverlay.min.js"></script>
 		<script src="./js/topojson.v1.min.js"></script>

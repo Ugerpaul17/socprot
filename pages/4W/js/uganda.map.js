@@ -20,7 +20,7 @@
 	// .defer(d3.json, "./UgandaDistricts.geojson")//DNAME_06
 		.defer(d3.json, "./data/UgandaDistricts.highlighted_.geojson")
 		.defer(d3.csv, "./data/mapValues.csv")
-		.defer(d3.csv, "./data/dataset.csv")
+		.defer(d3.csv, "./data/dataset1.csv")
 		.await(ready);
 
 
@@ -65,6 +65,18 @@
 		global.selectedUn = [];
 		global.selectedIp = [];
 		global.selectedOp = [];
+		
+		d3.select("#partner-list-count").text(0);
+		d3.select("#sector-list-count").text(0);
+		d3.select("#parish-list-count").text(0);
+		d3.select("#donor-list-count").text(0);
+		d3.select("#actor-type-list-count").text(0);
+		d3.select("#partner-header-total").text(global.agencyCount);
+		d3.select("#sector-header-total").text(global.sectorCount);
+		d3.select("#parish-header-total").text(global.parishCount);
+		d3.select("#donor-header-total").text(global.donorCount);
+		d3.select("#actor-type-header-total").text(global.actorTypeCount);
+
 
 		_selectedDataset = dataset;
 	}
@@ -156,6 +168,18 @@
 			}
 		}
 
+		$('.modal-content').resizable({
+			alsoResize: ".modal-dialog",
+			minHeight: 150
+		});
+		$('.modal-content').draggable();
+
+		$('#myModal').on('show.bs.modal', function () {
+			$(this).find('.modal-body').css({
+				'max-height':'100%'
+			});
+		});
+
 
 
 		global.districtCount = districtList.length;
@@ -228,7 +252,7 @@
 		var height = wrapper.node().offsetHeight || 480;
 		var color = d3.scale.linear().domain(domain) //http://bl.ocks.org/jfreyre/b1882159636cc9e1283a
 		.interpolate(d3.interpolateHcl)
-		.range([d3.rgb("#f7fcf5"), d3.rgb('#00441b')]); //#f597aa #a02842
+		.range([d3.rgb("#66f1c1"), d3.rgb('#172031')]); //#f597aa #a02842
 		var tooltip = d3.select(map.getPanes().overlayPane)
 		.append("div")
 		.attr("class", "d3-tooltip d3-hide");
@@ -305,7 +329,7 @@
 					})
 					}	
 			})
-			.on("mouseover", function (d){
+				.on("mouseover", function (d){
 				if(d.name === "key") {
 					d3.select(this).style("cursor", "pointer");
 				}
@@ -415,6 +439,24 @@
 				return "district district-" + d.properties.DNAME_06.replaceAll('[ ]', "_");
 			});
 
+//			ugandaPath.on("mouseover", function (d) {
+//
+//				var popup = L.popup()
+//				.setContent("<b>" + d.properties.s + " Division</b></br>" +
+//							"<b>Parish: </b>" + d.properties.pname + "</br>");
+//
+//				d.bindPopup(popup);
+//
+//				d.on("mouseover", function(e){
+//					this.openPopup();	
+//				})
+//
+//				d.on("mouseout", function(e){
+//					this.closePopup();	
+//				})
+//
+//			})
+
 			ugandaPath.attr('stroke-width', 1 / proj.scale)
 				.each(function (d) {
 				d.properties.centroid = projection(d3.geo.centroid(d)); // ugandaCentroid = d.properties.centroid;
@@ -464,8 +506,7 @@
 				a.properties._selected = false;
 				return 1;
 			});
-			
-			console.log(districtList, sectorList, agencyList, donorList, actorTypeList, dataset);
+
 			updateLeftPanel(districtList, sectorList, agencyList, donorList, actorTypeList, dataset);
 			var domain = [+Infinity, -Infinity];
 			ugandaPath.each(function (d) {
@@ -511,7 +552,7 @@
 			var beneficiaries = d3.sum(relationship, function(d){return parseFloat(d.Beneficiaries)});
 
 			global.beneficiaryCount = beneficiaries;
-			
+
 			d3.select("#beneficiary-count").text(beneficiaries);
 		}
 		d3.select("#d3-map-refresh").on("click", refreshMap);
@@ -745,7 +786,7 @@
 
 			// global.selectedDistrict = districtList;
 			updateLeftPanel(districtList, sectorList, agencyList, donorList, actorTypeList, dataset);
-					
+
 			if (flag === "district") {
 				d3.select("#district-count").text(global.selectedDistrict.length);
 				d3.select("#parish-list-count").text(global.selectedDistrict.length);
@@ -899,35 +940,35 @@
 					.on("click", function (c) {
 					if (d3.event.srcElement.localName === "svg") {
 						if(!sidebar.isVisible()) {
-						sidebar.toggle();
+							sidebar.toggle();
+						}
+
+						var needRemove = $(d3.select(this).node()).hasClass("d3-active"); //d3.select(this).attr("class");//d3-active
+						d3.select(this).classed("d3-active", !needRemove);
+						//					.style("background", needRemove ? "transparent" : "#1fabe1");
+						// myFilterByAgency(c, needRemove);
+						global.currentEvent = "agency"
+						myFilter(c, global.currentEvent, needRemove);
+						if(global.selectedAgency.length === 0){
+							refreshMap();}
 					}
-										
-					var needRemove = $(d3.select(this).node()).hasClass("d3-active"); //d3.select(this).attr("class");//d3-active
-					d3.select(this).classed("d3-active", !needRemove);
-					//					.style("background", needRemove ? "transparent" : "#1fabe1");
-					// myFilterByAgency(c, needRemove);
-					global.currentEvent = "agency"
-					myFilter(c, global.currentEvent, needRemove);
-					if(global.selectedAgency.length === 0){
-						refreshMap();}
-					}
-					
+
 					if (d3.event.srcElement.localName === "a") {
-					var str = "<thead><tr><th style='text-decoration: none !important; text-align: right;'>Parish Name</th> <th style='text-decoration: none !important; text-align: right;'>Project Title</th></tr></thead>";
-				
-									var tooltipList = "";
-									var i = 0;
-									while (i < c.values.length) {
-										tooltipList = tooltipList + ("<tr><td style='text-decoration: none !important; text-align: right;'>" + c.values[i].Parish + "</td> <td style='text-decoration: none !important; text-align: right;'>" + c.values[i]["Detailed Activity description"] + "</td></tr>");
-										i++
-									}
-				
-				
-									document.getElementById('modal-header').innerHTML = c.key;
-									document.getElementById('modal-body').innerHTML = str + tooltipList;
-									modal.style.display = "block";	
+						var str = "<thead><tr><th style='text-decoration: none !important; text-align: right;'>Parish Name</th> <th style='text-decoration: none !important; text-align: right;'>Project Title</th></tr></thead>";
+
+						var tooltipList = "";
+						var i = 0;
+						while (i < c.values.length) {
+							tooltipList = tooltipList + ("<tr><td style='text-decoration: none !important; text-align: right;'>" + c.values[i].Parish + "</td> <td style='text-decoration: none !important; text-align: right;'>" + c.values[i]["Detailed Activity description"] + "</td></tr>");
+							i++
+						}
+
+
+						document.getElementById('modal-header').innerHTML = c.key;
+						document.getElementById('modal-body').innerHTML = str + tooltipList;
+						modal.style.display = "block";	
 					}
-					
+
 				});
 				_agencyList
 					.html(function(d) {
@@ -994,27 +1035,22 @@
 			}
 
 
-//
-//			var partnerC = d3.select("#agency-list").selectAll("p.d3-active");
-//			var sectorC = d3.select("#sector-list").selectAll("p.d3-active");
-//			var parishC = d3.select("#district-list").selectAll("p.d3-active");
-//			var donorsC = d3.select("#donor-list").selectAll("p.d3-active");
-//			var actorTypeC = d3.select("#actor-type-list").selectAll("p.d3-active");
-//			
-//			console.log(partnerC);
-//			console.log(sectorC);
-//			console.log(parishC);
-//			console.log(donorsC);
-//			console.log(actorTypeC);
-//
-//			d3.select("#partner-list-count").text(partnerC.length-1);
-//			d3.select("#sector-list-count").text(sectorC.length-1);
-//			d3.select("#parish-list-count").text(parishC.length-1);
-//			d3.select("#donor-list-count").text(donorsC.length-1);
-//			d3.select("#actor-type-list-count").text(actorTypeC.length-1);		
-
+			//
+			//			var partnerC = d3.select("#agency-list").selectAll("p.d3-active");
+			//			var sectorC = d3.select("#sector-list").selectAll("p.d3-active");
+			//			var parishC = d3.select("#district-list").selectAll("p.d3-active");
+			//			var donorsC = d3.select("#donor-list").selectAll("p.d3-active");
+			//			var actorTypeC = d3.select("#actor-type-list").selectAll("p.d3-active");
+			//			
+			//			console.log(partnerC);
+			//			console.log(sectorC);
+			//			console.log(parishC);
+			//			console.log(donorsC);
+			//			console.log(actorTypeC);
+			//
+			//			
 			d3.selectAll(".custom-list").selectAll("p").select("svg").remove();
-		
+
 
 			var checkboxSVG = d3.selectAll(".custom-list").selectAll("p").append("svg")
 			.attr("width", 15)
@@ -1031,7 +1067,7 @@
 					sidebar.toggle();
 				}
 			});
-			
+
 		}
 
 		window.addEventListener("resize", function () {

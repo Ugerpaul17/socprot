@@ -1374,7 +1374,7 @@ body {
 }
 .cid-r4L3ICns9c .navbar {
   padding: .5rem 0;
-  background: grey;
+  background-color: rgba(0,0,0, .7);
   transition: none;
   max-height: 5%;
 }
