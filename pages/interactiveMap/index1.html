@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<link rel="shortcut icon" href="css_/images/stork.svg">
+
+		<title>KCCA - UNICEF Interactive Map</title>
+
+		<link href='css_/L.css' rel='stylesheet'/>
+		<link rel="stylesheet" href="css_/font-awesome.css" />
+		<link rel="stylesheet" href="css_/MarkerCluster.Default.css" />
+		<link rel="stylesheet" href="css_/leaflet.css" />
+		<link rel="stylesheet" href="css_/easy-button.css" />
+		<link href='css_/icontext.css' rel='stylesheet'/>
+		<link href='css_/L.Control.Sidebar.css' rel='stylesheet'/>
+		<link rel="stylesheet" href="css_/leaflet-tag-filter-button.css" />
+		<link rel="stylesheet" href="css_/bootstrap.css" />
+		<link rel="stylesheet" href="css_/MarkerCluster.css" />   
+		
+		<link rel="stylesheet" href="../../assets/web/assets/mobirise-icons/mobirise-icons.css">
+		<link rel="stylesheet" href="../../assets/tether/tether.min.css">
+		<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap-grid.min.css">
+		<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap-reboot.min.css">
+		<link rel="stylesheet" href="../../assets/dropdown/css/style.css">
+		<link rel="stylesheet" href="../../assets/theme/css/style.css">
+		<link rel="stylesheet" href="../../assets/mobirise/css/mbr-additional.css" type="text/css">
+		
+
+
+		<style>
+			body {
+				overflow-y: hidden;
+				padding: 0;
+				margin: 0;
+			}
+
+			html,
+			body{
+				height: 100%;
+				width: 100%;
+			}
+			#map {
+				height: 95%;
+				width: 100%;
+				bottom: 0;
+			}
+		</style>
+		<script src="js_/d3.v3.min.js"></script>
+		<script type="text/javascript" src="js_/leaflet.js"></script>
+		<script type="text/javascript" src="js_/L.js"></script>
+		<script type="text/javascript" src="js_/L.Control.Sidebar.js"></script>
+		<script src="js_/RadarChart.js"></script>
+		<script src="js_/leaflet-easy-button.js"></script>
+		<script src="js_/leaflet-tag-filter-button.js"></script>
+		<script type="text/javascript" src="js_/leaflet.markercluster.js"></script>
+		<script src="js_/jquery-2.1.1.js"></script>
+		<script type="text/javascript" src="js_/bootstrap.js"></script>
+
+		<!--// styling of filter button-->
+		<style>
+			
+			.easy-button-button {
+				display: block !important;
+			}
+
+			.tag-filter-tags-container {
+				left: 30px;
+			}
+		</style>
+
+
+
+
+	</head>
+
+	<body>
+
+		  <section class="menu cid-r4L3ICns9c" once="menu" id="menu1-d">
+
+    
+
+    <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+        <div class="menu-logo">
+            <div class="navbar-brand">Social Protection in Kampala</div>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav nav-dropdown nav-right navbar-nav-top-padding" data-app-modern-menu="true"><li class="nav-item">
+                    <a class="nav-link link text-white display-4" href="../../index.html">
+                        <span class="mbri-home mbr-iconfont mbr-iconfont-btn"></span>
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link link text-white display-4" href="https://www.geogecko.com">
+                        <span class="mbri-search mbr-iconfont mbr-iconfont-btn"></span>
+                        About Us
+                    </a>
+                </li></ul>
+            
+        </div>
+    </nav>
+</section>
+
+<!--<section class="engine"><a href="https://mobiri.se/r">bootstrap templates</a></section><section class="features16 cid-r4Qgxlao5L" id="features16-e">-->
+<section class="engine"><a href="https://mobiri.se/r">bootstrap templates</a></section>
+
+
+
+		<div class="mbr-overlay" style="opacity: 0.2; background-color: rgb(35, 35, 35);">
+		</div>
+
+		<div id="map" style="position: absolute;"> </div>
+		<script src="../../assets/web/assets/jquery/jquery.min.js"></script>
+		<script src="../../assets/popper/popper.min.js"></script>
+		<script src="../../assets/tether/tether.min.js"></script>
+<!--		<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>-->
+		<script src="../../assets/smoothscroll/smooth-scroll.js"></script>
+		<script src="../../assets/dropdown/js/script.min.js"></script>
+		<script src="../../assets/touchswipe/jquery.touch-swipe.min.js"></script>
+		<script src="../../assets/parallax/jarallax.min.js"></script>
+		<script src="../../assets/theme/js/script.js"></script>
+		
+		<script>       
+
+			$.fn.center = function () {
+				this.css("position","absolute");
+				this.css("bottom", "-5em"
+						);
+				this.css("right", "0px"
+						);
+				return this;
+			}
+
+
+
+			var storkmap = {};
+
+
+
+			function formatMarkerInfo(node) {
+
+				var link = '<a href="http://www.openstreetmap.org/edit?editor=id&node=' + node.id +
+					'">Edit this entry in iD</a><br>';
+				//var user = '<b>Added by: </b>' + '<a href="http://www.openstreetmap.org/user/' + node.user + '">' + node.user + '</a><br>';
+				var timestamp = '<b>Timestamp: </b>' + node.timestamp;
+
+				var r = $('<table>');
+
+				for (var i in node.tags)
+					r.append($('<tr>').append($('<th>').text(i)).append($('<td>').text(node.tags[i])));
+
+				var tags = $('<div>').append(r).html();
+
+
+				var img = '<b>Foto: </b>' + '<a href="' + node.tags.image + '">' + "foto link" + '</a><br>';
+				if (node.tags.image == null) img = '';
+
+
+				return link + '<br>' /*+ user + timestamp + '<br>' + '<br>' */+ '<b>Tags:</b>' + '<br>' + tags + '<br>' +
+					img;
+			};
+
+			function makeMarkers() {
+				var markerCG = storkmap.markerClusterGroup;
+				var markerCG1 = storkmap.markerClusterGroup1;
+				var markerCG2 = storkmap.markerClusterGroup2;
+				//				markerCG.clearLayers();
+
+				$.getJSON('./json/HealthCentres.geojson', function(data){
+					L.geoJson(data, {
+						onEachFeature: function(feature, layer) {
+							markerCG.addLayer(layer);
+						},
+						pointToLayer: function (feature, latlng) {
+							var geojsonMarkerProperties = {
+								tags: [String(feature.properties.ownershipText)],
+							}
+							return L.marker(latlng, geojsonMarkerProperties)
+						}
+					});
+				});
+
+				$.getJSON('./json/Schools.geojson', function(data){
+					L.geoJson(data, {
+						onEachFeature: function(feature, layer) {
+							markerCG1.addLayer(layer);
+						},
+						pointToLayer: function (feature, latlng) {
+							var geojsonMarkerProperties = {
+								tags: [String(feature.properties.ownershipText)],
+							}
+							return L.marker(latlng, geojsonMarkerProperties)
+						}
+					});
+				});
+				$.getJSON('./json/Police.geojson', function(data){
+					L.geoJson(data, {
+						onEachFeature: function(feature, layer) {
+							markerCG2.addLayer(layer);
+						},
+						pointToLayer: function (feature, latlng) {
+							var geojsonMarkerProperties = {
+								tags: [String(feature.properties.typeText)],
+							}
+							return L.marker(latlng, geojsonMarkerProperties)
+						}
+					});
+				});
+
+
+
+			};
+
+			function queryOverpass() {
+				//var bbString = formatBBox(),
+				//overpassQuery = encodeURIComponent("node" + '[birds_nest=stork]' + bbString + ";out body;"),
+				overpassURL = './json/interpreter.json'
+
+				$.ajax({
+					url: overpassURL,
+					type: 'GET',
+					crossDomain: true,
+					success: function (data) {
+						storkmap.osmJson = data.elements;
+						makeMarkers();						
+					},
+				});
+			};
+
+			function onMapViewReset(e) {
+				queryOverpass();
+			};
+
+			function onMapMoveEnd(e) {
+				queryOverpass();
+			};
+
+			function makeMap() {
+
+				var map = storkmap.map;
+
+				storkmap.map.addLayer(storkmap.markerClusterGroup);
+
+				queryOverpass();
+
+
+				var buttons = {
+					Police: L.easyButton({
+						id: "policeButton",
+						position: 'bottomleft',
+						states: [{
+							stateName: 'add-markers',
+							icon: '<img alt="do this" src="css_/images/shield.svg" height="30" width="15" align="left" style="opacity:0.2 "/><span id="text" class="btn--text"><font color="black"><b>Police</b></font></span>',
+							title: 'add random markers',
+							onClick: function(control) {
+								map.addLayer(storkmap.markerClusterGroup2);
+								control.state('remove-markers');
+							}
+						}, {
+							icon: '<img alt="do this" src="css_/images/shield.svg" height="30" width="15" align="left" /><span id="text" class="btn--text"><font color="black"><b>Police</b></font></span>',
+							stateName: 'remove-markers',
+							onClick: function(control) {
+								map.removeLayer(storkmap.markerClusterGroup2);
+								control.state('add-markers');
+							},
+							title: 'remove markers'
+						}]
+					}),
+					Schools: L.easyButton({
+						id: "schoolButton",
+						position: 'bottomleft',
+						states: [{
+							stateName: 'add-markers',
+							icon: '<img alt="do this" src="css_/images/school.svg" height="30" width="15" align="left" style="opacity:0.2 "/><span id="text" class="btn--text"><font color="black"><b>Schools</b></font></span>',
+							title: 'add random markers',
+							onClick: function(control) {
+								map.addLayer(storkmap.markerClusterGroup1);
+								control.state('remove-markers');
+							}
+						}, {
+							icon: '<img alt="do this" src="css_/images/school.svg" height="30" width="15" align="left" /><span id="text" class="btn--text"><font color="black"><b>Schools</b></font></span>',
+							stateName: 'remove-markers',
+							onClick: function(control) {
+								map.removeLayer(storkmap.markerClusterGroup1);
+								control.state('add-markers');
+							},
+							title: 'remove markers'
+						}]
+					}),
+					HealthCare: L.easyButton({
+						id: "healthButton",
+						position: 'bottomleft',
+						states: [{
+							icon: '<img alt="do this" src="css_/images/plus.svg" height="30" width="15" align="left"/><span id="text" class="btn--text"><font color="black"><b>Health Care</b></font></span>',
+							stateName: 'remove-markers',
+							onClick: function(control) {
+								map.removeLayer(storkmap.markerClusterGroup);
+								control.state('add-markers');
+							},
+							title: 'remove markers'
+						},
+								 {
+									 stateName: 'add-markers',
+									 icon: '<img alt="do this" src="css_/images/plus.svg" height="30" width="15" align="left" style="opacity:0.2 "/><span id="text" class="btn--text"><font color="black"><b>Health Care</b></font></span>',
+									 title: 'add random markers',
+									 onClick: function(control) {	
+										 map.addLayer(storkmap.markerClusterGroup);
+										 control.state('remove-markers');
+									 }
+								 }]
+					})
+				}
+
+				// add the buttons. iterates over the buttons objects
+				for (var key in buttons) {
+					if (buttons.hasOwnProperty(key)) {
+						buttons[key].addTo(map);
+					}
+				}
+
+				map.setView([0.3193, 32.5953], 12);
+
+
+			};
+
+			var attr_osm = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+			var attr_nests = 'data via <a href="http://www.overpass-api.de/" target=”_blank”>Overpass API</a>';
+			var attr_dev = 'web map funded by <a href="https://www.giz.de/en/worldwide/310.html" target=”_blank”>GIZ-Uganda</a> and created by <a href="http://geogecko.com" target=”_blank”>GeoGecko</a>';
+
+			var layerOSM = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}.png', {
+				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+				subdomains: 'abcd',
+				maxZoom: 19
+			});
+
+			storkmap.map = L.map('map', {
+				attributionControl: false,
+				layers: [layerOSM],
+				zoomControl: false,
+				minZoom: 6
+			});
+
+			////////////////////////////////////////////////
+			// Quick and dirty implementation of enableMCG
+			////////////////////////////////////////////////
+			L.Control.TagFilterButton.include({
+				// Goal: read from MCG instead of from _map
+				enableMCG: function(mcgInstance) {
+					this.registerCustomSource({
+						name: 'mcg',
+						source: {
+							mcg: mcgInstance,
+							hide: function(layerSource) {
+								var releatedLayers = [];
+
+								for (
+									var r = 0; r < this._releatedFilterButtons.length; r++
+								) {
+									releatedLayers = releatedLayers.concat(
+										this._releatedFilterButtons[r].getInvisibles()
+									);
+								}
+
+								var toBeRemovedFromInvisibles = [],
+									i,
+									toAdd = [];
+
+								for (var i = 0; i < this._invisibles.length; i++) {
+									if (releatedLayers.indexOf(this._invisibles[i]) == -1) {
+										for (
+											var j = 0; j < this._invisibles[i].options.tags.length; j++
+										) {
+											if (
+												this._selectedTags.length == 0 ||
+												this._selectedTags.indexOf(
+													this._invisibles[i].options.tags[j]
+												) !== -1
+											) {
+												//this._map.addLayer(this._invisibles[i]);
+												toAdd.push(this._invisibles[i]);
+												toBeRemovedFromInvisibles.push(i);
+												break;
+											}
+										}
+									}
+								}
+
+								// Batch add into MCG
+								layerSource.mcg.addLayers(toAdd);
+
+								while (toBeRemovedFromInvisibles.length > 0) {
+									this._invisibles.splice(
+										toBeRemovedFromInvisibles.pop(),
+										1
+									);
+								}
+
+								var removedMarkers = [];
+								var totalCount = 0;
+
+								if (this._selectedTags.length > 0) {
+									//this._map.eachLayer(
+									layerSource.mcg.eachLayer(
+										function(layer) {
+											if (
+												layer &&
+												layer.options &&
+												layer.options.tags
+											) {
+												totalCount++;
+												if (releatedLayers.indexOf(layer) == -1) {
+													var found = false;
+													for (
+														var i = 0; i < layer.options.tags.length; i++
+													) {
+														found =
+															this._selectedTags.indexOf(
+															layer.options.tags[i]
+														) !== -1;
+														if (found) {
+															break;
+														}
+													}
+													if (!found) {
+														removedMarkers.push(layer);
+													}
+												}
+											}
+										}.bind(this)
+									);
+
+									for (i = 0; i < removedMarkers.length; i++) {
+										//this._map.removeLayer(removedMarkers[i]);
+										this._invisibles.push(removedMarkers[i]);
+									}
+
+									// Batch remove from MCG
+									layerSource.mcg.removeLayers(removedMarkers);
+								}
+
+								return totalCount - removedMarkers.length;
+							},
+						},
+					});
+
+					this.layerSources.currentSource = this.layerSources.sources[
+						'mcg'
+					];
+				},
+			});
+
+			////////////////////////////////////////////////
+			// Fix for TagFilterButton
+			////////////////////////////////////////////////
+			L.Control.TagFilterButton.include({
+				_prepareLayerSources: function() {
+					this.layerSources = new Object();
+					this.layerSources['sources'] = new Object();
+
+					this.registerCustomSource({
+						name: 'default',
+						source: {
+							hide: function() {
+								var releatedLayers = [];
+
+								for (var r = 0; r < this._releatedFilterButtons.length; r++) {
+									releatedLayers = releatedLayers.concat(
+										this._releatedFilterButtons[r].getInvisibles()
+									);
+								}
+
+								var toBeRemovedFromInvisibles = [],
+									i;
+
+								// "Fix": add var
+								for (var i = 0; i < this._invisibles.length; i++) {
+									if (releatedLayers.indexOf(this._invisibles[i]) == -1) {
+										// "Fix": add var
+										for (var j = 0; j < this._invisibles[i].options.tags.length; j++) {
+											if (
+												this._selectedTags.length == 0 ||
+												this._selectedTags.indexOf(
+													this._invisibles[i].options.tags[j]
+												) !== -1
+											) {
+												this._map.addLayer(this._invisibles[i]);
+												toBeRemovedFromInvisibles.push(i);
+												break;
+											}
+										}
+									}
+								}
+
+								while (toBeRemovedFromInvisibles.length > 0) {
+									this._invisibles.splice(toBeRemovedFromInvisibles.pop(), 1);
+								}
+
+								var removedMarkers = [];
+								var totalCount = 0;
+
+								if (this._selectedTags.length > 0) {
+									this._map.eachLayer(
+										function(layer) {
+											if (layer && layer.options && layer.options.tags) {
+												totalCount++;
+												if (releatedLayers.indexOf(layer) == -1) {
+													var found = false;
+													for (var i = 0; i < layer.options.tags.length; i++) {
+														found =
+															this._selectedTags.indexOf(layer.options.tags[i]) !==
+															-1;
+														if (found) {
+															break;
+														}
+													}
+													if (!found) {
+														removedMarkers.push(layer);
+													}
+												}
+											}
+										}.bind(this)
+									);
+
+									for (i = 0; i < removedMarkers.length; i++) {
+										this._map.removeLayer(removedMarkers[i]);
+										this._invisibles.push(removedMarkers[i]);
+									}
+								}
+
+								return totalCount - removedMarkers.length;
+							},
+						},
+					});
+					this.layerSources.currentSource = this.layerSources.sources['default'];
+				},
+			});
+
+
+
+
+
+			//			L.control.attribution({position: 'bottomleft'}).addTo(storkmap.map);
+			//			storkmap.currentTag = "water_point";
+
+
+
+
+			storkmap.markerClusterGroup = L.markerClusterGroup({
+				iconCreateFunction: function(cluster) {
+					var childCount = cluster.getChildCount();
+					return L.divIcon({className: 'Borehole clusterIcons', html: '<div><span>' + childCount + '</span></div>'});
+				},
+				polygonOptions: {
+					opacity: 0,
+					fillOpacity: 0
+				}
+			});
+
+			storkmap.markerClusterGroup1 = L.markerClusterGroup({
+				iconCreateFunction: function(cluster) {
+					var childCount = cluster.getChildCount();
+					return L.divIcon({className: 'Water_Tap clusterIcons', html: '<div><span>' + childCount + '</span></div>'});
+				},
+				polygonOptions: {
+					opacity: 0,
+					fillOpacity: 0
+				}
+			});
+
+			storkmap.markerClusterGroup2 = L.markerClusterGroup({
+				iconCreateFunction: function(cluster) {
+					var childCount = cluster.getChildCount();
+					return L.divIcon({className: 'Water_Tank clusterIcons', html: '<div><span>' + childCount + '</span></div>'});
+				},
+				polygonOptions: {
+					opacity: 0,
+					fillOpacity: 0
+				}
+			});
+
+			var statusFilterButton = L.control.tagFilterButton({
+				data: ['Government HealthCentres', 'Private HealthCentres'],
+				filterOnEveryClick: true,
+				icon: '<img src="./css_/images/filter-solid.svg">',
+			}).addTo(storkmap.map);
+
+			var statusFilterButton1 = L.control.tagFilterButton({
+				data: ['Private Schools', 'Government Schools','Non Formal'],
+				filterOnEveryClick: true,
+				icon: '<img src="./css_/images/filter-solid.svg">',
+			}).addTo(storkmap.map);
+
+			var statusFilterButton2 = L.control.tagFilterButton({
+				data: ['Police Post','Police Station'],
+				filterOnEveryClick: true,
+				icon: '<img src="./css_/images/filter-solid.svg">',
+			}).addTo(storkmap.map);
+
+
+			statusFilterButton.enableMCG(storkmap.markerClusterGroup);
+			statusFilterButton1.enableMCG(storkmap.markerClusterGroup1);
+			statusFilterButton2.enableMCG(storkmap.markerClusterGroup2);
+
+			storkmap.osmJson = {};
+			makeMap();
+
+
+		</script>
+	</body>
+
+</html>

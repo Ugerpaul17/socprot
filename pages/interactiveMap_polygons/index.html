@@ -1,158 +1,78 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
-
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="">
-		<meta name="author" content="">
-		<link rel="shortcut icon" href="data/stork.svg">
-
 		<title>KCCA - UNICEF Interactive Map - Polygons</title>
 
-		<link href='css_/L.css' rel='stylesheet'/>
-		<link rel="stylesheet" href="css_/font-awesome.css" />
-		<link rel="stylesheet" href="css_/MarkerCluster.Default.css" />
-		<link rel="stylesheet" href="css_/leaflet.css" />
-		<link rel="stylesheet" href="css_/easy-button.css" />
-		<link href='css_/icontext.css' rel='stylesheet'/>
-		<link href='css_/L.Control.Sidebar.css' rel='stylesheet'/>
-		<link rel="stylesheet" href="css_/leaflet-tag-filter-button.css" />
-		<link rel="stylesheet" href="css_/bootstrap.css" />
-		<link rel="stylesheet" href="css_/MarkerCluster.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7.2/leaflet.ie.css" /><![endif]-->
 
 
-		<link rel="stylesheet" href="../../assets/web/assets/mobirise-icons/mobirise-icons.css">
-		<link rel="stylesheet" href="../../assets/tether/tether.min.css">
-		<!--		<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css">-->
-		<!--		<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap-grid.min.css">-->
-		<!--		<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap-reboot.min.css">-->
-		<!--		<link rel="stylesheet" href="../../assets/dropdown/css/style.css">-->
-		<!--		<link rel="stylesheet" href="../../assets/theme/css/style.css">-->
-		<link rel="stylesheet" href="../../assets/mobirise/css/mbr-additional.css" type="text/css">
-
+		<link rel="stylesheet" href="../../assets/sidebar/css/leaflet-sidebar.css">
+		<link rel="stylesheet" href="css/leaflet-tag-filter-button.css" />
 
 		<style>
 			body {
-				overflow-y: hidden;
 				padding: 0;
 				margin: 0;
 			}
 
-			html,
-			body{
+			html, body, #map {
 				height: 100%;
-				width: 100%;
-			}
-			#map {
-				height: 95%;
-				width: 100%;
-				bottom: 0;
-			}
-		</style>
-		<script src="js_/d3.v3.min.js"></script>
-		<script type="text/javascript" src="js_/leaflet.js"></script>
-		<script type="text/javascript" src="js_/L.js"></script>
-		<script type="text/javascript" src="js_/L.Control.Sidebar.js"></script>
-		<script src="js_/RadarChart.js"></script>
-		<script src="js_/leaflet-easy-button.js"></script>
-		<script src="js_/leaflet-tag-filter-button.js"></script>
-		<script type="text/javascript" src="js_/leaflet.markercluster.js"></script>
-		<script src="js_/jquery-2.1.1.js"></script>
-		<script type="text/javascript" src="js_/bootstrap.js"></script>
-
-		<!--// styling of filter button-->
-		<style>
-			.leaflet-map {
-				height: 500px;
-				width: 100%;
+				font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
 			}
 
-			.easy-button-button {
-				display: block !important;
-			}
-
-			.tag-filter-tags-container {
-				left: 30px;
+			.lorem {
+				font-style: italic;
+				color: #AAA;
 			}
 		</style>
-
-
-
-
 	</head>
-
 	<body>
+		<div id="sidebar-left" class="sidebar collapsed">
+			<!-- Nav tabs -->
+			<div class="sidebar-tabs">
+				<ul role="tablist">
+					<li><a href="#home" role="tab"><i class="fa fa-filter"></i></a></li>
+				</ul>
 
-		<section class="menu cid-r4L3ICns9c" once="menu" id="menu1-c">
+				<ul role="tablist">
+					<li><a href="#settings" role="tab"><i class="fa fa-info"></i></a></li>
+				</ul>
+			</div>
 
+			<!-- Tab panes -->
+			<div class="sidebar-content">
+				<div class="sidebar-pane" id="home">
+					<h4 class="sidebar-header" style="font-size: 0.8em; text-align: left;">Click on a parish to compare it against the district average
+						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+					</h4>
+					<p><strong>Selected Parish: </strong><span id='parish'></span>
+						<br>
+						<strong>Selected SubCounty: </strong><span id='subCounty'></span></p>
+					<h4 style="font-size: 0.8em; text-align: center;">Spider Chart
+					</h4>
 
-
-			<nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm bg-color transparent">
-				<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<div class="hamburger">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-				</button>
-				<div class="menu-logo">
-					<div class="navbar-brand">
-
-
-					</div>
-				</div>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav nav-dropdown nav-right navbar-nav-top-padding" data-app-modern-menu="true"><li class="nav-item">
-						<a class="nav-link link text-white display-4" href="../../index.html">
-							<span class="mbri-home mbr-iconfont mbr-iconfont-btn"></span>
-							Home
-						</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link link text-white display-4" href="https://www.geogecko.com">
-								<span class="mbri-search mbr-iconfont mbr-iconfont-btn"></span>
-								About Us
-							</a>
-						</li></ul>
 
 				</div>
-			</nav>
-		</section>
-
-		<!--		<section class="engine"><a href="https://mobiri.se/s">bootstrap themes</a></section><section class="features8 cid-r4E3Ns5sVs mbr-parallax-background" id="features8-8">-->
 
 
 
-		<div class="mbr-overlay" style="opacity: 0.2; background-color: rgb(35, 35, 35);">
+				<div class="sidebar-pane" id="settings">
+					<h1 class="sidebar-header">About<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+				</div>
+			</div>
 		</div>
 
+		<div id="map" class="sidebar-map"></div>
 
-		<div id="map" style="position: absolute;"> 
-
-			<div id="sidebar">
-				<h4 style="text-align: center;">Click on a parish in the map to compare it against the district average</h4>
-				<p><strong>Selected Parish: </strong><span id='parish'></span>
-					<br>
-					<strong>Selected SubCounty: </strong><span id='subCounty'></span></p>
-
-
-
-			</div></div>
-
-		<!--		</section>-->
-
+		<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+		<script src="../../assets/sidebar/js/leaflet-sidebar.js"></script>
 		<script src="../../assets/web/assets/jquery/jquery.min.js"></script>
-		<script src="../../assets/popper/popper.min.js"></script>
-		<script src="../../assets/tether/tether.min.js"></script>
-		<!--		<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>-->
-		<script src="../../assets/smoothscroll/smooth-scroll.js"></script>
-		<script src="../../assets/dropdown/js/script.min.js"></script>
-		<script src="../../assets/touchswipe/jquery.touch-swipe.min.js"></script>
-		<script src="../../assets/parallax/jarallax.min.js"></script>
-		<script src="../../assets/theme/js/script.js"></script>
+		<script src="js/d3.v3.min.js"></script>
+		<script src="js/RadarChart.js"></script>
 
 		<script>       
 
@@ -171,15 +91,27 @@
 
 
 			function makeMarkers() {
-				var rightSidebar = L.control.sidebar('sidebar', {
-					position: 'right',
-					closeButton: true
-				});
-				storkmap.map.addControl(rightSidebar);
-				rightSidebar.toggle();
-				rightSidebar.on('click', function(){
-				});
-
+				var sidebar = L.control.sidebar('sidebar-left');
+				storkmap.map.addControl(sidebar);
+				
+				sidebar.open('home')
+;
+//				var sidebarDiv = document.getElementById('sidebar-left');
+//
+//				toggleSidebar = function() {
+//					if (hasClass(sidebarDiv,'collapsed')) {
+//						sidebar.open();
+//					} else {
+//						sidebar.close();
+//					}
+//				}
+//
+//				function hasClass(element, cls) {
+//					return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+//				}
+//
+//				sidebar.toggleSidebar;
+				
 				$.getJSON('./data/kampalaParishes.geojson', function(data){
 					function style(feature) {
 						return {
@@ -210,11 +142,11 @@
 
 
 						featureLayer.on('mouseover', function (e) {
-//							this.openPopup();
+							//							this.openPopup();
 						});
-						
+
 						featureLayer.on('mouseout', function (e) {
-//							storkmap.map.closePopup();
+							//							storkmap.map.closePopup();
 						});
 
 
@@ -243,11 +175,8 @@
 						onEachFeature: parishOnEachFeature
 
 					}).on('click', function () {
-						if(!rightSidebar.isVisible()) {
-							rightSidebar.toggle();
-						}
 
-						d3.select('#sidebar').select('svg').remove();
+						d3.select('#home').select('svg').remove();
 
 						for (var i = 0; i < data.features.length; i++) {
 							if(selected[0] === data.features[i].properties.pname) {
@@ -284,8 +213,8 @@
 								]
 
 
-								var w = +(d3.select("#sidebar").style('width').slice(0, -2)) /2.5,
-									h = +(d3.select("#sidebar").style('width').slice(0, -2)) /2.5;
+								var w = +(d3.select("#home").style('width').slice(0, -2)) /2.5,
+									h = +(d3.select("#home").style('width').slice(0, -2)) /2.5;
 
 
 								var mycfg = {
@@ -296,7 +225,7 @@
 								}
 
 
-								RadarChart.draw("#sidebar", d, mycfg);
+								RadarChart.draw("#home", d, mycfg);
 
 								////////////////////////////////////////////
 								/////////// Initiate legend ////////////////
@@ -357,15 +286,11 @@
 
 					storkmap.map.addLayer(datalayer);
 
-					storkmap.map.on('click', function () {
-						rightSidebar.hide();
-						datalayer.setStyle(style());
-					});
 
 				});
 
-				var w = +(d3.select("#sidebar").style('width').slice(0, -2)) /2.5,
-					h = +(d3.select("#sidebar").style('width').slice(0, -2)) /2.5;
+				var w = +(d3.select("#home").style('width').slice(0, -2)) /2.5,
+					h = +(d3.select("#home").style('width').slice(0, -2)) /2.5;
 
 
 				var colorscale = d3.scale.category10();
@@ -412,7 +337,7 @@
 
 				//Call function to draw the Radar chart
 				//Will expect that data is in %'s
-				RadarChart.draw("#sidebar", d, mycfg);
+				RadarChart.draw("#home", d, mycfg);
 
 				////////////////////////////////////////////
 				/////////// Initiate legend ////////////////
@@ -526,7 +451,7 @@
 			makeMap();
 
 
-		</script>
-	</body>
+		</script>		
 
+	</body>
 </html>

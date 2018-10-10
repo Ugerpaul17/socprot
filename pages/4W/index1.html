@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>4W Map - KCCA - UNICEF</title>
+		<link href="./css/bootstrap.min.css" rel="Stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+		<!--
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+crossorigin=""/>
+-->
+		<link href="./css/nouislider.css" rel="Stylesheet" type="text/css">
+		<link href="./css/uganda.map.css" rel="Stylesheet" type="text/css">
+		<link rel="stylesheet" href="./css/leaflet.css">
+<!--		<link rel="stylesheet" href="./css/L.css">-->
+
+		<link rel="stylesheet" href="../../assets/web/assets/mobirise-icons/mobirise-icons.css">
+		<link rel="stylesheet" href="../../assets/tether/tether.min.css">
+		<link rel="stylesheet" href="../../assets/sidebar/css/leaflet-sidebar.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+		<!--		<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css">-->
+		<!--		<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap-grid.min.css">-->
+		<!--		<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap-reboot.min.css">-->
+		<!--		<link rel="stylesheet" href="../../assets/dropdown/css/style.css">-->
+		<!--		<link rel="stylesheet" href="../../assets/theme/css/style.css">-->
+		<link rel="stylesheet" href="../../assets/mobirise/css/mbr-additional.css" type="text/css">
+
+
+
+		<!--
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+crossorigin=""></script>
+<script src="https://unpkg.com/leaflet-image@latest/leaflet-image.js"></script>
+-->
+		<script src="js/leaflet.js"></script>
+		<!--		<script src="./js/L.js"></script>-->
+		<!--		<script src="./js/makeTable.js"></script>-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!--[if !IE]><!-->
+		<style>
+			* { 
+				margin: 0; 
+				padding: 0; 
+			}
+			body { 
+				font: 14px/1.4 Georgia, Serif;
+				background-color: grey;
+			}
+			#map {
+				height: 95%;
+				width: 100%;
+				bottom: 0;
+			}
+			#page-wrap {
+				margin: 50px;
+			}
+			/*
+			p {
+			margin: 20px 0; 
+			}
+			*/
+
+			/* 
+			Generic Styling, for Desktops/Laptops 
+			*/
+			table { 
+				width: 100%;
+				overflow-x: hidden;
+			}
+			thead tr {
+				border: 2px solid #13988E;
+
+			}
+			tbody {
+				border-bottom-left-radius: 10px;
+			}
+			/* Zebra striping */
+			/*			tr:nth-of-type(odd) { */
+			tr { 
+				border: 3px solid #172031;
+			}
+			th { 
+				background: #13988e; 
+				color: white; 
+				font-weight: bold; 
+				cursor: s-resize;
+				background-repeat: no-repeat;
+				background-position: 3% center;
+			}
+			td, th { 
+				padding: 6px; 
+				border: 1px solid #ccc;
+				text-align: left; 
+			}
+			td {
+				text-decoration: underline;
+				text-decoration-color: #13988E;
+			}
+
+			th.des:after {
+				content: "\21E9";
+			}
+
+			th.aes:after {
+				content: "\21E7";
+			}
+
+			/* 
+			Max width before this PARTICULAR table gets nasty
+			This query will take effect for any screen smaller than 760px
+			and also iPads specifically.
+			*/
+			@media 
+				only screen and (max-width: 760px),
+				(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+					/* Force table to not be like tables anymore */
+					table, thead, tbody, th, td, tr { 
+						display: block;
+						border-radius: 5px;
+					}
+
+					/* Hide table headers (but not display: none;, for accessibility) */
+					thead tr { 
+						position: absolute;
+						top: -9999px;
+						left: -9999px;
+					}
+
+					tr { border: 3px solid #172031; }
+
+					td { 
+						/* Behave  like a "row" */
+						border: none;
+						border-bottom: 1px solid #eee; 
+						position: relative;
+						padding-left: 50%; 
+					}
+
+					td:before { 
+						/* Now like a table header */
+						position: absolute;
+						/* Top/left values mimic padding */
+						top: 6px;
+						left: 6px;
+						width: 45%; 
+						padding-right: 10px; 
+						white-space: nowrap;
+					}
+
+					/*
+					Label the data
+					*/
+					td:before {
+						content: attr(data-th) ": ";
+						font-weight: bold;
+						width: 6.5em;
+						display: inline-block;
+					}
+			}
+
+			/* Smartphones (portrait and landscape) ----------- */
+			@media only screen
+				and (min-device-width : 320px)
+				and (max-device-width : 480px) {
+					body { 
+						padding: 0; 
+						margin: 0; 
+						width: 320px; }
+			}
+
+			/* iPads (portrait and landscape) ----------- */
+			@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+				body { 
+					width: 495px; 
+				}
+			}
+
+		</style>
+
+	</head>
+
+	<body>
+		<section class="menu cid-r4L3ICns9c" once="menu" id="menu1-c">
+
+
+
+			<nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm bg-color transparent">
+				<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<div class="hamburger">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+				</button>
+				<div class="menu-logo">
+					<div class="navbar-brand">Social Protection in Kampala</div>
+				</div>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav nav-dropdown nav-left navbar-nav-top-padding" data-app-modern-menu="true"><li class="nav-item">
+						<a class="nav-link link text-white display-4" href="../../index.html">
+							<span class="mbri-home mbr-iconfont mbr-iconfont-btn"></span>
+							Home
+						</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link link text-white display-4" href="https://www.geogecko.com">
+								<span class="mbri-search mbr-iconfont mbr-iconfont-btn"></span>
+								About Us
+							</a>
+						</li></ul>
+
+				</div>
+			</nav>
+		</section>
+
+		<!--		<section class="engine"><a href="https://mobiri.se/s">bootstrap themes</a></section><section class="features8 cid-r4E3Ns5sVs mbr-parallax-background" id="features8-8">-->
+
+
+
+		<div class="mbr-overlay" style="opacity: 0.2; background-color: rgb(35, 35, 35);">
+		</div>
+
+		<div id="map" style="position: absolute;"> 
+			<!-- The Modal -->
+			<div id="myModal" class="modal">
+
+				<!-- Modal content -->
+				<div class="modal-content">
+					<div class="modal-header">
+						<span class="close">&times;</span>
+						<p id="modal-header" class="custom-count-header" style="font-size: 16px;">Modal Header</p>
+					</div>
+					<table id="modal-body" class="modal-body">
+					</table>
+				</div>
+
+			</div>
+
+
+
+			<!-- The SidePanel -->
+			<div id="sidebar">
+				<!-- Nav tabs -->
+				<div class="sidebar-tabs">
+					<ul role="tablist">
+						<li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
+						<li><a href="#profile" role="tab"><i class="fa fa-user"></i></a></li>
+						<li class="disabled"><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li>
+						<li><a href="https://github.com/Turbo87/sidebar-v2" role="tab" target="_blank"><i class="fa fa-github"></i></a></li>
+					</ul>
+
+					<ul role="tablist">
+						<li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+					</ul>
+				</div>
+
+				<!-- Tab panes -->
+				<div class="sidebar-content">
+					<div class="sidebar-pane" id="home">
+						<h1 class="sidebar-header">
+							sidebar-v2
+							<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+						</h1>
+
+						<p>A responsive sidebar for mapping libraries like <a href="http://leafletjs.com/">Leaflet</a> or <a href="http://openlayers.org/">OpenLayers</a>.</p>
+
+						<p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+
+						<p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+
+						<p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+
+						<p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+					</div>
+
+					<div class="sidebar-pane" id="profile">
+						<h1 class="sidebar-header">Profile<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+					</div>
+
+					<div class="sidebar-pane" id="messages">
+						<h1 class="sidebar-header">Messages<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+					</div>
+
+					<div class="sidebar-pane" id="settings">
+						<h1 class="sidebar-header">Settings<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+					</div>
+				</div>
+				<!-- Nav tabs -->
+				<div class="sidebar-tabs">
+					<ul role="tablist">
+						<li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
+						<li><a href="#profile" role="tab"><i class="fa fa-user"></i></a></li>
+						<li class="disabled"><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li>
+						<li><a href="https://github.com/Turbo87/sidebar-v2" role="tab" target="_blank"><i class="fa fa-github"></i></a></li>
+					</ul>
+
+					<ul role="tablist">
+						<li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+					</ul>
+				</div>
+				
+				<!-- Tab panes-->
+				<div class="sidebar-content">
+					<div class="sidebar-pane top-panel col-md-8 col-sm-8" id="home">
+
+
+					<div class="head col-md-2 sidebar-content col-sm-2">
+						<p class="custom-count-header" style="font-size: 16px;"><br>Agencies </p>
+						<p id="agency-count" class="custom-count">0</p>
+					</div>
+					<div class=" head col-md-2 col-sm-2">
+						<p class="custom-count-header" style="font-size: 16px;"><br>Sectors </p>
+						<p id="sector-count" class="custom-count">0</p>
+					</div>
+					<div class="head col-md-2 col-sm-2">
+						<p class="custom-count-header" style="font-size: 16px;"><br>Parishes </p>
+						<p id="district-count" class="custom-count">0</p>
+					</div>
+					<div class="head col-md-2 col-sm-2">
+						<p class="custom-count-header" style="font-size: 16px;"><br>Beneficiaries </p>
+						<p id="beneficiary-count" class="custom-count">0</p>
+					</div>
+
+
+				</div><br><br><br><br>			
+				<div id="page-wrap" class="custom-list" style="height: 40vh !important;">
+
+					<p>Click the table header to sort data according to that column</p>
+
+				</div>
+				<div class="col-md-12">
+				</div>
+
+					<div class="sidebar-pane" id="profile">
+						<h1 class="sidebar-header">Profile<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+					</div>
+
+					<div class="sidebar-pane" id="messages">
+						<h1 class="sidebar-header">Messages<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+					</div>
+
+					<div class="sidebar-pane" id="settings">
+						<h1 class="sidebar-header">Settings<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+					</div>
+				</div>
+			</div>
+			<div class="main-container">
+			</div>
+			<div class="row" style="margin:0px;">
+				<!--<div class="bottom-panel col-md-12" style="padding: 0 5px;">  <span class="glyphicon glyphicon-menu-down"></span>-->
+				<div class="left-panel col-md-2">
+
+					<div class="menu-panel">
+						<div class="counter-panel">
+							<div class="row" style="margin:0px;">
+								<div class="title-panel col-md-12">
+									<div id="header-text">
+										<p><span>Who does,</span><br>
+											<span>What,</span><br>
+											<span>Where,</span><br>
+											<span>When</span></p>
+									</div>
+								</div>
+
+							</div>
+							<p id="d3-map-refresh">Reset Filters <i class="glyphicon glyphicon-refresh"></i></p>
+
+						</div>
+						<div class="list-container">
+							<div class="col-md-12">
+								<p class="custom-list-header">Partners <i class="glyphicon glyphicon-chevron-down"></i><span class="count">&nbsp;</span><span id="partner-header-total" class="count">0</span><span class="count">/</span><span id="partner-list-count" class="count">0</span></p>
+								<div id="agency-list" class="custom-list"></div>
+							</div>
+							<div class="col-md-12">
+								<p class="custom-list-header">Sectors <i class="glyphicon glyphicon-chevron-down"></i><span class="count">&nbsp;</span><span id="sector-header-total" class="count">0</span><span class="count">/</span><span id="sector-list-count" class="count">0</span></p>
+								<div id="sector-list" class="custom-list"></div>
+							</div>
+							<div class="col-md-12">
+								<p class="custom-list-header">Parishes<i class="glyphicon glyphicon-chevron-down"></i><span class="count">&nbsp;</span><span id="parish-header-total" class="count">0</span><span class="count">/</span><span id="parish-list-count" class="count">0</span></p>
+								<div id="district-list" class="custom-list"></div>
+							</div>
+							<div class="col-md-12">
+								<p class="custom-list-header">Donors<i class="glyphicon glyphicon-chevron-down"></i><span class="count">&nbsp;</span><span id="donor-header-total" class="count">0</span><span class="count">/</span><span id="donor-list-count" class="count">0</span></p>
+								<div id="donor-list" class="custom-list"></div>
+							</div>
+							<div class="col-md-12">
+								<p class="custom-list-header">Actor Type<i class="glyphicon glyphicon-chevron-down"></i><span class="count">&nbsp;</span><span id="actor-type-header-total" class="count">0</span><span class="count">/</span><span id="actor-type-list-count" class="count">0</span></p>
+								<div id="actor-type-list" class="custom-list"></div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="right-panel col-md-12 col-sm-12">
+				<div id="d3-map-container">
+					<div style="background:#f5f5f5; position:absolute; top:0px; width:100%;">
+						<a href="https://www.geogecko.com/" target="_blank"><img style="z-index: 10000; left: 1em; position: fixed; bottom: 2%; border: 0; width: 6em;" src="data/kcca_logo.svg" alt="KCCA"><img style="z-index: 10000; left: 8em; position: fixed; bottom: 2%; border: 0; width: 8em;" src="data/unicef_for-every-child_EN.png" alt="Unicef"><img style="z-index: 10000; left: 16em; position: fixed; bottom: 2%; border: 0; width: 10em;" src="data/logo-full-no-text.svg" alt="GeoGecko"></a>
+					</div>
+					<div id="d3-map-wrapper"></div>
+				</div>
+			</div>
+		</div>
+		<!--		</section>-->
+
+		<script src="../../assets/web/assets/jquery/jquery.min.js"></script>
+		<script src="../../assets/popper/popper.min.js"></script>
+		<script src="../../assets/tether/tether.min.js"></script>
+		<!--		<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>-->
+		<script src="../../assets/smoothscroll/smooth-scroll.js"></script>
+		<script src="../../assets/dropdown/js/script.min.js"></script>
+		<script src="../../assets/touchswipe/jquery.touch-swipe.min.js"></script>
+		<script src="../../assets/parallax/jarallax.min.js"></script>
+		<script src="../../assets/theme/js/script.js"></script>
+		<script src="../../assets/sidebar/js/leaflet-sidebar.js"></script>
+
+
+<!--
+		<script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+		<link href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
+-->
+<!--		<script src="./js/d3.v3.min.js"></script>-->
+<!--		<script src="./js/L.D3SvgOverlay.min.js"></script>-->
+		<script src="./js/topojson.v1.min.js"></script>
+		<script src="./js/queue.v1.min.js"></script>
+		<script src="./js/nouislider.js"></script>
+<!--		<script src="./js/uganda.map.js"></script>-->
+
+		<script>
+			//			 var sidebar1 = L.control.sidebar('sidebar-left').addTo(map);
+		</script>
+
+		<script>
+			setTimeout(function () {
+				$("body").addClass('all-loaded');
+			}, 600);
+		</script>
+
+	</body>
+</html>
