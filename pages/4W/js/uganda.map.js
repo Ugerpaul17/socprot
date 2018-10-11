@@ -217,7 +217,7 @@
 		var map = new L.Map("d3-map-container", {
 			center: [0.3233, 32.5625],
 			zoom: 12,
-			zoomControl: false
+			zoomControl: true
 		});
 		var _3w_attrib = 'Created by <a href="http://www.geogecko.com">Geo Gecko</a> and © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, Powered by <a href="https://d3js.org/">d3</a>';
 		var basemap = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}{r}.png', {
@@ -401,14 +401,14 @@
 			}).on("click", function (d) {
 
 				if (d.name === "key") {
-					var parishDataFilter = districtList.filter(function (k) {
+					var agencyDataFilter = agencyList.filter(function (k) {
 						if (d.value === k.key) {
-							var str = "<thead><tr><th style='text-decoration: none !important; text-align: right;'>Agency Name</th> <th style='text-decoration: none !important; text-align: right;'>Project Title</th></tr></thead>";
+							var str = "<thead><tr><th style='border: 1px solid #ccc!important; text-decoration: none !important; text-align: left;'>Parish</th> <th style='border: 1px solid #ccc!important; text-decoration: none !important; text-align: left;'>Project Title</th><th style='border: 1px solid #ccc!important; text-decoration: none !important; border: 1px solid #ccc!important; text-align: left;'>Project Start</th><th style='border: 1px solid #ccc!important; text-decoration: none !important; border: 1px solid #ccc!important; text-align: left;'>Project End</th></tr></thead>";
 
 							var tooltipList = "";
 							var i = 0;
 							while (i < k.values.length) {
-								tooltipList = tooltipList + ("<tr><td style='text-decoration: none !important; text-align: right;'>" + k.values[i]["Agency name"] + "</td> <td style='text-decoration: none !important; text-align: right;'>" + k.values[i]["Detailed Activity description"] + "</td></tr>");
+								tooltipList = tooltipList + ("<tr><td style='border: 1px solid #ccc!important; text-decoration: none !important; text-align: left;'>" + k.values[i]["Parish"] + "</td> <td style='border: 1px solid #ccc!important; text-decoration: none !important; text-align: left;'>" + k.values[i]["Detailed Activity description"] + "</td><td style='border: 1px solid #ccc!important; text-decoration: none !important; text-align: left;'>" + k.values[i]["Start (month)"] + "</td><td style='border: 1px solid #ccc!important; text-decoration: none !important; width: 2em!important; text-align: left;'>" + k.values[i]["End (month)"] + "</td></tr>");
 								i++
 							}					
 							document.getElementById('modal-header').innerHTML = d.value;

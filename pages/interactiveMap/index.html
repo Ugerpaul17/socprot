@@ -12,12 +12,14 @@
 		<link rel="stylesheet" href="css/leaflet-easy-button.css" />
 		<link rel="stylesheet" href="css/leaflet-tag-filter-button.css" />
 		<link rel="stylesheet" href="css/ripple.min.css" />
-		<link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
 		<link rel="stylesheet" href="css/prism/prism.css">
 		<!--		<link rel="stylesheet" href="css/styles.css">-->
 		<link rel="stylesheet" href="../../assets/sidebar/css/leaflet-sidebar_compatible.css">
 		<link rel="stylesheet" href="css/MarkerCluster.css" />
 		<link rel="stylesheet" href="css/MarkerCluster.Default.css" />
+  <link rel="stylesheet" href="../../assets/web/assets/mobirise-icons/mobirise-icons.css">
+  <link rel="stylesheet" href="../../assets/ocha/style.css">
+		<link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
 
 
 
@@ -36,7 +38,7 @@
 		<style>
 			html, body, #map {
 				height: 100%;
-				font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+				font-size:  10pt;
 			}
 
 			.easy-button-button {
@@ -53,8 +55,9 @@
 			<!-- Nav tabs -->
 			<div class="leaflet-sidebar-tabs">
 				<ul role="tablist">
-					<li><a href="#home" role="tab"><i class="fa fa-info"></i></a></li>
-					<li><a href="#profile" role="tab"><i class="fa fa-group"></i></a></li>
+					<li><a href="../../index.html"><i class="mbri-home mbr-iconfont mbr-iconfont-btn"></i></a></li>
+					<li><a href="#home" role="tab"><i class="mbri-info mbr-iconfont mbr-iconfont-btn"></i></a></li>
+					<li><a href="#profile" role="tab"><i class="mbri-menu mbr-iconfont mbr-iconfont-btn"></i></a></li>
 				</ul>
 
 				<ul role="tablist">
@@ -505,14 +508,14 @@
 						position: 'bottomleft',
 						states: [{
 							stateName: 'add-markers',
-							icon: '<img alt="do this" src="css/images/shield.svg" height="30" width="30" align="left" style="opacity:0.2 "/><span id="text" style="width = auto !important;" class="btn--text"><font color="black"><b>Slum Areas</b></font></span>',
+							icon: '<i class="mbri-map-pin mbr-iconfont mbr-iconfont-btn" style="opacity:0.2;"></i><span id="text" style="width = auto !important; opacity:0.2 ;" class="btn--text"><font color="black"><b>Slum Areas</b></font></span>',
 							title: 'add random markers',
 							onClick: function(control) {
 								myMap.map.addLayer(datalayer1);
 								control.state('remove-markers');
 							}
 						}, {
-							icon: '<img alt="do this" src="css/images/shield.svg" height="30" width="30" align="left" /><span id="text" style="width = auto !important;" class="btn--text"><font color="black"><b>Slum Areas</b></font></span>',
+							icon: '<i class="mbri-map-pin mbr-iconfont mbr-iconfont-btn"></i><span id="text" style="width = auto !important;" class="btn--text"><font color="black"><b>Slum Areas</b></font></span>',
 							stateName: 'remove-markers',
 							onClick: function(control) {
 								myMap.map.removeLayer(datalayer1);
@@ -526,14 +529,14 @@
 						position: 'bottomleft',
 						states: [{
 							stateName: 'add-markers',
-							icon: '<img alt="do this" src="css/images/school.svg" height="30" width="30" align="left" style="opacity:0.2 "/><span id="text" style="width = auto !important;" class="btn--text"><font color="black"><b>Parish Boundaries</b></font></span>',
+							icon: '<i class="mbri-map-pin mbr-iconfont mbr-iconfont-btn" style="opacity:0.2;"></i><span id="text" style="width = auto !important; opacity:0.2 ;" class="btn--text"><font color="black"><b>Parish Boundaries</b></font></span>',
 							title: 'add random markers',
 							onClick: function(control) {
 								myMap.map.addLayer(datalayer);
 								control.state('remove-markers');
 							}
 						}, {
-							icon: '<img alt="do this" src="css/images/school.svg" height="30" width="30" align="left" /><span id="text" style="width = auto !important;" class="btn--text"><font color="black"><b>Parish Boundaries</b></font></span>',
+							icon: '<i class="mbri-map-pin mbr-iconfont mbr-iconfont-btn"></i><span id="text" style="width = auto !important;" class="btn--text"><font color="black"><b>Parish Boundaries</b></font></span>',
 							stateName: 'remove-markers',
 							onClick: function(control) {
 								myMap.map.removeLayer(datalayer);
@@ -560,25 +563,25 @@
 				var statusFilterButton = L.control.tagFilterButton({
 					data: ['Government', 'Private'],
 					filterOnEveryClick: true,
-					icon: '<i class="fa fa-suitcase"></i>',
+					icon: '<i class="mbri-key mbr-iconfont mbr-iconfont-btn"></i>',
 				}).addTo( myMap.map );
 
 				var healthFilterButton = L.control.tagFilterButton({
 					data: ['Deliveries', 'Antenatal', 'Turn Off Health Layer'],
 					filterOnEveryClick: true,
-					icon: '<i class="fa fa-pagelines"></i>',
+					icon: '<i class="icon-ocha icon-health"></i>',
 				}).addTo( myMap.map );
 
 				var schoolFilterButton = L.control.tagFilterButton({
 					data: ['Non Formal Schools','Post Primary Schools','Pre-Primary Schools','Primary Schools', 'Secondary Schools', 'Tertiary Educational Institutions', 'Turn Off Education Layer'],
 					filterOnEveryClick: true,
-					icon: '<i class="fa fa-pagelines"></i>',
+					icon: '<i class="icon-ocha icon-education"></i>',
 				}).addTo( myMap.map );
 
 				var policeFilterButton = L.control.tagFilterButton({
 					data: ['Police Station','Police Post', 'Turn Off Police Layer'],
 					filterOnEveryClick: true,
-					icon: '<i class="fa fa-pagelines"></i>',
+					icon: '<i class="icon-ocha icon-protection"></i>',
 				}).addTo( myMap.map );
 
 				

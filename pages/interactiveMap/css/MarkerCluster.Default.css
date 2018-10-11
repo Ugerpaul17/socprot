@@ -52,4 +52,5 @@ body {
 
 .clusterIcons > div {
   margin-top: 6px;
+	display: none;
 }

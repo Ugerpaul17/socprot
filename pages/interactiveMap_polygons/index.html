@@ -12,6 +12,7 @@
 
 		<link rel="stylesheet" href="../../assets/sidebar/css/leaflet-sidebar.css">
 		<link rel="stylesheet" href="css/leaflet-tag-filter-button.css" />
+  <link rel="stylesheet" href="../../assets/web/assets/mobirise-icons/mobirise-icons.css">
 
 		<style>
 			body {
@@ -21,7 +22,7 @@
 
 			html, body, #map {
 				height: 100%;
-				font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+				font-size:  10pt;
 			}
 
 			.lorem {
@@ -35,6 +36,7 @@
 			<!-- Nav tabs -->
 			<div class="sidebar-tabs">
 				<ul role="tablist">
+					<li><a href="../../index.html"><i class="mbri-home mbr-iconfont mbr-iconfont-btn"></i></a></li>
 					<li><a href="#home" role="tab"><i class="fa fa-filter"></i></a></li>
 				</ul>
 
@@ -115,7 +117,7 @@
 				$.getJSON('./data/kampalaParishes.geojson', function(data){
 					function style(feature) {
 						return {
-							color: '#00c5ff',
+							color: '#ff5500',
 							fillOpacity: 0,
 							opacity: 1,
 							weight: 0.8
@@ -126,7 +128,7 @@
 					var datalayer;
 					function selectedStyle(feature) {
 						return {
-							color: '#ff5500',
+							color: '#00c5ff',
 							fillOpacity: 0,
 							zIndex:10000,
 							opacity: 1,
