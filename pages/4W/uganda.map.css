@@ -592,3 +592,7 @@ p.custom-list-header .glyphicon {
     from {opacity: 0} 
     to {opacity: 1}
 }
+
+#sidebar-left, #sidebar-right {
+    display: none; /* Hidden by default */
+}
