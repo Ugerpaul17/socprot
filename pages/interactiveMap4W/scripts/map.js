@@ -304,7 +304,12 @@ $(window).on('load', function() {
 
 				var beneficiaries = d3.sum(relationship, function(d){return parseFloat(d.Beneficiaries)});
 
-				
+				console.log(districtList);
+				console.log(sectorList);
+				console.log(agencyList);
+				console.log(waterList);
+				console.log(donorList);
+				console.log(actorTypeList);
 
 				global.districtCount = districtList.length;
 				global.parishCount = ugandaGeoJson.features.length;
