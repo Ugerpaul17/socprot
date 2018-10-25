@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=yes">
+
+<html>
+	<head>
+		<title>Loading the map...</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="../../assets/web/assets/mobirise-icons/mobirise-icons.css">
+		<!--[if lte IE 8]><link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7.2/leaflet.ie.css" /><![endif]-->
+
+
+		<link href="uganda.map.css" rel="Stylesheet" type="text/css">
+		<link rel="stylesheet" href="../../assets/sidebar/css/leaflet-sidebar.css">
+
+		<!-- jQuery-->
+		<script src="scripts/jquery-3.2.0.min.js"></script>
+
+		<!-- Leaflet (CSS and JS) -->
+		<link rel="stylesheet" href="leaflet.css" />
+		<script src="scripts/leaflet.js"></script>
+
+		<!-- leaflet-providers -->
+		<script src="scripts/leaflet-providers/leaflet-providers.js"></script>
+
+		<!-- Tabletop -->
+		<script src="scripts/tabletop.js"></script>
+
+
+		<!-- Mapzen Search
+<link rel="stylesheet" href="scripts/leaflet-geocoder/leaflet-geocoder-mapzen.css">
+<script src="scripts/leaflet-geocoder/leaflet-geocoder-mapzen.js"></script>
+-->
+
+		<!-- jQuery-CSV -->
+		<script src="scripts/jquery.csv-0.71.min.js"></script>
+
+		<!-- Custom style sheet -->
+		<link rel="stylesheet" type="text/css" href="style.css">
+
+		<!-- DataTables -->
+		<script src="scripts/jquery.dataTables.min.js"></script>
+		<link rel="stylesheet" href="jquery.dataTables.min.css" />
+		<style>
+			body {
+				padding: 0;
+				margin: 0;
+			}
+
+			html, body, #map {
+				height: 100%;
+				font-size: 10pt;
+			}
+
+			.lorem {
+				font-style: italic;
+				color: #AAA;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="loader">Loading...</div>
+		<!-- The Modal -->
+		<div id="myModal" class="modal">
+
+			<!-- Modal content -->
+			<div class="modal-content">
+				<div class="modal-header">
+					<span class="close">&times;</span>
+					<p id="modal-header" class="custom-count-header" style="font-size: 16px;">Modal Header</p>
+				</div>
+				<table id="modal-body" class="modal-body">
+				</table>
+			</div>
+
+		</div>
+
+		<div id="sidebar-left" class="sidebar collapsed">
+			<!-- Nav tabs -->
+			<div class="sidebar-tabs">
+				<ul role="tablist">
+					<li><a href="../../index.html"><i class="mbri-home mbr-iconfont mbr-iconfont-btn"></i></a></li>
+					<li><a href="#home" role="tab"><i class="fa fa-filter"></i></a></li>
+					<li><a href="#profile" role="tab"><i class="mbri-align-justify mbr-iconfont"></i></a></li>
+					<li><a href="#profile1" role="tab"><i class="mbri-bulleted-list mbr-iconfont"></i></a></li>
+				</ul>
+
+				<ul role="tablist">
+					<li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+				</ul>
+			</div>
+
+			<!-- Tab panes -->
+			<div class="sidebar-content">
+				<div class="sidebar-pane" id="home">
+					<h1 class="sidebar-header">
+						Filters
+						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+					</h1>
+
+					<div class="menu-panel">
+						<p id="d3-map-refresh">Reset Filters</p>
+						<!--						<img src = "./css/reset.svg" style="border-radius: 50px;width:30px;height:30px; box-shadow: 0px 5px 5px grey;" title = "Reset Filters" id= "reset">-->
+
+					</div>
+					<div class="list-container">
+						<div class="col-md-12">
+							<p class="custom-list-header">Layers <i class="glyphicon glyphicon-chevron-down"></i></p>
+							<div id="district-list" class="custom-list"></div>
+						</div>
+						<div class="col-md-12">
+							<p class="custom-list-header">Ownership <i class="glyphicon glyphicon-chevron-down"></i></p>
+							<div id="donor-list" class="custom-list"></div>
+						</div>
+						<div class="col-md-12">
+							<p class="custom-list-header">Education <i class="glyphicon glyphicon-chevron-down"></i></p>
+							<div id="sector-list" class="custom-list"></div>
+						</div>
+						<div class="col-md-12">
+							<p class="custom-list-header">Protection <i class="glyphicon glyphicon-chevron-down"></i></p>
+							<div id="agency-list" class="custom-list"></div>
+						</div>
+						<div class="col-md-12">
+							<p class="custom-list-header">Health <i class="glyphicon glyphicon-chevron-down"></i></p>
+							<div id="actor-type-list" class="custom-list"></div>
+						</div>
+						<div class="col-md-12">
+							<p class="custom-list-header">Water <i class="glyphicon glyphicon-chevron-down"></i></p>
+							<div id="water-list" class="custom-list"></div>
+						</div>
+					</div>
+				</div>
+				<div class="sidebar-pane" id="profile">
+					<h4 class="sidebar-header" style="font-size: 0.8em; text-align: left;">Layers
+						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+					</h4>
+					<div id='buttonContainer1'></div>
+				</div>
+				<div class="sidebar-pane" id="profile1">
+					<h4 class="sidebar-header" style="font-size: 0.8em; text-align: left;">Parishes in Kampala
+						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+					</h4>
+					Click on parish name for breakdown.
+					<div id="page-wrap" class="custom-list" style="border: 1px solid #ccc!important; height: 60vh !important;"></div>
+				</div>
+			</div>
+		</div>
+
+<!--		
+		<div id="sidebar-right" class="sidebar collapsed">
+			<div class="sidebar-tabs">
+				<ul role="tablist">
+					<li><a href="#home1" role="tab"><i class="fa fa-bars"></i></a></li>
+				</ul>
+
+				<ul role="tablist">
+					<li><a href="#settings1" role="tab"><i class="fa fa-gear"></i></a></li>
+				</ul>
+			</div>
+
+			<div class="sidebar-content">
+				<div class="sidebar-pane" id="home1">
+					<h1 class="sidebar-header">
+						Results
+						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+					</h1>
+
+					<div class="top-panel col-md-8 col-sm-8">
+
+
+						<div class="head col-md-2 col-sm-2">
+							<p class="custom-count-header" style="font-size: 16px;"><br>Education </p>
+							<p id="sector-count" class="custom-count">0</p>
+						</div>
+						<div class=" head col-md-2 col-sm-2">
+							<p class="custom-count-header" style="font-size: 16px;"><br>Health </p>
+							<p id="actor-type-count" class="custom-count">0</p>
+						</div>
+					</div> <br><br><br><br><br><br>
+					<div class="top-panel col-md-8 col-sm-8">
+
+						<div class="head col-md-2 col-sm-2">
+							<p class="custom-count-header" style="font-size: 16px;"><br>Protection </p>
+							<p id="agency-count" class="custom-count">0</p>
+						</div>
+						<div class="head col-md-2 col-sm-2">
+							<p class="custom-count-header" style="font-size: 16px;"><br>Water </p>
+							<p id="water-count" class="custom-count">0</p>
+						</div>
+					</div>
+					<div class="col-md-12">
+					</div>
+				</div>
+			</div>
+		</div>
+-->
+		<div id="d3-map-container" class="sidebar-map">
+			<div id="d3-map-wrapper"></div></div>
+
+
+		<script type="text/javascript">
+			var map = L.map('d3-map-container', {
+				attributionControl: false,
+				zoomControl: false,
+				maxBounds: [
+					//south west
+					[0.1458,32.4051],
+					//north east
+					[0.4961, 32.7822]
+				]
+			}).setView([0.3233, 32.5625], 12); // default center is overridden by Google Sheet options and points
+		</script>
+
+
+		<!--		<script src="./js/leaflet.js"></script>-->
+		<script src="../../assets/sidebar/js/leaflet-sidebar.js"></script>
+		<!--		<script src="../../assets/web/assets/jquery/jquery.min.js"></script>-->
+		<script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+		<link href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
+		<script src="scripts/queue.v1.min.js"></script>
+		<script src="scripts/d3.v3.min.js"></script>
+		<script src="scripts/leaflet-easy-button.js"></script>
+		<script src="scripts/L.D3SvgOverlay.min.js"></script>
+		<script type="text/javascript" src="google-doc-url.js"></script>
+		<script type="text/javascript" src="scripts/constants.js"></script>
+		<script type="text/javascript" src="scripts/palette.js"></script>
+		<script type="text/javascript" src="scripts/polylabel.js"></script>
+		<script type="text/javascript" src="scripts/procsv.js"></script>
+		<script type="text/javascript" src="scripts/map.js"></script>
+
+
+
+	</body>
+</html>
