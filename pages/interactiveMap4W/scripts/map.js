@@ -303,7 +303,12 @@ $(window).on('load', function() {
 				}).sortKeys(d3.ascending).entries(relationship);
 
 				var beneficiaries = d3.sum(relationship, function(d){return parseFloat(d.Beneficiaries)});
-
+				
+				
+				
+					console.log(relationship);
+				console.log(dataset);
+				
 				console.log(districtList);
 				console.log(sectorList);
 				console.log(agencyList);
