@@ -11,7 +11,7 @@
 var RadarChart = {
   draw: function(id, d, options){
   var cfg = {
-	 radius: 2,
+	 radius: 6,
 	 w: 600,
 	 h: 600,
 	 factor: 1,
@@ -40,7 +40,7 @@ var RadarChart = {
 	var total = allAxis.length;
 	var radius = cfg.factor*Math.min(cfg.w/2, cfg.h/2);
 	var Format = d3.format('%');
-	d3.select(id).select("svg").remove();
+//	d3.select(id).select("svg").remove();
 	
 	var g = d3.select(id)
 			.append("svg")

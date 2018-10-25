@@ -12,7 +12,7 @@
 
 		<link rel="stylesheet" href="../../assets/sidebar/css/leaflet-sidebar.css">
 		<link rel="stylesheet" href="css/leaflet-tag-filter-button.css" />
-  <link rel="stylesheet" href="../../assets/web/assets/mobirise-icons/mobirise-icons.css">
+		<link rel="stylesheet" href="../../assets/web/assets/mobirise-icons/mobirise-icons.css">
 
 		<style>
 			body {
@@ -95,26 +95,26 @@
 			function makeMarkers() {
 				var sidebar = L.control.sidebar('sidebar-left');
 				storkmap.map.addControl(sidebar);
-				
+
 				sidebar.open('home')
-;
-//				var sidebarDiv = document.getElementById('sidebar-left');
-//
-//				toggleSidebar = function() {
-//					if (hasClass(sidebarDiv,'collapsed')) {
-//						sidebar.open();
-//					} else {
-//						sidebar.close();
-//					}
-//				}
-//
-//				function hasClass(element, cls) {
-//					return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
-//				}
-//
-//				sidebar.toggleSidebar;
-				
-				$.getJSON('./data/kampalaParishes.geojson', function(data){
+				;
+				//				var sidebarDiv = document.getElementById('sidebar-left');
+				//
+				//				toggleSidebar = function() {
+				//					if (hasClass(sidebarDiv,'collapsed')) {
+				//						sidebar.open();
+				//					} else {
+				//						sidebar.close();
+				//					}
+				//				}
+				//
+				//				function hasClass(element, cls) {
+				//					return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+				//				}
+				//
+				//				sidebar.toggleSidebar;
+
+				$.getJSON('./data/kampalaParishes_.geojson', function(data){
 					function style(feature) {
 						return {
 							color: '#ff5500',
@@ -139,8 +139,8 @@
 					function parishOnEachFeature(feature, featureLayer){
 
 						var popup = L.popup()
-						.setContent("<b>" + feature.properties.s + " Division</b></br>" +
-									"<b>Parish: </b>" + feature.properties.pname + "</br>");
+						.setContent("<b>" + feature.properties.SNAME2014 + " Division</b></br>" +
+									"<b>Parish: </b>" + feature.properties.PNAME2014 + "</br>");
 
 
 						featureLayer.on('mouseover', function (e) {
@@ -156,7 +156,7 @@
 							click: function(e) {
 								datalayer.setStyle(style());
 								selected = [];
-								selected.push(e.target.feature.properties.pname);
+								selected.push(e.target.feature.properties.PNAME2014);
 								e.target.feature.properties.selected = true;
 								e.target.setStyle(selectedStyle());
 								e.target.bringToFront();
@@ -176,44 +176,67 @@
 						style: style,
 						onEachFeature: parishOnEachFeature
 
-					}).on('click', function () {
+					}).on('click', function (d) {
 
-						d3.select('#home').select('svg').remove();
+						d3.select('#home').selectAll('svg').remove();
+
+						console.log(data);
+						console.log(selected);
+
+
 
 						for (var i = 0; i < data.features.length; i++) {
-							if(selected[0] === data.features[i].properties.pname) {
-								document.getElementById('parish').innerHTML = data.features[i].properties.pname;
-								document.getElementById('subCounty').innerHTML = data.features[i].properties.s;
+							if(selected[0] === data.features[i].properties.PNAME2014) {
+								document.getElementById('parish').innerHTML = data.features[i].properties.PNAME2014;
+								document.getElementById('subCounty').innerHTML = data.features[i].properties.SNAME2014;
 
 
-								var d = [
+								var dProtection = [
 									[
-										{axis:" Male Population ",value: data.features[i].properties.mpopn / 100},
-										{axis:" Female Population ",value: data.features[i].properties.fpopn / 100}, 
-										{axis:" Sex Ratio ",value: data.features[i].properties.sexratio / 100},
-										{axis:" Total Population ",value: data.features[i].properties.tpopn / 100},
-										{axis:" Area ",value: data.features[i].properties.Area / 100},
-										{axis:" Green Space 2016 ",value: data.features[i].properties.greenSpace_20161206 / 100},
-										{axis:" Green space 2018 ",value: data.features[i].properties.greenSpace_20180204 / 100},
-										{axis:" Percentage 2016 ",value: data.features[i].properties.percentage_20161206 / 100},
-										{axis:" Percentage 2018 ",value: data.features[i].properties.percentage_20180204 / 100},
-										{axis:" Difference ",value: data.features[i].properties.Difference / 100}
-
+										{axis:"% HH heads 10-17years",value: data.features[i].properties["%HhH(10-17"] / 100},
+										{axis:"%of HHs that live in mizigo",value: data.features[i].properties["Tenement (Muzigo) Percent"] / 100}, 
+										{axis:"%of HHs that live in earth floor housing",value: data.features[i].properties["Floor Earth Percent"] / 100},
+										{axis:"Poverty",value: data.features[i].properties["HH poverty"] / 100},
+										{axis:"%of HHs that live in mud wall housing",value: data.features[i].properties["Wall Mud and pole Percent"] / 100}
 									],[
 
-										{axis:"Male Population",value:0.48127},
-										{axis:"Female Population",value:0.5139583333},
-										{axis:"Sex Ratio",value:0.4826041667},
-										{axis:"Total Population",value:0.4865625},
-										{axis:"Area",value:0.5177083333},
-										{axis:"Green Space 2016",value:0.5144791667},
-										{axis:"Green Space 2018",value:0.4865625},
-										{axis:"Percentage 2016",value:0.2783305738},
-										{axis:"Percentage 2018",value:0.9181135307},
-										{axis:"Difference",value:0.1865192207}
+										{axis:"% HH heads 10-17years",value:0.00483333333},
+										{axis:"%of HHs that live in mizigo",value:0.4449791667}, 
+										{axis:"%of HHs that live in earth floor housing",value:0.03577083333},{axis:"Poverty",value:0.0094},
+										{axis:"%of HHs that live in mud wall housing",value:0.02973958333}
 									]
 								]
 
+								var dHealth = [
+									[
+										{axis:"% HH heads 10-17years",value: data.features[i].properties["%HhH(10-17"] / 100},
+										{axis:"%of HHs that live in mizigo",value: data.features[i].properties["Tenement (Muzigo) Percent"] / 100}, 
+										{axis:"%of HHs that live in earth floor housing",value: data.features[i].properties["Floor Earth Percent"] / 100},
+										{axis:"Poverty",value: data.features[i].properties["HH poverty"]},
+										{axis:"%of HHs that live in mud wall housing",value: data.features[i].properties["Wall Mud and pole Percent"] / 100}
+									],[
+
+										{axis:"% HH heads 10-17years",value:0.483333333},
+										{axis:"%of HHs that live in mizigo",value:0.4449791667}, 
+										{axis:"%of HHs that live in earth floor housing",value:0.03577083333},{axis:"Poverty",value:0.0094},
+										{axis:"%of HHs that live in mud wall housing",value:0.02973958333}
+									]
+								]
+
+
+								var dWash = [
+									[
+										{axis:"% HH heads 10-17years",value: data.features[i].properties["%HhH(10-17"] / 100},
+										{axis:"%of HHs that live in mizigo",value: data.features[i].properties["Tenement (Muzigo) Percent"] / 100}, 
+										{axis:"%of HHs that live in earth floor housing",value: data.features[i].properties["Floor Earth Percent"] / 100},
+										{axis:"Poverty",value: data.features[i].properties["HH poverty"]}
+									],[
+
+										{axis:"% HH heads 10-17years",value:0.483333333},
+										{axis:"%of HHs that live in mizigo",value:0.4449791667}, 
+										{axis:"%of HHs that live in earth floor housing",value:0.03577083333},{axis:"Poverty",value:0.0094}
+									]
+								]
 
 								var w = +(d3.select("#home").style('width').slice(0, -2)) /2.5,
 									h = +(d3.select("#home").style('width').slice(0, -2)) /2.5;
@@ -227,7 +250,13 @@
 								}
 
 
-								RadarChart.draw("#home", d, mycfg);
+								RadarChart.draw("#home", dProtection, mycfg);
+								RadarChart.draw("#home", dHealth, mycfg);
+								RadarChart.draw("#home", dWash, mycfg);
+
+								console.log(dProtection);
+								console.log(dWash);
+								console.log(dHealth);
 
 								////////////////////////////////////////////
 								/////////// Initiate legend ////////////////
@@ -301,34 +330,51 @@
 				var LegendOptions = ['Smartphone','Tablet'];
 
 
-				var d = [
+				var dProtection = [
 					[
-						{axis:"Male Population",value:0.48127},
-						{axis:"Female Population",value:0.5139583333},
-						{axis:"Sex Ratio",value:0.4826041667},
-						{axis:"Total Population",value:0.4865625},
-						{axis:"Area",value:0.5177083333},
-						{axis:"Green Space 2016",value:0.5144791667},
-						{axis:"Green Space 2018",value:0.4865625},
-						{axis:"Percentage 2016",value:0.2783305738},
-						{axis:"Percentage 2018",value:0.09181135307},
-						{axis:"Difference",value:0.1865192207}
-
+						{axis:"% HH heads 10-17years",value:0.00483333333},
+						{axis:"%of HHs that live in mizigo",value:0.4449791667}, 
+						{axis:"%of HHs that live in earth floor housing",value:0.03577083333},{axis:"Poverty",value:0.0094},
+						{axis:"%of HHs that live in mud wall housing",value:0.02973958333}
 					],[
-						{axis:"Male Population",value:0.48127},
-						{axis:"Female Population",value:0.5139583333},
-						{axis:"Sex Ratio",value:0.4826041667},
-						{axis:"Total Population",value:0.4865625},
-						{axis:"Area",value:0.5177083333},
-						{axis:"Green Space 2016",value:0.5144791667},
-						{axis:"Green Space 2018",value:0.4865625},
-						{axis:"Percentage 2016",value:0.2783305738},
-						{axis:"Percentage 2018",value:0.09181135307},
-						{axis:"Difference",value:0.1865192207}
 
+						{axis:"% HH heads 10-17years",value:0.00483333333},
+						{axis:"%of HHs that live in mizigo",value:0.4449791667}, 
+						{axis:"%of HHs that live in earth floor housing",value:0.03577083333},{axis:"Poverty",value:0.0094},
+						{axis:"%of HHs that live in mud wall housing",value:0.02973958333}
 					]
-				];
+				]
 
+				var dHealth = [
+					[
+						{axis:"% HH heads 10-17years",value:0.483333333},
+						{axis:"%of HHs that live in mizigo",value:0.4449791667}, 
+						{axis:"%of HHs that live in earth floor housing",value:0.03577083333},{axis:"Poverty",value:0.0094},
+						{axis:"%of HHs that live in mud wall housing",value:0.02973958333}
+					],[
+
+						{axis:"% HH heads 10-17years",value:0.483333333},
+						{axis:"%of HHs that live in mizigo",value:0.4449791667}, 
+						{axis:"%of HHs that live in earth floor housing",value:0.03577083333},{axis:"Poverty",value:0.0094},
+						{axis:"%of HHs that live in mud wall housing",value:0.02973958333}
+					]
+				]
+
+
+				var dWash = [
+					[
+						{axis:"% HH heads 10-17years",value:0.483333333},
+						{axis:"%of HHs that live in mizigo",value:0.4449791667}, 
+						{axis:"%of HHs that live in earth floor housing",value:0.03577083333},
+						{axis:"Poverty",value:0.0094}
+					],[
+
+						{axis:"% HH heads 10-17years",value:0.483333333},
+						{axis:"%of HHs that live in mizigo",value:0.4449791667}, 
+						{axis:"%of HHs that live in earth floor housing",value:0.03577083333},
+						{axis:"Poverty",value:0.0094}
+					]
+				]
 
 				var mycfg = {
 					w: w,
@@ -339,7 +385,9 @@
 
 				//Call function to draw the Radar chart
 				//Will expect that data is in %'s
-				RadarChart.draw("#home", d, mycfg);
+				RadarChart.draw("#home", dProtection, mycfg);
+				RadarChart.draw("#home", dHealth, mycfg);
+				RadarChart.draw("#home", dWash, mycfg);
 
 				////////////////////////////////////////////
 				/////////// Initiate legend ////////////////
