@@ -1,609 +1,239 @@
-
-
 <!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=yes">
+
 <html>
 	<head>
-		<title>
-			KCCA - UNICEF Interactive Map
-		</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" href="css/leaflet.css" />
-		<link rel="stylesheet" href="css/leaflet-easy-button.css" />
-		<link rel="stylesheet" href="css/leaflet-tag-filter-button.css" />
-		<link rel="stylesheet" href="css/ripple.min.css" />
-		<link rel="stylesheet" href="css/prism/prism.css">
-		<!--		<link rel="stylesheet" href="css/styles.css">-->
-		<link rel="stylesheet" href="../../assets/sidebar/css/leaflet-sidebar_compatible.css">
-		<link rel="stylesheet" href="css/MarkerCluster.css" />
-		<link rel="stylesheet" href="css/MarkerCluster.Default.css" />
-  <link rel="stylesheet" href="../../assets/web/assets/mobirise-icons/mobirise-icons.css">
-  <link rel="stylesheet" href="../../assets/ocha/style.css">
-		<link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
+		<title>Loading the map...</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="../../assets/web/assets/mobirise-icons/mobirise-icons.css">
+		<!--[if lte IE 8]><link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7.2/leaflet.ie.css" /><![endif]-->
 
 
+		<link href="uganda.map.css" rel="Stylesheet" type="text/css">
+		<link rel="stylesheet" href="../../assets/sidebar/css/leaflet-sidebar.css">
+
+		<!-- jQuery-->
+		<script src="scripts/jquery-3.2.0.min.js"></script>
+
+		<!-- Leaflet (CSS and JS) -->
+		<link rel="stylesheet" href="leaflet.css" />
+		<script src="scripts/leaflet.js"></script>
+
+		<!-- leaflet-providers -->
+		<script src="scripts/leaflet-providers/leaflet-providers.js"></script>
+
+		<!-- Tabletop -->
+		<script src="scripts/tabletop.js"></script>
 
 
+		<!-- Mapzen Search
+<link rel="stylesheet" href="scripts/leaflet-geocoder/leaflet-geocoder-mapzen.css">
+<script src="scripts/leaflet-geocoder/leaflet-geocoder-mapzen.js"></script>
+-->
 
-		<script src="js/jquery-1.12.3.min.js"></script>
-		<script src="css/bootstrap/js/bootstrap.min.js"></script>
-		<script src="css/prism/prism.js"></script>
-		<script src="js/leaflet.js"></script>
-		<script type="text/javascript" src="js/leaflet.markercluster.js"></script>
-		<script src="js/d3.v3.min.js"></script>
-		<script src="js/leaflet-easy-button.js"></script>
-		<script src="js/leaflet-tag-filter-button.js"></script>
-		<script src="../../assets/sidebar/js/leaflet-sidebar_compatible.js"></script>
+		<!-- jQuery-CSV -->
+		<script src="scripts/jquery.csv-0.71.min.js"></script>
 
+		<!-- Custom style sheet -->
+		<link rel="stylesheet" type="text/css" href="style.css">
+
+		<!-- DataTables -->
+		<script src="scripts/jquery.dataTables.min.js"></script>
+		<link rel="stylesheet" href="jquery.dataTables.min.css" />
 		<style>
+			body {
+				padding: 0;
+				margin: 0;
+			}
+
 			html, body, #map {
 				height: 100%;
-				font-size:  10pt;
+				font-size: 10pt;
 			}
 
-			.easy-button-button {
-				display: block !important;
-			}
-
-			.tag-filter-tags-container {
-				left: 30px;
+			.lorem {
+				font-style: italic;
+				color: #AAA;
 			}
 		</style>
 	</head>
+
 	<body>
-		<div id="sidebar-left" class="leaflet-sidebar collapsed">
+
+		<div class="loader">Loading...</div>
+		<!-- The Modal -->
+		<div id="myModal" class="modal">
+
+			<!-- Modal content -->
+			<div class="modal-content">
+				<div class="modal-header">
+					<span class="close">&times;</span>
+					<p id="modal-header" class="custom-count-header" style="font-size: 16px;">Modal Header</p>
+				</div>
+				<table id="modal-body" class="modal-body">
+				</table>
+			</div>
+
+		</div>
+
+		<div id="sidebar-left" class="sidebar collapsed">
 			<!-- Nav tabs -->
-			<div class="leaflet-sidebar-tabs">
+			<div class="sidebar-tabs">
 				<ul role="tablist">
 					<li><a href="../../index.html"><i class="mbri-home mbr-iconfont mbr-iconfont-btn"></i></a></li>
-					<li><a href="#home" role="tab"><i class="mbri-info mbr-iconfont mbr-iconfont-btn"></i></a></li>
-					<li><a href="#profile" role="tab"><i class="mbri-menu mbr-iconfont mbr-iconfont-btn"></i></a></li>
+					<li><a href="#home" role="tab"><i class="fa fa-filter"></i></a></li>
+					<li><a href="#profile" role="tab"><i class="mbri-align-justify mbr-iconfont"></i></a></li>
+					<li><a href="#profile1" role="tab"><i class="mbri-bulleted-list mbr-iconfont"></i></a></li>
 				</ul>
 
 				<ul role="tablist">
-					<li><a href="#settings" role="tab"><i class="fa fa-info"></i></a></li>
+					<li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
 				</ul>
 			</div>
 
 			<!-- Tab panes -->
-			<div class="leaflet-sidebar-content">
-				<div class="leaflet-sidebar-pane" id="home">
-					<h4 class="leaflet-sidebar-header" style="font-size: 0.8em; text-align: left;">Map Info.
-						<span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
-					</h4>
-					
+			<div class="sidebar-content">
+				<div class="sidebar-pane" id="home">
+					<h1 class="sidebar-header">
+						Filters
+						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+					</h1>
+
+					<div class="menu-panel">
+						<p id="d3-map-refresh">Reset Filters</p>
+						<!--						<img src = "./css/reset.svg" style="border-radius: 50px;width:30px;height:30px; box-shadow: 0px 5px 5px grey;" title = "Reset Filters" id= "reset">-->
+
+					</div>
+					<div class="list-container">
+						<div class="col-md-12">
+							<p class="custom-list-header">Layers <i class="glyphicon glyphicon-chevron-down"></i></p>
+							<div id="district-list" class="custom-list"></div>
+						</div>
+						<div class="col-md-12">
+							<p class="custom-list-header">Ownership <i class="glyphicon glyphicon-chevron-down"></i></p>
+							<div id="donor-list" class="custom-list"></div>
+						</div>
+						<div class="col-md-12">
+							<p class="custom-list-header">Education <i class="glyphicon glyphicon-chevron-down"></i></p>
+							<div id="sector-list" class="custom-list"></div>
+						</div>
+						<div class="col-md-12">
+							<p class="custom-list-header">Protection <i class="glyphicon glyphicon-chevron-down"></i></p>
+							<div id="agency-list" class="custom-list"></div>
+						</div>
+						<div class="col-md-12">
+							<p class="custom-list-header">Health <i class="glyphicon glyphicon-chevron-down"></i></p>
+							<div id="actor-type-list" class="custom-list"></div>
+						</div>
+						<div class="col-md-12">
+							<p class="custom-list-header">Water <i class="glyphicon glyphicon-chevron-down"></i></p>
+							<div id="water-list" class="custom-list"></div>
+						</div>
+					</div>
 				</div>
-				<div class="leaflet-sidebar-pane" id="profile">
-					<h4 class="leaflet-sidebar-header" style="font-size: 0.8em; text-align: left;">Layers
-						<span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+				<div class="sidebar-pane" id="profile">
+					<h4 class="sidebar-header" style="font-size: 0.8em; text-align: left;">Layers
+						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
 					</h4>
 					<div id='buttonContainer1'></div>
 				</div>
-
-
-
-				<div class="leaflet-sidebar-pane" id="settings">
-					<h1 class="leaflet-sidebar-header">About<span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+				<div class="sidebar-pane" id="profile1">
+					<h4 class="sidebar-header" style="font-size: 0.8em; text-align: left;">Parishes in Kampala
+						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+					</h4>
+					Click on parish name for breakdown.
+					<div id="page-wrap" class="custom-list" style="border: 1px solid #ccc!important; height: 60vh !important;"></div>
 				</div>
 			</div>
 		</div>
-		<div id="map"></div>
+
+<!--		
+		<div id="sidebar-right" class="sidebar collapsed">
+			<div class="sidebar-tabs">
+				<ul role="tablist">
+					<li><a href="#home1" role="tab"><i class="fa fa-bars"></i></a></li>
+				</ul>
+
+				<ul role="tablist">
+					<li><a href="#settings1" role="tab"><i class="fa fa-gear"></i></a></li>
+				</ul>
+			</div>
+
+			<div class="sidebar-content">
+				<div class="sidebar-pane" id="home1">
+					<h1 class="sidebar-header">
+						Results
+						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+					</h1>
+
+					<div class="top-panel col-md-8 col-sm-8">
+
+
+						<div class="head col-md-2 col-sm-2">
+							<p class="custom-count-header" style="font-size: 16px;"><br>Education </p>
+							<p id="sector-count" class="custom-count">0</p>
+						</div>
+						<div class=" head col-md-2 col-sm-2">
+							<p class="custom-count-header" style="font-size: 16px;"><br>Health </p>
+							<p id="actor-type-count" class="custom-count">0</p>
+						</div>
+					</div> <br><br><br><br><br><br>
+					<div class="top-panel col-md-8 col-sm-8">
+
+						<div class="head col-md-2 col-sm-2">
+							<p class="custom-count-header" style="font-size: 16px;"><br>Protection </p>
+							<p id="agency-count" class="custom-count">0</p>
+						</div>
+						<div class="head col-md-2 col-sm-2">
+							<p class="custom-count-header" style="font-size: 16px;"><br>Water </p>
+							<p id="water-count" class="custom-count">0</p>
+						</div>
+					</div>
+					<div class="col-md-12">
+					</div>
+				</div>
+			</div>
+		</div>
+-->
+		<div id="d3-map-container" class="sidebar-map">
+			<div id="d3-map-wrapper"></div></div>
+
+
 		<script type="text/javascript">
-
-			$(function(argument) {
-				
-				var myMap = {};
-				
-				var osmUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-					osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-					osm = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}.png', {
-						attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-						subdomains: 'abcd',
-						maxZoom: 19
-					});
-
-				// initialize the map on the "map" div with a given center and zoom
-				myMap.map = L.map('map').setView([0.3193, 32.5953], 12).addLayer(osm);
-
-				var sidebar = L.control.sidebar({container: 'sidebar-left'});
-
-				myMap.map.addControl(sidebar);
-
-				sidebar.open('home');
-
-				myMap.healthClusterGroup = L.markerClusterGroup({
-					iconCreateFunction: function(cluster) {
-						var childCount = cluster.getChildCount();
-						return L.divIcon({className: 'Health clusterIcons', html: '<div><span>' + childCount + '</span></div>'});
-					},
-					polygonOptions: {
-						opacity: 0,
-						fillOpacity: 0
-					}
-				});
-
-				myMap.schoolClusterGroup = L.markerClusterGroup({
-					iconCreateFunction: function(cluster) {
-						var childCount = cluster.getChildCount();
-						return L.divIcon({className: 'School clusterIcons', html: '<div><span>' + childCount + '</span></div>'});
-					},
-					polygonOptions: {
-						opacity: 0,
-						fillOpacity: 0
-					}
-				});
-
-				myMap.policeClusterGroup = L.markerClusterGroup({
-					iconCreateFunction: function(cluster) {
-						var childCount = cluster.getChildCount();
-						return L.divIcon({className: 'Police clusterIcons', html: '<div><span>' + childCount + '</span></div>'});
-					},
-					polygonOptions: {
-						opacity: 0,
-						fillOpacity: 0
-					}
-				});
-
-				$.getJSON('./json/HealthCentres.geojson', function(data){
-					var healthClusters = myMap.healthClusterGroup;
-					L.geoJson(data, {
-						onEachFeature: function(feature, layer) {
-							var popup = L.popup()
-						.setContent("<b>Health Facility: </b>" + feature.properties.NAME_OF_HE + "</br>" + 
-									"<b>Ownsership: </b>" + feature.properties.ownershipText + "</br>");
-
-						layer.bindPopup(popup);
-							
-							healthClusters.addLayer(layer);
-						},
-						pointToLayer: function (feature, latlng) {
-							var geojsonMarkerProperties = {
-								radius: 5,
-								fillColor: "#FC3100",
-								color: "#000",
-								weight: 1,	
-								opacity: 1,
-								fillOpacity: 0.8,
-								tags: [String(feature.properties.ownershipText),String(feature.properties.deliveriesText), String(feature.properties.antenatalText), "Turn Off Education Layer", "Turn Off Police Layer"]
-							}
-							return L.circleMarker(latlng, geojsonMarkerProperties);
-						}
-					});
-				});
-
-				$.getJSON('./json/Schools.geojson', function(data){
-					var schoolClusters = myMap.schoolClusterGroup
-					L.geoJson(data, {
-						onEachFeature: function(feature, layer) {
-							var popup = L.popup()
-						.setContent("<b>Education Facility: </b>" + feature.properties.Name_of_in + "</br>" + "<b>Type: </b>" + feature.properties.typeText + "</br>" + 
-									"<b>Ownsership: </b>" + feature.properties.ownershipText + "</br>" + "<b>Year Started: </b>" + feature.properties.Year_of_op + "</br>");
-							
-
-						layer.bindPopup(popup);
-							
-							schoolClusters.addLayer(layer);
-						},
-						pointToLayer: function (feature, latlng) {
-							var geojsonMarkerProperties = {
-								radius: 5,
-								fillColor: "#FFB400",
-								color: "#000",
-								weight: 1,	
-								opacity: 1,
-								fillOpacity: 0.8,
-								tags: [String(feature.properties.ownershipText),String(feature.properties.typeText), "Turn Off Health Layer", "Turn Off Police Layer"]
-							}
-							return L.circleMarker(latlng, geojsonMarkerProperties);
-						}
-					});
-				});
-
-				$.getJSON('./json/Police.geojson', function(data){
-					var policeClusters = myMap.policeClusterGroup;
-					L.geoJson(data, {
-						onEachFeature: function(feature, layer) {
-							
-							var popup = L.popup()
-						.setContent("<b>Name: </b>" + feature.properties.StationNam + "</br>" + "<b>Type: </b>" + feature.properties.typeText + "</br>" + 
-									"<b>Location: </b>" + feature.properties.Location + "</br>");
-							
-
-						layer.bindPopup(popup);
-							policeClusters.addLayer(layer);
-						},
-						pointToLayer: function (feature, latlng) {
-							var geojsonMarkerProperties = {
-								radius: 5,
-								fillColor: "#3B5323",
-								color: "#000",
-								weight: 1,	
-								opacity: 1,
-								fillOpacity: 0.8,
-								tags: [String(feature.properties.typeText), "Turn Off Health Layer", "Turn Off Health Layer"]
-							}
-							return L.circleMarker(latlng, geojsonMarkerProperties);
-						}
-					});
-				});
-				
-				
-				myMap.map.addLayer(myMap.healthClusterGroup);
-				myMap.map.addLayer(myMap.schoolClusterGroup);
-				myMap.map.addLayer(myMap.policeClusterGroup);
-
-
-
-				//EnableMCG
-				{
-					////////////////////////////////////////////////
-					// Quick and dirty implementation of enableMCG
-					////////////////////////////////////////////////
-					L.Control.TagFilterButton.include({
-						// Goal: read from MCG instead of from _map
-						enableMCG: function(mcgInstance) {
-							this.registerCustomSource({
-								name: 'mcg',
-								source: {
-									mcg: mcgInstance,
-									hide: function(layerSource) {
-										var releatedLayers = [];
-
-										for (
-											var r = 0; r < this._releatedFilterButtons.length; r++
-										) {
-											releatedLayers = releatedLayers.concat(
-												this._releatedFilterButtons[r].getInvisibles()
-											);
-										}
-
-										var toBeRemovedFromInvisibles = [],
-											i,
-											toAdd = [];
-
-										for (var i = 0; i < this._invisibles.length; i++) {
-											if (releatedLayers.indexOf(this._invisibles[i]) == -1) {
-												for (
-													var j = 0; j < this._invisibles[i].options.tags.length; j++
-												) {
-													if (
-														this._selectedTags.length == 0 ||
-														this._selectedTags.indexOf(
-															this._invisibles[i].options.tags[j]
-														) !== -1
-													) {
-														//this._map.addLayer(this._invisibles[i]);
-														toAdd.push(this._invisibles[i]);
-														toBeRemovedFromInvisibles.push(i);
-														break;
-													}
-												}
-											}
-										}
-
-										// Batch add into MCG
-										layerSource.mcg.addLayers(toAdd);
-
-										while (toBeRemovedFromInvisibles.length > 0) {
-											this._invisibles.splice(
-												toBeRemovedFromInvisibles.pop(),
-												1
-											);
-										}
-
-										var removedMarkers = [];
-										var totalCount = 0;
-
-										if (this._selectedTags.length > 0) {
-											//this._map.eachLayer(
-											layerSource.mcg.eachLayer(
-												function(layer) {
-													if (
-														layer &&
-														layer.options &&
-														layer.options.tags
-													) {
-														totalCount++;
-														if (releatedLayers.indexOf(layer) == -1) {
-															var found = false;
-															for (
-																var i = 0; i < layer.options.tags.length; i++
-															) {
-																found =
-																	this._selectedTags.indexOf(
-																	layer.options.tags[i]
-																) !== -1;
-																if (found) {
-																	break;
-																}
-															}
-															if (!found) {
-																removedMarkers.push(layer);
-															}
-														}
-													}
-												}.bind(this)
-											);
-
-											for (i = 0; i < removedMarkers.length; i++) {
-												//this._map.removeLayer(removedMarkers[i]);
-												this._invisibles.push(removedMarkers[i]);
-											}
-
-											// Batch remove from MCG
-											layerSource.mcg.removeLayers(removedMarkers);
-										}
-
-										return totalCount - removedMarkers.length;
-									},
-								},
-							});
-
-							this.layerSources.currentSource = this.layerSources.sources[
-								'mcg'
-							];
-						},
-					});
-
-					////////////////////////////////////////////////
-					// Fix for TagFilterButton
-					////////////////////////////////////////////////
-					L.Control.TagFilterButton.include({
-						_prepareLayerSources: function() {
-							this.layerSources = new Object();
-							this.layerSources['sources'] = new Object();
-
-							this.registerCustomSource({
-								name: 'default',
-								source: {
-									hide: function() {
-										var releatedLayers = [];
-
-										for (var r = 0; r < this._releatedFilterButtons.length; r++) {
-											releatedLayers = releatedLayers.concat(
-												this._releatedFilterButtons[r].getInvisibles()
-											);
-										}
-
-										var toBeRemovedFromInvisibles = [],
-											i;
-
-										// "Fix": add var
-										for (var i = 0; i < this._invisibles.length; i++) {
-											if (releatedLayers.indexOf(this._invisibles[i]) == -1) {
-												// "Fix": add var
-												for (var j = 0; j < this._invisibles[i].options.tags.length; j++) {
-													if (
-														this._selectedTags.length == 0 ||
-														this._selectedTags.indexOf(
-															this._invisibles[i].options.tags[j]
-														) !== -1
-													) {
-														this._map.addLayer(this._invisibles[i]);
-														toBeRemovedFromInvisibles.push(i);
-														break;
-													}
-												}
-											}
-										}
-
-										while (toBeRemovedFromInvisibles.length > 0) {
-											this._invisibles.splice(toBeRemovedFromInvisibles.pop(), 1);
-										}
-
-										var removedMarkers = [];
-										var totalCount = 0;
-
-										if (this._selectedTags.length > 0) {
-											this._map.eachLayer(
-												function(layer) {
-													if (layer && layer.options && layer.options.tags) {
-														totalCount++;
-														if (releatedLayers.indexOf(layer) == -1) {
-															var found = false;
-															for (var i = 0; i < layer.options.tags.length; i++) {
-																found =
-																	this._selectedTags.indexOf(layer.options.tags[i]) !==
-																	-1;
-																if (found) {
-																	break;
-																}
-															}
-															if (!found) {
-																removedMarkers.push(layer);
-															}
-														}
-													}
-												}.bind(this)
-											);
-
-											for (i = 0; i < removedMarkers.length; i++) {
-												this._map.removeLayer(removedMarkers[i]);
-												this._invisibles.push(removedMarkers[i]);
-											}
-										}
-
-										return totalCount - removedMarkers.length;
-									},
-								},
-							});
-							this.layerSources.currentSource = this.layerSources.sources['default'];
-						},
-					});
-				}
-
-
-				var datalayer;
-				var datalayer1;
-
-				$.getJSON('./json/kampalaParishes.geojson', function(data){
-					function style(feature) {
-						return {
-							color: '#00c5ff',
-							fillOpacity: 0,
-							opacity: 1,
-							weight: 0.8
-						};
-					}
-
-
-
-					function selectedStyle(feature) {
-						return {
-							color: '#ff5500',
-							fillOpacity: 0,
-							zIndex:10000,
-							opacity: 1,
-							weight: 2
-						};
-					}
-					var selected;
-					function parishOnEachFeature(feature, featureLayer){
-
-						var popup = L.popup()
-						.setContent("<b>" + feature.properties.s + " Division</b></br>" +
-									"<b>Parish: </b>" + feature.properties.pname + "</br>");
-
-
-						featureLayer.on({
-							click: function(e) {
-								datalayer.setStyle(style());
-								selected = [];
-								selected.push(e.target.feature.properties.pname);
-								e.target.feature.properties.selected = true;
-								e.target.setStyle(selectedStyle());
-								e.target.bringToFront();
-							}
-						});
-
-						featureLayer.bindPopup(popup);
-					}
-					datalayer = L.geoJson(data, {
-						style: style,
-						onEachFeature: parishOnEachFeature
-
-					});
-
-				});
-
-				$.getJSON('./json/kampala_slum_settlement.geojson', function(data){
-					function style1(feature) {
-						return {
-							color: 'green',
-							fillOpacity: 0.4,
-							opacity: 1,
-							weight: 0.8
-						};
-					}
-
-					datalayer1 = L.geoJson(data, {
-						style: style1
-					});
-
-				});
-
-				var buttons1 = {
-					Slums: L.easyButton({
-						id: "slums",
-						position: 'bottomleft',
-						states: [{
-							stateName: 'add-markers',
-							icon: '<i class="mbri-map-pin mbr-iconfont mbr-iconfont-btn" style="opacity:0.2;"></i><span id="text" style="width = auto !important; opacity:0.2 ;" class="btn--text"><font color="black"><b>Slum Areas</b></font></span>',
-							title: 'add random markers',
-							onClick: function(control) {
-								myMap.map.addLayer(datalayer1);
-								control.state('remove-markers');
-							}
-						}, {
-							icon: '<i class="mbri-map-pin mbr-iconfont mbr-iconfont-btn"></i><span id="text" style="width = auto !important;" class="btn--text"><font color="black"><b>Slum Areas</b></font></span>',
-							stateName: 'remove-markers',
-							onClick: function(control) {
-								myMap.map.removeLayer(datalayer1);
-								control.state('add-markers');
-							},
-							title: 'remove markers'
-						}]
-					}),
-					Parishes: L.easyButton({
-						id: "parishes",
-						position: 'bottomleft',
-						states: [{
-							stateName: 'add-markers',
-							icon: '<i class="mbri-map-pin mbr-iconfont mbr-iconfont-btn" style="opacity:0.2;"></i><span id="text" style="width = auto !important; opacity:0.2 ;" class="btn--text"><font color="black"><b>Parish Boundaries</b></font></span>',
-							title: 'add random markers',
-							onClick: function(control) {
-								myMap.map.addLayer(datalayer);
-								control.state('remove-markers');
-							}
-						}, {
-							icon: '<i class="mbri-map-pin mbr-iconfont mbr-iconfont-btn"></i><span id="text" style="width = auto !important;" class="btn--text"><font color="black"><b>Parish Boundaries</b></font></span>',
-							stateName: 'remove-markers',
-							onClick: function(control) {
-								myMap.map.removeLayer(datalayer);
-								control.state('add-markers');
-							},
-							title: 'remove markers'
-						}]
-					})
-				}
-				
-				// add the buttons. iterates over the buttons objects
-				for (var key in buttons1) {
-					if (buttons1.hasOwnProperty(key)) {
-						buttons1[key].addTo(myMap.map);
-						var htmlObject = buttons1[key].getContainer();
-						var a = document.getElementById('buttonContainer1');
-						function setParent(el, newParent){
-							newParent.appendChild(el);
-						}
-						setParent(htmlObject, a);
-					}
-				}
-
-				var statusFilterButton = L.control.tagFilterButton({
-					data: ['Government', 'Private'],
-					filterOnEveryClick: true,
-					icon: '<i class="mbri-key mbr-iconfont mbr-iconfont-btn"></i>',
-				}).addTo( myMap.map );
-
-				var healthFilterButton = L.control.tagFilterButton({
-					data: ['Deliveries', 'Antenatal', 'Turn Off Health Layer'],
-					filterOnEveryClick: true,
-					icon: '<i class="icon-ocha icon-health"></i>',
-				}).addTo( myMap.map );
-
-				var schoolFilterButton = L.control.tagFilterButton({
-					data: ['Non Formal Schools','Post Primary Schools','Pre-Primary Schools','Primary Schools', 'Secondary Schools', 'Tertiary Educational Institutions', 'Turn Off Education Layer'],
-					filterOnEveryClick: true,
-					icon: '<i class="icon-ocha icon-education"></i>',
-				}).addTo( myMap.map );
-
-				var policeFilterButton = L.control.tagFilterButton({
-					data: ['Police Station','Police Post', 'Turn Off Police Layer'],
-					filterOnEveryClick: true,
-					icon: '<i class="icon-ocha icon-protection"></i>',
-				}).addTo( myMap.map );
-
-				
-				jQuery('.easy-button-button').click(function() {
-					target = jQuery('.easy-button-button').not(this);
-					target.parent().find('.tag-filter-tags-container').css({
-						'display' : 'none',
-					});
-				});
-				
-				statusFilterButton.enableMCG(myMap.healthClusterGroup);
-				healthFilterButton.enableMCG(myMap.healthClusterGroup);
-				schoolFilterButton.enableMCG(myMap.schoolClusterGroup);
-				policeFilterButton.enableMCG(myMap.policeClusterGroup);
-
-				//				statusFilterButton.enableMCG(schoolClusters);
-				//				statusFilterButton.enableMCG(policeClusters);
-
-
-
-				
-			});
-
+			var map = L.map('d3-map-container', {
+				attributionControl: false,
+				zoomControl: false,
+				maxBounds: [
+					//south west
+					[0.1458,32.4051],
+					//north east
+					[0.4961, 32.7822]
+				]
+			}).setView([0.3233, 32.5625], 12); // default center is overridden by Google Sheet options and points
 		</script>
+
+
+		<!--		<script src="./js/leaflet.js"></script>-->
+		<script src="../../assets/sidebar/js/leaflet-sidebar.js"></script>
+		<!--		<script src="../../assets/web/assets/jquery/jquery.min.js"></script>-->
+		<script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+		<link href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
+		<script src="scripts/queue.v1.min.js"></script>
+		<script src="scripts/d3.v3.min.js"></script>
+		<script src="scripts/leaflet-easy-button.js"></script>
+		<script src="scripts/L.D3SvgOverlay.min.js"></script>
+		<script type="text/javascript" src="google-doc-url.js"></script>
+		<script type="text/javascript" src="scripts/constants.js"></script>
+		<script type="text/javascript" src="scripts/palette.js"></script>
+		<script type="text/javascript" src="scripts/polylabel.js"></script>
+		<script type="text/javascript" src="scripts/procsv.js"></script>
+		<script type="text/javascript" src="scripts/map.js"></script>
+
+
+
 	</body>
+</html>
