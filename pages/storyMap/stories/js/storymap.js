@@ -5012,10 +5012,10 @@ VCO.MediaType = function(m) {
 				cls: 		VCO.Media.Website
 			},
 			{
-				type: 		"End",
+				type: 		"",
 				name: 		"",
 				match_str: 	"",
-				cls: 		VCO.Media.End
+				cls: 		VCO.Media
 			}
 		];
 	
