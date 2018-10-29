@@ -143,7 +143,7 @@
 				},
 				"text": {
 					"headline": 			"Ask CHL",
-					"text": 				"If you know a child or an adolescent in this situation or in other dangerous situation, please advise them to call the child helpline, or contact the helpline yourself.<br><br> <a href='../../index.html' class='btn btn-primary display-4'>Select another story</a>"
+					"text": 				"If you know a child or an adolescent in this situation or in other dangerous situation, please advise them to call the child helpline, or contact the helpline yourself.<br><br> <a href='../index.html' class='btn btn-primary display-4'>Select another story</a>"
 				},
 				"media": {
 					"url": 				"css/images/End.png",
