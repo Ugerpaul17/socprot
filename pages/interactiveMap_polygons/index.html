@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+		<link rel="stylesheet" href="css/leaflet.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7.2/leaflet.ie.css" /><![endif]-->
 
 
@@ -47,17 +47,15 @@
 
 			<!-- Tab panes -->
 			<div class="sidebar-content">
-				<div class="sidebar-pane" id="home">
+				<div class="sidebar-pane" id="home" style="overflow-x: auto !important">
 					<h4 class="sidebar-header" style="font-size: 0.8em; text-align: left;">Click on a parish to compare it against the district average
 						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
 					</h4>
 					<p><strong>Selected Parish: </strong><span id='parish'></span>
 						<br>
 						<strong>Selected SubCounty: </strong><span id='subCounty'></span></p>
-					<h4 style="font-size: 0.8em; text-align: center;">Spider Chart
-					</h4>
-
-
+					<div id="statistics-list" class="custom-list" style="top:10px;"></div>
+					<div id="statistics-legend" class="custom-list" style = "overflow: hidden; height: 50px;"></div>
 				</div>
 
 
@@ -70,7 +68,7 @@
 
 		<div id="map" class="sidebar-map"></div>
 
-		<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+		<script src="js/leaflet.js"></script>
 		<script src="../../assets/sidebar/js/leaflet-sidebar.js"></script>
 		<script src="../../assets/web/assets/jquery/jquery.min.js"></script>
 		<script src="js/d3.v3.min.js"></script>
@@ -96,29 +94,14 @@
 				var sidebar = L.control.sidebar('sidebar-left');
 				storkmap.map.addControl(sidebar);
 
-				sidebar.open('home')
-				;
-				//				var sidebarDiv = document.getElementById('sidebar-left');
-				//
-				//				toggleSidebar = function() {
-				//					if (hasClass(sidebarDiv,'collapsed')) {
-				//						sidebar.open();
-				//					} else {
-				//						sidebar.close();
-				//					}
-				//				}
-				//
-				//				function hasClass(element, cls) {
-				//					return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
-				//				}
-				//
-				//				sidebar.toggleSidebar;
+				sidebar.open('home');
+
 
 				$.getJSON('./data/kampalaParishes_.geojson', function(data){
 					function style(feature) {
 						return {
 							color: '#ff5500',
-							fillOpacity: 0,
+							fillOpacity: 0.5,
 							opacity: 1,
 							weight: 0.8
 						};
@@ -126,10 +109,13 @@
 
 
 					var datalayer;
+					var tooltip = d3.select(storkmap.map.getPanes().overlayPane)
+					.append("div")
+					.attr("class", "d3-tooltip d3-hide");
 					function selectedStyle(feature) {
 						return {
 							color: '#00c5ff',
-							fillOpacity: 0,
+							fillOpacity: 0.5,
 							zIndex:10000,
 							opacity: 1,
 							weight: 2
@@ -141,15 +127,6 @@
 						var popup = L.popup()
 						.setContent("<b>" + feature.properties.SNAME2014 + " Division</b></br>" +
 									"<b>Parish: </b>" + feature.properties.PNAME2014 + "</br>");
-
-
-						featureLayer.on('mouseover', function (e) {
-							//							this.openPopup();
-						});
-
-						featureLayer.on('mouseout', function (e) {
-							//							storkmap.map.closePopup();
-						});
 
 
 						featureLayer.on({
@@ -165,7 +142,6 @@
 							}
 						});
 
-						featureLayer.bindPopup(popup);
 					}
 
 
@@ -178,140 +154,108 @@
 
 					}).on('click', function (d) {
 
-						d3.select('#home').selectAll('svg').remove();
-
-						console.log(data);
-						console.log(selected);
-
-
-
 						for (var i = 0; i < data.features.length; i++) {
 							if(selected[0] === data.features[i].properties.PNAME2014) {
 								document.getElementById('parish').innerHTML = data.features[i].properties.PNAME2014;
 								document.getElementById('subCounty').innerHTML = data.features[i].properties.SNAME2014;
 
+								var ugChart = d3.select(".statUG").selectAll("rect");
+								ugChart.attr("height", "20");
 
-								var dProtection = [
-									[
-										{axis:"% HH heads 10-17years",value: data.features[i].properties["%HhH(10-17"] / 100},
-										{axis:"%of HHs that live in mizigo",value: data.features[i].properties["Tenement (Muzigo) Percent"] / 100}, 
-										{axis:"%of HHs that live in earth floor housing",value: data.features[i].properties["Floor Earth Percent"] / 100},
-										{axis:"Poverty",value: data.features[i].properties["HH poverty"] / 100},
-										{axis:"%of HHs that live in mud wall housing",value: data.features[i].properties["Wall Mud and pole Percent"] / 100}
-									],[
+								d3.selectAll(".districtLegend").remove();
 
-										{axis:"% HH heads 10-17years",value:0.00483333333},
-										{axis:"%of HHs that live in mizigo",value:0.4449791667}, 
-										{axis:"%of HHs that live in earth floor housing",value:0.03577083333},{axis:"Poverty",value:0.0094},
-										{axis:"%of HHs that live in mud wall housing",value:0.02973958333}
-									]
-								]
-
-								var dHealth = [
-									[
-										{axis:"% HH heads 10-17years",value: data.features[i].properties["%HhH(10-17"] / 100},
-										{axis:"%of HHs that live in mizigo",value: data.features[i].properties["Tenement (Muzigo) Percent"] / 100}, 
-										{axis:"%of HHs that live in earth floor housing",value: data.features[i].properties["Floor Earth Percent"] / 100},
-										{axis:"Poverty",value: data.features[i].properties["HH poverty"]},
-										{axis:"%of HHs that live in mud wall housing",value: data.features[i].properties["Wall Mud and pole Percent"] / 100}
-									],[
-
-										{axis:"% HH heads 10-17years",value:0.483333333},
-										{axis:"%of HHs that live in mizigo",value:0.4449791667}, 
-										{axis:"%of HHs that live in earth floor housing",value:0.03577083333},{axis:"Poverty",value:0.0094},
-										{axis:"%of HHs that live in mud wall housing",value:0.02973958333}
-									]
-								]
+								var legend = d3.select('#statistics-legend').select("svg");
+								var rectangles = legend.select('g');
 
 
-								var dWash = [
-									[
-										{axis:"% HH heads 10-17years",value: data.features[i].properties["%HhH(10-17"] / 100},
-										{axis:"%of HHs that live in mizigo",value: data.features[i].properties["Tenement (Muzigo) Percent"] / 100}, 
-										{axis:"%of HHs that live in earth floor housing",value: data.features[i].properties["Floor Earth Percent"] / 100},
-										{axis:"Poverty",value: data.features[i].properties["HH poverty"]}
-									],[
-
-										{axis:"% HH heads 10-17years",value:0.483333333},
-										{axis:"%of HHs that live in mizigo",value:0.4449791667}, 
-										{axis:"%of HHs that live in earth floor housing",value:0.03577083333},{axis:"Poverty",value:0.0094}
-									]
-								]
-
-								var w = +(d3.select("#home").style('width').slice(0, -2)) /2.5,
-									h = +(d3.select("#home").style('width').slice(0, -2)) /2.5;
+								rectangles.append("rect")
+									.attr("transform", "translate(0,25)")
+									.attr("class", "districtLegend")
+									.attr("width", "100px")
+									.attr("height", "20px")
+									.attr("fill", "#41b6c4");
+								rectangles.append("text")
+									.attr("class", "districtLegend")
+									.attr("x", 6.33)
+									.attr("y",  35)
+									.attr("dy", ".35em")
+									.style('fill', 'white')
+									.text("Parish Averages");
 
 
-								var mycfg = {
-									w: w,
-									h: h,
-									maxValue: 1,
-									levels: 6,
-								}
 
 
-								RadarChart.draw("#home", dProtection, mycfg);
-								RadarChart.draw("#home", dHealth, mycfg);
-								RadarChart.draw("#home", dWash, mycfg);
 
-								console.log(dProtection);
-								console.log(dWash);
-								console.log(dHealth);
+								d3.csv('./data/dummydata2.csv', function (error, list) {
+									var header = [];
+									var values = [];
+									for (var i = 0; i < data.features.length; i++) {
+										if(selected[0] === data.features[i].properties.PNAME2014) {
+											for (var k = 0; k < list.length; k++) {
+												header.push(list[k].Column);
+												values.push(data.features[i].properties[list[k].Column]);
+											}
+										}
+									}
+									d3.select(".statDist").remove();
+									var chartDist = [header].concat([values]);
+									//									console.log(chartDist);
+									var valueLabelWidth = 10; // space reserved for value labels (right)
+									var barHeight = 25; // height of one bar
+									var barLabelWidth = 200; // space reserved for bar labels
+									// var barLabelPadding = 5; // padding between bar and bar labels (left)
+									var gridLabelHeight = 18; // space reserved for gridline labels
+									var gridChartOffset = 3; // space between start of grid and first bar
+									var maxBarWidth = 150; // width of the bar with the max value
 
-								////////////////////////////////////////////
-								/////////// Initiate legend ////////////////
-								////////////////////////////////////////////
+									// accessor functions
+									//             var barLabel = function(d) {  return d; };
+									var barValue = function(d) { return parseFloat(d); };
 
-								var svg = d3.select('#body')
-								.selectAll('svg')
-								.append('svg')
-								.attr("width", w)
-								.attr("height", h)
-
-								//Create the title for the legend
-								var text = svg.append("text")
-								.attr("class", "title")
-								.attr('transform', 'translate(90,0)') 
-								.attr("x", w - 70)
-								.attr("y", 10)
-								.attr("font-size", "12px")
-								.attr("fill", "#404040")
-								.text("What % of owners use a specific service in a week");
-
-								//Initiate Legend	
-								var legend = svg.append("g")
-								.attr("class", "legend")
-								.attr("height", 100)
-								.attr("width", 200)
-								.attr('transform', 'translate(90,20)') 
-								;
-								//Create colour squares
-								legend.selectAll('rect')
-									.data(LegendOptions)
-									.enter()
-									.append("rect")
-									.attr("x", w - 65)
-									.attr("y", function(d, i){ return i * 20;})
-									.attr("width", 10)
-									.attr("height", 10)
-									.style("fill", function(d, i){ return colorscale(i);})
-								;
-								//Create text next to squares
-								legend.selectAll('text')
-									.data(LegendOptions)
-									.enter()
-									.append("text")
-									.attr("x", w - 52)
-									.attr("y", function(d, i){ return i * 20 + 9;})
-									.attr("font-size", "11px")
-									.attr("fill", "#737373")
-									.text(function(d) { return d; })
-								;
-
-
+									// scales
+									var yScale = d3.scale.ordinal().domain(d3.range(0, chartDist[0].length)).rangeBands([0, chartDist[0].length * barHeight]);
+									var y = function(d, i) { return yScale(i) * 1.5; };
+									var x = d3.scale.linear().domain([0, 100/*d3.max(data, barValue)*/]).range([0, maxBarWidth]);
+									// svg container element
+									var chart = d3.select('#statistics-list').select("svg");
+									// bars
+									var barsContainer = chart.append('g')
+									.attr("class", "statDist")
+									.attr('transform', 'translate(' + barLabelWidth + ',' + (gridLabelHeight + gridChartOffset +10) + ')');
+									barsContainer.selectAll("rect").data(chartDist[1]).enter().append("rect")
+										.attr('y', y)
+										.attr('height', yScale.rangeBand() / 2 * 0.8)
+										.attr('width', function(d) { return x(barValue(d)); })
+										.attr('stroke', 'white')
+										.attr('fill', '#41b6c4');
+									// bar value labels
+									barsContainer.selectAll("text").data(chartDist[1]).enter().append("text")
+										.attr("x", function(d) { return x(barValue(d)); })
+										.attr("y", yText)
+										.attr("dx", 3) // padding-left
+										.attr("dy", "-.3em") // vertical-align: middle
+										.attr("text-anchor", "start") // text-align: right
+										.attr("fill", '#41b6c4')
+										.attr("stroke", "none")
+										.text(function(d) { return d3.round(barValue(d), 2); });
+								});
 							}
 						}
-					});
+					})
+						.on("mousemove", function (d) {
+
+						var popup = L.popup()
+						.setLatLng(d.latlng) //(assuming e.latlng returns the coordinates of the event)
+						.setContent('<p><b>' + d.layer.feature.properties.PNAME2014 + '</b><span> Parish</span></p>')
+						.openOn(storkmap.map);
+
+					})
+					//        .on("mouseover", function (d) {
+					//        tooltip.classed("d3-hide", false);
+					//        })
+					//        .on("mouseout", function (d) {
+					//          tooltip.classed("d3-hide", true);
+					//        });
 
 
 
@@ -320,123 +264,102 @@
 
 				});
 
-				var w = +(d3.select("#home").style('width').slice(0, -2)) /2.5,
-					h = +(d3.select("#home").style('width').slice(0, -2)) /2.5;
+				var header = [];
+				var values = [];
+
+				var chartData = [["%HH Head(10-17)", "%Distance to Public Health Facility (< 5kms)", "%Distance to Private Health Facility (< 5kms)", "%HH - No Kitchen", "%HH - Make shift Bathroom", "%HH - No bathroom", "%HH - No Toilet facility (bush or polythene bags or bucket)", "%HH - Public taps", "%Distance to Public Primary school (< 5kms)", "%HH - Tenement (Muzigo)","%HH - Floor (Earth)", "%HH - Floor (Rammed earth)","%HH - Wall (Mud and pole)", "HH poverty"],
+								 ["0.4","90.2", "94.8", "37.8", "1.5", "0.7", "0.2", "35", "91.7", "52.9", "2.4", "1.5", "2.4", "0.37"]];
+
+				//[headerList].concat([values]);
+
+				var valueLabelWidth = 20; // space reserved for value labels (right)
+				var barHeight = 25; // height of one bar
+				var barLabelWidth = 200; // space reserved for bar labels
+				var barLabelPadding = 15; // padding between bar and bar labels (left)
+				var gridLabelHeight = 18; // space reserved for gridline labels
+				var gridChartOffset = 3; // space between start of grid and first bar
+				var maxBarWidth = 175; // width of the bar with the max value
+
+				// accessor functions
+				var barLabel = function(d) {  return d; };
+				var barValue = function(d) { return parseFloat(d); };
+
+				// scales
+				var yScale = d3.scale.ordinal().domain(d3.range(0, chartData[0].length)).rangeBands([0, chartData[0].length * barHeight]);
+				var y = function(d, i) { return yScale(i) * 1.5; };
+				var yText = function(d, i) { return y(d, i) + yScale.rangeBand() / 2; };
+				var x = d3.scale.linear().domain([0, 100/*d3.max(data, barValue)*/]).range([0, maxBarWidth]);
+				// svg container element
+				var chart = d3.select('#statistics-list').append("svg")
+				.attr('width', maxBarWidth + barLabelWidth + valueLabelWidth)
+				.attr('height', (gridLabelHeight + 20 + gridChartOffset + chartData[0].length * barHeight) * 1.5);
+				// grid line labels
+				var gridContainer = chart.append('g')
+				.attr('transform', 'translate(' + barLabelWidth + ',' + gridLabelHeight + ')');
+				gridContainer.selectAll("text").data(x.ticks(10)).enter().append("text")
+					.attr("x", x)
+					.attr("dy", -3)
+					.attr("text-anchor", "middle")
+					.text(function(d, i) { if( i === 1 || i === 3 || i === 5 || i === 7 || i === 9 ) { return } else return d});
+				// vertical grid lines
+				gridContainer.selectAll("line").data(x.ticks(10)).enter().append("line")
+					.attr("x1", x)
+					.attr("x2", x)
+					.attr("y1", 0)
+					.attr("y2", (yScale.rangeExtent()[1] + gridChartOffset) * 1.5)
+					.style("stroke", "#ccc");
+				// bar labels
+				var labelsContainer = chart.append('g')
+				.attr('transform', 'translate(' + (barLabelWidth - barLabelPadding) + ',' + (gridLabelHeight + gridChartOffset) + ')');
+				labelsContainer.selectAll('text').data(chartData[0]).enter().append('text')
+					.attr('y', yText)
+					.attr('stroke', 'none')
+					.attr('fill', 'black')
+					.attr("dy", "0em") // vertical-align: middle
+					.attr('text-anchor', 'end')
+					.text(barLabel);
+				// bars
+				var barsContainer = chart.append('g')
+				.attr("class", "statUG")
+				.attr('transform', 'translate(' + barLabelWidth + ',' + (gridLabelHeight + gridChartOffset) + ')');
+				barsContainer.selectAll("rect").data(chartData[1]).enter().append("rect")
+					.attr('y', y)
+					.attr('height', yScale.rangeBand() - 5)
+					.attr('width', function(d) { return x(barValue(d)); })
+					.attr('stroke', 'white')
+					.attr('fill', '#E3784A');
+				// bar value labels
+				barsContainer.selectAll("text").data(chartData[1]).enter().append("text")
+					.attr("x", function(d) { return x(barValue(d)); })
+					.attr("y", yText)
+					.attr("dx", 3) // padding-left
+					.attr("dy", "-.3em") // vertical-align: middle
+					.attr("text-anchor", "start") // text-align: right
+					.attr("fill", "#E3784A")
+					.attr("stroke", "none")
+					.text(function(d) { return d3.round(barValue(d), 2); });
+				// start line
+				barsContainer.append("line")
+					.attr("y1", -gridChartOffset)
+					.attr("y2", (yScale.rangeExtent()[1] + gridChartOffset) * 1.5)
+					.style("stroke", "#000");
+
+				var legend = d3.select('#statistics-legend').append("svg")
+				.attr("width", 100)
+				.attr("height", 45);
+				var rectangles = legend.append('g');
 
 
-				var colorscale = d3.scale.category10();
-
-				//Legend titles
-				var LegendOptions = ['Smartphone','Tablet'];
-
-
-				var dProtection = [
-					[
-						{axis:"% HH heads 10-17years",value:0.00483333333},
-						{axis:"%of HHs that live in mizigo",value:0.4449791667}, 
-						{axis:"%of HHs that live in earth floor housing",value:0.03577083333},{axis:"Poverty",value:0.0094},
-						{axis:"%of HHs that live in mud wall housing",value:0.02973958333}
-					],[
-
-						{axis:"% HH heads 10-17years",value:0.00483333333},
-						{axis:"%of HHs that live in mizigo",value:0.4449791667}, 
-						{axis:"%of HHs that live in earth floor housing",value:0.03577083333},{axis:"Poverty",value:0.0094},
-						{axis:"%of HHs that live in mud wall housing",value:0.02973958333}
-					]
-				]
-
-				var dHealth = [
-					[
-						{axis:"% HH heads 10-17years",value:0.483333333},
-						{axis:"%of HHs that live in mizigo",value:0.4449791667}, 
-						{axis:"%of HHs that live in earth floor housing",value:0.03577083333},{axis:"Poverty",value:0.0094},
-						{axis:"%of HHs that live in mud wall housing",value:0.02973958333}
-					],[
-
-						{axis:"% HH heads 10-17years",value:0.483333333},
-						{axis:"%of HHs that live in mizigo",value:0.4449791667}, 
-						{axis:"%of HHs that live in earth floor housing",value:0.03577083333},{axis:"Poverty",value:0.0094},
-						{axis:"%of HHs that live in mud wall housing",value:0.02973958333}
-					]
-				]
-
-
-				var dWash = [
-					[
-						{axis:"% HH heads 10-17years",value:0.483333333},
-						{axis:"%of HHs that live in mizigo",value:0.4449791667}, 
-						{axis:"%of HHs that live in earth floor housing",value:0.03577083333},
-						{axis:"Poverty",value:0.0094}
-					],[
-
-						{axis:"% HH heads 10-17years",value:0.483333333},
-						{axis:"%of HHs that live in mizigo",value:0.4449791667}, 
-						{axis:"%of HHs that live in earth floor housing",value:0.03577083333},
-						{axis:"Poverty",value:0.0094}
-					]
-				]
-
-				var mycfg = {
-					w: w,
-					h: h,
-					maxValue: 1,
-					levels: 6,
-				}
-
-				//Call function to draw the Radar chart
-				//Will expect that data is in %'s
-				RadarChart.draw("#home", dProtection, mycfg);
-				RadarChart.draw("#home", dHealth, mycfg);
-				RadarChart.draw("#home", dWash, mycfg);
-
-				////////////////////////////////////////////
-				/////////// Initiate legend ////////////////
-				////////////////////////////////////////////
-
-				var svg = d3.select('#body')
-				.selectAll('svg')
-				.append('svg')
-				.attr("width", w)
-				.attr("height", h)
-
-				//Create the title for the legend
-				var text = svg.append("text")
-				.attr("class", "title")
-				.attr('transform', 'translate(90,0)') 
-				.attr("x", w + 70)
-				.attr("y", 10)
-				.attr("font-size", "12px")
-				.attr("fill", "#404040")
-				.text("What % of owners use a specific service in a week");
-
-				//Initiate Legend	
-				var legend = svg.append("g")
-				.attr("class", "legend")
-				.attr("height", 100)
-				.attr("width", 200)
-				.attr('transform', 'translate(90,20)') 
-				;
-				//Create colour squares
-				legend.selectAll('rect')
-					.data(LegendOptions)
-					.enter()
-					.append("rect")
-					.attr("x", w - 65)
-					.attr("y", function(d, i){ return i * 20;})
-					.attr("width", 10)
-					.attr("height", 10)
-					.style("fill", function(d, i){ return colorscale(i);})
-				;
-				//Create text next to squares
-				legend.selectAll('text')
-					.data(LegendOptions)
-					.enter()
-					.append("text")
-					.attr("x", w - 52)
-					.attr("y", function(d, i){ return i * 20 + 9;})
-					.attr("font-size", "11px")
-					.attr("fill", "#737373")
-					.text(function(d) { return d; });
+				rectangles.append("rect")
+					.attr("width", "100px")
+					.attr("height", "20px")
+					.attr("fill", "#E3784A");
+				rectangles.append("text")
+					.attr("x", 3.01)
+					.attr("y",  10)
+					.attr("dy", ".35em")
+					.style('fill', 'white')
+					.text("District Averages");
 			};
 
 			function queryOverpass() {
