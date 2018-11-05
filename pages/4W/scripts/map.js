@@ -67,7 +67,6 @@ $(window).on('load', function() {
 	   * column in the spreadsheet.
 	   */
 	function determineLayers(points) {
-
 		;
 		(function (d3, $, queue, window) {
 			'use strict';
@@ -1232,7 +1231,7 @@ $(window).on('load', function() {
 	   */
 	function changeAttribution() {
 		var attributionHTML = $('.leaflet-control-attribution')[0].innerHTML;
-		var credit = 'View <a href="' + googleDocURL + '" target="_blank">data</a>';
+		var credit = 'View <a href="' + googleDocURL + '" target="_blank">data</a> sourced by <a href="https://www.kcca.go.ug/" target="_blank">KCCA</a>,<a href="https://www.unicef.org/uganda/" target="_blank">UNICEF</a>&<a href="http://www.reach-initiative.org/" target="_blank">AGORA</a>';
 		var name = getSetting('_authorName');
 		var url = getSetting('_authorURL');
 
