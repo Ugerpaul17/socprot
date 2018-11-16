@@ -13,6 +13,8 @@
 		<link rel="stylesheet" href="../../assets/sidebar/css/leaflet-sidebar.css">
 		<link rel="stylesheet" href="css/leaflet-tag-filter-button.css" />
 		<link rel="stylesheet" href="../../assets/web/assets/mobirise-icons/mobirise-icons.css">
+		<link rel="stylesheet" href="../../assets/mobirise/css/mbr-additional.css">
+		<link rel="stylesheet" href="css/map.css">
 
 		<style>
 			body {
@@ -139,7 +141,9 @@
 								e.target.bringToFront();
 
 								//L.DomEvent.stopPropagation(e); // stop click event from being propagated further
-							}
+							},
+							mouseover: highlightFeature,
+							mouseout: resetHighlight
 						});
 
 					}
@@ -241,21 +245,47 @@
 								});
 							}
 						}
-					})
-						.on("mousemove", function (d) {
+					});
+					var info = L.control();
 
-						var popup = L.popup()
-						.setLatLng(d.latlng) //(assuming e.latlng returns the coordinates of the event)
-						.setContent('<p><b>' + d.layer.feature.properties.PNAME2014 + '</b><span> Parish</span></p>')
-						.openOn(storkmap.map);
+					info.onAdd = function (map) {
+						this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+						this.update();
+						return this._div;
+					};
 
-					})
-					//        .on("mouseover", function (d) {
-					//        tooltip.classed("d3-hide", false);
-					//        })
-					//        .on("mouseout", function (d) {
-					//          tooltip.classed("d3-hide", true);
-					//        });
+					// method that we will use to update the control based on feature properties passed
+					info.update = function (props) {
+						console.log(props);
+						this._div.innerHTML = (props ? 'Sub County: <b>' + props.SNAME2014 + '</b><br/>' + 
+																		'Parish: <b>' + props.PNAME2014 + '</b>'
+																		: 'Hover over a parish');
+					};
+
+					info.addTo(storkmap.map);
+
+
+					function highlightFeature(e) {
+						var layer = e.target;
+
+						layer.setStyle({
+							weight: 5,
+							color: '#666',
+							dashArray: '',
+							fillOpacity: 0.7
+						});
+
+						if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+							layer.bringToFront();
+						}
+						info.update(layer.feature.properties);
+					}
+
+
+					function resetHighlight(e) {
+						datalayer.resetStyle(e.target);
+						info.update();
+					}
 
 
 

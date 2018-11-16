@@ -111,11 +111,11 @@ p.custom-count {
     background: rgb(245, 245, 245);
     position: relative;
 }
-
+/*
 #d3-map-refresh {
 
     position: relative;
-/*    left: 25% !important;*/
+/*    left: 25% !important;
 	font-family: Roboto, sans-serif;
 	font-weight: 600;
 	width: 30%;
@@ -132,9 +132,9 @@ p.custom-count {
 	    
     background: #13988E;
     cursor: pointer;
-/*	opacity:.7;*/
+/*	opacity:.7;
 	color: white;
-}
+}*/
 
 #d3-map-make-pdf {
     position: absolute;
@@ -234,11 +234,6 @@ div.d3-tooltip p {
     cursor: pointer;
 }
 
-.custom-list svg {
-    float: right;
-	border: 2px solid #172031;
-	border-radius: 5px;
-}
 
 .collapsed {
 /*    display: none;	*/
@@ -249,6 +244,7 @@ div.d3-tooltip p {
 }
 
 .d3-active {
+	color: white;
 }
 
 .list-container {
@@ -597,26 +593,37 @@ p.custom-list-header .glyphicon {
     display: none; /* Hidden by default */
 }
 
-.district-list-Kampala_Health_Facilities {
-	color: darkred !important;
+.sidebar-tabs > li.active, .sidebar-tabs > ul > li.active {
+	background-color: white !important;
+	border: 3px solid grey;
+	border-radius: 2px;
+	width:80%
 }
 
-.district-list-Police {
-	color: darkblue!important;
+#d3-map-refresh-health:hover, #healthOn:hover {
+  background-color: #8b0000;
+}
+#healthOn.active {
+  background: #8b0000;
 }
 
-.district-list-Schools {
-	color: green!important;
+#d3-map-refresh-education:hover, #educationOn:hover {
+  background-color: #008000;
+}
+#educationOn.active {
+  background: #008000;
 }
 
-.district-list-Water {
-	color: dodgerblue!important;
+#d3-map-refresh-protection:hover, #protectionOn:hover {
+  background-color: #00008b;
+}
+#protectionOn.active {
+  background: #00008b;
 }
 
-#buttonContainer1 > .leaflet-control, #slums, #parishes {
-	width: 100% !important;
+#d3-map-refresh-water:hover, #waterOn:hover {
+  background-color: #1e90ff;
 }
-
- {
-	
+#waterOn.active {
+  background: #1e90ff;
 }

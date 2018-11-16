@@ -87,7 +87,7 @@ $(window).on('load', function() {
 			var dataset;
 			queue()
 			// .defer(d3.json, "./UgandaDistricts.geojson")//DNAME_06
-				.defer(d3.json, "./data/UgandaDistricts.highlighted_.geojson")
+				.defer(d3.json, "./data/povertyAndPopulationDensity.geojson")
 				.defer(d3.csv, "./data/mapValues.csv")
 				.defer(d3.csv, "./data/dataset2.csv")
 				.await(ready);
@@ -158,9 +158,6 @@ $(window).on('load', function() {
 				ugandaGeoJson.features.map(function (d) {
 					d.properties.DNAME_06 = d.properties.dist;
 				});
-
-				console.log(points);
-				console.log(relationship);
 
 				$(".custom-list-header").click(function () {
 					$(".custom-list-header").siblings(".custom-list").addClass('collapsed');
@@ -505,7 +502,6 @@ $(window).on('load', function() {
 						.attr("z-index", "600")
 						.attr("style", "pointer-events:all!important")
 						.style("cursor", "pointer")
-						.style("stroke", "#000")
 						.each(function (d) {
 						d.properties.centroid = projection(d3.geo.centroid(d));
 						datasetNest.map(function (c) {
@@ -535,6 +531,9 @@ $(window).on('load', function() {
 								color.domain(domain);
 							}
 						});
+					})
+					.style("stroke", function (d) {
+						return d.properties._agencyList ? "#000" : "#00000000"; //#3CB371
 					})
 						.on("click", function (d) {
 						var svg = d3.select(this.parentNode.parentNode.parentNode);
@@ -582,7 +581,7 @@ $(window).on('load', function() {
 						});
 					})
 						.style("fill", function (d) {
-						return d.properties._agencyList ? color(d.properties._agencyList.length) : "#00000000"; //#3CB371
+						return d.properties._agencyList ? "#00000000" : "#00000000"; //#3CB371
 					})
 						.attr("class", function (d) {
 						return "district district-" + d.properties.DNAME_06.replaceAll('[ ]', "_");
@@ -606,7 +605,7 @@ $(window).on('load', function() {
 					//
 					//			})
 
-					ugandaPath.attr('stroke-width', 1 / proj.scale)
+					ugandaPath.attr('stroke-width', proj.scale*1)
 						.each(function (d) {
 						d.properties.centroid = projection(d3.geo.centroid(d)); // ugandaCentroid = d.properties.centroid;
 						datasetNest.map(function (c) {
@@ -636,8 +635,11 @@ $(window).on('load', function() {
 							}
 						});
 					})
+					.style("stroke", function (d) {
+						return d.properties._agencyList ? "#000" : "#00000000"; //#3CB371
+					})
 						.style("fill", function (d) {
-						return d.properties._agencyList ? color(d.properties._agencyList.length) : "#00000000"; //#3CB371
+						return d.properties._agencyList ? "#00000000" : "#00000000"; //#3CB371
 					})
 						.attr("class", function (d) {
 						return "district district-" + d.properties.DNAME_06.replaceAll('[ ]', "_");
@@ -693,9 +695,12 @@ $(window).on('load', function() {
 							}
 						})
 					})
+					.style("stroke", function (d) {
+						return d.properties._agencyList ? "#000" : "#00000000"; //#3CB371
+					})
 						.style("fill", function (d) {
 						if(d.properties._agencyList){
-							return d.properties._agencyList.length ? color(d.properties._agencyList.length) : "#00000000"; //#3CB371
+							return d.properties._agencyList.length ? "#00000000" : "#00000000"; //#3CB371
 						}
 						return "#00000000";
 					});
@@ -847,8 +852,11 @@ $(window).on('load', function() {
 							}
 						})
 					})
+					.style("stroke", function (d) {
+						return d.properties._numberOfAgencies ? "#000" : "#00000000"; //#3CB371
+					})
 						.style("fill", function (d) {
-						return d.properties._numberOfAgencies ? color(d.properties._numberOfAgencies) : "#00000000"; //#3CB371
+						return d.properties._numberOfAgencies ? "#00000000" : "#00000000"; //#3CB371
 					});
 
 					var selectedDatasetNest = d3.nest()
@@ -1114,7 +1122,7 @@ $(window).on('load', function() {
 						});
 						_agencyList
 							.html(function(d) {
-							return "<a>" + d.key + "</a>"
+							return d.key
 						})
 						_agencyList.exit().remove();
 					}
@@ -1170,6 +1178,145 @@ $(window).on('load', function() {
 
 				}
 
+				map.createPane("lowerlayers");
+
+				map.getPane('lowerlayers').style.zIndex = 300;
+
+				var datalayer;
+				var datalayer1;
+
+				$.getJSON('data/povertyAndPopulationDensity.geojson', function(data){
+					function getColorPoverty(d) {
+						return d > 5.1  ? 'rgb(23,78,105)' :
+						d > 3.1  ? 'rgb(46,95,120)' :
+						d > 1.6  ? 'rgb(115,148,165)' :
+						d > 0.6   ? 'rgb(162,184,195)' :
+						'rgb(231,237,240)';
+					}
+
+					function getColorPopDensity(d) {
+						return d > 28929.79  ? 'rgb(23,78,105)' :
+						d > 21772.67  ? 'rgb(46,95,120)' :
+						d > 14615.54  ? 'rgb(115,148,165)' :
+						d > 7458.42   ? 'rgb(162,184,195)' :
+						'rgb(231,237,240)';
+					}
+
+					function stylePoverty(feature) {
+						return {
+							color: getColorPoverty(feature.properties.povertyHH),
+							fillOpacity: 0.6,
+							pane: "lowerlayers",
+							weight: 0.2
+						};
+					}
+					function stylePopDensity(feature) {
+						return {
+//							MK
+,color: getColorPopDensity(feature.properties.populationDensity),02
+							fillOpacity: 0.6,
+							pane: "lowerlayers",
+							weight: 0.2
+						};
+					}
+					var selected;
+					function parishOnEachFeature(feature, featureLayer){
+
+						var popup = L.popup()
+						.setContent("<b>" + feature.properties.s + " Division</b></br>" +
+									"<b>Parish: </b>" + feature.properties.pname + "</br>");
+
+
+						featureLayer.on({
+							click: function(e) {
+								datalayer.setStyle(style());
+								selected = [];
+								selected.push(e.target.feature.properties.pname);
+								e.target.feature.properties.selected = true;
+								e.target.setStyle(selectedStyle());
+								e.target.bringToFront();
+							}
+						});
+
+						//						featureLayer.bindPopup(popup);
+					}
+					datalayer = L.geoJson(data, {
+						style: stylePoverty,
+						//						onEachFeature: parishOnEachFeature
+
+					}).addTo(map);
+					datalayer1 = L.geoJson(data, {
+						style: stylePopDensity,
+						//						onEachFeature: parishOnEachFeature
+
+					});
+				
+
+					var overlaymaps = {
+						"Household Poverty" : datalayer,
+						"Population Density" : datalayer1
+					}
+
+					L.control.layers(overlaymaps, null, {autoZIndex: false,collapsed: true, position: 'topleft'}).addTo(map);
+					
+					var layerRemover = L.control({position: 'topleft'});
+
+					layerRemover.onAdd = function (map) {
+
+    			var div = L.DomUtil.create('div', '');
+        		div.innerHTML = '<p class="nav nav-tabs" role="tablist">' +
+							'<a class="nav-item"><a id="removeLayers" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" >Remove Layers</a></a>' +
+						'</p>'
+
+    			return div;
+					};
+
+				layerRemover.addTo(map);
+					
+					
+					var removeLayers = d3.select("#removeLayers");
+					
+					removeLayers.on('click', function(){
+						map.removeLayer(datalayer);
+						map.removeLayer(datalayer1);
+					})
+					
+
+				});
+				
+				
+				var populationLegend = L.control({position: 'bottomright'});
+				var populationChangeLegend = L.control({position: 'bottomright'});
+
+				populationLegend.onAdd = function (map) {
+					var div = L.DomUtil.create('div', 'info legend');
+    			div.innerHTML +=
+    			'<img src="images/povertyLegend.jpeg" alt="legend" width="302" height="215">';
+				return div;
+				};
+
+				populationChangeLegend.onAdd = function (map) {
+					var div = L.DomUtil.create('div', 'info legend');
+    						div.innerHTML +=
+    							'<img src="images/popDensityLegend.jpeg" alt="legend" width="396" height="222">';
+							return div;
+				};
+
+				// Add this one (only) for now, as the Population layer is on by default
+				populationLegend.addTo(map);
+
+				map.on('baselayerchange', function (eventLayer) {
+					console.log(eventLayer);
+					// Switch to the Population legend...
+					if (eventLayer.name === 'Household Poverty') {
+						this.removeControl(populationChangeLegend);
+						populationLegend.addTo(this);
+					} else { // Or switch to the Population Change legend...
+						this.removeControl(populationLegend);
+						populationChangeLegend.addTo(this);
+					}
+				});
+				
 				window.addEventListener("resize", function () {
 					var wrapper = d3.select("#d3-map-wrapper");
 					var width = wrapper.node().offsetWidth || 960;
@@ -1231,7 +1378,7 @@ $(window).on('load', function() {
 	   */
 	function changeAttribution() {
 		var attributionHTML = $('.leaflet-control-attribution')[0].innerHTML;
-		var credit = 'View <a href="' + googleDocURL + '" target="_blank">data</a> sourced by <a href="https://www.kcca.go.ug/" target="_blank">KCCA</a>,<a href="https://www.unicef.org/uganda/" target="_blank">UNICEF</a>&<a href="http://www.reach-initiative.org/" target="_blank">AGORA</a>';
+		var credit = 'View <a href="' + googleDocURL + '" target="_blank">data</a> sourced by <a href="https://www.kcca.go.ug/" target="_blank">KCCA</a>,<a href="https://www.unicef.org/uganda/" target="_blank">UNICEF</a>&<a href="http://www.impact-initiatives.org/" target="_blank">AGORA</a>';
 		var name = getSetting('_authorName');
 		var url = getSetting('_authorURL');
 
