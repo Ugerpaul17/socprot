@@ -4907,67 +4907,67 @@ VCO.MediaType = function(m) {
 				type: 		"youtube",
 				name: 		"YouTube", 
 				match_str: 	"Step1",
-				cls: 		VCO.Media.YouTube
+				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"vimeo",
 				name: 		"Vimeo", 
 				match_str: 	"Step2",
-				cls: 		VCO.Media.Vimeo
+				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"dailymotion",
 				name: 		"DailyMotion", 
 				match_str: 	"Step3",
-				cls: 		VCO.Media.DailyMotion
+				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"vine",
 				name: 		"Vine", 
 				match_str: 	"Step4",
-				cls: 		VCO.Media.Vine
+				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"soundcloud",
 				name: 		"SoundCloud", 
 				match_str: 	"Step5",
-				cls: 		VCO.Media.SoundCloud
+				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"twitter",
 				name: 		"Twitter", 
 				match_str: 	"Step6",
-				cls: 		VCO.Media.Twitter
+				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"googlemaps",
 				name: 		"Google Map", 
 				match_str: 	"Step7",
-				cls: 		VCO.Media.Map
+				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"googleplus",
 				name: 		"Google+", 
 				match_str: 	"Step8",
-				cls: 		VCO.Media.GooglePlus
+				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"flickr",
 				name: 		"Flickr", 
 				match_str: 	"Step9",
-				cls: 		VCO.Media.Flickr
+				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"instagram",
 				name: 		"Instagram", 
 				match_str: 	"StepA",
-				cls: 		VCO.Media.Instagram
+				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"profile",
 				name: 		"Profile", 
 				match_str: 	"StepB",
-				cls: 		VCO.Media.Profile
+				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"image",
@@ -4979,37 +4979,37 @@ VCO.MediaType = function(m) {
 				type: 		"googledocs",
 				name: 		"Google Doc",
 				match_str: 	"StepD",
-				cls: 		VCO.Media.GoogleDoc
+				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"wikipedia",
 				name: 		"Wikipedia",
 				match_str: 	"StepE",
-				cls: 		VCO.Media.Wikipedia
+				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"iframe",
 				name: 		"iFrame",
 				match_str: 	"StepF",
-				cls: 		VCO.Media.IFrame
+				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"storify",
 				name: 		"Storify",
 				match_str: 	"StepG",
-				cls: 		VCO.Media.Storify
+				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"blockquote",
 				name: 		"Quote",
 				match_str: 	"StepH",
-				cls: 		VCO.Media.Blockquote
+				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"website",
 				name: 		"Website",
 				match_str: 	"StepI",
-				cls: 		VCO.Media.Website
+				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"",
@@ -15771,16 +15771,16 @@ VCO.Map = VCO.Class.extend({
 			start_at_slide: 	0,
 			map_popup: 			false, 
 			zoom_distance: 		100,
-			calculate_zoom: 	true,  // Allow map to determine best zoom level between markers (recommended)
+			calculate_zoom: 	false,  // Allow map to determine best zoom level between markers (recommended)
 			line_follows_path: 	true,  // Map history path follows default line, if false it will connect previous and current only
 			line_color: 		"#333",
 			line_color_inactive: "#000", 
 			line_weight: 		5,
-			line_opacity: 		0.20,
+			line_opacity: 		0.0,
 			line_dash: 			"5,5",
 			line_join: 			"miter",
-			show_lines: 		true,
-			show_history_line: 	true,
+			show_lines: 		false,
+			show_history_line: 	false,
 			use_custom_markers: false,
 			map_center_offset:  null // takes object {top:0,left:0}
 		};
@@ -17408,17 +17408,17 @@ VCO.StoryMap = VCO.Class.extend({
 			path_gfx: 				"gfx",
 			map_popup: 				false,
 			zoom_distance: 			100,
-			calculate_zoom: 		true,   		// Allow map to determine best zoom level between markers (recommended)
+			calculate_zoom: 		false,   		// Allow map to determine best zoom level between markers (recommended)
 			use_custom_markers: 	false,  		// Allow use of custom map marker icons
 			line_follows_path: 		true,   		// Map history path follows default line, if false it will connect previous and current only
 			line_color: 			"#c34528", //"#DA0000",
 			line_color_inactive: 	"#CCC",
 			line_join: 				"miter",
 			line_weight: 			3,
-			line_opacity: 			0.80,
+			line_opacity: 			0.0,
 			line_dash: 				"5,5",
-			show_lines: 			true,
-			show_history_line: 		true,
+			show_lines: 			false,
+			show_history_line: 		false,
 			api_key_flickr: 		"f2cc870b4d233dd0a5bfe73fd0d64ef0",
 			language:               "en"		
 		};

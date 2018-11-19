@@ -1,0 +1,204 @@
+
+{
+	"storymap":{
+		"test": "test",
+		"slides": [
+			{
+				"type": 					"", 
+
+				"date": 					"1835",
+				"location": {
+					"lat": 				0.3193,
+					"lon": 				32.5953,
+					"name": 				"ANNA",
+					"zoom": 				12,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"Elodie",
+					"text": 				"<p style='text-align:justify;'>Katwe II is one of the city’s poorest neighborhoods, where 77 per cent of the refugee population is from the DRC. (AGORA 2018:  Understanding the Needs of Urban Refugees and Host Communities Residing in Vulnerable Neighborhoods of Kampala). It is located south of the city center of Kampala. At just 16, Elodie is the head of the household. Both her parents were killed before she and her two younger siblings fled from the Democratic Republic of Congo (DRC). As life at the camp on the Ugandan border was very hard, Elodie decided to bring her siblings to Kampala, where they now live in Katwe II. At home in the DRC, Elodie was a senior three student with dreams of becoming a teacher. However, because she must take care of her younger siblings, doesn’t speak very good English and can’t afford basic school materials, she hasn’t been able to continue her education in Uganda. Instead she is learning to make soap and candles on a training Programme provided by a local NGO. At night however, she is going to work at a bar in Kabalagala, where she, in the early hours, work as a servant. In the later hours she works as sex worker. The family lives in a small, dilapidated cubicle-like house, which they rent for 15,000 USh per month. During the rainy seasons, water floods the whole house and, since the front door can easily be pushed open when the children are asleep, the house is unsafe.</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/elodie/Step1.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+            
+            
+			{
+				"uniqueid": 				"",
+				"date": 					"1839",
+				"location": {
+					"lat": 				0.293060,
+					"lon": 				32.580186,
+					"name": 				"11:30 p.m",
+					"zoom": 				17,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"LOCATION 1",
+					"text": 				"<p style='text-align:justify;'>At 6 am, Elodie wakes up and walks to the nearest communal tap to fetch water. It takes her 15 minutes to get there and another 20 minutes to get to the front of the queue. Elodie do not speak the local language, but she sense that the other people in the line are hostile, who is complaining about the foreigners making the queues long. A comment that Elodie often hear is why they don’t go back to their own country. Elodie is terrified but stays in line. (AGORA 2018: Understanding the Needs of Urban Refugees and Host Communities Residing In Vulnerable Neighborhoods of Kampala). Back in the home at 7 am Aminah and Vinnie put away their bedding so the house can be cleaned. Meanwhile Elodie prepares the porridge that she is having for breakfast together with her siblings. The porridge is provided to them by a relief organization, where she sometimes attends vocational training. Before sending the siblings to school, they take a shower in the communal bathroom on the neighborhood that they share with 15 other households. The bathrooms are often used as toilet, which makes it unhygienic and unhealthy. The sanitary conditions are not good in the area, which make diseases common. Elodie always wait to use the toilet at the training organization.</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/elodie/Step2.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+			{
+				"uniqueid": 				"",
+				"date": 					"1851",
+				"location": {
+					"lat": 				0.294268,
+					"lon": 				32.581256,
+					"zoom": 				17,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"LOCATION 2",
+					"text": 				"<p style='text-align:justify;'>Elodie walks her siblings to schools to ensure that they get there safely on Kampala’s busy roads. It takes them 20 minutes to reach the primary school in Taawo, one of the zones in Katwe II. </p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/elodie/Step3.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+
+			{
+				"uniqueid": 				"",
+				"date": 					"1862",
+				"location": {
+					"lat": 				0.298509,
+					"lon": 				32.577025,
+					"zoom": 				17,
+					"line": 				true
+				},
+				"text": {
+					"headline": 			"LOCATION 3",
+					"text": 				"<p style='text-align:justify;'>When they reach the school, Vinnie’s male teacher threatens to send him home for not bringing a new book and pencil. Elodie tries to persuade the teacher to let her brother stay at school. The teacher touches her and suggests that they could settle this issue at his home without anyone knowing about the small issue. Elodie convince the teacher that she will bring a new book and pencil tomorrow, which the teacher finally agrees on and let Vinnie stay at school. The situation makes Elodie sad and when she leaves the school, tears roll down her cheeks. She misses her elder brother who used to protect her before they were separated on the journey from the DRC.(Most girls wished they were boys because boys were strong and brave, KCCA USPP FGDs with adolescent girls, 2018)</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/elodie/Step4.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+            
+            		{
+				"uniqueid": 				"",
+				"date": 					"1862",
+				"location": {
+					"lat": 				0.300779,
+					"lon": 				32.577727,
+					"zoom": 				17,
+					"line": 				true
+				},
+				"text": {
+					"headline": 			"LOCATION 4",
+					"text": 				"<p style='text-align:justify;'>At 8:30 am Elodie arrives at the NGO in Nsambya where she is being taught how to make soap and candles. She has many friends here, including some who speak her language, Lingala. She’s happy and feels safe and at home. At 9 am, Elodie goes for her first lesson, which is taught in French. For Elodie, the lesson is not just about learning to make soap. She still hopes to become a teacher one day, and her teacher is her role model. During break at 10.30 am, the students are given a cup of black tea and some bread. Elodie enjoys the sugary tea but eats just a little of the bread so she can give it to Aminah and Vinnie when she gets home. The classes ends at 11.40 am and Elodie heads home. On her way out, she wonders if she should tell counsellor at the organization about the sores she has on her private parts. She feels embarrassed about it and decide not to say anything. This is also due to a fear that the counsellor will refer her to a health center where she won’t be able to pay for the medical treatment.</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/elodie/Step5.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+            
+                      		{
+				"uniqueid": 				"",
+				"date": 					"1862",
+				"location": {
+					"lat": 				0.298983,
+					"lon": 				32.588235,
+					"zoom": 				17,
+					"line": 				true
+				},
+				"text": {
+					"headline": 			"LOCATION 5",
+					"text": 				"<p style='text-align:justify;'>When she gets home at 12.10 pm, Elodie washes the family’s dirty clothes which is difficult when using water from the drainage channel outside the house. Elodie takes a sleep before preparing an evening meal made from maize flour and beans provided by the training organisation. At 5 pm, Aminah and Vinnie arrives to the home and the have their meal together. Elodie did not have time to pick them up today, and during the meal they are talking about the traffic in Kampala and how they stay safe when walking on the streets. Aminah and Vinnie goes to bed early, so Elodie can head to work in Kabalagala.</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/elodie/Step6.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+            
+
+                      		{
+				"uniqueid": 				"",
+				"date": 					"1862",
+				"location": {
+					"lat": 				0.294268,
+					"lon": 				32.581256,
+					"zoom": 				17,
+					"line": 				true
+				},
+				"text": {
+					"headline": 			"LOCATION 6",
+					"text": 				"<p style='text-align:justify;'>Elodie works in Kabalagala, which is an area full of bars and clubs. Elodie works on one of these bars, where she starts her shift at 7.30 pm. When she arrives, she changes into her uniform – a black miniskirt and a white crop top. During the early hours of the evening, she serves drinks, but later in the night, male clients pay her for sex in the back rooms of the bar. When her shift ends at 2 am, Elodie secretly counts her earnings for the night, hides her tips in her bra, and goes to give her boss 80 per cent of her earnings. Elodie works illigally at the bar, and paying her boss 80 per cent, allow her to stay there to earn money.</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/elodie/Step7.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+            
+                        
+                        
+                      		{
+				"uniqueid": 				"",
+				"date": 					"1862",
+				"location": {
+					"lat": 				0.305936,
+					"lon": 				32.59167,
+					"zoom": 				17,
+					"line": 				true
+				},
+				"text": {
+					"headline": 			"LOCATION 7",
+					"text": 				"<p style='text-align:justify;'>Elodie gets home at 2.30 am, where she takes a bath behind their building. because she is too disgusted and scared to use the communal bathroom, Elodie bathes behind the house and goes to bed. She’s relieved to have earned enough to pay for her siblings’ school materials but prays for a time when she has enough money to start her own business and can afford a proper medical check – and doesn’t have to have sex with men for money. </p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/elodie/Step8.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+			            {
+            "type": "",
+            "date": "2013",
+            "text": {
+                "headline": "END",
+                "text": "<p style='text-align:justify;'>END</p>"
+            },
+            "location": {
+                "name": "END",
+					"lat": 				0.3193,
+					"lon": 				32.5953,
+                "zoom": 12,
+                "line": false
+            },
+				"media": {
+					"url": 				"css/images/elodie/Step9.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+        }
+		]
+	}
+}

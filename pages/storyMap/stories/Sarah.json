@@ -1,0 +1,205 @@
+
+{
+	"storymap":{
+		"test": "test",
+		"slides": [
+			{
+				"type": 					"", 
+
+				"date": 					"1835",
+				"location": {
+					"lat": 				0.3193,
+					"lon": 				32.5953,
+					"name": 				"SARAH",
+					"zoom": 				12,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"SARAH",
+					"text": 				"<p style='text-align:justify;'>Kisenyi is in the central part of Kampala and is part of the Central Division, which is one of the five divisions in Kampala. It is considered as a vulnerable urban neighborhood and is home to vulnerable socio-economic populations groups, including refugees. The area is densely built and includes temporary constructions (Source: KISENYI III NEIGHBORHOOD PROFILE, Agora, 2016). Sarah and her siblings were raised be their mother, their dad left them, when her youngest was born. The family live in a one-bedroomed house and therefore sleep in the same room and have limited space available. Sarah’s two brothers go to public school, while her four-year-old sister stays home with their mother. Until last year, Sarah went to a public and reached primary grade six, where the students have an average age of 12. Her mother was unable to afford to pay for Sarah and her brothers’ school breakfast and lunch, so Sarah had to drop out of school, so they money could be spent on her brother’s education. Although primary education at public schools is officially free, parents are expected to pay for their children’s morning porridge and lunch. (EPRC: Education, Marriage, Fertility and Labour market Experiences of Young Women in Uganda: Evidence from a Qualitative Assessment, 2018) 43 per cent of girls aged 15–19 in Kampala have dropped out of school. (UNICEF Report: Emerging Global Challenges: Climate-Related Hazards and Urbanization: Protecting Uganda’s Children, 2017)</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/sarah/Step1.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+ 
+
+            
+            
+			{
+				"uniqueid": 				"",
+				"date": 					"1835",
+				"location": {
+					"lat": 				0.307903,
+					"lon": 				32.572386,
+					"name": 				"4:30am",
+					"zoom": 				17,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"LOCATION 1",
+					"text": 				"<p style='text-align:justify;'>Sarah’s day starts at 4.30 am. She wakes up that early to be able to get to work in time. She is working as a domestic worker, house girl, for another family. She got the job earlier in the year through her mother’s friend who also work as house girl. Before she leaves for work and before her mother wakes up, Sarah cleans the house, prepares breakfast for the family and feeds her siblings. After these duties she is ready for work and therefore leave her home in Kisenyi…</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/sarah/Step2.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+			{
+				"uniqueid": 				"",
+				"date": 					"1839",
+				"location": {
+					"lat": 				0.309182,
+					"lon": 				32.570795,
+					"name": 				"11:30 p.m",
+					"zoom": 				17,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"LOCATION 2",
+					"text": 				"<p style='text-align:justify;'>Sarah’s work is in Naalya, which is on the other side of town. She therefore has to travel 14 kilometers, which she usually does by the one of the Kampala taxis. Taxis in Kampala are mini buses that are licensed to have 14 passengers, but it is not unusual that the driver exceeds the licensed limit. Today is not an exception from this and Sarah leave Kisenyi in one of the taxis………</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/sarah/Step3.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+			{
+				"uniqueid": 				"",
+				"date": 					"1851",
+				"location": {
+					"lat": 				0.370730,
+					"lon": 				32.638231,
+					"zoom": 				17,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"LOCATION 3",
+					"text": 				"<p style='text-align:justify;'>At around 7 am, Sarah arrives at her workplace in Naalya, which is an area developing into a middle-income residential neighborhood. Her employers are just about to leave to work and a driver have already picked the two children in the family and taken them to school. Sarah starts the working day with the laundry, which she hangs outside to dry in the sun after washing.</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/sarah/Step4.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+			{
+				"uniqueid": 				"",
+				"date": 					null,
+				"location": {
+					"lat": 				0.373139,
+					"lon": 				32.636655,
+					"zoom": 				17,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"LOCATION 4",
+					"text": 				"<p style='text-align:justify;'>After finishing the laundry, Sarah leaves for the market, to buy ingredients for the family’s evening meal. The market is located near the house and is just one of the smaller markets in the area. These small markets are usually located long some of the major roads and often sell mainly food stuffs. Sarah buys matooke, beans and greens for the meal and heads back to the house. </p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/sarah/Step5.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+			{
+				"uniqueid": 				"",
+				"date": 					"1862",
+				"location": {
+					"lat": 				0.370730,
+					"lon": 				32.638231,
+					"zoom": 				17,
+					"line": 				true
+				},
+				"text": {
+					"headline": 			"LOCATION 5",
+					"text": 				"<p style='text-align:justify;'>Upon her return, Sarah starts cleaning the house. She gets time to rest a bit before starting preparing the evening meal. Matooke is a variety of bananas and Sarah prepares it in the traditional way, where it is cooked in banana leaves and mashed afterwards. At 6 pm, the driver brings the children back from school. Sarah welcomes the children and helps them with their homework. Before the parents arrive, she bathes them and prepare them for another school day tomorrow. The parents arrive at 8 pm, when Sarah serves the evening meal, which is her last duty of the day. The sun is already down when she is leaving Naalya at around 9 pm. (EPRC: Education, Marriage, Fertility and Labour market Experiences of Young Women in Uganda: Evidence from a Qualitative Assessment, 2018.)</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/sarah/Step6.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+            
+            {
+				"uniqueid": 				"",
+				"date": 					"1862",
+				"location": {
+					"lat": 				0.367310,
+					"lon": 				32.613220,
+					"zoom": 				17,
+					"line": 				true
+				},
+				"text": {
+					"headline": 			"LOCATION 6",
+					"text": 				"<p style='text-align:justify;'>In the taxi back home, Sarah starts to think about her day. She misses being in school, where she had a lot of classmates to chat with. Now she is mostly alone during the day and it makes her feel sad and lonely. She doesn’t feel that she can talk with anyone about her problems. On her way she notices a Uganda Helpline poster advertising the help available to children and adolescents in difficult situations. She memorizes the child helpline number, 116, and decides to call them later. One in five girls in Kampala suffer from depression, and almost 9 out of 10 feel lonely and sad. (UNICEF Report: Emerging Global Challenges: Climate-Related Hazards and Urbanization: Protecting Uganda’s Children, 2017)</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/sarah/Step7.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+            
+            {
+				"uniqueid": 				"",
+				"date": 					"1862",
+				"location": {
+					"lat": 				0.307903,
+					"lon": 				32.572386,
+					"zoom": 				17,
+					"line": 				true
+				},
+				"text": {
+					"headline": 			"LOCATION 7",
+					"text": 				"<p style='text-align:justify;'>Sarah arrives home at around 9.45, where her two brothers already are. Her mother and sister are still at the nearby market, where they sell vegetables. Sarah prepares the family’s dinner and helps her younger brothers with their homework. Helping her brothers with the homework gives her a chance to still learn something and somehow feel a connection to a school. When her mother finally arrives home, they eat the meal together. Its late and the family goes to bed after the meal. Sarah remembers the number for the child helpline and decides to call them, when she is sure that her mother and siblings are asleep. A counsellor responds and asks Sarah if it’s possible for her to visit the Child Helpline office. As Sarah cannot risk getting fired or miss work, the counsellor makes an appointment to meet Sarah near her workplace in Naalya after work the following day. Sarah is not alone with these issues. In her case the counsellor decides to thoroughly assess Sarah’s situation and remove her from her work, which amounts to child labor and is therefore illegal. Sarah’s employers and the person who gave her up to be a domestic worker will be reported to the police, and Sarah’s case will be referred to organizations that support children and adolescents to go back to school or do vocational training.</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/sarah/Step8.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+			{
+				"type": 					"", 
+
+				"date": 					"1835",
+				"location": {
+					"lat": 				0.3193,
+					"lon": 				32.5953,
+					"name": 				"END",
+					"zoom": 				12,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"END",
+                "text": "<p style='text-align:justify;'>The Uganda Child Helpline, also known by its brand name Sauti, offers a toll-free telephone service on the short code 116 which is accessible on all telecommunication networks in the country. The telephone service operates 24/7 and is just one of the ways in which the Child Helpline aims to protect children. Other approaches employed by the Helpline to offer child protection include: <ul><li>Handling walk-in clients</li><li>Responding to cases reported through the U-report platform</li><li>Follow up of child abuse cases reported through various Media (including social media)</li><li>Handling cases that entail Online Child Sexual Abuse</li><li>Community awareness raising campaigns in schools, communities and on radios & television etc.</li></ul></p>"
+            },
+				"media": {
+					"url": 				"css/images/sarah/Step9.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			}
+		]
+	}
+}

@@ -1,0 +1,168 @@
+
+{
+	"storymap":{
+		"test": "test",
+		"slides": [
+			{
+				"type": 					"",			
+				"date": 					"1835",
+				"location": {
+					"lat": 				0.3193,
+					"lon": 				32.5953,
+					"name": 				"ANNA",
+					"zoom": 				12,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"Anna",
+					"text": 				"<p style='text-align:justify;'>Lukuli is in the south eastern part of Kampala and is considered as a middle-income residential area, with detached residential houses. The area is part of Makindye division, which is one of the five divisions in Kampala. <br/><br/> Anna goes to a private primary school. She is in grade 4, where the average age of the students is 10 years. She lives in a three-bedroomed detached house with her mother, father and two siblings – an older brother and a younger sister. The family have a house girl, who helps with the daily cleaning and to maintain the household.</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/anna/Step1.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+            
+			{
+				"uniqueid": 				"",
+				"date": 					"1835",
+				"location": {
+					"lat": 				0.279507,
+					"lon": 				32.603067,
+					"name": 				"5:30am",
+					"zoom": 				17,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"LOCATION 1",
+					"text": 				"<p style='text-align:justify;'>Anna wakes up at around 6 am, just before the sunrise in Kampala. The day start as usual with breakfast consisting of porridge, which typically, in Uganda, is a mix of millet flour and water. Schools Uniform is common, and Anna puts on her school uniform, while the house girl prepares her lunch pack. <br/>On with the backpack and Anna is off for school…</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/Anna/Step2.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+            
+			{
+				"uniqueid": 				"",
+				"date": 					"1839",
+				"location": {
+					"lat": 				0.287231,
+					"lon": 				32.596632,
+					"name": 				"11:30 p.m",
+					"zoom": 				17,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"LOCATION 2",
+					"text": 				"<p style='text-align:justify;'>Anna’s school is in Nsambya, which is located around 5 kilometers from her house. She usually walks the 5 kilometers, mainly along the busy Gogonya Road. Traffic is busy and dense in Kampala, and traffic accidents are common. Public transportation is available in form of mini buses locally known as taxis, but the fastest form of transport is on the Boda Bodas……</p>"
+		
+				},
+				"media": {
+					"url": 				"css/images/Anna/Step3.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+            
+    
+			{
+				"uniqueid": 				"",
+				"date": 					"1839",
+				"location": {
+					"lat": 				0.291006,
+					"lon": 				32.596290,
+					"name": 				"11:30 p.m",
+					"zoom": 				17,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+                    "headline": 			"LOCATION 3",
+					"text": 				"<p style='text-align:justify;'>Boda Bodas are taxi motorcycles and Is a common way of transportation in Kampala. On her way she is passing by one of the many Boda Boda stages in Kampala. They are typical located on busy locations or on street corners. Taking a Boda Boda can reduce the travel time significant and Anna can typically save 20 minutes by using a Boda Boda.  Boda Bodas have typically been an unregulated industry with unregistered drivers, which especially for girls sometimes are linked to harassment. In the latest years there have been a development in the transportation sector in Kampala, and Anna, and the rest of the citizens in Kampala, are therefore now able use one of the registered Boda Bodas, where the driver’s identity is known locations routes are tracked. As Anna passes by the boda stage, boda drivers make crude and offensive comments about her breasts and buttocks, which frighten and embarrass her. She is not alone that feels this as 80 percent of girls in Kampala do not feel save in public spaces. (Source; UNICEF Uganda Urban CSSP Focus Group Discussions, 2018; UNICEF Report: Emerging Global Challenges: Climate-Related Hazards and Urbanization: Protecting Uganda’s Children, 2017).</p>"
+			
+				},
+				"media": {
+					"url": 				"css/images/Anna/Step4.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+            
+            
+			{
+				"uniqueid": 				"",
+				"date": 					null,
+				"location": {
+					"lat": 				0.298250,
+					"lon": 				32.588996,
+					"zoom": 				17,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"LOCATION 4",
+					"text": 				"<p style='text-align:justify;'>The school is a place where Anna feels save and she appreciates the opportunity to learn, discuss and laugh with friends and prepare for her future. However, sometimes the boys in the school and even the teachers make her fell less comfortable by commenting and laughing at her developing body. Anna is expecting her periods to start soon and is worried about it. She knows that some of her classmates, that already got their periods, stay home during their menstruation, because they are feeling embarrassed and do not have sanitary pads available (Source: UNICEF Uganda Urban CSSP Focus Group Discussions, 2018.). Today, members of the Uganda Child Helpline have come along to Anna’s class to introduce their services. The talk about violence against children and how they as kids should be protected and enjoy their rights and achieve their full potential, dreams and aspirations. Anna listens carefully and realized that her problems and worries is a common thing among children. It makes her fell less alone with the problems and worries and she now know that she can get help and advice from one of the counsellors from the Uganda Child Helpline. Anna usually stays in school to finish her homework before heading home, and her day at schools therefore usually end at 6 pm. Today her parents have asked a Boda driver to pick their daughter from school to avoid her from walking in the dark…</p>"
+			
+				},
+				"media": {
+					"url": 				"css/images/Anna/Step5.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+
+			{
+				"uniqueid": 				"",
+				"date": 					"1862",
+				"location": {
+					"lat": 				0.279507,
+					"lon": 				32.603067,
+					"zoom": 				17,
+					"line": 				true
+				},
+				"text": {
+					"headline": 			"LOCATION 5",
+					"text": 				"<p style='text-align:justify;'>Annas parents are not yet back from work, but her brother and sister are already home. The house girl has done all the cleaning and cooking during the day and do therefore not have any duties this evening in the house. She therefore ends up playing with her sister and watch TV, before their parents gets home at 8 pm. The family have the supper and tea together before she has to prepare for the next day and goes to bed.</p>"
+			
+				},
+				"media": {
+					"url": 				"css/images/Anna/Step6.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+           
+            
+            {
+            "type": "",
+            "date": "2013",
+            "text": {
+                "headline": "END",
+                "text": "<p style='text-align:justify;'>The Uganda Child Helpline, also known by its brand name Sauti, offers a toll-free telephone service on the short code 116 which is accessible on all telecommunication networks in the country. The telephone service operates 24/7 and is just one of the ways in which the Child Helpline aims to protect children. Other approaches employed by the Helpline to offer child protection include: <ul><li>Handling walk-in clients</li><li>Responding to cases reported through the U-report platform</li><li>Follow up of child abuse cases reported through various Media (including social media)</li><li>Handling cases that entail Online Child Sexual Abuse</li><li>Community awareness raising campaigns in schools, communities and on radios & television etc.</li></ul></p>"
+            },
+            "location": {
+                "name": "END",
+					"lat": 				0.3193,
+					"lon": 				32.5953,
+                "zoom": 12,
+                "line": true
+            },
+				"media": {
+					"url": 				"css/images/Anna/Step7.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+        }
+            
+           
+		]
+	}
+}
