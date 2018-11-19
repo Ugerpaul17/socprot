@@ -4,7 +4,7 @@
 		"test": "test",
 		"slides": [
 			{
-				"type": 					"", 
+				"type": 					"overview", 
 
 				"date": 					"1835",
 				"location": {
@@ -179,26 +179,29 @@
 					"caption":			""
 				}
 			},
-			            {
-            "type": "",
-            "date": "2013",
-            "text": {
-                "headline": "END",
-                "text": "<p style='text-align:justify;'>END</p>"
-            },
-            "location": {
-                "name": "END",
+			{
+				"type": 					"overview", 
+
+				"date": 					"1835",
+				"location": {
 					"lat": 				0.3193,
 					"lon": 				32.5953,
-                "zoom": 12,
-                "line": false
-            },
+					"name": 				"Elodie",
+					"zoom": 				12,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"END",
+					"text": 				"<p style='text-align:justify;'>END</p>"
+				
+				},
 				"media": {
-					"url": 				"css/images/elodie/Step9.jpg",
+					"url": 				"css/images/elodie/Step1.jpg",
 					"credit":				"SOURCE/PHOTOGRAPHER",
 					"caption":			""
 				}
-        }
+			}
 		]
 	}
 }
