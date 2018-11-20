@@ -1212,8 +1212,7 @@ $(window).on('load', function() {
 					}
 					function stylePopDensity(feature) {
 						return {
-//							MK
-,color: getColorPopDensity(feature.properties.populationDensity),02
+							color: getColorPopDensity(feature.properties.populationDensity),
 							fillOpacity: 0.6,
 							pane: "lowerlayers",
 							weight: 0.2
@@ -1247,8 +1246,6 @@ $(window).on('load', function() {
 					}).addTo(map);
 					datalayer1 = L.geoJson(data, {
 						style: stylePopDensity,
-						//						onEachFeature: parishOnEachFeature
-
 					});
 				
 
@@ -1378,7 +1375,7 @@ $(window).on('load', function() {
 	   */
 	function changeAttribution() {
 		var attributionHTML = $('.leaflet-control-attribution')[0].innerHTML;
-		var credit = 'View <a href="' + googleDocURL + '" target="_blank">data</a> sourced by <a href="https://www.kcca.go.ug/" target="_blank">KCCA</a>,<a href="https://www.unicef.org/uganda/" target="_blank">UNICEF</a>&<a href="http://www.impact-initiatives.org/" target="_blank">AGORA</a>';
+		var credit = 'Data from <a href="https://www.kcca.go.ug/" target="_blank">KCCA</a>, Vizualisation by <a href="https://www.geogecko.com/" target="_blank">GeoGecko</a>';
 		var name = getSetting('_authorName');
 		var url = getSetting('_authorURL');
 
@@ -1391,9 +1388,9 @@ $(window).on('load', function() {
 			credit += ' | ';
 		}
 
-		credit += 'View <a href="' + getSetting('_githubRepo') + '">code</a>';
-		if (getSetting('_codeCredit')) credit += ' by ' + getSetting('_codeCredit');
-		credit += ' with ';
+//		credit += 'View <a href="' + getSetting('_githubRepo') + '">code</a>';
+//		if (getSetting('_codeCredit')) credit += ' by ' + getSetting('_codeCredit');
+//		credit += ' with ';
 		$('.leaflet-control-attribution')[0].innerHTML = credit + attributionHTML;
 	}
 

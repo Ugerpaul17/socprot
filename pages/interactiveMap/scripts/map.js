@@ -310,8 +310,9 @@ $(window).on('load', function() {
 				map.createPane('educationPane');
 				map.createPane('protectionPane');
 				map.createPane('waterPane');
+				map.createPane('parishLayer');
 
-				map.getPane('healthPane').style.zIndex = 400
+				map.getPane('healthPane').style.zIndex = 100
 				map.getPane('educationPane').style.zIndex = 100
 				map.getPane('protectionPane').style.zIndex = 100
 				map.getPane('waterPane').style.zIndex = 100
@@ -319,30 +320,31 @@ $(window).on('load', function() {
 
 				var healthPoints = L.geoJson(health, {
 					pointToLayer: function (feature, latlng) {
-						function size(feature) {
+						function shape(feature) {
 							//						console.log(feature);
 							if (feature.properties.Deliveries === "Yes" && feature.properties.ANC === "Yes") {
-								return	5
+								return	"circle"
 							} else if (feature.properties.Deliveries === "Yes" && feature.properties.ANC === "No") {
-								return	4
+								return	"square"
 							} else if (feature.properties.Deliveries === "No" && feature.properties.ANC === "Yes") {
-								return	3
+								return	"triangle-up"
 							} else if (feature.properties.Deliveries === "No" && feature.properties.ANC === "No") {
-								return	2
+								return	"x"
 							}
 						}
 						var geojsonMarkerOptions = {
-							radius: size(feature),
+							radius: 5,
 							fillColor: "#8b0000",
 							color: "#000",
 							weight: 1,
 							pane: "healthPane",
 							opacity: 1,
+							shape: shape(feature),
 							fillOpacity: 0.8,
 							className: "health health-" + feature.properties.identifier + " " + feature.properties.class
 						};
 
-						return L.circleMarker(latlng, geojsonMarkerOptions);
+						return L.shapeMarker(latlng, geojsonMarkerOptions);
 					}
 				}).bindPopup(function (layer) {
 					return "<b>" + layer.feature.properties.Type + ".</b></br>" +
@@ -353,33 +355,36 @@ $(window).on('load', function() {
 
 				var educationPoints = L.geoJson(education, {
 					pointToLayer: function (feature, latlng) {
-						function size(feature) {
+						function shape(feature) {
 							//						console.log(feature);
 							if (feature.properties.typeText === "Pre-Primary Schools") {
-								return	2
+								return	"circle"
 							} else if (feature.properties.typeText === "Primary Schools") {
-								return	4
+								return	"square"
 							} else if (feature.properties.typeText === "Post Primary Schools") {
-								return	5
+								return	"triangle-up"
 							} else if (feature.properties.typeText === "Secondary Schools") {
-								return	6
+								return	"x"
 							} else if (feature.properties.typeText === "Tertiary Educational Institutions") {
-								return	7
+								return	"triangle-down"
 							} else if (feature.properties.typeText === "Non Formal Schools") {
-								return	8
+								return	"x"
 							}
 						}
+
+
 						var geojsonMarkerOptions = {
-							radius: size(feature),
+							radius: 5,
 							fillColor: "#008000",
 							color: "#000",
 							weight: 1,
 							pane: "educationPane",
 							opacity: 1,
+							shape: shape(feature),
 							fillOpacity: 0.8,
 							className: "education education-" + feature.properties.identifier + " " + feature.properties.class
 						};
-						return L.circleMarker(latlng, geojsonMarkerOptions);
+						return L.shapeMarker(latlng, geojsonMarkerOptions);
 					}
 				}).bindPopup(function (layer) {
 					return "<b>" + layer.feature.properties.Type + ".</b></br>" +
@@ -390,25 +395,26 @@ $(window).on('load', function() {
 
 				var protectionPoints = L.geoJson(protection, {
 					pointToLayer: function (feature, latlng) {
-						function size(feature) {
+						function shape(feature) {
 							//						console.log(feature);
 							if (feature.properties.typeText === "Police Post") {
-								return	3	
+								return	"circle"	
 							} else if (feature.properties.typeText === "Police Station") {
-								return	6
+								return	"square"
 							}
 						}
 						var geojsonMarkerOptions = {
-							radius: size(feature),
+							radius: 5,
 							fillColor: "#00008b",
 							color: "#000",
 							weight: 1,
 							pane: "protectionPane",
 							opacity: 1,
+							shape: shape(feature),
 							fillOpacity: 0.8,
 							className: "protection protection-" + feature.properties.identifier + " " + feature.properties.class
 						};
-						return L.circleMarker(latlng, geojsonMarkerOptions);
+						return L.shapeMarker(latlng, geojsonMarkerOptions);
 					}
 				}).bindPopup(function (layer) {
 					return "<b>" + layer.feature.properties.Type + ".</b></br>" +
@@ -450,11 +456,11 @@ $(window).on('load', function() {
 				}).addTo(map);
 
 
-				var legendIcon1 = d3.selectAll(".icon1").append('svg')
+				var waterIcon1 = d3.selectAll("icon1").append('svg')
 				.attr("width", 25)
 				.attr("height", 25);
 
-				legendIcon1.append('path')
+				waterIcon1.append('path')
 					.attr("style", "pointer-events:all!important")
 					.style("fill", "#1e90ff")
 					.style("opacity", 0.7)
@@ -468,85 +474,6 @@ $(window).on('load', function() {
 					protectionButton = d3.select("#protectionButton"),
 					waterButton = d3.select("#waterButton");
 
-				//				healthButton.on('click', function(){
-				//					refreshMap();
-				//					map.addLayer(healthPoints);
-				//					map.removeLayer(educationPoints);
-				//					map.removeLayer(protectionPoints);
-				//					map.removeLayer(waterPoints);
-				//				});
-				//				educationButton.on('click', function(){
-				//					refreshMap();
-				//					map.removeLayer(healthPoints);
-				//					map.addLayer(educationPoints);
-				//					map.removeLayer(protectionPoints);
-				//					map.removeLayer(waterPoints);
-				//				});
-				//				protectionButton.on('click', function(){
-				//					refreshMap();
-				//					map.removeLayer(healthPoints);
-				//					map.removeLayer(educationPoints);
-				//					map.addLayer(protectionPoints);
-				//					map.removeLayer(waterPoints);
-				//				});
-				//				waterButton.on('click', function(){
-				//					refreshMap();
-				//					map.removeLayer(healthPoints);
-				//					map.removeLayer(educationPoints);
-				//					map.removeLayer(protectionPoints);
-				//					map.addLayer(waterPoints);
-				//				});
-
-				var healthOn = d3.select("#healthOn"),
-					educationOn = d3.select("#educationOn"),
-					protectionOn = d3.select("#protectionOn"),
-					waterOn = d3.select("#waterOn");
-
-
-				healthOn.on('click', function(){
-					if (this.classList.contains("active")) {
-						this.classList.remove("active")
-						this.innerHTML = "<span>Turn Layer On</span>"
-						map.getPane('healthPane').style.zIndex = 100;
-					} else {
-						this.classList.add("active");
-						this.innerHTML = "<span>Turn Layer Off</span>"
-						map.getPane('healthPane').style.zIndex = 400
-					}
-				});
-				educationOn.on('click', function(){
-					if (this.classList.contains("active")) {
-						this.classList.remove("active")
-						this.innerHTML = "<span>Turn Layer On</span>"
-						map.getPane('educationPane').style.zIndex = 100
-					} else {
-						this.classList.add("active");
-						this.innerHTML = "<span>Turn Layer Off</span>"
-						map.getPane('educationPane').style.zIndex = 400
-					}
-				});
-				protectionOn.on('click', function(){
-					if (this.classList.contains("active")) {
-						this.classList.remove("active")
-						this.innerHTML = "<span>Turn Layer On</span>"
-						map.getPane('protectionPane').style.zIndex = 100
-					} else {
-						this.classList.add("active");
-						this.innerHTML = "<span>Turn Layer Off</span>"
-						map.getPane('protectionPane').style.zIndex = 400
-					}
-				});
-				waterOn.on('click', function(){
-					if (this.classList.contains("active")) {
-						this.classList.remove("active")
-						this.innerHTML = "<span>Turn Layer On</span>"
-						map.getPane('waterPane').style.zIndex = 100
-					} else {
-						this.classList.add("active");
-						this.innerHTML = "<span>Turn Layer Off</span>"
-						map.getPane('waterPane').style.zIndex = 400
-					}
-				});
 
 
 				var opacity = 0.3;
@@ -585,7 +512,7 @@ $(window).on('load', function() {
 
 				function refreshMapHealth() {
 					refreshCountsHealth();
-					d3.selectAll(".health").style("opacity", 1);
+					map.getPane('healthPane').style.zIndex = 100;
 					d3.select("#health-list").selectAll("p").style("background", "transparent");
 
 					updateLeftPanel(districtList, educationList, protectionList, donorList, healthList, waterList, dataset);
@@ -595,7 +522,7 @@ $(window).on('load', function() {
 
 				function refreshMapEducation() {
 					refreshCountsEducation();
-					d3.selectAll(".education").style("opacity", 1);
+					map.getPane('educationPane').style.zIndex = 100;
 					d3.select("#education-list").selectAll("p").style("background", "transparent");
 
 					updateLeftPanel(districtList, educationList, protectionList, donorList, healthList, waterList, dataset);
@@ -605,7 +532,7 @@ $(window).on('load', function() {
 
 				function refreshMapProtection() {
 					refreshCountsProtection();
-					d3.selectAll(".protection").style("opacity", 1);
+					map.getPane('protectionPane').style.zIndex = 100;
 					d3.select("#protection-list").selectAll("p").style("background", "transparent");
 
 					updateLeftPanel(districtList, educationList, protectionList, donorList, healthList, waterList, dataset);
@@ -615,7 +542,7 @@ $(window).on('load', function() {
 
 				function refreshMapWater() {
 					refreshCountsWater();
-					d3.selectAll(".water").style("opacity", 1);
+					map.getPane('waterPane').style.zIndex = 100;
 					d3.select("#water-list").selectAll("p").style("background", "transparent");
 
 					updateLeftPanel(districtList, educationList, protectionList, donorList, healthList, waterList, dataset);
@@ -651,7 +578,7 @@ $(window).on('load', function() {
 
 				function myFilter(c, flag, needRemove) {
 					if (flag === "district") {
-						filterSelectedItem("selectedDistrict", c, needRemove);
+						filterSelectedItem("selectedEducation", c, needRemove);
 					}
 					if (flag === "education") {
 						filterSelectedItem("selectedEducation", c, needRemove);
@@ -669,7 +596,7 @@ $(window).on('load', function() {
 						filterSelectedItem("selectedOp", c, needRemove);
 					}
 					if (flag === "donor") {
-						filterSelectedItem("selectedDonor", c, needRemove);
+						filterSelectedItem("selectedHealth", c, needRemove);
 					}
 					if (flag === "health") {
 						filterSelectedItem("selectedHealth", c, needRemove);
@@ -680,9 +607,10 @@ $(window).on('load', function() {
 
 					var selectedDataset = dataset.filter(function (d) { //global.selectedDataset
 						var isDistrict = false; //global.selectedDistrict ? global.selectedDistrict.key === d.District : true;
-						if (global.selectedDistrict.length > 0) {
-							global.selectedDistrict.map(function (c) {
-								if (c.key === d.layer) {
+						if (global.selectedEducation.length > 0) {
+							map.getPane('educationPane').style.zIndex = 400
+							global.selectedEducation.map(function (c) {
+								if (c.values[0].typeTextSchools === d.typeTextSchools) {
 									isDistrict = true;
 								}
 							});
@@ -692,6 +620,7 @@ $(window).on('load', function() {
 						// var isSector = global.selectedEducation ? global.selectedEducation.values[0].Sector_ID === d.Sector_ID : true;
 						var isEducation = false;
 						if (global.selectedEducation.length > 0) {
+							map.getPane('educationPane').style.zIndex = 400
 							global.selectedEducation.map(function (c) {
 								if (c.values[0].typeTextSchools === d.typeTextSchools) {
 									isEducation = true;
@@ -704,6 +633,7 @@ $(window).on('load', function() {
 
 						var isProtection = false;
 						if (global.selectedProtection.length > 0) {
+							map.getPane('protectionPane').style.zIndex = 400
 							global.selectedProtection.map(function (c) {
 								if (c.values[0].typeTextProtection === d.typeTextProtection) {
 									isProtection = true;
@@ -714,9 +644,10 @@ $(window).on('load', function() {
 						}
 
 						var isDonor = false;
-						if (global.selectedDonor.length > 0) {
-							global.selectedDonor.map(function (c) {
-								if (c.values[0].ownershipText === d.ownershipText) {
+						if (global.selectedHealth.length > 0) {
+							map.getPane('healthPane').style.zIndex = 400
+							global.selectedHealth.map(function (c) {
+								if (c.values[0].typeTextHealth === d.typeTextHealth) {
 									isDonor = true;
 								}
 							});
@@ -726,6 +657,7 @@ $(window).on('load', function() {
 
 						var isHealth = false;
 						if (global.selectedHealth.length > 0) {
+							map.getPane('healthPane').style.zIndex = 400
 							global.selectedHealth.map(function (c) {
 								if (c.values[0].typeTextHealth === d.typeTextHealth) {
 									isHealth = true;
@@ -737,6 +669,7 @@ $(window).on('load', function() {
 
 						var isWater = false;
 						if (global.selectedWater.length > 0) {
+							map.getPane('waterPane').style.zIndex = 400
 							global.selectedWater.map(function (c) {
 								if (c.values[0].typeTextWater === d.typeTextWater) {
 									isWater = true;
@@ -750,6 +683,7 @@ $(window).on('load', function() {
 					});
 
 					_selectedDataset = selectedDataset;
+
 
 
 					var selectedDatasetNest = d3.nest()
@@ -828,20 +762,18 @@ $(window).on('load', function() {
 							d3.select(this).classed("d3-active", !needRemove).style("background", needRemove ? "transparent" : "#808080");
 							global.currentEvent = "district";
 							myFilter(c, global.currentEvent, needRemove);
-							d3.selectAll(".district").style("opacity", 0);
+							d3.selectAll(".education").style("opacity", 0);
 
-							global.selectedDistrict.map(function (a) {
+							global.selectedEducation.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
-									d3.selectAll(".district-" + a.values[i].identifier).style("opacity", 1);	
+									d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);	
 								}
 							});
-							if(global.selectedDistrict.length === 0){
+							if(global.selectedEducation.length === 0){
+								map.getPane('educationPane').style.zIndex = 100;
 								refreshMap();}
 						});
 						_districtList
-							.attr("class", function (d) {
-							return "district-list-" + d.key.replaceAll('[ ]', "_");
-						})
 							.text(function (d) {
 							return d.key;
 						});
@@ -870,6 +802,7 @@ $(window).on('load', function() {
 								}
 							});
 							if(global.selectedWater.length === 0){
+								map.getPane('waterPane').style.zIndex = 100
 								refreshMap();}
 						});
 						_waterList
@@ -908,6 +841,7 @@ $(window).on('load', function() {
 								}
 							});
 							if(global.selectedEducation.length === 0){
+								map.getPane('educationPane').style.zIndex = 100
 								refreshMap();}
 						});
 						_educationList //.transition().duration(duration)
@@ -926,6 +860,7 @@ $(window).on('load', function() {
 						_protectionList.enter().append("p")
 						// .style("background", "transparent")
 							.on("click", function (c) {
+							console.log(c);
 
 							var needRemove = $(d3.select(this).node()).hasClass("d3-active"); //d3.select(this).attr("class");//d3-active
 							d3.select(this).classed("d3-active", !needRemove).style("background", needRemove ? "transparent" : "#808080");
@@ -940,6 +875,7 @@ $(window).on('load', function() {
 								}
 							});
 							if(global.selectedProtection.length === 0){
+								map.getPane('protectionPane').style.zIndex = 100
 								refreshMap();}
 
 
@@ -967,14 +903,15 @@ $(window).on('load', function() {
 							// myFilterByAgency(c, needRemove);
 							global.currentEvent = "donor"
 							myFilter(c, global.currentEvent, needRemove);
-							d3.selectAll(".district").style("opacity", 0);
+							d3.selectAll(".health").style("opacity", 0);
 
-							global.selectedDonor.map(function (a) {
+							global.selectedHealth.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
-									d3.selectAll(".district-" + a.values[i].identifier).style("opacity", 1);	
+									d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);	
 								}
 							});
-							if(global.selectedDonor.length === 0){
+							if(global.selectedHealth.length === 0){
+								map.getPane('healthPane').style.zIndex = 100
 								refreshMap();}
 						});
 						_donorList
@@ -1006,6 +943,7 @@ $(window).on('load', function() {
 								}
 							});
 							if(global.selectedHealth.length === 0){
+								map.getPane('healthPane').style.zIndex = 100
 								refreshMap();}
 						});
 						_healthList
@@ -1117,6 +1055,7 @@ $(window).on('load', function() {
 						.each(function(d){})
 						// .style("background", "transparent")
 						.on("click", function (c) {
+							console.log(c);
 
 							var needRemove = $(d3.select(this).node()).hasClass("d3-active"); //d3.select(this).attr("class");//d3-active
 							d3.select(this).classed("d3-active", !needRemove).style("background", needRemove ? "transparent" : "#808080");
@@ -1137,7 +1076,7 @@ $(window).on('load', function() {
 						});
 						_protectionList
 							.html(function(d) {
-							return "<a>" + d.key + "</a>"
+							return d.key
 						})
 					}
 
@@ -1196,12 +1135,45 @@ $(window).on('load', function() {
 
 				var datalayer;
 				var datalayer1;
+				var datalayerPoverty;
+				var datalayerDensity;
 
-				$.getJSON('data/kampalaParishes.geojson', function(data){
+				$.getJSON('data/povertyAndPopulationDensity.geojson', function(data){
+					function getColorPoverty(d) {
+						return d > 5.1  ? 'rgb(23,78,105)' :
+						d > 3.1  ? 'rgb(46,95,120)' :
+						d > 1.6  ? 'rgb(115,148,165)' :
+						d > 0.6   ? 'rgb(162,184,195)' :
+						'rgb(231,237,240)';
+					}
+
+					function getColorPopDensity(d) {
+						return d > 28929.79  ? 'rgb(23,78,105)' :
+						d > 21772.67  ? 'rgb(46,95,120)' :
+						d > 14615.54  ? 'rgb(115,148,165)' :
+						d > 7458.42   ? 'rgb(162,184,195)' :
+						'rgb(231,237,240)';
+					}
+
+					function stylePoverty(feature) {
+						return {
+							color: getColorPoverty(feature.properties.povertyHH),
+							fillOpacity: 0.6,
+							weight: 0.2
+						};
+					}
+					function stylePopDensity(feature) {
+						return {
+							color: getColorPopDensity(feature.properties.populationDensity),
+							fillOpacity: 0.6,
+							weight: 0.2
+						};
+					}
 					function style(feature) {
 						return {
 							color: '#00c5ff',
 							fillOpacity: 0,
+							pane:	"parishLayer",
 							opacity: 1,
 							weight: 0.8
 						};
@@ -1222,8 +1194,8 @@ $(window).on('load', function() {
 					function parishOnEachFeature(feature, featureLayer){
 
 						var popup = L.popup()
-						.setContent("<b>" + feature.properties.s + " Division</b></br>" +
-									"<b>Parish: </b>" + feature.properties.pname + "</br>");
+						.setContent("<b>" + feature.properties.SNAME2014 + " Division</b></br>" +
+									"<b>Parish: </b>" + feature.properties.dist + "</br>");
 
 
 						featureLayer.on({
@@ -1234,7 +1206,9 @@ $(window).on('load', function() {
 								e.target.feature.properties.selected = true;
 								e.target.setStyle(selectedStyle());
 								e.target.bringToFront();
-							}
+							},
+							mouseover: highlightFeature,
+							mouseout: resetHighlight
 						});
 
 						featureLayer.bindPopup(popup);
@@ -1243,50 +1217,116 @@ $(window).on('load', function() {
 						style: style,
 						onEachFeature: parishOnEachFeature
 
+					}).addTo(map);
+
+					datalayerPoverty = L.geoJson(data, {
+						style: stylePoverty,
+						//						onEachFeature: parishOnEachFeature
+
+					});
+					datalayerDensity = L.geoJson(data, {
+						style: stylePopDensity,
+						//						onEachFeature: parishOnEachFeature
+
 					});
 
-				});
+					map.getPane('parishLayer').style.zIndex = 300;
+					map.getPanes().overlayPane.style.zIndex = 200;
 
-				$.getJSON('data/kampala_slum_settlement.geojson', function(data){
-					function style1(feature) {
-						return {
-							color: 'green',
-							fillOpacity: 0.4,
-							opacity: 1,
-							weight: 0.8
+					$.getJSON('data/kampala_slum_settlement.geojson', function(data){
+						function style1(feature) {
+							return {
+								color: 'green',
+								fillOpacity: 0.4,
+								opacity: 1,
+								weight: 0.8
+							};
+						}
+
+						datalayer1 = L.geoJson(data, {
+							style: style1
+						});
+
+
+						var overlaymaps = {
+							"Slum Boundaries" : datalayer1,
+							"Household Poverty" : datalayerPoverty,
+							"Population Density" : datalayerDensity
 						};
-					}
 
-					datalayer1 = L.geoJson(data, {
-						style: style1
+
+
+						L.control.layers(overlaymaps, null, {autoZIndex: false,collapsed: true, position: 'topleft'}).addTo(map);
+
+
+						var layerRemover = L.control({position: 'topleft'});
+
+						layerRemover.onAdd = function (map) {
+
+							var div = L.DomUtil.create('div', '');
+							div.innerHTML = '<p class="nav nav-tabs" role="tablist">' +
+								'<a class="nav-item"><a id="removeLayers" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" >Remove Layers</a></a>' +
+								'</p>'
+
+							return div;
+						};
+
+						layerRemover.addTo(map);
+
 					});
 
+
+
 				});
 
+				var info = L.control();
+
+				info.onAdd = function (map) {
+					this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+					this.update();
+					return this._div;
+				};
+
+				// method that we will use to update the control based on feature properties passed
+				info.update = function (props) {
+					console.log(props);
+					this._div.innerHTML = (props ? 'Sub County: <b>' + props.SNAME2014 + '</b><br/>' + 
+										   'Parish: <b>' + props.dist + '</b>'
+										   : 'Hover over a parish');
+				};
+
+				info.addTo(map);
 
 
-				var slumOn = d3.select("#slumLayer"),
-					parishOn = d3.select("#parishLayer");
+				function highlightFeature(e) {
+					var layer = e.target;
 
+					layer.setStyle({
+						weight: 5,
+						color: '#666',
+						dashArray: '',
+						fillOpacity: 0.7
+					});
 
-				slumOn.on('click', function(){
-					if (this.classList.contains("active")) {
-						this.classList.remove("active")
-						map.removeLayer(datalayer1);
-					} else {
-						this.classList.add("active");
-						map.addLayer(datalayer1);
+					if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+						layer.bringToFront();
 					}
-				});
-				parishOn.on('click', function(){
-					if (this.classList.contains("active")) {
-						this.classList.remove("active")
-						map.removeLayer(datalayer);
-					} else {
-						this.classList.add("active");
-						map.addLayer(datalayer);
-					}
-				});
+					info.update(layer.feature.properties);
+				}
+
+
+				function resetHighlight(e) {
+					datalayer.resetStyle(e.target);
+					info.update();
+				}
+
+				var removeLayers = d3.select("#removeLayers");
+
+				removeLayers.on('click', function(){
+					map.removeLayer(datalayer1);
+					map.removeLayer(datalayerPoverty);
+					map.removeLayer(datalayerDensity);
+				})
 
 
 
@@ -1351,7 +1391,7 @@ $(window).on('load', function() {
 	   */
 	function changeAttribution() {
 		var attributionHTML = $('.leaflet-control-attribution')[0].innerHTML;
-		var credit = 'View <a href="' + googleDocURL + '" target="_blank">data</a>';
+		var credit = 'Data from <a href="https://www.kcca.go.ug/" target="_blank">KCCA</a>, Vizualisation by <a href="https://www.geogecko.com/" target="_blank">GeoGecko</a>';
 		var name = getSetting('_authorName');
 		var url = getSetting('_authorURL');
 
@@ -1364,9 +1404,9 @@ $(window).on('load', function() {
 			credit += ' | ';
 		}
 
-		credit += 'View <a href="' + getSetting('_githubRepo') + '">code</a>';
-		if (getSetting('_codeCredit')) credit += ' by ' + getSetting('_codeCredit');
-		credit += ' with ';
+		//		credit += 'View <a href="' + getSetting('_githubRepo') + '">code</a>';
+		//		if (getSetting('_codeCredit')) credit += ' by ' + getSetting('_codeCredit');
+		//		credit += ' with ';
 		$('.leaflet-control-attribution')[0].innerHTML = credit + attributionHTML;
 	}
 

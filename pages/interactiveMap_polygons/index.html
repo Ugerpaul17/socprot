@@ -256,7 +256,6 @@
 
 					// method that we will use to update the control based on feature properties passed
 					info.update = function (props) {
-						console.log(props);
 						this._div.innerHTML = (props ? 'Sub County: <b>' + props.SNAME2014 + '</b><br/>' + 
 																		'Parish: <b>' + props.PNAME2014 + '</b>'
 																		: 'Hover over a parish');
@@ -293,6 +292,7 @@
 
 
 				});
+				
 
 				var header = [];
 				var values = [];

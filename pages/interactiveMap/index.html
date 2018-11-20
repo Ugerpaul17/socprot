@@ -89,7 +89,6 @@
 					<li id="educationButton"><a href="#education" role="tab"><img src="data/images/education.svg" alt="Education" title="Education"></a></li>
 					<li id="protectionButton"><a href="#protection" role="tab"><img src="data/images/protection.svg" alt="Protection" title="Protection"></a></li>
 					<li id="waterButton"><a href="#water" role="tab"><img src="data/images/water.svg" alt="Water" title="Water"></a></li>
-					<li><a href="#layers" role="tab"><i class="mbri-align-justify mbr-iconfont"></i></a></li>
 					<li><a href="#list" role="tab"><i class="mbri-bulleted-list mbr-iconfont"></i></a></li>
 				</ul>
 
@@ -110,7 +109,7 @@
 						<br>
 						<ul class="nav nav-tabs" role="tablist">
 							<a class="nav-item"><a id="d3-map-refresh-health" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true">Reset Filters</a></a>
-							<a class="nav-item"><a id="healthOn" class="nav-link mbr-fonts-style show active display-7" role="tab" data-toggle="tab"><span>Turn Layer Off</span></a></a>
+							<!--							<a class="nav-item"><a id="healthOn" class="nav-link mbr-fonts-style show active display-7" role="tab" data-toggle="tab"><span>Turn Layer Off</span></a></a>-->
 						</ul>
 					</div>
 					<div class="list-container">
@@ -126,13 +125,27 @@
 						<br>
 					</div>
 					<div class="col-md-12">
-							<div id="healthLegend" style="background-color: #ffffff;">Legend<br>
-								<i  style="border-radius: 50%;  width: 6px !important; height: 6px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#8b0000;"></i>Neither Delivery nor Antenatal Services<br>
-								<i  style="border-radius: 50%;  width: 10px !important; height: 10px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#8b0000;"></i> Antenatal Services<br>
-								<i  style="border-radius: 50%;  width: 14px !important; height: 14px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#8b0000;"></i>Delivery Services<br>
-								<i  style="border-radius: 50%;  width: 18px !important; height: 18px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#8b0000;"></i>Both Delivery and Antenatal Services<br>
-							</div>
+						<div id="healthLegend" style="background-color: #ffffff;">Legend<br>
+							<table>
+								<tr>
+									<th style="float: left;">
+										<i style="border-radius: 50%;  width: 18px !important; height: 18px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#8b0000;"></i> Antenatal Services <br>
+									</th>
+								</tr>
+								<tr>
+									<th style="float: left;">
+										<i style="width: 18px !important; height: 18px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#8b0000;"></i> Both Delivery and Antenatal Services <br>
+									</th>
+								</tr>
+								<tr>
+									<th style="float: left;" class="icon1"></th><th style="float: left;">Delivery Services <br></th>
+								</tr>
+								<tr>
+									<th style="float: left;">X	</th><th style="float: left;">Neither Delivery not Antenatal Services <br></th>
+								</tr>
+							</table>
 						</div>
+					</div>
 				</div>
 				<div class="sidebar-pane" id="education">
 					<h1 class="sidebar-header" style="background-color: #008000;">
@@ -144,7 +157,7 @@
 						<br>
 						<ul class="nav nav-tabs" role="tablist">
 							<a class="nav-item"><a id="d3-map-refresh-education" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true">Reset Filters</a></a>
-							<a class="nav-item"><a id="educationOn" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab"><span>Turn Layer On</span></a></a>
+							<!--							<a class="nav-item"><a id="educationOn" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab"><span>Turn Layer On</span></a></a>-->
 						</ul>
 					</div>
 					<div class="list-container">
@@ -160,14 +173,37 @@
 						<br>
 					</div>
 					<div class="col-md-12">
-							<div id="educationLegend" style="background-color: #ffffff;">Legend<br>
-								<i  style="border-radius: 50%;  width: 8px !important; height: 8px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#008000;"></i> Pre-Primary Schools<br>
-								<i  style="border-radius: 50%;  width: 10px !important; height: 10px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#008000;"></i>Primary Schools<br>
-								<i  style="border-radius: 50%;  width: 12px !important; height: 12px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#008000;"></i>Post-Primary Schools<br>
-								<i  style="border-radius: 50%;  width: 14px !important; height: 14px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#008000;"></i>Secondary Schools<br>
-								<i  style="border-radius: 50%;  width: 16px !important; height: 16px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#008000;"></i>Non Formal Schools<br>
-								<i  style="border-radius: 50%;  width: 18px !important; height: 18px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#008000;"></i>Tertiary Schools<br></div>
+						<div id="educationLegend" style="background-color: #ffffff;">Legend<br>
+							<table>
+								<tr>
+									<th style="float: left;">
+										<i style="border-radius: 50%;  width: 18px !important; height: 18px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#008000;"></i> Non Formal School <br>
+									</th>
+								</tr>
+								<tr>
+									<th style="float: left;">
+										<i style="width: 18px !important; height: 18px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#008000;"></i> Post Primary Schools <br>
+									</th>
+								</tr>
+								<tr>
+									<th style="float: left;" class="icon1"></th><th style="float: left;">  Pre Primary Schools</th>
+								</tr>
+								<tr>
+									<th style="float: left;">
+										<i style="border-radius: 50%;  width: 18px !important; height: 18px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#008000;"></i> Primary Schools <br>
+									</th>
+								</tr>
+								<tr>
+									<th style="float: left;">
+										<i style="width: 18px !important; height: 18px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#008000;"></i> Secondary Schools <br>
+									</th>
+								</tr>
+								<tr>
+									<th style="float: left;">X	</th><th style="float: left;"> Tertiary Educational Institutions</th>
+								</tr>
+							</table>
 						</div>
+					</div>
 				</div>
 				<div class="sidebar-pane" id="protection">
 					<h1 class="sidebar-header" style="background-color: #00008b;">
@@ -179,7 +215,7 @@
 						<br>
 						<ul class="nav nav-tabs" role="tablist">
 							<a class="nav-item"><a id="d3-map-refresh-protection" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true">Reset Filters</a></a>
-							<a class="nav-item"><a id="protectionOn" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab"><span>Turn Layer On</span></a></a>
+							<!--							<a class="nav-item"><a id="protectionOn" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab"><span>Turn Layer On</span></a></a>-->
 						</ul>
 					</div>
 					<div class="list-container">
@@ -189,12 +225,23 @@
 						</div>
 						<br>
 						<br>
-						
+
 					</div>
 					<div class="col-md-12">
-							<div id="protectionLegend" style="background-color: #ffffff;">Legend<br>
-								<i  style="border-radius: 50%;  width: 8px !important; height: 8px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#00008b;"></i> Police Post<br>
-								<i  style="border-radius: 50%;  width: 12px !important; height: 12px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#00008b;"></i>Police Station<br></div>
+						<div id="protectionLegend" style="background-color: #ffffff;">Legend<br>
+							<table>
+								<tr>
+									<th style="float: left;">
+										<i style="border-radius: 50%;  width: 18px !important; height: 18px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#00008b;"></i> Police Post <br>
+									</th>
+								</tr>
+								<tr>
+									<th style="float: left;">
+										<i style="width: 18px !important; height: 18px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#00008b;"></i> Police Station <br>
+									</th>
+								</tr>
+							</table>
+						</div>
 					</div>
 				</div>
 				<div class="sidebar-pane" id="water">
@@ -207,7 +254,7 @@
 						<br>
 						<ul class="nav nav-tabs" role="tablist">
 							<a class="nav-item"><a id="d3-map-refresh-water" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true">Reset Filters</a></a>
-							<a class="nav-item"><a id="waterOn" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab"><span>Turn Layer On</span></a></a>
+							<!--							<a class="nav-item"><a id="waterOn" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab"><span>Turn Layer On</span></a></a>-->
 						</ul>
 					</div>
 					<div class="list-container">
@@ -217,38 +264,26 @@
 						</div>
 						<br>
 						<br>
-						
+
 					</div>
 					<div class="col-md-12">
-							<div id="waterLegend" style="background-color: #ffffff;">Legend<br>
-								<table>
-									<tr>
-										<th style="float: left;">
-											<i style="border-radius: 50%;  width: 18px !important; height: 18px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#1e90ff;"></i> Protected Springs <br>
-										</th>
-									</tr>
-									<tr>
-										<th style="float: left;">
-											<i style="width: 18px !important; height: 18px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#1e90ff;"></i> Public Toilet <br>
-										</th>
-									</tr>
-									<tr>
-										<th style="float: left;" class="icon1"></th><th style="float: left;">Water Reservoirs</th>
-									</tr>
-								</table>
-							</div>
+						<div id="waterLegend" style="background-color: #ffffff;">Legend<br>
+							<table>
+								<tr>
+									<th style="float: left;">
+										<i style="border-radius: 50%;  width: 18px !important; height: 18px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#1e90ff;"></i> Protected Springs <br>
+									</th>
+								</tr>
+								<tr>
+									<th style="float: left;">
+										<i style="width: 18px !important; height: 18px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#1e90ff;"></i> Public Toilet <br>
+									</th>
+								</tr>
+								<tr>
+									<th style="float: left;" class="icon1"></th><th style="float: left;">Water Reservoirs</th>
+								</tr>
+							</table>
 						</div>
-				</div>
-				<div class="sidebar-pane" id="layers">
-					<h4 class="sidebar-header" style="font-size: 0.8em; text-align: left;">Layers
-						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
-					</h4>
-					<div class="menu-panel">
-						<br>
-						<ul class="nav nav-tabs" role="tablist">
-							<a class="nav-item"><a id="slumLayer" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" >Slum Areas</a></a>
-							<a class="nav-item"><a id="parishLayer" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab">Parish Boundaries</a></a>
-						</ul>
 					</div>
 				</div>
 				<div class="sidebar-pane" id="list">
@@ -261,8 +296,10 @@
 			</div>
 		</div>
 
+
 		<div id="d3-map-container" class="sidebar-map">
-			<div id="d3-map-wrapper"></div></div>
+			<div id="d3-map-wrapper"></div>
+		</div>
 
 
 		<script type="text/javascript">
