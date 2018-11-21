@@ -4940,51 +4940,75 @@ VCO.MediaType = function(m) {
 				cls: 		VCO.Media.Image
 			},
 			{
+				type: 		"googlemaps",
+				name: 		"Google Map", 
+				match_str: 	"Step7",
+				cls: 		VCO.Media.Image
+			},
+			{
+				type: 		"googleplus",
+				name: 		"Google+", 
+				match_str: 	"Step8",
+				cls: 		VCO.Media.Image
+			},
+			{
 				type: 		"flickr",
 				name: 		"Flickr", 
-				match_str: 	"Step7",
+				match_str: 	"Step9",
 				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"instagram",
 				name: 		"Instagram", 
-				match_str: 	"Step8",
-				cls: 		VCO.Media.Image
-			},
-			{
-				type: 		"wikipedia",
-				name: 		"Wikipedia",
-				match_str: 	"Step9",
-				cls: 		VCO.Media.Image
-			},
-			{
-				type: 		"image",
-				name: 		"Image",
 				match_str: 	"StepA",
-				cls: 		VCO.Media.Image
-			},
-			{
-				type: 		"googledocs",
-				name: 		"Google Doc",
-				match_str: 	"StepB",
 				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"profile",
 				name: 		"Profile", 
+				match_str: 	"StepB",
+				cls: 		VCO.Media.Image
+			},
+			{
+				type: 		"image",
+				name: 		"Image",
 				match_str: 	"StepC",
+				cls: 		VCO.Media.Image
+			},
+			{
+				type: 		"googledocs",
+				name: 		"Google Doc",
+				match_str: 	"StepD",
+				cls: 		VCO.Media.Image
+			},
+			{
+				type: 		"wikipedia",
+				name: 		"Wikipedia",
+				match_str: 	"StepE",
 				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"iframe",
 				name: 		"iFrame",
-				match_str: 	"StepD",
+				match_str: 	"StepF",
 				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"storify",
 				name: 		"Storify",
-				match_str: 	"StepE",
+				match_str: 	"StepG",
+				cls: 		VCO.Media.Image
+			},
+			{
+				type: 		"blockquote",
+				name: 		"Quote",
+				match_str: 	"StepH",
+				cls: 		VCO.Media.Image
+			},
+			{
+				type: 		"website",
+				name: 		"Website",
+				match_str: 	"StepI",
 				cls: 		VCO.Media.Image
 			},
 			{
@@ -15009,7 +15033,7 @@ L.Control.MiniMap = L.Control.extend({
         width: 150,
         height: 150,
         aimingRectOptions: {
-            color: "#174e69",
+            color: "#c34528",
             weight: 1,
             clickable: false,
 			stroke:true
@@ -15080,7 +15104,7 @@ L.Control.MiniMap = L.Control.extend({
             this._shadowRect = L.rectangle(this._mainMap.getBounds(), this.options.shadowRectOptions).addTo(this._miniMap);
 			
 			this._locationCircle = L.circleMarker(this._mainMap.getCenter(), {
-				fillColor: "#174e69",
+				fillColor: "#c34528",
 				color: "#FFFFFF",
 				weight:2,
 				radius: 10,
@@ -17387,7 +17411,7 @@ VCO.StoryMap = VCO.Class.extend({
 			calculate_zoom: 		false,   		// Allow map to determine best zoom level between markers (recommended)
 			use_custom_markers: 	false,  		// Allow use of custom map marker icons
 			line_follows_path: 		true,   		// Map history path follows default line, if false it will connect previous and current only
-			line_color: 			"#174e69", //"#DA0000",
+			line_color: 			"#c34528", //"#DA0000",
 			line_color_inactive: 	"#CCC",
 			line_join: 				"miter",
 			line_weight: 			3,

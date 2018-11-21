@@ -4,7 +4,7 @@
 		"test": "test",
 		"slides": [
 			{
-				"type": 					"overview", 
+				"type": 					"", 
               
 				"date": 					"1835",
 				"location": {
@@ -17,7 +17,7 @@
 				},
 				"text": {
 					"headline": 			"SHAMIM",
-					"text": 				"<p style='text-align:justify;'>Katanga is one of the slum areas in Kampala, located around 2 kilometers from the city centre. The area is densely built and is mainly covered with temporary buildings. It is situated in  swamp land with many sewer drainage channels. Shamim dropped out of schools in Senior Two when she got pregnant by a fellow student. When her guardians found out that she was pregnant they drove Shamim out of home. She and Fatuma now live with two other people in a one-roomed house (Emerging Global Challenges Report, UNICEF, 2017). During the day, Shamim works as a full-time apprentice at a salon in Kampala. Nearly 1 in 10 girls aged between 12 and 17 years in Kampala have given birth. (Census 2014: Equity Analysis) </p>"
+					"text": 				"<p style='text-align:justify;'>Shamim represents girls in Kampala aged 12–17 years who have given birth. She dropped out of school in Senior Two when she got pregnant by a fellow student and now has a six-month-old daughter, Fatuma. When her guardians found out that she was pregnant they drove Shamim out of home. She and Fatuma now live with two other people in a one-roomed house in Katanga, one of Kampala’s slums. <font size='2'> <i>(Emerging Global Challenges Report, UNICEF, 2017) During the day, Shamim works as a full-time apprentice at a salon in Kampala.</i></font><br><br><font size='2'> <b>Nearly 1 in 10 girls aged between 12 and 17 years in Kampala have given birth. </b><br><i> (Census 2014: Equity Analysis) </i></font></p>"
 				
 				},
 				"media": {
@@ -40,8 +40,8 @@
 					"line_color":			"#1e90ff"
 				},
 				"text": {
-					"headline": 			"LOCATION 1",
-					"text": 				"<p style='text-align:justify;'>Shamim’s day starts at 5.30 am, where she wakes, cleans the house and prepares porridge for breakfast before Fatuma wakes. As many others in Katange, Shamim can’t afford to buy clean water from the public pipes. On lucky days there is a broken pipe nearby, where she can take clean water for free before the pipe are fixed. Today is one of these lucky days and Shamim picks up some clean free water from the nearby pipe. Fatuma needs to go to the clinic today to get immunized so Shamim packs her immunization card, ties Fatuma to her back and leave their home at around 6.30…</p>"
+					"headline": 			"Home",
+					"text": 				"<p style='text-align:justify;'>At 5.30 am, Shamim wakes up to clean the house and prepare breakfast before Fatuma wakes. She then has breakfast, usually porridge made from maize flour. Shamim can’t afford to buy clean water from the public pipes, but  today she’s in luck as a nearby pipe has broken so she can get some water for free. After she gets back from collecting the water, Shamim wakes up Fatuma, gives her a bath, feeds her, dresses her and plays with her for a short while. As it’s the day for Fatuma’s immunisations, Shamim packs her immunisation card and some extra baby clothes in her bag. She ties Fatuma to her back and at 6.30 am leaves the house. <br><br><a href=https://geo-gecko.github.io/socprot/pages/interactiveMap/index.html>See infrastructure map for Kampala</a></p>"
 				
 				},
 				"media": {
@@ -63,8 +63,8 @@
 					"line_color":			"#1e90ff"
 				},
 				"text": {
-					"headline": 			"LOCATION 2",
-					"text": 				"<p style='text-align:justify;'>It takes Shamim 30 minutes to walk to Mulago hospital, the nearest government health center, where she can get free immunization. Walking in the morning feels safe for Shamim because otherwise there are a lot of people on the streets and she therefore would feel so exposed, which is not the case if she was walking alone on the street. It is also just before the rush hour starts and traffic become heavy.</p>"
+					"headline": 			"Travelling to the hospital",
+					"text": 				"<p style='text-align:justify;'>It takes Shamim 30 minutes to walk  to Mulago Hospital, the nearest government health centre where she can get free immunisations. Shamim feels safe walking early in the morning as there are other people on the road and not much traffic. <br><br><a href=https://geo-gecko.github.io/socprot/pages/interactiveMap/index.html>See infrastructure map for Kampala</a></p>"
 				
 				},
 				"media": {
@@ -85,8 +85,8 @@
 					"line_color":			"#1e90ff"
 				},
 				"text": {
-					"headline": 			"LOCATION 3",
-					"text": 				"<p style='text-align:justify;'>Shamim arrives at the hospital an hour early to make sure she’s the first in line, but she soon realizes that she is not, and 10 mothers are already in the line ahead of her. Shamim finds it difficult and feels uncomfortable when approaching the health workers and often wishes that she had other teenage mothers to talk with about the challenges and difficulties she experiences. The other mothers in the line are older than she is, and she therefore doesnot feel comfortable talking with them (Urban CSSP Focus Group Discussions, 2018). Immunizations are meant to start at 8 am, but this morning there is a staff meeting and at 9.45 am Shamim is still waiting together with Fatuma. When her turn finally comes, she removes Fatuma’s clothes, takes her to be weighed and goes to the immunization station. Fatuma is supposed to receive three vaccines and a vitamin A supplement (Child Health Card, MoH-UNEPI) but the health worker tells Shamim that one of the vaccines and the vitamin A supplement are out of stock. When Shamim asks whether not having those injections will pose a threat to Fatuma’s health, the health worker barks at her, accusing Shamim of asking silly questions and holding up others in the queue. Although she’s worried, Shamim is too frightened to ask any more questions and leaves the health center. (Urban CSSP Focus Group Discussions, 2018). Shamim is in a hurry and must be at her work in the salon in Wandegeya soon...</p>"
+					"headline": 			"Hospital",
+					"text": 				"<p style='text-align:justify;'>Shamim gets to the hospital an hour early to make sure she’s one of the first in line. But when she arrives there are already 10 mothers ahead of her. Although this is her third immunisation visit, she still feels uncomfortable and is not sure who to approach at the health centre. The other mothers in the queue are all older than her and Shamim doesn’t feel comfortable talking to them. She feels alone and sad, and wishes she had other teenage mothers to talk to. <font size='2'> <i> (Urban CSSP Focus Group Discussions, 2018) </i></font><br><br>Although immunisations are meant to start at 8 am, this morning there’s a staff a meeting and at 9.45 am Shamim is still waiting. When her turn finally comes, she removes Fatuma’s clothes, takes her to be weighed and then goes to the immunisation station. Fatuma is supposed to receive three vaccines and a vitamin A supplement <font size='2'> <i> (Child Health Card, MoH-UNEPI) </i></font> but the health worker tells Shamim that one of the vaccines and the vitamin A supplement are out of stock. When Shamim asks whether not having those injections will pose a threat to Fatuma’s health, the health worker barks at her, accusing Shamim of asking silly questions and holding up others in the queue. Although she’s worried, Shamim is too frightened to ask any more questions and leaves the health centre. <font size='2'> <i> (Urban CSSP Focus Group Discussions, 2018) </i></font><br><br>As she leaves, Shamim soothes and breastfeeds Fatuma, who is crying from the pain of the vaccinations, and then starts walking to the salon in Wandegeya where she works as an apprentice hairdresser. </p>"
 				
 				},
 				"media": {
@@ -107,8 +107,8 @@
 					"line": 				true
 				},
 				"text": {
-					"headline": 			"LOCATION 4",
-					"text": 				"<p style='text-align:justify;'>Wandegeya is a 20-minute walk from the hospital. Shamim arrives to the salon and lays Fatuma in a safe corner before starting work. The salon is supposed to teach Shamim about hairdressing, so she can one day open a salon of her own. But most days she ends up spending her time cleaning the salon and running errands for her boss and the other employees, including fetching their breakfasts and lunches from nearby vendors. At 1pm, Fatuma starts to cry because she’s hungry, but because Shamim can’t afford to eat well, she’s not producing enough milk to feed her baby. Instead Shamim gives Fatuma some of the leftovers from her colleagues’ lunch. During the afternoon, Shamim continues to run errands such as fetching water to wash customers’ hair, cleaning the floor and keeping the salon tidy. In between she manages to spend a bit of time practicing hairdressing by braiding a doll, which is how her boss is teaching her. Since she must clean up and mop the floors, Shamim is the last to leave the salon with her boss. At 8 pm Shamim ties Fatuma to her back and heads home.</p>"
+					"headline": 			"Work",
+					"text": 				"<p style='text-align:justify;'>After 20 minutes, Shamim arrives at the salon and lays Fatuma in a safe corner before starting work. Although she’s supposed to be learning hairdressing, Shamim spends most of her time cleaning the salon and running errands for her boss and the other employees, including fetching their breakfasts and lunches from nearby vendors. At 1pm, Fatuma starts to cry because she’s hungry but as Shamim can’t afford to eat well she’s not producing enough milk.  Shamim gives Fatuma some of the leftovers from her workmates’ lunch. <br><br>During the afternoon, Shamim continues to run errands such as fetching water to wash customers’ hair, cleaning the floor and keeping the salon tidy. In between she manages to spend a bit of time practising hairdressing by braiding a doll, which is how her boss is teaching her. Since she has to clean up and mop the floors, Shamim is the last to leave the salon with her boss. </p>"
 				
 				},
 				"media": {
@@ -128,8 +128,8 @@
 					"line": 				true
 				},
 				"text": {
-					"headline": 			"LOCATION 5",
-					"text": 				"<p style='text-align:justify;'>Shamim arrives home at 8.30 pm. She gives Fatuma a bath and washes her clothes, that must be sued already again tomorrow. Bathing and washing are normally done by using some of the water in the nearby streams, but today she can use the clean water she collected in the morning. Once Fatuma is in bed, she heats up some of the porridge left from the morning and eats it together with a chapati, which is a round flat bread made from mainly whole meal flour. She goes to bed and starts reflecting on her life and wishes she could go back to school or get some vocational training so that she could get a better job and give Fatuma a better life and access better medical services. At 2 am, Shamim wakes up to Fatuma crying. She changes Fatuma’s wet clothes and breastfeeds her. Shamim then tries to get back to sleep, she knows that tomorrow another exhausting day awaits. </p>"
+					"headline": 			"Travelling home",
+					"text": 				"<p style='text-align:justify;'>At 8 pm, Shamim ties Fatuma to her back and starts walking home. She can’t afford to get a boda-boda as whatever money she’s received in tips she needs to save.</p>"
 				
 				},
 				"media": {
@@ -150,12 +150,34 @@
 					"line": 				true
 				},
 				"text": {
-					"headline": 			"LOCATION 5",
-					"text": 				"<p style='text-align:justify;'>Many of the girls that Shamim represents, faces the same challenges as her. The Uganda Child Helpline offers toll free telephone service, where girls like Shamim can call and get consultancy. The Uganda Child Helpline, also known by its brand name Sauti, offers a toll free telephone service on the short code 116 which is accessible on all telecommunication networks in the country. The telephone service operates 24/7 and is just one of the ways in which the Child Helpline aims to protect children. Other approaches employed by the Helpline to offer child protection include: <ul><li>Handling walk-in clients</li><li>Responding to cases reported through the U-report platform</li><li>Follow up of child abuse cases reported through various Media (including social media)</li><li>Handling cases that entail Online Child Sexual Abuse</li><li>Community awareness raising campaigns in schools, communities and on radios & television etc.</li></ul></p>"
+					"headline": 			"Home",
+					"text": 				"<p style='text-align:justify;'>When she arrives home at 8.30 pm, Shamim washes Fatuma ‘s dirty clothes and gives her a bath using the water she managed to save from the morning. Once she’s put Fatuma to bed, Shamim heats up the porridge left over from breakfast, which she eats with a chapatti. She washes her feet and, exhausted, lies down on a small mattress made of old clothes inside a mattress cover. As she falls asleep, she reflects on her life and wishes she could go back to school or get some vocational training so that she could get a better job and afford to take Fatuma to a private hospital. She would like to start her own small business, such as a hair salon. <font size='2'> <i>(Urban CSSP Focus Group Discussions, 2018) </i></font><br><br>At 2 am, Shamim wakes up to Fatuma crying. She changes the baby’s wet clothes and breastfeeds her. She tries to get back to sleep. She knows that soon she’ll have to wake up and start another long, hard day.</p>"
 				
 				},
 				"media": {
 					"url": 				"css/images/shamim/Step7.jpg",
+					"credit":				"SOURCE/PHOTOGRAPHER",
+					"caption":			""
+				}
+			},
+						{
+				"type": 					"", 
+
+				"date": 					"1835",
+				"location": {
+					"lat": 				0.3193,
+					"lon": 				32.5953,
+					"name": 				"END",
+					"zoom": 				12,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+                "headline": "The Uganda Child Helpline",
+                "text": "<p style='text-align:justify;'>The Uganda Child Helpline, also known by its brand name Sauti, offers a toll-free telephone service on the short code 116 which is accessible on all telecommunication networks in the country. The telephone service operates 24/7 and is just one of the ways in which the Child Helpline aims to protect children. Other approaches employed by the Helpline to offer child protection include: <ul><li>Handling walk-in clients</li><li>Responding to cases reported through the U-report platform</li><li>Follow up of child abuse cases reported through various Media (including social media)</li><li>Handling cases that entail Online Child Sexual Abuse</li><li>Community awareness raising campaigns in schools, communities and on radios & television etc.</li></ul></p>"
+            },
+				"media": {
+					"url": 				"css/images/sarah/Step9.jpg",
 					"credit":				"SOURCE/PHOTOGRAPHER",
 					"caption":			""
 				}

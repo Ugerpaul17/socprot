@@ -136,6 +136,14 @@ $(window).on('load', function() {
 				global.selectedWater = [];
 				_selectedDataset = dataset;
 			}
+			function refreshCountsDistrict() {
+				global.selectedDistrict = [];
+				_selectedDataset = dataset;
+			}
+			function refreshCountsDonor() {
+				global.selectedDonor = [];
+				_selectedDataset = dataset;
+			}
 
 			function ready(error, health, education, protection, water, sector, relationship) {
 				//standard for if data is missing, the map shouldnt start.
@@ -215,7 +223,6 @@ $(window).on('load', function() {
 					.append('tr');
 					rows.selectAll('td')
 						.data(function (d) {
-						//						console.log(d);
 						return titles.map(function (k) {
 							if (k === 'values') {
 								return { 'value': +(d[k].length), 'name': k};
@@ -321,7 +328,6 @@ $(window).on('load', function() {
 				var healthPoints = L.geoJson(health, {
 					pointToLayer: function (feature, latlng) {
 						function shape(feature) {
-							//						console.log(feature);
 							if (feature.properties.Deliveries === "Yes" && feature.properties.ANC === "Yes") {
 								return	"circle"
 							} else if (feature.properties.Deliveries === "Yes" && feature.properties.ANC === "No") {
@@ -356,7 +362,6 @@ $(window).on('load', function() {
 				var educationPoints = L.geoJson(education, {
 					pointToLayer: function (feature, latlng) {
 						function shape(feature) {
-							//						console.log(feature);
 							if (feature.properties.typeText === "Pre-Primary Schools") {
 								return	"circle"
 							} else if (feature.properties.typeText === "Primary Schools") {
@@ -364,7 +369,7 @@ $(window).on('load', function() {
 							} else if (feature.properties.typeText === "Post Primary Schools") {
 								return	"triangle-up"
 							} else if (feature.properties.typeText === "Secondary Schools") {
-								return	"x"
+								return	"diamond"
 							} else if (feature.properties.typeText === "Tertiary Educational Institutions") {
 								return	"triangle-down"
 							} else if (feature.properties.typeText === "Non Formal Schools") {
@@ -396,7 +401,6 @@ $(window).on('load', function() {
 				var protectionPoints = L.geoJson(protection, {
 					pointToLayer: function (feature, latlng) {
 						function shape(feature) {
-							//						console.log(feature);
 							if (feature.properties.typeText === "Police Post") {
 								return	"circle"	
 							} else if (feature.properties.typeText === "Police Station") {
@@ -426,7 +430,6 @@ $(window).on('load', function() {
 				var waterPoints = L.geoJson(water, {
 					pointToLayer: function (feature, latlng) {
 						function shape(feature) {
-							//						console.log(feature);
 							if (feature.properties.Type === "Protected Springs") {
 								return	"circle"
 							} else if (feature.properties.Type === "Public Toilet") {
@@ -456,7 +459,7 @@ $(window).on('load', function() {
 				}).addTo(map);
 
 
-				var waterIcon1 = d3.selectAll("icon1").append('svg')
+				var waterIcon1 = d3.selectAll(".waterIcon1").append('svg')
 				.attr("width", 25)
 				.attr("height", 25);
 
@@ -466,6 +469,50 @@ $(window).on('load', function() {
 					.style("opacity", 0.7)
 					.style("stroke-width", "0.5px")
 					.attr("d", 'M 0,0 m 0.575,19.167 L 8.25,3.417 L 16.075,19.167 Z');
+
+				var healthIcon1 = d3.selectAll(".healthIcon1").append('svg')
+				.attr("width", 25)
+				.attr("height", 25);
+
+				healthIcon1.append('path')
+					.attr("style", "pointer-events:all!important")
+					.style("fill", "#8b0000")
+					.style("opacity", 0.7)
+					.style("stroke-width", "0.5px")
+					.attr("d", 'M 0,0 m 0.575,19.167 L 8.25,3.417 L 16.075,19.167 Z');
+
+				var educationIcon1 = d3.selectAll(".educationIcon1").append('svg')
+				.attr("width", 25)
+				.attr("height", 25);
+
+				educationIcon1.append('path')
+					.attr("style", "pointer-events:all!important")
+					.style("fill", "#008000")
+					.style("opacity", 0.7)
+					.style("stroke-width", "0.5px")
+					.attr("d", 'M 0,0 m 0.575,19.167 L 8.25,3.417 L 16.075,19.167 Z');
+
+				var educationIcon2 = d3.selectAll(".educationIcon2").append('svg')
+				.attr("width", 25)
+				.attr("height", 25);
+
+				educationIcon2.append('path')
+					.attr("style", "pointer-events:all!important")
+					.style("fill", "#008000")
+					.style("opacity", 0.7)
+					.style("stroke-width", "0.5px")
+					.attr("d", 'M 0.5 8.5 L 8 0 L 16.5 8.5 L 8.5 17 Z');
+
+				var educationIcon3 = d3.selectAll(".educationIcon3").append('svg')
+				.attr("width", 25)
+				.attr("height", 25);
+
+				educationIcon3.append('path')
+					.attr("style", "pointer-events:all!important")
+					.style("fill", "#008000")
+					.style("opacity", 0.7)
+					.style("stroke-width", "0.5px")
+					.attr("d", 'M 0 0 L 15 0 L 7 15 Z');
 
 
 
@@ -512,8 +559,10 @@ $(window).on('load', function() {
 
 				function refreshMapHealth() {
 					refreshCountsHealth();
+					refreshCountsDonor();
 					map.getPane('healthPane').style.zIndex = 100;
 					d3.select("#health-list").selectAll("p").style("background", "transparent");
+					d3.select("#donor-list").selectAll("p").style("background", "transparent");
 
 					updateLeftPanel(districtList, educationList, protectionList, donorList, healthList, waterList, dataset);
 					var domain = [+Infinity, -Infinity];
@@ -522,8 +571,10 @@ $(window).on('load', function() {
 
 				function refreshMapEducation() {
 					refreshCountsEducation();
+					refreshCountsDistrict();
 					map.getPane('educationPane').style.zIndex = 100;
 					d3.select("#education-list").selectAll("p").style("background", "transparent");
+					d3.select("#district-list").selectAll("p").style("background", "transparent");
 
 					updateLeftPanel(districtList, educationList, protectionList, donorList, healthList, waterList, dataset);
 					var domain = [+Infinity, -Infinity];
@@ -578,7 +629,7 @@ $(window).on('load', function() {
 
 				function myFilter(c, flag, needRemove) {
 					if (flag === "district") {
-						filterSelectedItem("selectedEducation", c, needRemove);
+						filterSelectedItem("selectedDistrict", c, needRemove);
 					}
 					if (flag === "education") {
 						filterSelectedItem("selectedEducation", c, needRemove);
@@ -596,7 +647,7 @@ $(window).on('load', function() {
 						filterSelectedItem("selectedOp", c, needRemove);
 					}
 					if (flag === "donor") {
-						filterSelectedItem("selectedHealth", c, needRemove);
+						filterSelectedItem("selectedDonor", c, needRemove);
 					}
 					if (flag === "health") {
 						filterSelectedItem("selectedHealth", c, needRemove);
@@ -607,10 +658,10 @@ $(window).on('load', function() {
 
 					var selectedDataset = dataset.filter(function (d) { //global.selectedDataset
 						var isDistrict = false; //global.selectedDistrict ? global.selectedDistrict.key === d.District : true;
-						if (global.selectedEducation.length > 0) {
+						if (global.selectedDistrict.length > 0) {
 							map.getPane('educationPane').style.zIndex = 400
-							global.selectedEducation.map(function (c) {
-								if (c.values[0].typeTextSchools === d.typeTextSchools) {
+							global.selectedDistrict.map(function (c) {
+								if (c.values[0].ownershipText === d.ownershipText) {
 									isDistrict = true;
 								}
 							});
@@ -644,10 +695,10 @@ $(window).on('load', function() {
 						}
 
 						var isDonor = false;
-						if (global.selectedHealth.length > 0) {
+						if (global.selectedDonor.length > 0) {
 							map.getPane('healthPane').style.zIndex = 400
-							global.selectedHealth.map(function (c) {
-								if (c.values[0].typeTextHealth === d.typeTextHealth) {
+							global.selectedDonor.map(function (c) {
+								if (c.values[0].ownershipText === d.ownershipText) {
 									isDonor = true;
 								}
 							});
@@ -764,16 +815,46 @@ $(window).on('load', function() {
 							myFilter(c, global.currentEvent, needRemove);
 							d3.selectAll(".education").style("opacity", 0);
 
-							global.selectedEducation.map(function (a) {
+							global.selectedDistrict.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
-									d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);	
+									if(global.selectedEducation.length === 0){
+										d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);
+									} else {
+										for (var j = 0; j < global.selectedEducation.length; j++) {
+											if(a.values[i].typeTextSchools === global.selectedEducation[j].key) {
+												d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);	
+											}
+										}	
+									}
+
 								}
 							});
-							if(global.selectedEducation.length === 0){
-								map.getPane('educationPane').style.zIndex = 100;
-								refreshMap();}
+							global.selectedEducation.map(function (a) {
+								for (var i = 0;i < a.values.length; i++) {
+									if(global.selectedDistrict.length === 0){
+										d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);
+									} else {
+										for (var i = 0;i < a.values.length; i++) {
+											for (var j = 0; j < global.selectedDistrict.length; j++) {
+												if(a.values[i].ownershipText === global.selectedDistrict[j].key) {
+													d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);	
+												}
+											}
+										}
+									}
+
+								}
+							});
+							if(global.selectedDistrict.length === 0 && global.selectedEducation.length === 0){
+								map.getPane('educationPane').style.zIndex = 100
+							} else {
+								map.getPane('educationPane').style.zIndex = 400
+							}
 						});
 						_districtList
+							.attr("class", function (d) {
+							return "district-list-" + d.key.replaceAll('[ ]', "_");
+						})
 							.text(function (d) {
 							return d.key;
 						});
@@ -803,7 +884,7 @@ $(window).on('load', function() {
 							});
 							if(global.selectedWater.length === 0){
 								map.getPane('waterPane').style.zIndex = 100
-								refreshMap();}
+							}
 						});
 						_waterList
 							.attr("class", function (d) {
@@ -837,12 +918,40 @@ $(window).on('load', function() {
 							// myFilterBySector(c, needRemove);
 							global.selectedEducation.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
-									d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);	
+									if(global.selectedDistrict.length === 0){
+										d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);
+									} else {
+										for (var i = 0;i < a.values.length; i++) {
+											for (var j = 0; j < global.selectedDistrict.length; j++) {
+												if(a.values[i].ownershipText === global.selectedDistrict[j].key) {
+													d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);	
+												}
+											}
+										}
+									}
+
 								}
 							});
-							if(global.selectedEducation.length === 0){
+							global.selectedDistrict.map(function (a) {
+								for (var i = 0;i < a.values.length; i++) {
+									if(global.selectedEducation.length === 0){
+										d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);
+									} else {
+										for (var j = 0; j < global.selectedEducation.length; j++) {
+											if(a.values[i].typeTextSchools === global.selectedEducation[j].key) {
+												d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);	
+											}
+										}	
+									}
+
+								}
+							});
+							if(global.selectedEducation.length === 0 && global.selectedDistrict.length === 0){
 								map.getPane('educationPane').style.zIndex = 100
-								refreshMap();}
+
+							} else {
+								map.getPane('educationPane').style.zIndex = 400
+							}
 						});
 						_educationList //.transition().duration(duration)
 							.attr("class", function(d){
@@ -860,7 +969,6 @@ $(window).on('load', function() {
 						_protectionList.enter().append("p")
 						// .style("background", "transparent")
 							.on("click", function (c) {
-							console.log(c);
 
 							var needRemove = $(d3.select(this).node()).hasClass("d3-active"); //d3.select(this).attr("class");//d3-active
 							d3.select(this).classed("d3-active", !needRemove).style("background", needRemove ? "transparent" : "#808080");
@@ -876,9 +984,7 @@ $(window).on('load', function() {
 							});
 							if(global.selectedProtection.length === 0){
 								map.getPane('protectionPane').style.zIndex = 100
-								refreshMap();}
-
-
+							}
 						});
 						_protectionList
 							.attr("class", function(d){
@@ -905,16 +1011,53 @@ $(window).on('load', function() {
 							myFilter(c, global.currentEvent, needRemove);
 							d3.selectAll(".health").style("opacity", 0);
 
-							global.selectedHealth.map(function (a) {
+							global.selectedDonor.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
-									d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);	
+									if(global.selectedHealth.length === 0){
+										d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+									} else {
+										for (var i = 0;i < a.values.length; i++) {
+											for (var i = 0;i < a.values.length; i++) {
+												for (var j = 0; j < global.selectedHealth.length; j++) {
+													if(a.values[i].typeTextHealth === global.selectedHealth[j].key) {
+														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);	
+													}
+												}
+											}
+										}
+									}
+
 								}
 							});
-							if(global.selectedHealth.length === 0){
+							global.selectedHealth.map(function (a) {
+								for (var i = 0;i < a.values.length; i++) {
+									if(global.selectedDonor.length === 0){
+										d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+									} else {
+										for (var i = 0;i < a.values.length; i++) {
+											for (var i = 0;i < a.values.length; i++) {
+												for (var j = 0;j < global.selectedDonor.length; j++) {
+													if(a.values[i].ownershipText === global.selectedDonor[j].key) {
+														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);	
+													}
+												}
+											}
+										}
+									}
+
+								}
+							});
+
+							if(global.selectedDonor.length === 0 && global.selectedHealth.length === 0){
 								map.getPane('healthPane').style.zIndex = 100
-								refreshMap();}
+							} else {
+								map.getPane('healthPane').style.zIndex = 400
+							}
 						});
 						_donorList
+							.attr("class", function(d){
+							return d.key.replace(/\s/g,'');
+						})
 							.text(function (d) {
 							return d.key;
 						});
@@ -939,14 +1082,50 @@ $(window).on('load', function() {
 
 							global.selectedHealth.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
-									d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);	
+									if(global.selectedDonor.length === 0){
+										d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+									} else {
+										for (var i = 0;i < a.values.length; i++) {
+											for (var i = 0;i < a.values.length; i++) {
+												for (var j = 0;j < global.selectedDonor.length; j++) {
+													if(a.values[i].ownershipText === global.selectedDonor[j].key) {
+														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);	
+													}
+												}
+											}
+										}
+									}
+
 								}
 							});
-							if(global.selectedHealth.length === 0){
+							global.selectedDonor.map(function (a) {
+								for (var i = 0;i < a.values.length; i++) {
+									if(global.selectedHealth.length === 0){
+										d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+									} else {
+										for (var i = 0;i < a.values.length; i++) {
+											for (var i = 0;i < a.values.length; i++) {
+												for (var j = 0; j < global.selectedHealth.length; j++) {
+													if(a.values[i].typeTextHealth === global.selectedHealth[j].key) {
+														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);	
+													}
+												}
+											}
+										}
+									}
+
+								}
+							});
+							if(global.selectedHealth.length === 0 && global.selectedDonor.length === 0){
 								map.getPane('healthPane').style.zIndex = 100
-								refreshMap();}
+							} else {
+								map.getPane('healthPane').style.zIndex = 400
+							}
 						});
 						_healthList
+							.attr("class", function(d){
+							return d.key.replace(/\s/g,'');
+						})
 							.text(function (d) {
 							return d.key;
 						});
@@ -972,20 +1151,45 @@ $(window).on('load', function() {
 							d3.select(this).classed("d3-active", !needRemove).style("background", needRemove ? "transparent" : "#808080");
 							global.currentEvent = "district";
 							myFilter(c, global.currentEvent, needRemove);
-							d3.selectAll(".district").style("opacity", 0);
+							d3.selectAll(".education").style("opacity", 0);
 
 							global.selectedDistrict.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
-									d3.selectAll(".district-" + a.values[i].identifier).style("opacity", 1);	
+									if(global.selectedEducation.length === 0){
+										d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);
+									} else {
+										for (var j = 0; j < global.selectedEducation.length; j++) {
+											if(a.values[i].typeTextSchools === global.selectedEducation[j].key) {
+												d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);	
+											}
+										}	
+									}
+
 								}
 							});
-							if(global.selectedDistrict.length === 0){
-								refreshMap();}
+							global.selectedEducation.map(function (a) {
+								for (var i = 0;i < a.values.length; i++) {
+									if(global.selectedDistrict.length === 0){
+										d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);
+									} else {
+										for (var i = 0;i < a.values.length; i++) {
+											for (var j = 0; j < global.selectedDistrict.length; j++) {
+												if(a.values[i].ownershipText === global.selectedDistrict[j].key) {
+													d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);	
+												}
+											}
+										}
+									}
+
+								}
+							});
+							if(global.selectedDistrict.length === 0 && global.selectedEducation.length === 0){
+								map.getPane('educationPane').style.zIndex = 100
+							} else {
+								map.getPane('educationPane').style.zIndex = 400
+							}
 						});
 						_districtList
-							.attr("class", function (d) {
-							return "district-list-" + d.key.replaceAll('[ ]', "_");
-						})
 							.text(function (d) {
 							return d.key;
 						});
@@ -1009,12 +1213,10 @@ $(window).on('load', function() {
 								}
 							});
 							if(global.selectedWater.length === 0){
-								refreshMap();}
+								map.getPane('waterPane').style.zIndex = 100
+							}
 						});
 						_waterList
-							.attr("class", function (d) {
-							return "water-list-" + d.key.replaceAll('[ ]', "_");
-						})
 							.text(function (d) {
 							return d.key;
 						});
@@ -1035,16 +1237,41 @@ $(window).on('load', function() {
 							// myFilterBySector(c, needRemove);
 							global.selectedEducation.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
-									d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);	
+									if(global.selectedDistrict.length === 0){
+										d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);
+									} else {
+										for (var i = 0;i < a.values.length; i++) {
+											for (var j = 0; j < global.selectedDistrict.length; j++) {
+												if(a.values[i].ownershipText === global.selectedDistrict[j].key) {
+													d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);	
+												}
+											}
+										}
+									}
+
 								}
 							});
-							if(global.selectedEducation.length === 0){
-								refreshMap();}
+							global.selectedDistrict.map(function (a) {
+								for (var i = 0;i < a.values.length; i++) {
+									if(global.selectedEducation.length === 0){
+										d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);
+									} else {
+										for (var j = 0; j < global.selectedEducation.length; j++) {
+											if(a.values[i].typeTextSchools === global.selectedEducation[j].key) {
+												d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);	
+											}
+										}	
+									}
+
+								}
+							});
+							if(global.selectedEducation.length === 0 && global.selectedDistrict.length === 0){
+								map.getPane('educationPane').style.zIndex = 100
+							} else {
+								map.getPane('educationPane').style.zIndex = 400
+							}
 						});
-						_educationList //.transition().duration(duration)
-							.attr("class", function(d){
-							return d.key.replace(/\s/g,'');
-						})
+						_educationList
 							.text(function (d) {
 							return d.key;
 						});
@@ -1055,7 +1282,6 @@ $(window).on('load', function() {
 						.each(function(d){})
 						// .style("background", "transparent")
 						.on("click", function (c) {
-							console.log(c);
 
 							var needRemove = $(d3.select(this).node()).hasClass("d3-active"); //d3.select(this).attr("class");//d3-active
 							d3.select(this).classed("d3-active", !needRemove).style("background", needRemove ? "transparent" : "#808080");
@@ -1070,14 +1296,13 @@ $(window).on('load', function() {
 								}
 							});
 							if(global.selectedProtection.length === 0){
-								refreshMap();}
-
-
+								map.getPane('protectionPane').style.zIndex = 100
+							}
 						});
 						_protectionList
-							.html(function(d) {
-							return d.key
-						})
+							.text(function (d) {
+							return d.key;
+						});
 					}
 
 					if (donorList) {
@@ -1089,15 +1314,50 @@ $(window).on('load', function() {
 							// myFilterByAgency(c, needRemove);
 							global.currentEvent = "donor"
 							myFilter(c, global.currentEvent, needRemove);
-							d3.selectAll(".district").style("opacity", 0);
+							d3.selectAll(".health").style("opacity", 0);
 
 							global.selectedDonor.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
-									d3.selectAll(".district-" + a.values[i].identifier).style("opacity", 1);	
+									if(global.selectedHealth.length === 0){
+										d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+									} else {
+										for (var i = 0;i < a.values.length; i++) {
+											for (var i = 0;i < a.values.length; i++) {
+												for (var j = 0; j < global.selectedHealth.length; j++) {
+													if(a.values[i].typeTextHealth === global.selectedHealth[j].key) {
+														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);	
+													}
+												}
+											}
+										}
+									}
+
 								}
 							});
-							if(global.selectedDonor.length === 0){
-								refreshMap();}
+							global.selectedHealth.map(function (a) {
+								for (var i = 0;i < a.values.length; i++) {
+									if(global.selectedDonor.length === 0){
+										d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+									} else {
+										for (var i = 0;i < a.values.length; i++) {
+											for (var i = 0;i < a.values.length; i++) {
+												for (var j = 0;j < global.selectedDonor.length; j++) {
+													if(a.values[i].ownershipText === global.selectedDonor[j].key) {
+														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);	
+													}
+												}
+											}
+										}
+									}
+
+								}
+							});
+
+							if(global.selectedDonor.length === 0 && global.selectedHealth.length === 0){
+								map.getPane('healthPane').style.zIndex = 100
+							} else {
+								map.getPane('healthPane').style.zIndex = 400
+							}
 						});
 						_donorList
 							.text(function (d) {
@@ -1119,11 +1379,45 @@ $(window).on('load', function() {
 
 							global.selectedHealth.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
-									d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);	
+									if(global.selectedDonor.length === 0){
+										d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+									} else {
+										for (var i = 0;i < a.values.length; i++) {
+											for (var i = 0;i < a.values.length; i++) {
+												for (var j = 0;j < global.selectedDonor.length; j++) {
+													if(a.values[i].ownershipText === global.selectedDonor[j].key) {
+														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);	
+													}
+												}
+											}
+										}
+									}
+
 								}
 							});
-							if(global.selectedHealth.length === 0){
-								refreshMap();}
+							global.selectedDonor.map(function (a) {
+								for (var i = 0;i < a.values.length; i++) {
+									if(global.selectedHealth.length === 0){
+										d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+									} else {
+										for (var i = 0;i < a.values.length; i++) {
+											for (var i = 0;i < a.values.length; i++) {
+												for (var j = 0; j < global.selectedHealth.length; j++) {
+													if(a.values[i].typeTextHealth === global.selectedHealth[j].key) {
+														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);	
+													}
+												}
+											}
+										}
+									}
+
+								}
+							});
+							if(global.selectedHealth.length === 0 && global.selectedDonor.length === 0){
+								map.getPane('healthPane').style.zIndex = 100
+							} else {
+								map.getPane('healthPane').style.zIndex = 400
+							}
 						});
 						_healthList
 							.text(function (d) {
@@ -1199,19 +1493,10 @@ $(window).on('load', function() {
 
 
 						featureLayer.on({
-							click: function(e) {
-								datalayer.setStyle(style());
-								selected = [];
-								selected.push(e.target.feature.properties.pname);
-								e.target.feature.properties.selected = true;
-								e.target.setStyle(selectedStyle());
-								e.target.bringToFront();
-							},
 							mouseover: highlightFeature,
 							mouseout: resetHighlight
 						});
 
-						featureLayer.bindPopup(popup);
 					}
 					datalayer = L.geoJson(data, {
 						style: style,
@@ -1273,6 +1558,14 @@ $(window).on('load', function() {
 
 						layerRemover.addTo(map);
 
+						var removeLayers = d3.select("#removeLayers");
+
+						removeLayers.on('click', function(){
+							map.removeLayer(datalayer1);
+							map.removeLayer(datalayerPoverty);
+							map.removeLayer(datalayerDensity);
+						})
+
 					});
 
 
@@ -1289,7 +1582,6 @@ $(window).on('load', function() {
 
 				// method that we will use to update the control based on feature properties passed
 				info.update = function (props) {
-					console.log(props);
 					this._div.innerHTML = (props ? 'Sub County: <b>' + props.SNAME2014 + '</b><br/>' + 
 										   'Parish: <b>' + props.dist + '</b>'
 										   : 'Hover over a parish');
@@ -1302,10 +1594,10 @@ $(window).on('load', function() {
 					var layer = e.target;
 
 					layer.setStyle({
-						weight: 5,
+						weight: 3,
 						color: '#666',
 						dashArray: '',
-						fillOpacity: 0.7
+						fillOpacity: 0
 					});
 
 					if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
@@ -1320,16 +1612,7 @@ $(window).on('load', function() {
 					info.update();
 				}
 
-				var removeLayers = d3.select("#removeLayers");
-
-				removeLayers.on('click', function(){
-					map.removeLayer(datalayer1);
-					map.removeLayer(datalayerPoverty);
-					map.removeLayer(datalayerDensity);
-				})
-
-
-
+				
 				window.addEventListener("resize", function () {
 					var wrapper = d3.select("#d3-map-wrapper");
 					var width = wrapper.node().offsetWidth || 960;
@@ -1346,8 +1629,7 @@ $(window).on('load', function() {
 
 
 		})(d3, $, queue, window);
-
-
+		
 		document.getElementById('sidebar-left').style.display = "block";
 		//		document.getElementById('sidebar-right').style.display = "block";
 		$('#map').css('visibility', 'visible');
