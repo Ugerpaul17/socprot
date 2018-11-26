@@ -70,11 +70,22 @@
 
 		<div id="map" class="sidebar-map"></div>
 
+		<div id="d3-map-info-container">
+			<section class="spaces">
+				<button type="button" class="pop-button button3" data-placement="bottom" data-trigger="click" data-toggle="popover" title="Filters" data-content="Use this panel to interact with the map and put points on the map."><span>&#43;</span></button>
+				<button type="button" class="pop-button button1" data-placement="bottom" data-trigger="click" data-toggle="popover" title="Map Control" data-content="Use these controls to zoom into the map and See which Parish you're pointing at."><span>&#43;</span></button>
+				<button type="button" class="pop-button button2" data-placement="bottom" data-trigger="click" data-toggle="popover" title="Layer Control" data-content="Turn on/off thematic layers on the map with these controls"><span>&#43;</span></button>
+				<p class="nav nav-tabs" style=" position: absolute; bottom: 1.5%; right: 0.5%;" role="tablist"><a class="nav-item"><a id="infoButton2" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true" ><span style="font-size: x-large;">Info &#9432;</span></a></a></p>
+			</section>
+		</div>
+
+		<link href="clickable-pop-up-boxes.css" rel="stylesheet">
+		<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 		<script src="js/leaflet.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 		<script src="../../assets/sidebar/js/leaflet-sidebar.js"></script>
-		<script src="../../assets/web/assets/jquery/jquery.min.js"></script>
 		<script src="js/d3.v3.min.js"></script>
-		<script src="js/RadarChart.js"></script>
 
 		<script>       
 
@@ -98,13 +109,146 @@
 
 				sidebar.open('home');
 
+				L.control.zoom({
+					position:'topright'
+				}).addTo(storkmap.map);
+
+				var datalayer;
+				var datalayer1;
+				var datalayerPoverty;
+				var datalayerDensity;
+
+				$.getJSON('data/povertyAndPopulationDensity.geojson', function(data){
+					function getColorPoverty(d) {
+						return d > 5.1  ? 'rgb(23,78,105)' :
+						d > 3.1  ? 'rgb(46,95,120)' :
+						d > 1.6  ? 'rgb(115,148,165)' :
+						d > 0.6   ? 'rgb(162,184,195)' :
+						'rgb(231,237,240)';
+					}
+
+					function getColorPopDensity(d) {
+						return d > 28929.79  ? 'rgb(23,78,105)' :
+						d > 21772.67  ? 'rgb(46,95,120)' :
+						d > 14615.54  ? 'rgb(115,148,165)' :
+						d > 7458.42   ? 'rgb(162,184,195)' :
+						'rgb(231,237,240)';
+					}
+
+					function stylePoverty(feature) {
+						return {
+							color: getColorPoverty(feature.properties.povertyHH),
+							fillOpacity: 0.6,
+							weight: 0.2
+						};
+					}
+					function stylePopDensity(feature) {
+						return {
+							color: getColorPopDensity(feature.properties.populationDensity),
+							fillOpacity: 0.6,
+							weight: 0.2
+						};
+					}
+
+					datalayerPoverty = L.geoJson(data, {
+						style: stylePoverty,
+						//						onEachFeature: parishOnEachFeature
+
+					});
+					datalayerDensity = L.geoJson(data, {
+						style: stylePopDensity,
+						//						onEachFeature: parishOnEachFeature
+
+					});
+
+
+
+					$.getJSON('data/kampala_slum_settlement.geojson', function(data){
+						function style1(feature) {
+							return {
+								color: 'green',
+								fillOpacity: 0.4,
+								opacity: 1,
+								weight: 0.8
+							};
+						}
+
+						datalayer1 = L.geoJson(data, {
+							style: style1
+						});
+
+
+						var overlaymaps = {
+							"Slum Boundaries" : datalayer1,
+							"Household Poverty" : datalayerPoverty,
+							"Population Density" : datalayerDensity
+						};
+
+
+
+						L.control.layers(overlaymaps, null, {autoZIndex: false,collapsed: true, position: 'topleft'}).addTo(storkmap.map);
+
+
+						var layerRemover = L.control({position: 'topleft'});
+
+						layerRemover.onAdd = function () {
+
+							var div = L.DomUtil.create('div', '');
+							div.innerHTML = '<p class="nav nav-tabs" role="tablist">' +
+								'<a class="nav-item"><a id="removeLayers" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true">Remove Layers</a></a>' +
+								'</p>'
+
+							return div;
+						};
+
+						layerRemover.addTo(storkmap.map);
+
+						var removeLayers = d3.select("#removeLayers");
+
+						removeLayers.on('click', function(){
+							
+							storkmap.map.removeControl(populationChangeLegend);
+							storkmap.map.removeControl(populationLegend);
+
+							storkmap.map.removeLayer(datalayer1);
+							storkmap.map.removeLayer(datalayerPoverty);
+							storkmap.map.removeLayer(datalayerDensity);
+						})
+
+						var resetMap = L.control({position: 'topleft'});
+
+						resetMap.onAdd = function (map) {
+
+							var div = L.DomUtil.create('div', '');
+							div.innerHTML = '<p class="nav nav-tabs" role="tablist">' +
+								'<a class="nav-item"><a id="resetMap" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true">Reset Map</a></a>' +
+								'</p>'
+
+							return div;
+						};
+
+						resetMap.addTo(storkmap.map);
+
+						var resetMapButton = d3.select("#resetMap");
+
+						resetMapButton.on('click', function(){
+							d3.select(".statDist").remove();
+
+							storkmap.map.setView([0.3233, 32.5625], 12);
+						})
+
+					});
+
+
+
+				});
 
 				$.getJSON('./data/kampalaParishes_.geojson', function(data){
 					function style(feature) {
 						return {
-							color: '#ff5500',
+							color: '#174e69',
 							fillOpacity: 0.5,
-							opacity: 1,
+							opacity: 0.6,
 							weight: 0.8
 						};
 					}
@@ -116,10 +260,10 @@
 					.attr("class", "d3-tooltip d3-hide");
 					function selectedStyle(feature) {
 						return {
-							color: '#00c5ff',
+							color: '#13988e',
 							fillOpacity: 0.5,
 							zIndex:10000,
-							opacity: 1,
+							opacity: 0.3,
 							weight: 2
 						};
 					}
@@ -175,9 +319,9 @@
 								rectangles.append("rect")
 									.attr("transform", "translate(0,25)")
 									.attr("class", "districtLegend")
-									.attr("width", "100px")
+									.attr("width", "150px")
 									.attr("height", "20px")
-									.attr("fill", "#41b6c4");
+									.attr("fill", "#13988e");
 								rectangles.append("text")
 									.attr("class", "districtLegend")
 									.attr("x", 6.33)
@@ -190,7 +334,7 @@
 
 
 
-								d3.csv('./data/dummydata2.csv', function (error, list) {
+								d3.csv('./data/listOfParameters.csv', function (error, list) {
 									var header = [];
 									var values = [];
 									for (var i = 0; i < data.features.length; i++) {
@@ -231,7 +375,7 @@
 										.attr('height', yScale.rangeBand() / 2 * 0.8)
 										.attr('width', function(d) { return x(barValue(d)); })
 										.attr('stroke', 'white')
-										.attr('fill', '#41b6c4');
+										.attr('fill', '#13988e');
 									// bar value labels
 									barsContainer.selectAll("text").data(chartDist[1]).enter().append("text")
 										.attr("x", function(d) { return x(barValue(d)); })
@@ -239,7 +383,7 @@
 										.attr("dx", 3) // padding-left
 										.attr("dy", "-.3em") // vertical-align: middle
 										.attr("text-anchor", "start") // text-align: right
-										.attr("fill", '#41b6c4')
+										.attr("fill", '#13988e')
 										.attr("stroke", "none")
 										.text(function(d) { return d3.round(barValue(d), 2); });
 								});
@@ -257,8 +401,8 @@
 					// method that we will use to update the control based on feature properties passed
 					info.update = function (props) {
 						this._div.innerHTML = (props ? 'Sub County: <b>' + props.SNAME2014 + '</b><br/>' + 
-																		'Parish: <b>' + props.PNAME2014 + '</b>'
-																		: 'Hover over a parish');
+											   'Parish: <b>' + props.PNAME2014 + '</b>'
+											   : 'Hover over a parish');
 					};
 
 					info.addTo(storkmap.map);
@@ -269,9 +413,9 @@
 
 						layer.setStyle({
 							weight: 5,
-							color: '#666',
+							color: '#174e69',
 							dashArray: '',
-							fillOpacity: 0.7
+							fillOpacity: 0.3
 						});
 
 						if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
@@ -285,6 +429,91 @@
 						datalayer.resetStyle(e.target);
 						info.update();
 					}
+					
+					
+					var infoButton = L.control({position: 'bottomright'});
+
+					infoButton.onAdd = function (map) {
+
+						var div = L.DomUtil.create('div', '');
+						div.innerHTML = '<p class="nav nav-tabs" style="z-index: 5000;" role="tablist">' +
+							'<a class="nav-item"><a id="infoButton" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true" ><span style="font-size: x-large;">Info &#9432;</span></a></a>' +
+							'</p>'
+
+						return div;
+					};
+
+					infoButton.addTo(storkmap.map);
+
+					var infoButton = d3.select("#infoButton");
+
+					infoButton.on('click', function(){
+
+						var div_form = $('#infoButton2');
+						if (div_form.hasClass('active')) {
+							div_form.removeClass('active');
+						} else {
+							div_form.addClass('active');
+						}
+
+						var div_form = $('#d3-map-info-container');
+						if (div_form.hasClass('hide')) {
+							div_form.removeClass('hide');
+						} else {
+							div_form.addClass('hide');
+						}
+					})
+
+					var infoButton2 = d3.select("#infoButton2");
+
+					infoButton2.on('click', function(){
+
+						var div_form = $('#infoButton');
+						if (div_form.hasClass('active')) {
+							div_form.removeClass('active');
+						} else {
+							div_form.addClass('active');
+						}
+
+						var div_form = $('#d3-map-info-container');
+						if (div_form.hasClass('hide')) {
+							div_form.removeClass('hide');
+						} else {
+							div_form.addClass('hide');
+						}
+					})
+					
+					var populationLegend = L.control({position: 'bottomright'});
+						var populationChangeLegend = L.control({position: 'bottomright'});
+
+						populationLegend.onAdd = function (map) {
+							var div = L.DomUtil.create('div', 'info legend');
+							div.innerHTML +=
+								'<img src="images/povertyLegend.jpeg" alt="legend" width="302" height="215">';
+							return div;
+						};
+
+						populationChangeLegend.onAdd = function (map) {
+							var div = L.DomUtil.create('div', 'info legend');
+							div.innerHTML +=
+								'<img src="images/popDensityLegend.jpeg" alt="legend" width="396" height="222">';
+							return div;
+						};
+
+						// Add this one (only) for now, as the Population layer is on by default
+//						populationLegend.addTo(storkmap.map);
+
+						storkmap.map.on('baselayerchange', function (eventLayer) {
+							console.log(eventLayer);
+							// Switch to the Population legend...
+							if (eventLayer.name === 'Household Poverty') {
+								this.removeControl(populationChangeLegend);
+								populationLegend.addTo(this);
+							} else { // Or switch to the Population Change legend...
+								this.removeControl(populationLegend);
+								populationChangeLegend.addTo(this);
+							}
+						});
 
 
 
@@ -292,7 +521,7 @@
 
 
 				});
-				
+
 
 				var header = [];
 				var values = [];
@@ -357,7 +586,7 @@
 					.attr('height', yScale.rangeBand() - 5)
 					.attr('width', function(d) { return x(barValue(d)); })
 					.attr('stroke', 'white')
-					.attr('fill', '#E3784A');
+					.attr('fill', '#174e69');
 				// bar value labels
 				barsContainer.selectAll("text").data(chartData[1]).enter().append("text")
 					.attr("x", function(d) { return x(barValue(d)); })
@@ -365,7 +594,7 @@
 					.attr("dx", 3) // padding-left
 					.attr("dy", "-.3em") // vertical-align: middle
 					.attr("text-anchor", "start") // text-align: right
-					.attr("fill", "#E3784A")
+					.attr("fill", "#174e69")
 					.attr("stroke", "none")
 					.text(function(d) { return d3.round(barValue(d), 2); });
 				// start line
@@ -375,22 +604,25 @@
 					.style("stroke", "#000");
 
 				var legend = d3.select('#statistics-legend').append("svg")
-				.attr("width", 100)
+				.attr("width", 150)
 				.attr("height", 45);
 				var rectangles = legend.append('g');
 
 
 				rectangles.append("rect")
-					.attr("width", "100px")
+					.attr("width", "150px")
 					.attr("height", "20px")
-					.attr("fill", "#E3784A");
+					.attr("fill", "#174e69");
 				rectangles.append("text")
 					.attr("x", 3.01)
 					.attr("y",  10)
 					.attr("dy", ".35em")
 					.style('fill', 'white')
-					.text("District Averages");
+					.text("Kampala Averages");
+
 			};
+
+
 
 			function queryOverpass() {
 				//var bbString = formatBBox(),
@@ -431,7 +663,7 @@
 			var attr_nests = 'data via <a href="http://www.overpass-api.de/" target=”_blank”>Overpass API</a>';
 			var attr_dev = 'web map funded by <a href="https://www.giz.de/en/worldwide/310.html" target=”_blank”>GIZ-Uganda</a> and created by <a href="http://geogecko.com" target=”_blank”>GeoGecko</a>';
 
-			var layerOSM = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}.png', {
+			var layerOSM = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
 				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
 				subdomains: 'abcd',
 				maxZoom: 19
@@ -454,7 +686,9 @@
 			makeMap();
 
 
-		</script>		
+		</script>
+
+		<script src="clickable-pop-up-boxes.js"></script>
 
 	</body>
 </html>

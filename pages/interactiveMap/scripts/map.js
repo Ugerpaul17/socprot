@@ -595,6 +595,8 @@ $(window).on('load', function() {
 					refreshCountsWater();
 					map.getPane('waterPane').style.zIndex = 100;
 					d3.select("#water-list").selectAll("p").style("background", "transparent");
+					
+					
 
 					updateLeftPanel(districtList, educationList, protectionList, donorList, healthList, waterList, dataset);
 					var domain = [+Infinity, -Infinity];
@@ -1550,7 +1552,7 @@ $(window).on('load', function() {
 
 							var div = L.DomUtil.create('div', '');
 							div.innerHTML = '<p class="nav nav-tabs" role="tablist">' +
-								'<a class="nav-item"><a id="removeLayers" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" >Remove Layers</a></a>' +
+								'<a class="nav-item"><a id="removeLayers" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true">Remove Layers</a></a>' +
 								'</p>'
 
 							return div;
@@ -1561,9 +1563,35 @@ $(window).on('load', function() {
 						var removeLayers = d3.select("#removeLayers");
 
 						removeLayers.on('click', function(){
+
 							map.removeLayer(datalayer1);
 							map.removeLayer(datalayerPoverty);
 							map.removeLayer(datalayerDensity);
+						})
+						
+						var resetMap = L.control({position: 'topleft'});
+
+						resetMap.onAdd = function (map) {
+
+							var div = L.DomUtil.create('div', '');
+							div.innerHTML = '<p class="nav nav-tabs" role="tablist">' +
+								'<a class="nav-item"><a id="resetMap" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true">Reset Map</a></a>' +
+								'</p>'
+
+							return div;
+						};
+
+						resetMap.addTo(map);
+
+						var resetMapButton = d3.select("#resetMap");
+						
+						resetMapButton.on('click', function(){
+							refreshMapHealth();
+							refreshMapEducation();
+							refreshMapProtection();
+							refreshMapWater();
+							
+							map.setView([0.3233, 32.5625], 12);
 						})
 
 					});
@@ -1611,8 +1639,59 @@ $(window).on('load', function() {
 					datalayer.resetStyle(e.target);
 					info.update();
 				}
-
 				
+				var infoButton = L.control({position: 'bottomright'});
+
+						infoButton.onAdd = function (map) {
+
+							var div = L.DomUtil.create('div', '');
+							div.innerHTML = '<p class="nav nav-tabs" style="z-index: 5000;" role="tablist">' +
+								'<a class="nav-item"><a id="infoButton" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true" ><span style="font-size: x-large;">Info &#9432;</span></a></a>' +
+								'</p>'
+
+							return div;
+						};
+
+						infoButton.addTo(map);
+
+						var infoButton = d3.select("#infoButton");
+
+						infoButton.on('click', function(){
+							
+							var div_form = $('#infoButton2');
+        					if (div_form.hasClass('active')) {
+           						div_form.removeClass('active');
+        					} else {
+          						div_form.addClass('active');
+        					}
+								
+							var div_form = $('#d3-map-info-container');
+        					if (div_form.hasClass('hide')) {
+           						div_form.removeClass('hide');
+        					} else {
+          						div_form.addClass('hide');
+        					}
+						})
+				
+				var infoButton2 = d3.select("#infoButton2");
+
+						infoButton2.on('click', function(){
+							
+							var div_form = $('#infoButton');
+        					if (div_form.hasClass('active')) {
+           						div_form.removeClass('active');
+        					} else {
+          						div_form.addClass('active');
+        					}
+								
+							var div_form = $('#d3-map-info-container');
+        					if (div_form.hasClass('hide')) {
+           						div_form.removeClass('hide');
+        					} else {
+          						div_form.addClass('hide');
+        					}
+						})
+
 				window.addEventListener("resize", function () {
 					var wrapper = d3.select("#d3-map-wrapper");
 					var width = wrapper.node().offsetWidth || 960;
@@ -1629,7 +1708,7 @@ $(window).on('load', function() {
 
 
 		})(d3, $, queue, window);
-		
+
 		document.getElementById('sidebar-left').style.display = "block";
 		//		document.getElementById('sidebar-right').style.display = "block";
 		$('#map').css('visibility', 'visible');

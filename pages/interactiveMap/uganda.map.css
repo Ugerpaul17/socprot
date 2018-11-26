@@ -111,30 +111,19 @@ p.custom-count {
     background: rgb(245, 245, 245);
     position: relative;
 }
-/*
-#d3-map-refresh {
-
-    position: relative;
-/*    left: 25% !important;
-	font-family: Roboto, sans-serif;
-	font-weight: 600;
-	width: 30%;
-    z-index: 9;
-    border-radius: 10px;
-	background: grey;
-	color: white;
-     box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.24), 0 4px 8px 0 rgba(0, 0, 0, 0.16); 
-    padding: 1px 15px;
-    font-size: 1.4rem;
-    z-index: 500;
+#d3-map-info-container {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+	opacity: 0;
 }
-#d3-map-refresh:hover {
-	    
-    background: #13988E;
-    cursor: pointer;
-/*	opacity:.7;
-	color: white;
-}*/
+
+#d3-map-info-container.hide  {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+	z-index: 2000;
+	background-color :rgba(23,78, 105,0.4);
+	opacity: 1;
+}
 
 #d3-map-make-pdf {
     position: absolute;
@@ -209,7 +198,7 @@ div.d3-tooltip p {
 }
 .custom-list {
     text-align: left;
-    height: 10vh !important;
+    height: auto;
     margin: 0;
     padding: 6px 15px;
     top: 20px;
