@@ -532,7 +532,7 @@ $(window).on('load', function() {
 							}
 						});
 					})
-					.style("stroke", function (d) {
+						.style("stroke", function (d) {
 						return d.properties._agencyList ? "#000" : "#00000000"; //#3CB371
 					})
 						.on("click", function (d) {
@@ -635,7 +635,7 @@ $(window).on('load', function() {
 							}
 						});
 					})
-					.style("stroke", function (d) {
+						.style("stroke", function (d) {
 						return d.properties._agencyList ? "#000" : "#00000000"; //#3CB371
 					})
 						.style("fill", function (d) {
@@ -695,7 +695,7 @@ $(window).on('load', function() {
 							}
 						})
 					})
-					.style("stroke", function (d) {
+						.style("stroke", function (d) {
 						return d.properties._agencyList ? "#000" : "#00000000"; //#3CB371
 					})
 						.style("fill", function (d) {
@@ -852,7 +852,7 @@ $(window).on('load', function() {
 							}
 						})
 					})
-					.style("stroke", function (d) {
+						.style("stroke", function (d) {
 						return d.properties._numberOfAgencies ? "#000" : "#00000000"; //#3CB371
 					})
 						.style("fill", function (d) {
@@ -1184,6 +1184,7 @@ $(window).on('load', function() {
 
 				var datalayer;
 				var datalayer1;
+				var datalayer2;
 
 				$.getJSON('data/povertyAndPopulationDensity.geojson', function(data){
 					function getColorPoverty(d) {
@@ -1247,56 +1248,70 @@ $(window).on('load', function() {
 					datalayer1 = L.geoJson(data, {
 						style: stylePopDensity,
 					});
-				
 
-					var overlaymaps = {
-						"Household Poverty" : datalayer,
-						"Population Density" : datalayer1
-					}
+					$.getJSON('data/kampala_slum_settlement.geojson', function(data){
+						function style1(feature) {
+							return {
+								color: 'green',
+								fillOpacity: 0.4,
+								opacity: 1,
+								weight: 0.8
+							};
+						}
 
-					L.control.layers(overlaymaps, null, {autoZIndex: false,collapsed: true, position: 'topleft'}).addTo(map);
-					
-					var layerRemover = L.control({position: 'topleft'});
+						datalayer2 = L.geoJson(data, {
+							style: style1
+						});
+						var overlaymaps = {
+							"Slum Boundaries" : datalayer2,
+							"Household Poverty" : datalayer,
+							"Population Density" : datalayer1
+						}
+						L.control.layers(overlaymaps, null, {autoZIndex: false,collapsed: true, position: 'topleft'}).addTo(map);
+						
+						var layerRemover = L.control({position: 'topleft'});
 
 					layerRemover.onAdd = function (map) {
 
-    			var div = L.DomUtil.create('div', '');
-        		div.innerHTML = '<p class="nav nav-tabs" role="tablist">' +
+						var div = L.DomUtil.create('div', '');
+						div.innerHTML = '<p class="nav nav-tabs" role="tablist">' +
 							'<a class="nav-item"><a id="removeLayers" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" >Remove Layers</a></a>' +
-						'</p>'
+							'</p>'
 
-    			return div;
+						return div;
 					};
 
-				layerRemover.addTo(map);
-					
-					
+					layerRemover.addTo(map);
+
+
 					var removeLayers = d3.select("#removeLayers");
-					
+
 					removeLayers.on('click', function(){
 						map.removeLayer(datalayer);
 						map.removeLayer(datalayer1);
 					})
-					
+
+					});
+
 
 				});
-				
-				
+
+
 				var populationLegend = L.control({position: 'bottomright'});
 				var populationChangeLegend = L.control({position: 'bottomright'});
 
 				populationLegend.onAdd = function (map) {
 					var div = L.DomUtil.create('div', 'info legend');
-    			div.innerHTML +=
-    			'<img src="images/povertyLegend.jpeg" alt="legend" width="302" height="215">';
-				return div;
+					div.innerHTML +=
+						'<img src="images/povertyLegend.jpeg" alt="legend" width="302" height="215">';
+					return div;
 				};
 
 				populationChangeLegend.onAdd = function (map) {
 					var div = L.DomUtil.create('div', 'info legend');
-    						div.innerHTML +=
-    							'<img src="images/popDensityLegend.jpeg" alt="legend" width="396" height="222">';
-							return div;
+					div.innerHTML +=
+						'<img src="images/popDensityLegend.jpeg" alt="legend" width="396" height="222">';
+					return div;
 				};
 
 				// Add this one (only) for now, as the Population layer is on by default
@@ -1314,6 +1329,58 @@ $(window).on('load', function() {
 					}
 				});
 				
+				var infoButton = L.control({position: 'bottomright'});
+
+						infoButton.onAdd = function (map) {
+
+							var div = L.DomUtil.create('div', '');
+							div.innerHTML = '<p class="nav nav-tabs" style="z-index: 5000;" role="tablist">' +
+								'<a class="nav-item"><a id="infoButton" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true" ><span style="font-size: x-large;">Info &#9432;</span></a></a>' +
+								'</p>'
+
+							return div;
+						};
+
+						infoButton.addTo(map);
+
+						var infoButton = d3.select("#infoButton");
+
+						infoButton.on('click', function(){
+							
+							var div_form = $('#infoButton2');
+        					if (div_form.hasClass('active')) {
+           						div_form.removeClass('active');
+        					} else {
+          						div_form.addClass('active');
+        					}
+								
+							var div_form = $('#d3-map-info-container');
+        					if (div_form.hasClass('hide')) {
+           						div_form.removeClass('hide');
+        					} else {
+          						div_form.addClass('hide');
+        					}
+						})
+				
+				var infoButton2 = d3.select("#infoButton2");
+
+						infoButton2.on('click', function(){
+							
+							var div_form = $('#infoButton');
+        					if (div_form.hasClass('active')) {
+           						div_form.removeClass('active');
+        					} else {
+          						div_form.addClass('active');
+        					}
+								
+							var div_form = $('#d3-map-info-container');
+        					if (div_form.hasClass('hide')) {
+           						div_form.removeClass('hide');
+        					} else {
+          						div_form.addClass('hide');
+        					}
+						})
+
 				window.addEventListener("resize", function () {
 					var wrapper = d3.select("#d3-map-wrapper");
 					var width = wrapper.node().offsetWidth || 960;
@@ -1388,9 +1455,9 @@ $(window).on('load', function() {
 			credit += ' | ';
 		}
 
-//		credit += 'View <a href="' + getSetting('_githubRepo') + '">code</a>';
-//		if (getSetting('_codeCredit')) credit += ' by ' + getSetting('_codeCredit');
-//		credit += ' with ';
+		//		credit += 'View <a href="' + getSetting('_githubRepo') + '">code</a>';
+		//		if (getSetting('_codeCredit')) credit += ' by ' + getSetting('_codeCredit');
+		//		credit += ' with ';
 		$('.leaflet-control-attribution')[0].innerHTML = credit + attributionHTML;
 	}
 

@@ -17,7 +17,11 @@
 		<link rel="stylesheet" href="../../assets/sidebar/css/leaflet-sidebar.css">
 
 		<!-- jQuery-->
-		<script src="scripts/jquery-3.2.0.min.js"></script>
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+
+		<link href="clickable-pop-up-boxes.css" rel="stylesheet">
+		<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
 
 		<!-- Leaflet (CSS and JS) -->
 		<link rel="stylesheet" href="leaflet.css" />
@@ -199,7 +203,18 @@
 		</div>
 
 		<div id="d3-map-container" class="sidebar-map">
-			<div id="d3-map-wrapper"></div></div>
+			<div id="d3-map-wrapper"></div>
+		</div>
+
+		<div id="d3-map-info-container">
+			<section class="spaces">
+				<button type="button" class="pop-button button3" data-placement="bottom" data-trigger="click" data-toggle="popover" title="Filters" data-content="Use this panel to interact with the map and put points on the map."><span>&#43;</span></button>
+				<button type="button" class="pop-button button1" data-placement="bottom" data-trigger="click" data-toggle="popover" title="Map Control" data-content="Use these controls to zoom into the map and See which Parish you're pointing at."><span>&#43;</span></button>
+				<button type="button" class="pop-button button2" data-placement="bottom" data-trigger="click" data-toggle="popover" title="Layer Control" data-content="Turn on/off thematic layers on the map with these controls"><span>&#43;</span></button>
+				<p class="nav nav-tabs" style=" position: absolute; bottom: 2.5%; right: 0.5%;" role="tablist"><a class="nav-item"><a id="infoButton2" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true" ><span style="font-size: x-large;">Info &#9432;</span></a></a></p>
+			</section>
+		</div>
+
 
 
 		<script type="text/javascript">
@@ -208,6 +223,10 @@
 				zoomControl: false
 			}).setView([0.3233, 32.5625], 12); // default center is overridden by Google Sheet options and points
 		</script>
+
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
 
 		<!--		<script src="./js/leaflet.js"></script>-->
@@ -226,6 +245,7 @@
 		<script type="text/javascript" src="scripts/polylabel.js"></script>
 		<script type="text/javascript" src="scripts/procsv.js"></script>
 		<script type="text/javascript" src="scripts/map.js"></script>
+		<script src="clickable-pop-up-boxes.js"></script>
 
 
 

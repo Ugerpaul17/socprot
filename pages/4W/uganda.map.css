@@ -112,6 +112,20 @@ p.custom-count {
     position: relative;
 }
 
+#d3-map-info-container {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+	opacity: 0;
+}
+
+#d3-map-info-container.hide  {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+	z-index: 2000;
+	background-color :rgba(23,78, 105,0.4);
+	opacity: 1;
+}
+
 #d3-map-refresh {
 
     position: relative;
