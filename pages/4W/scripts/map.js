@@ -1268,34 +1268,87 @@ $(window).on('load', function() {
 							"Population Density" : datalayer1
 						}
 						L.control.layers(overlaymaps, null, {autoZIndex: false,collapsed: true, position: 'topleft'}).addTo(map);
-						
+
 						var layerRemover = L.control({position: 'topleft'});
 
-					layerRemover.onAdd = function (map) {
+						layerRemover.onAdd = function (map) {
 
-						var div = L.DomUtil.create('div', '');
-						div.innerHTML = '<p class="nav nav-tabs" role="tablist">' +
-							'<a class="nav-item"><a id="removeLayers" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" >Remove Layers</a></a>' +
-							'</p>'
+							var div = L.DomUtil.create('div', '');
+							div.innerHTML = '<p class="nav nav-tabs" role="tablist">' +
+								'<a class="nav-item"><a id="removeLayers" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" >Remove Layers</a></a>' +
+								'</p>'
 
-						return div;
-					};
+							return div;
+						};
 
-					layerRemover.addTo(map);
+						layerRemover.addTo(map);
 
 
-					var removeLayers = d3.select("#removeLayers");
+						var removeLayers = d3.select("#removeLayers");
 
-					removeLayers.on('click', function(){
-						map.removeLayer(datalayer);
-						map.removeLayer(datalayer1);
-					})
+						removeLayers.on('click', function(){
+							map.removeLayer(datalayer);
+							map.removeLayer(datalayer1);
+						})
 
 					});
 
 
 				});
 
+
+
+				var infoButton = L.control({position: 'bottomright'});
+
+				infoButton.onAdd = function (map) {
+
+					var div = L.DomUtil.create('div', '');
+					div.innerHTML = '<p class="nav nav-tabs" style="z-index: 5000;" role="tablist">' +
+						'<a class="nav-item"><a id="infoButton" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true" ><span style="font-size: x-large;">Info &#9432;</span></a></a>' +
+						'</p>'
+
+					return div;
+				};
+
+				infoButton.addTo(map);
+
+				var infoButton = d3.select("#infoButton");
+
+				infoButton.on('click', function(){
+
+					var div_form = $('#infoButton2');
+					if (div_form.hasClass('active')) {
+						div_form.removeClass('active');
+					} else {
+						div_form.addClass('active');
+					}
+
+					var div_form = $('#d3-map-info-container');
+					if (div_form.hasClass('hide')) {
+						div_form.removeClass('hide');
+					} else {
+						div_form.addClass('hide');
+					}
+				})
+
+				var infoButton2 = d3.select("#infoButton2");
+
+				infoButton2.on('click', function(){
+
+					var div_form = $('#infoButton');
+					if (div_form.hasClass('active')) {
+						div_form.removeClass('active');
+					} else {
+						div_form.addClass('active');
+					}
+
+					var div_form = $('#d3-map-info-container');
+					if (div_form.hasClass('hide')) {
+						div_form.removeClass('hide');
+					} else {
+						div_form.addClass('hide');
+					}
+				})
 
 				var populationLegend = L.control({position: 'bottomright'});
 				var populationChangeLegend = L.control({position: 'bottomright'});
@@ -1328,58 +1381,7 @@ $(window).on('load', function() {
 						populationChangeLegend.addTo(this);
 					}
 				});
-				
-				var infoButton = L.control({position: 'bottomright'});
 
-						infoButton.onAdd = function (map) {
-
-							var div = L.DomUtil.create('div', '');
-							div.innerHTML = '<p class="nav nav-tabs" style="z-index: 5000;" role="tablist">' +
-								'<a class="nav-item"><a id="infoButton" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true" ><span style="font-size: x-large;">Info &#9432;</span></a></a>' +
-								'</p>'
-
-							return div;
-						};
-
-						infoButton.addTo(map);
-
-						var infoButton = d3.select("#infoButton");
-
-						infoButton.on('click', function(){
-							
-							var div_form = $('#infoButton2');
-        					if (div_form.hasClass('active')) {
-           						div_form.removeClass('active');
-        					} else {
-          						div_form.addClass('active');
-        					}
-								
-							var div_form = $('#d3-map-info-container');
-        					if (div_form.hasClass('hide')) {
-           						div_form.removeClass('hide');
-        					} else {
-          						div_form.addClass('hide');
-        					}
-						})
-				
-				var infoButton2 = d3.select("#infoButton2");
-
-						infoButton2.on('click', function(){
-							
-							var div_form = $('#infoButton');
-        					if (div_form.hasClass('active')) {
-           						div_form.removeClass('active');
-        					} else {
-          						div_form.addClass('active');
-        					}
-								
-							var div_form = $('#d3-map-info-container');
-        					if (div_form.hasClass('hide')) {
-           						div_form.removeClass('hide');
-        					} else {
-          						div_form.addClass('hide');
-        					}
-						})
 
 				window.addEventListener("resize", function () {
 					var wrapper = d3.select("#d3-map-wrapper");
