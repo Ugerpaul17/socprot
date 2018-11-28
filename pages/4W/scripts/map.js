@@ -187,34 +187,24 @@ $(window).on('load', function() {
 					return d;
 				});
 				var districtList = d3.nest().key(function (d) {
-					if(d.Parish !== "") {
 						return d.Parish;
-					}
 				}).sortKeys(d3.ascending).entries(points);
 
 				var sectorList = d3.nest().key(function (d) {
-					if(d.Sector_Other !== "") {
 						return d.Sector_Other;
-					}
 				}).sortKeys(d3.ascending).entries(points);
 
 				var agencyList = d3.nest().key(function (d) {
-					if(d["Agency name"] !== "") {
 						return d["Agency name"];
-					}
 				}).sortKeys(d3.ascending).entries(points);
 
 
 				var donorList = d3.nest().key(function (d) {
-					if(d["Donor"] !== "") {
 						return d["Donor"];
-					}
 				}).sortKeys(d3.ascending).entries(points);
 
 				var actorTypeList = d3.nest().key(function (d) {
-					if(d["Actor type"] !== "") {
 						return d["Actor type"];
-					}
 				}).sortKeys(d3.ascending).entries(points);
 
 				var beneficiaries = d3.sum(points, function(d){return parseFloat(d.Beneficiaries)});
@@ -313,15 +303,11 @@ $(window).on('load', function() {
 				.append("div")
 				.attr("class", "d3-tooltip d3-hide");
 				var datasetNest = d3.nest().key(function (d) {
-					if(d.key !== "") {
-						return d.Parish;	
-					}
+						return d.Parish;
 				}).entries(dataset);
 
 				var datasetAgency = d3.nest().key(function (d) {
-					if(d.key !== "") {
-						return d["Agency name"];	
-					}
+						return d["Agency name"];
 				}).entries(dataset);
 
 				function updateTable(data) {
@@ -860,14 +846,14 @@ $(window).on('load', function() {
 					});
 
 					var selectedDatasetNest = d3.nest()
-					.key(function(d){if(d.Parish !== ""){ 
+					.key(function(d){
 						return d.Parish; 
-					}}).entries(selectedDataset);
+					}).entries(selectedDataset);
 
 					var selectedDatasetAgency = d3.nest()
-					.key(function(d){if(d.key !== ""){ 
+					.key(function(d){
 						return d["Agency name"]; 
-					}}).entries(selectedDataset);
+					}).entries(selectedDataset);
 
 					var top5Values = selectedDatasetNest.sort(function(a,b){
 						return d3.ascending(a.key, b.key)
@@ -903,43 +889,33 @@ $(window).on('load', function() {
 					var districtList = null;
 					if (flag !== "district") {
 						districtList = d3.nest().key(function (d) {
-							if(d.Parish !== "") {
 								return d.Parish;
-							}
 						}).sortKeys(d3.ascending).entries(selectedDataset);
 					}
 
 					var sectorList = null;
 					if (flag !== "sector") {
 						sectorList = d3.nest().key(function (d) {
-							if(d.Sector_Other !== "") {
 								return d.Sector_Other;
-							}
 						}).sortKeys(d3.ascending).entries(selectedDataset);
 					}
 
 					var agencyList = null;
 					if (flag !== "agency") {
 						agencyList = d3.nest().key(function (d) {
-							if(d["Agency name"] !== "") {
 								return d["Agency name"];
-							}
 						}).sortKeys(d3.ascending).entries(selectedDataset);
 					}
 					var donorList = null;
 					if (flag !== "donor") {
 						donorList = d3.nest().key(function (d) {
-							if(d["Donor"] !== "") {
 								return d["Donor"];
-							}
 						}).sortKeys(d3.ascending).entries(selectedDataset);
 					}
 					var actorTypeList = null;
 					if (flag !== "actor-type") {
 						actorTypeList = d3.nest().key(function (d) {
-							if(d["Actor type"] !== "") {
 								return d["Actor type"];
-							}
 						}).sortKeys(d3.ascending).entries(selectedDataset);
 					}
 					var unAgencyList = null;
