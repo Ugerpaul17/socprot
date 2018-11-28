@@ -607,6 +607,12 @@ p.custom-list-header .glyphicon {
     to {opacity: 1}
 }
 
+
+#sidebar-left, #sidebar-right {
+    display: none; /* Hidden by default */
+}
+
+
 #removeLayers:hover{
   background-color: #174e69;
 }
