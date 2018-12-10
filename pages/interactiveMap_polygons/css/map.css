@@ -23,3 +23,12 @@
 	background-color :rgba(23,78, 105,0.4);
 	opacity: 1;
 }
+
+
+.sidebar-tabs > li.active, .sidebar-tabs > ul > li.active {
+	background-color: white !important;
+	border: 3px solid grey;
+	border-radius: 2px;
+	width:80%
+}
+s

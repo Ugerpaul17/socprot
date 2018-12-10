@@ -8,7 +8,7 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<!--		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">-->
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="../../assets/web/assets/mobirise-icons/mobirise-icons.css">
 		<!--[if lte IE 8]><link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7.2/leaflet.ie.css" /><![endif]-->
 
@@ -97,11 +97,10 @@
 					<li id="educationButton"><a href="#education" role="tab"><img src="data/images/education.svg" alt="Education" title="Education"></a></li>
 					<li id="protectionButton"><a href="#protection" role="tab"><img src="data/images/protection.svg" alt="Protection" title="Protection"></a></li>
 					<li id="waterButton"><a href="#water" role="tab"><img src="data/images/water.svg" alt="Water" title="Water"></a></li>
-					<li><a href="#list" role="tab"><i class="mbri-bulleted-list mbr-iconfont"></i></a></li>
 				</ul>
 
 				<ul role="tablist">
-					<li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+					<li><a href="#info" role="tab"><i class="fa fa-info"></i></a></li>
 				</ul>
 			</div>
 
@@ -212,7 +211,7 @@
 					</div>
 				</div>
 				<div class="sidebar-pane" id="protection">
-					<h1 class="sidebar-header" style="background-color: #00008b;">
+					<h1 class="sidebar-header" style="background-color: #ee8f25;">
 						Protection
 						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
 					</h1>
@@ -238,12 +237,12 @@
 							<table>
 								<tr>
 									<th style="float: left;">
-										<i style="border-radius: 50%;  width: 18px !important; height: 18px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#00008b;"></i> Police Post <br>
+										<i style="border-radius: 50%;  width: 18px !important; height: 18px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#ee8f25;"></i> Police Post <br>
 									</th>
 								</tr>
 								<tr>
 									<th style="float: left;">
-										<i style="width: 18px !important; height: 18px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#00008b;"></i> Police Station <br>
+										<i style="width: 18px !important; height: 18px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#ee8f25;"></i> Police Station <br>
 									</th>
 								</tr>
 							</table>
@@ -292,11 +291,13 @@
 						</div>
 					</div>
 				</div>
-				<div class="sidebar-pane" id="list">
-					<h4 class="sidebar-header" style="font-size: 0.8em; text-align: left;">Parishes in Kampala
+				<div class="sidebar-pane" id="info">
+					<h1 class="sidebar-header">
+						About Portal
 						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
-					</h4>
-					<div id="page-wrap" class="custom-list" style="border: 1px solid #ccc!important; height: 60vh !important;"></div>
+					</h1>
+
+					Interactive Point Map
 				</div>
 			</div>
 		</div>
@@ -305,15 +306,17 @@
 		<div id="d3-map-container" class="sidebar-map">
 			<div id="d3-map-wrapper"></div>
 		</div>
-		
-		<div id="d3-map-info-container">
-			<section class="spaces">
-						<button type="button" class="pop-button button3" data-placement="bottom" data-trigger="click" data-toggle="popover" title="Filters" data-content="Use this panel to interact with the map and put points on the map."><span>&#43;</span></button>
-						<button type="button" class="pop-button button1" data-placement="bottom" data-trigger="click" data-toggle="popover" title="Map Control" data-content="Use these controls to zoom into the map and See which Parish you're pointing at."><span>&#43;</span></button>
-						<button type="button" class="pop-button button2" data-placement="bottom" data-trigger="click" data-toggle="popover" title="Layer Control" data-content="Turn on/off thematic layers on the map with these controls"><span>&#43;</span></button>
-						<p class="nav nav-tabs" style=" position: absolute; bottom: 2.5%; right: 0.5%;" role="tablist"><a class="nav-item"><a id="infoButton2" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true" ><span style="font-size: x-large;">Info &#9432;</span></a></a></p>
-			</section>
-		</div>
+
+		<!--
+<div id="d3-map-info-container">
+<section class="spaces">
+<button type="button" class="pop-button button3" data-placement="bottom" data-trigger="click" data-toggle="popover" title="Filters" data-content="Use this panel to interact with the map and put points on the map."><span>&#43;</span></button>
+<button type="button" class="pop-button button1" data-placement="bottom" data-trigger="click" data-toggle="popover" title="Map Control" data-content="Use these controls to zoom into the map and See which Parish you're pointing at."><span>&#43;</span></button>
+<button type="button" class="pop-button button2" data-placement="bottom" data-trigger="click" data-toggle="popover" title="Layer Control" data-content="Turn on/off thematic layers on the map with these controls"><span>&#43;</span></button>
+<p class="nav nav-tabs" style=" position: absolute; bottom: 2.5%; right: 0.5%;" role="tablist"><a class="nav-item"><a id="infoButton2" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true" ><span style="font-size: x-large;">Info &#9432;</span></a></a></p>
+</section>
+</div>
+-->
 
 
 		<script type="text/javascript">

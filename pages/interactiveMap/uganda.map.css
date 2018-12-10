@@ -604,10 +604,10 @@ p.custom-list-header .glyphicon {
 }
 
 #d3-map-refresh-protection:hover, #protectionOn:hover {
-  background-color: #00008b;
+  background-color: #ee8f25;
 }
 #protectionOn.active {
-  background: #00008b;
+  background: #ee8f25;
 }
 
 #d3-map-refresh-water:hover, #waterOn:hover {

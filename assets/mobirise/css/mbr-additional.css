@@ -2459,20 +2459,27 @@ body {
   padding: 1rem 1rem;
   margin: 0.4rem .8rem !important;
   transition: all .5s;
+  background: #ffffff;
 }
 .nav-tabs .nav-link:hover {
-  background-color: #ff3366;
+  background-color: #174e69;
   color: #ffffff;
 }
 .nav-tabs .nav-link.active {
-  font-weight: 500;
-  color: #ffffff;
+  box-sizing: border-box;
+  color: grey;
   font-style: normal;
-  border: none;
-  background: #ff3366;
+  font-weight: 500;
+  border-radius: 3px;
+  border: 1px solid grey;
+  padding: 1rem 1rem;
+  margin: 0.4rem .8rem !important;
+  transition: all .5s;
+  background: #ffffff;
 }
 .nav-tabs .nav-link.active:hover {
-  border: none;
+  background-color: #174e69;
+  color: #ffffff;
 }
 p {
   color: #232323;

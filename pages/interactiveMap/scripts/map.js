@@ -409,7 +409,7 @@ $(window).on('load', function() {
 						}
 						var geojsonMarkerOptions = {
 							radius: 5,
-							fillColor: "#00008b",
+							fillColor: "#ee8f25",
 							color: "#000",
 							weight: 1,
 							pane: "protectionPane",
@@ -531,9 +531,7 @@ $(window).on('load', function() {
 				.append("div")
 				.attr("class", "d3-tooltip d3-hide");
 				var datasetNest = d3.nest().key(function (d) {
-					if(d.key !== "") {
-						return d.layer;	
-					}
+						return d.layer;
 				}).entries(dataset);
 
 
@@ -1434,7 +1432,7 @@ $(window).on('load', function() {
 				var datalayerPoverty;
 				var datalayerDensity;
 
-				$.getJSON('data/povertyAndPopulationDensity.geojson', function(data){
+				$.getJSON('data/kampalaParishes_.geojson', function(data){
 					function getColorPoverty(d) {
 						return d > 5.1  ? 'rgb(23,78,105)' :
 						d > 3.1  ? 'rgb(46,95,120)' :
@@ -1611,12 +1609,15 @@ $(window).on('load', function() {
 				// method that we will use to update the control based on feature properties passed
 				info.update = function (props) {
 					this._div.innerHTML = (props ? 'Sub County: <b>' + props.SNAME2014 + '</b><br/>' + 
-										   'Parish: <b>' + props.dist + '</b>'
+										   'Parish: <b>' + props.dist + '</b><br/><br/>' + 
+										   'Health facilities: <b>' + props.healthCount + '</b><br/>' + 
+										   'Education facilities: <b>' + props.educationCount + '</b><br/>' + 
+										   'Protection facilities: <b>' + props.protectionCount + '</b><br/>' + 
+										   'Water facilities: <b>' + props.waterCount + '</b><br/>'
 										   : 'Hover over a parish');
 				};
 
 				info.addTo(map);
-
 
 				function highlightFeature(e) {
 					var layer = e.target;
@@ -1639,58 +1640,6 @@ $(window).on('load', function() {
 					datalayer.resetStyle(e.target);
 					info.update();
 				}
-				
-				var infoButton = L.control({position: 'bottomright'});
-
-						infoButton.onAdd = function (map) {
-
-							var div = L.DomUtil.create('div', '');
-							div.innerHTML = '<p class="nav nav-tabs" style="z-index: 5000;" role="tablist">' +
-								'<a class="nav-item"><a id="infoButton" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true" ><span style="font-size: x-large;">Info &#9432;</span></a></a>' +
-								'</p>'
-
-							return div;
-						};
-
-						infoButton.addTo(map);
-
-						var infoButton = d3.select("#infoButton");
-
-						infoButton.on('click', function(){
-							
-							var div_form = $('#infoButton2');
-        					if (div_form.hasClass('active')) {
-           						div_form.removeClass('active');
-        					} else {
-          						div_form.addClass('active');
-        					}
-								
-							var div_form = $('#d3-map-info-container');
-        					if (div_form.hasClass('hide')) {
-           						div_form.removeClass('hide');
-        					} else {
-          						div_form.addClass('hide');
-        					}
-						})
-				
-				var infoButton2 = d3.select("#infoButton2");
-
-						infoButton2.on('click', function(){
-							
-							var div_form = $('#infoButton');
-        					if (div_form.hasClass('active')) {
-           						div_form.removeClass('active');
-        					} else {
-          						div_form.addClass('active');
-        					}
-								
-							var div_form = $('#d3-map-info-container');
-        					if (div_form.hasClass('hide')) {
-           						div_form.removeClass('hide');
-        					} else {
-          						div_form.addClass('hide');
-        					}
-						})
 
 				window.addEventListener("resize", function () {
 					var wrapper = d3.select("#d3-map-wrapper");
