@@ -531,7 +531,7 @@ $(window).on('load', function() {
 				.append("div")
 				.attr("class", "d3-tooltip d3-hide");
 				var datasetNest = d3.nest().key(function (d) {
-						return d.layer;
+					return d.layer;
 				}).entries(dataset);
 
 
@@ -593,8 +593,8 @@ $(window).on('load', function() {
 					refreshCountsWater();
 					map.getPane('waterPane').style.zIndex = 100;
 					d3.select("#water-list").selectAll("p").style("background", "transparent");
-					
-					
+
+
 
 					updateLeftPanel(districtList, educationList, protectionList, donorList, healthList, waterList, dataset);
 					var domain = [+Infinity, -Infinity];
@@ -1430,10 +1430,19 @@ $(window).on('load', function() {
 				var datalayer;
 				var datalayer1;
 				var datalayerPoverty;
+				var datalayerChildPoverty;
 				var datalayerDensity;
 
 				$.getJSON('data/kampalaParishes_.geojson', function(data){
 					function getColorPoverty(d) {
+						return d > 5.1  ? 'rgb(23,78,105)' :
+						d > 3.1  ? 'rgb(46,95,120)' :
+						d > 1.6  ? 'rgb(115,148,165)' :
+						d > 0.6   ? 'rgb(162,184,195)' :
+						'rgb(231,237,240)';
+					}
+
+					function getColorChildPoverty(d) {
 						return d > 5.1  ? 'rgb(23,78,105)' :
 						d > 3.1  ? 'rgb(46,95,120)' :
 						d > 1.6  ? 'rgb(115,148,165)' :
@@ -1459,6 +1468,13 @@ $(window).on('load', function() {
 					function stylePopDensity(feature) {
 						return {
 							color: getColorPopDensity(feature.properties.populationDensity),
+							fillOpacity: 0.6,
+							weight: 0.2
+						};
+					}
+					function stylePopChildPoverty(feature) {
+						return {
+							color: getColorChildPoverty(feature.properties.povertyChild),
 							fillOpacity: 0.6,
 							weight: 0.2
 						};
@@ -1505,14 +1521,14 @@ $(window).on('load', function() {
 					}).addTo(map);
 
 					datalayerPoverty = L.geoJson(data, {
-						style: stylePoverty,
-						//						onEachFeature: parishOnEachFeature
-
+						style: stylePoverty
 					});
 					datalayerDensity = L.geoJson(data, {
-						style: stylePopDensity,
-						//						onEachFeature: parishOnEachFeature
+						style: stylePopDensity
+					});
 
+					datalayerChildPoverty = L.geoJson(data, {
+						style: stylePopChildPoverty						
 					});
 
 					map.getPane('parishLayer').style.zIndex = 300;
@@ -1535,6 +1551,7 @@ $(window).on('load', function() {
 
 						var overlaymaps = {
 							"Slum Boundaries" : datalayer1,
+							"Child Poverty" : datalayerChildPoverty,
 							"Household Poverty" : datalayerPoverty,
 							"Population Density" : datalayerDensity
 						};
@@ -1561,12 +1578,24 @@ $(window).on('load', function() {
 						var removeLayers = d3.select("#removeLayers");
 
 						removeLayers.on('click', function(){
+							
+							if(map.hasLayer(datalayer1)){
+								map.removeControl(slumLegend);	
+							} else if(map.hasLayer(datalayerPoverty)){
+								map.removeControl(householdPovertyLegend);	
+							} else if(map.hasLayer(datalayerDensity)){
+								map.removeControl(populationDensityLegend);	
+							} else if(map.hasLayer(datalayerChildPoverty)){
+								map.removeControl(childPovertyLegend);	
+							}
 
 							map.removeLayer(datalayer1);
+							map.removeLayer(datalayerChildPoverty);
 							map.removeLayer(datalayerPoverty);
 							map.removeLayer(datalayerDensity);
+
 						})
-						
+
 						var resetMap = L.control({position: 'topleft'});
 
 						resetMap.onAdd = function (map) {
@@ -1582,13 +1611,13 @@ $(window).on('load', function() {
 						resetMap.addTo(map);
 
 						var resetMapButton = d3.select("#resetMap");
-						
+
 						resetMapButton.on('click', function(){
 							refreshMapHealth();
 							refreshMapEducation();
 							refreshMapProtection();
 							refreshMapWater();
-							
+
 							map.setView([0.3233, 32.5625], 12);
 						})
 
@@ -1640,6 +1669,65 @@ $(window).on('load', function() {
 					datalayer.resetStyle(e.target);
 					info.update();
 				}
+
+				var populationDensityLegend = L.control({position: 'bottomright'});
+				var childPovertyLegend = L.control({position: 'bottomright'});
+				var slumLegend = L.control({position: 'bottomright'});
+				var householdPovertyLegend = L.control({position: 'bottomright'});
+
+				householdPovertyLegend.onAdd = function (map) {
+					var div = L.DomUtil.create('div', 'info legend');
+					div.innerHTML +=
+						'<img src="images/povertyLegend.jpeg" alt="legend" width="302" height="215">';
+					return div;
+				};
+
+				populationDensityLegend.onAdd = function (map) {
+					var div = L.DomUtil.create('div', 'info legend');
+					div.innerHTML +=
+						'<img src="images/popDensityLegend.jpeg" alt="legend" width="396" height="222">';
+					return div;
+				};
+
+				childPovertyLegend.onAdd = function (map) {
+					var div = L.DomUtil.create('div', 'info legend');
+					div.innerHTML +=
+						'<img src="images/povertyChildLegend.jpeg" alt="legend" width="302" height="237">';
+					return div;
+				};
+
+				slumLegend.onAdd = function (map) {
+					var div = L.DomUtil.create('div', 'info legend');
+					div.innerHTML +=
+						'<img src="images/slumSettlement.jpeg" alt="legend" width="182" height="78">';
+					return div;
+				};
+
+				map.on('baselayerchange', function (eventLayer) {
+					console.log(eventLayer);
+					// Switch to the Population legend...
+					if (eventLayer.name === 'Household Poverty') {
+						this.removeControl(populationDensityLegend);
+						this.removeControl(childPovertyLegend);
+						this.removeControl(slumLegend);
+						householdPovertyLegend.addTo(this);
+					} else if (eventLayer.name === 'Population Density') { // Or switch to the Population Density legend...
+						this.removeControl(householdPovertyLegend);
+						this.removeControl(childPovertyLegend);
+						this.removeControl(slumLegend);
+						populationDensityLegend.addTo(this);
+					} else if (eventLayer.name === 'Child Poverty') { // Or switch to the Child Poverty legend...
+						this.removeControl(householdPovertyLegend);
+						this.removeControl(populationDensityLegend);
+						this.removeControl(slumLegend);
+						childPovertyLegend.addTo(this);
+					} else if (eventLayer.name === 'Slum Boundaries') { // Or switch to the Slum Boundaries legend...
+						this.removeControl(householdPovertyLegend);
+						this.removeControl(populationDensityLegend);
+						this.removeControl(childPovertyLegend);
+						slumLegend.addTo(this);
+					}
+				});
 
 				window.addEventListener("resize", function () {
 					var wrapper = d3.select("#d3-map-wrapper");

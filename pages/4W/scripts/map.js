@@ -519,7 +519,7 @@ $(window).on('load', function() {
 						});
 					})
 						.style("stroke", function (d) {
-							return d.properties._agencyList ? "#000" : "#00000000"; //#3CB371
+						return d.properties._agencyList ? "#000" : "#00000000"; //#3CB371
 					})
 					//						.on("click", function (d) {
 					//						var svg = d3.select(this.parentNode.parentNode.parentNode);
@@ -1165,18 +1165,26 @@ $(window).on('load', function() {
 						};
 					}
 					var outline = L.geoJson(data, {
-						style: styleOutline,
-						//						onEachFeature: parishOnEachFeature
-
+						style: styleOutline
 					}).addTo(map);
 				});
-				
+
 				var datalayer;
 				var datalayer1;
 				var datalayer2;
+				var datalayerChildPoverty;
 
 				$.getJSON('data/povertyAndPopulationDensity.geojson', function(data){
+					console.log(data);
 					function getColorPoverty(d) {
+						return d > 5.1  ? 'rgb(23,78,105)' :
+						d > 3.1  ? 'rgb(46,95,120)' :
+						d > 1.6  ? 'rgb(115,148,165)' :
+						d > 0.6   ? 'rgb(162,184,195)' :
+						'rgb(231,237,240)';
+					}
+
+					function getColorChildPoverty(d) {
 						return d > 5.1  ? 'rgb(23,78,105)' :
 						d > 3.1  ? 'rgb(46,95,120)' :
 						d > 1.6  ? 'rgb(115,148,165)' :
@@ -1208,14 +1216,25 @@ $(window).on('load', function() {
 							weight: 0.2
 						};
 					}
+
+					function stylePopChildPoverty(feature) {
+						return {
+							color: getColorChildPoverty(feature.properties.povertyChild),
+							fillOpacity: 0.6,
+							pane: "lowerlayers",
+							weight: 0.2
+						};
+					}
+
 					var selected;
 					datalayer = L.geoJson(data, {
-						style: stylePoverty,
-						//						onEachFeature: parishOnEachFeature
-
+						style: stylePoverty
 					}).addTo(map);
 					datalayer1 = L.geoJson(data, {
-						style: stylePopDensity,
+						style: stylePopDensity
+					});
+					datalayerChildPoverty = L.geoJson(data, {
+						style: stylePopChildPoverty						
 					});
 
 					$.getJSON('data/kampala_slum_settlement.geojson', function(data){
@@ -1233,6 +1252,7 @@ $(window).on('load', function() {
 						});
 						var overlaymaps = {
 							"Slum Boundaries" : datalayer2,
+							"Child Poverty" : datalayerChildPoverty,
 							"Household Poverty" : datalayer,
 							"Population Density" : datalayer1
 						}
@@ -1256,8 +1276,21 @@ $(window).on('load', function() {
 						var removeLayers = d3.select("#removeLayers");
 
 						removeLayers.on('click', function(){
+							if(map.hasLayer(datalayer2)){
+								map.removeControl(slumLegend);	
+							} else if(map.hasLayer(datalayer)){
+								map.removeControl(householdPovertyLegend);	
+							} else if(map.hasLayer(datalayer1)){
+								map.removeControl(populationDensityLegend);	
+							} else if(map.hasLayer(datalayerChildPoverty)){
+								map.removeControl(childPovertyLegend);	
+							}
+							
 							map.removeLayer(datalayer);
 							map.removeLayer(datalayer1);
+							map.removeLayer(datalayer2);
+							map.removeLayer(datalayerChildPoverty);
+
 						})
 
 					});
@@ -1286,15 +1319,6 @@ $(window).on('load', function() {
 
 
 				function highlightFeature(e) {
-					//					var layer = e.target;
-
-					//					layer.setStyle({
-					//						weight: 5,
-					//						color: '#174e69',
-					//						dashArray: '',
-					//						fillOpacity: 0.3
-					//					});
-
 					if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
 						//						layer.bringToFront();
 					}
@@ -1303,93 +1327,68 @@ $(window).on('load', function() {
 
 
 				function resetHighlight(e) {
-					//					datalayer.resetStyle(e.target);
 					info.update();
 				}
 
+				var populationDensityLegend = L.control({position: 'bottomright'});
+				var childPovertyLegend = L.control({position: 'bottomright'});
+				var slumLegend = L.control({position: 'bottomright'});
+				var householdPovertyLegend = L.control({position: 'bottomright'});
 
-
-				//				var infoButton = L.control({position: 'bottomright'});
-				//
-				//				infoButton.onAdd = function (map) {
-				//
-				//					var div = L.DomUtil.create('div', '');
-				//					div.innerHTML = '<p class="nav nav-tabs" style="z-index: 5000;" role="tablist">' +
-				//						'<a class="nav-item"><a id="infoButton" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true" ><span style="font-size: x-large;">Info &#9432;</span></a></a>' +
-				//						'</p>'
-				//
-				//					return div;
-				//				};
-				//
-				//				infoButton.addTo(map);
-				//
-				//				var infoButton = d3.select("#infoButton");
-				//
-				//				infoButton.on('click', function(){
-				//
-				//					var div_form = $('#infoButton2');
-				//					if (div_form.hasClass('active')) {
-				//						div_form.removeClass('active');
-				//					} else {
-				//						div_form.addClass('active');
-				//					}
-				//
-				//					var div_form = $('#d3-map-info-container');
-				//					if (div_form.hasClass('hide')) {
-				//						div_form.removeClass('hide');
-				//					} else {
-				//						div_form.addClass('hide');
-				//					}
-				//				})
-				//
-				//				var infoButton2 = d3.select("#infoButton2");
-				//
-				//				infoButton2.on('click', function(){
-				//
-				//					var div_form = $('#infoButton');
-				//					if (div_form.hasClass('active')) {
-				//						div_form.removeClass('active');
-				//					} else {
-				//						div_form.addClass('active');
-				//					}
-				//
-				//					var div_form = $('#d3-map-info-container');
-				//					if (div_form.hasClass('hide')) {
-				//						div_form.removeClass('hide');
-				//					} else {
-				//						div_form.addClass('hide');
-				//					}
-				//				})
-
-				var populationLegend = L.control({position: 'bottomright'});
-				var populationChangeLegend = L.control({position: 'bottomright'});
-
-				populationLegend.onAdd = function (map) {
+				householdPovertyLegend.onAdd = function (map) {
 					var div = L.DomUtil.create('div', 'info legend');
 					div.innerHTML +=
 						'<img src="images/povertyLegend.jpeg" alt="legend" width="302" height="215">';
 					return div;
 				};
 
-				populationChangeLegend.onAdd = function (map) {
+				populationDensityLegend.onAdd = function (map) {
 					var div = L.DomUtil.create('div', 'info legend');
 					div.innerHTML +=
 						'<img src="images/popDensityLegend.jpeg" alt="legend" width="396" height="222">';
 					return div;
 				};
 
+				childPovertyLegend.onAdd = function (map) {
+					var div = L.DomUtil.create('div', 'info legend');
+					div.innerHTML +=
+						'<img src="images/povertyChildLegend.jpeg" alt="legend" width="302" height="237">';
+					return div;
+				};
+
+				slumLegend.onAdd = function (map) {
+					var div = L.DomUtil.create('div', 'info legend');
+					div.innerHTML +=
+						'<img src="images/slumSettlement.jpeg" alt="legend" width="182" height="78">';
+					return div;
+				};
+
 				// Add this one (only) for now, as the Population layer is on by default
-				populationLegend.addTo(map);
+				householdPovertyLegend.addTo(map);
 
 				map.on('baselayerchange', function (eventLayer) {
 					console.log(eventLayer);
 					// Switch to the Population legend...
 					if (eventLayer.name === 'Household Poverty') {
-						this.removeControl(populationChangeLegend);
-						populationLegend.addTo(this);
-					} else { // Or switch to the Population Change legend...
-						this.removeControl(populationLegend);
-						populationChangeLegend.addTo(this);
+						this.removeControl(populationDensityLegend);
+						this.removeControl(childPovertyLegend);
+						this.removeControl(slumLegend);
+						householdPovertyLegend.addTo(this);
+					} else if (eventLayer.name === 'Population Density') { // Or switch to the Population Density legend...
+						this.removeControl(householdPovertyLegend);
+						this.removeControl(childPovertyLegend);
+						this.removeControl(slumLegend);
+						populationDensityLegend.addTo(this);
+					} else if (eventLayer.name === 'Child Poverty') { // Or switch to the Child Poverty legend...
+						this.removeControl(householdPovertyLegend);
+						this.removeControl(populationDensityLegend);
+						this.removeControl(slumLegend);
+						childPovertyLegend.addTo(this);
+					} else if (eventLayer.name === 'Slum Boundaries') { // Or switch to the Slum Boundaries legend...
+						this.removeControl(householdPovertyLegend);
+						this.removeControl(populationDensityLegend);
+						this.removeControl(childPovertyLegend);
+						slumLegend.addTo(this);
 					}
 				});
 
