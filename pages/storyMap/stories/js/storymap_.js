@@ -45,7 +45,7 @@ trace = function( msg ) {
 ================================================== */
 
 VCO.Util = {
-	
+
 	extend: function (/*Object*/ dest) /*-> Object*/ {	// merge src properties into dest
 		var sources = Array.prototype.slice.call(arguments, 1);
 		for (var j = 0, len = sources.length, src; j < len; j++) {
@@ -58,59 +58,59 @@ VCO.Util = {
 		}
 		return dest;
 	},
-	
+
 	setOptions: function (obj, options) {
 		obj.options = VCO.Util.extend({}, obj.options, options);
 		if (obj.options.uniqueid === "") {
 			obj.options.uniqueid = VCO.Util.unique_ID(6);
 		}
 	},
-	
+
 	findArrayNumberByUniqueID: function(id, array, prop) {
 		var _n = 0;
-		
+
 		for (var i = 0; i < array.length; i++) {
 			if (array[i].data[prop] == id) {
 				trace(array[i].data[prop]);
 				_n = i;
 			}
 		};
-		
+
 		return _n;
 	},
-	
+
 	convertUnixTime: function(str) { // created for Instagram. It's ISO8601-ish
 		// 2013-12-09 01:56:28
 		var pattern = /^(\d{4})-(\d{2})-(\d{2})[T\s](\d{2}):(\d{2}):(\d{2})/;
 		if (str.match(pattern)) {
 			var date_parts = str.match(pattern).slice(1);
 		}
-			
+
 		var date_array = [];
 
 		for(var i = 0; i < date_parts.length; i++) {
 			var val = parseInt(date_parts[i]);
 			if (i == 1) { val = val - 1 } // stupid javascript months
-		 	date_array.push( val )
+			date_array.push( val )
 		}
 
-	 	date = new Date(date_array[0], date_array[1], date_array[2], date_array[3], date_array[4], date_array[5]);
-	 	months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-	 	year = date.getFullYear();
-	 	month = months[date.getMonth()];
-	 	day = date.getDate();
-	 	time = month + ', ' + day + ' ' + year;
-		
+		date = new Date(date_array[0], date_array[1], date_array[2], date_array[3], date_array[4], date_array[5]);
+		months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+		year = date.getFullYear();
+		month = months[date.getMonth()];
+		day = date.getDate();
+		time = month + ', ' + day + ' ' + year;
+
 		return time;
 	},
-	
+
 	setData: function (obj, data) {
 		obj.data = VCO.Util.extend({}, obj.data, data);
 		if (obj.data.uniqueid === "") {
 			obj.data.uniqueid = VCO.Util.unique_ID(6);
 		}
 	},
-	
+
 	mergeData: function(data_main, data_to_merge) {
 		var x;
 		for (x in data_to_merge) {
@@ -120,35 +120,35 @@ VCO.Util = {
 		}
 		return data_main;
 	},
-	
+
 	stamp: (function () {
 		var lastId = 0, key = '_vco_id';
-		
+
 
 		return function (/*Object*/ obj) {
 			obj[key] = obj[key] || ++lastId;
 			return obj[key];
 		};
 	}()),
-	
+
 	isArray: (function () {
-	    // Use compiler's own isArray when available
-	    if (Array.isArray) {
-	        return Array.isArray;
-	    }
- 
-	    // Retain references to variables for performance
-	    // optimization
-	    var objectToStringFn = Object.prototype.toString,
-	        arrayToStringResult = objectToStringFn.call([]);
- 
-	    return function (subject) {
-	        return objectToStringFn.call(subject) === arrayToStringResult;
-	    };
+		// Use compiler's own isArray when available
+		if (Array.isArray) {
+			return Array.isArray;
+		}
+
+		// Retain references to variables for performance
+		// optimization
+		var objectToStringFn = Object.prototype.toString,
+			arrayToStringResult = objectToStringFn.call([]);
+
+		return function (subject) {
+			return objectToStringFn.call(subject) === arrayToStringResult;
+		};
 	}()),
-	
+
 	unique_ID: function(size, prefix) {
-		
+
 		var getRandomNumber = function(range) {
 			return Math.floor(Math.random() * range);
 		};
@@ -165,27 +165,27 @@ VCO.Util = {
 			}
 			return str;
 		};
-		
+
 		if (prefix) {
 			return prefix + "-" + randomID(size);
 		} else {
 			return "vco-" + randomID(size);
 		}
 	},
-	
+
 	htmlify: function(str) {
 		//if (str.match(/<\s*p[^>]*>([^<]*)<\s*\/\s*p\s*>/)) {
 		if (VCO.Browser.chrome) {
 			str = VCO.Emoji(str);
 		}
 		if (str.match(/<p>[\s\S]*?<\/p>/)) {
-			
+
 			return str;
 		} else {
 			return "<p>" + str + "</p>";
 		}
 	},
-	
+
 	getParamString: function (obj) {
 		var params = [];
 		for (var i in obj) {
@@ -195,16 +195,16 @@ VCO.Util = {
 		}
 		return '?' + params.join('&');
 	},
-	
+
 	formatNum: function (num, digits) {
 		var pow = Math.pow(10, digits || 5);
 		return Math.round(num * pow) / pow;
 	},
-	
+
 	falseFn: function () {
 		return false;
 	},
-	
+
 	requestAnimFrame: (function () {
 		function timeoutDefer(callback) {
 			window.setTimeout(callback, 1000 / 60);
@@ -226,13 +226,13 @@ VCO.Util = {
 			}
 		};
 	}()),
-	
+
 	bind: function (/*Function*/ fn, /*Object*/ obj) /*-> Object*/ {
 		return function () {
 			return fn.apply(obj, arguments);
 		};
 	},
-	
+
 	template: function (str, data) {
 		return str.replace(/\{ *([\w_]+) *\}/g, function (str, key) {
 			var value = data[key];
@@ -242,22 +242,22 @@ VCO.Util = {
 			return value;
 		});
 	},
-	
-	hexToRgb: function(hex) {
-	    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-	    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-	    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
-	        return r + r + g + g + b + b;
-	    });
 
-	    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-	    return result ? {
-	        r: parseInt(result[1], 16),
-	        g: parseInt(result[2], 16),
-	        b: parseInt(result[3], 16)
-	    } : null;
+	hexToRgb: function(hex) {
+		// Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+		var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+		hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+			return r + r + g + g + b + b;
+		});
+
+		var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+		return result ? {
+			r: parseInt(result[1], 16),
+			g: parseInt(result[2], 16),
+			b: parseInt(result[3], 16)
+		} : null;
 	},
-	
+
 	ratio: {
 		square: function(size) {
 			var s = {
@@ -273,7 +273,7 @@ VCO.Util = {
 			}
 			return s;
 		},
-		
+
 		r16_9: function(size) {
 			if (size.w !== null && size.w !== "") {
 				return Math.round((size.w / 16) * 9);
@@ -304,16 +304,16 @@ VCO.Util = {
 		} else {
 			return "";
 		}
-		
+
 	},
 	getUrlVars: function(string) {
 		var str,
 			vars = [],
 			hash,
 			hashes;
-		
+
 		str = string.toString();
-		
+
 		if (str.match('&#038;')) { 
 			str = str.replace("&#038;", "&");
 		} else if (str.match('&#38;')) {
@@ -321,16 +321,16 @@ VCO.Util = {
 		} else if (str.match('&amp;')) {
 			str = str.replace("&amp;", "&");
 		}
-		
+
 		hashes = str.slice(str.indexOf('?') + 1).split('&');
-		
+
 		for(var i = 0; i < hashes.length; i++) {
 			hash = hashes[i].split('=');
 			vars.push(hash[0]);
 			vars[hash[0]] = hash[1];
 		}
-		
-		
+
+
 		return vars;
 	}
 };
@@ -338,1559 +338,1559 @@ VCO.Util = {
 // Expects VCO to be visible in scope
 
 ;(function(VCO){
-    /* Zepto v1.1.2-15-g59d3fe5 - zepto event ajax form ie - zeptojs.com/license */
-
-    var Zepto = (function() {
-      var undefined, key, $, classList, emptyArray = [], slice = emptyArray.slice, filter = emptyArray.filter,
-        document = window.document,
-        elementDisplay = {}, classCache = {},
-        cssNumber = { 'column-count': 1, 'columns': 1, 'font-weight': 1, 'line-height': 1,'opacity': 1, 'z-index': 1, 'zoom': 1 },
-        fragmentRE = /^\s*<(\w+|!)[^>]*>/,
-        singleTagRE = /^<(\w+)\s*\/?>(?:<\/\1>|)$/,
-        tagExpanderRE = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,
-        rootNodeRE = /^(?:body|html)$/i,
-        capitalRE = /([A-Z])/g,
-
-        // special attributes that should be get/set via method calls
-        methodAttributes = ['val', 'css', 'html', 'text', 'data', 'width', 'height', 'offset'],
-
-        adjacencyOperators = [ 'after', 'prepend', 'before', 'append' ],
-        table = document.createElement('table'),
-        tableRow = document.createElement('tr'),
-        containers = {
-          'tr': document.createElement('tbody'),
-          'tbody': table, 'thead': table, 'tfoot': table,
-          'td': tableRow, 'th': tableRow,
-          '*': document.createElement('div')
-        },
-        readyRE = /complete|loaded|interactive/,
-        classSelectorRE = /^\.([\w-]+)$/,
-        idSelectorRE = /^#([\w-]*)$/,
-        simpleSelectorRE = /^[\w-]*$/,
-        class2type = {},
-        toString = class2type.toString,
-        zepto = {},
-        camelize, uniq,
-        tempParent = document.createElement('div'),
-        propMap = {
-          'tabindex': 'tabIndex',
-          'readonly': 'readOnly',
-          'for': 'htmlFor',
-          'class': 'className',
-          'maxlength': 'maxLength',
-          'cellspacing': 'cellSpacing',
-          'cellpadding': 'cellPadding',
-          'rowspan': 'rowSpan',
-          'colspan': 'colSpan',
-          'usemap': 'useMap',
-          'frameborder': 'frameBorder',
-          'contenteditable': 'contentEditable'
-        },
-        isArray = Array.isArray ||
-          function(object){ return object instanceof Array }
-
-      zepto.matches = function(element, selector) {
-        if (!selector || !element || element.nodeType !== 1) return false
-        var matchesSelector = element.webkitMatchesSelector || element.mozMatchesSelector ||
-                              element.oMatchesSelector || element.matchesSelector
-        if (matchesSelector) return matchesSelector.call(element, selector)
-        // fall back to performing a selector:
-        var match, parent = element.parentNode, temp = !parent
-        if (temp) (parent = tempParent).appendChild(element)
-        match = ~zepto.qsa(parent, selector).indexOf(element)
-        temp && tempParent.removeChild(element)
-        return match
-      }
-
-      function type(obj) {
-        return obj == null ? String(obj) :
-          class2type[toString.call(obj)] || "object"
-      }
-
-      function isFunction(value) { return type(value) == "function" }
-      function isWindow(obj)     { return obj != null && obj == obj.window }
-      function isDocument(obj)   { return obj != null && obj.nodeType == obj.DOCUMENT_NODE }
-      function isObject(obj)     { return type(obj) == "object" }
-      function isPlainObject(obj) {
-        return isObject(obj) && !isWindow(obj) && Object.getPrototypeOf(obj) == Object.prototype
-      }
-      function likeArray(obj) { return typeof obj.length == 'number' }
-
-      function compact(array) { return filter.call(array, function(item){ return item != null }) }
-      function flatten(array) { return array.length > 0 ? $.fn.concat.apply([], array) : array }
-      camelize = function(str){ return str.replace(/-+(.)?/g, function(match, chr){ return chr ? chr.toUpperCase() : '' }) }
-      function dasherize(str) {
-        return str.replace(/::/g, '/')
-               .replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
-               .replace(/([a-z\d])([A-Z])/g, '$1_$2')
-               .replace(/_/g, '-')
-               .toLowerCase()
-      }
-      uniq = function(array){ return filter.call(array, function(item, idx){ return array.indexOf(item) == idx }) }
-
-      function classRE(name) {
-        return name in classCache ?
-          classCache[name] : (classCache[name] = new RegExp('(^|\\s)' + name + '(\\s|$)'))
-      }
-
-      function maybeAddPx(name, value) {
-        return (typeof value == "number" && !cssNumber[dasherize(name)]) ? value + "px" : value
-      }
-
-      function defaultDisplay(nodeName) {
-        var element, display
-        if (!elementDisplay[nodeName]) {
-          element = document.createElement(nodeName)
-          document.body.appendChild(element)
-          display = getComputedStyle(element, '').getPropertyValue("display")
-          element.parentNode.removeChild(element)
-          display == "none" && (display = "block")
-          elementDisplay[nodeName] = display
-        }
-        return elementDisplay[nodeName]
-      }
-
-      function children(element) {
-        return 'children' in element ?
-          slice.call(element.children) :
-          $.map(element.childNodes, function(node){ if (node.nodeType == 1) return node })
-      }
-
-      // `$.zepto.fragment` takes a html string and an optional tag name
-      // to generate DOM nodes nodes from the given html string.
-      // The generated DOM nodes are returned as an array.
-      // This function can be overriden in plugins for example to make
-      // it compatible with browsers that don't support the DOM fully.
-      zepto.fragment = function(html, name, properties) {
-        var dom, nodes, container
-
-        // A special case optimization for a single tag
-        if (singleTagRE.test(html)) dom = $(document.createElement(RegExp.$1))
-
-        if (!dom) {
-          if (html.replace) html = html.replace(tagExpanderRE, "<$1></$2>")
-          if (name === undefined) name = fragmentRE.test(html) && RegExp.$1
-          if (!(name in containers)) name = '*'
-
-          container = containers[name]
-          container.innerHTML = '' + html
-          dom = $.each(slice.call(container.childNodes), function(){
-            container.removeChild(this)
-          })
-        }
-
-        if (isPlainObject(properties)) {
-          nodes = $(dom)
-          $.each(properties, function(key, value) {
-            if (methodAttributes.indexOf(key) > -1) nodes[key](value)
-            else nodes.attr(key, value)
-          })
-        }
-
-        return dom
-      }
-
-      // `$.zepto.Z` swaps out the prototype of the given `dom` array
-      // of nodes with `$.fn` and thus supplying all the Zepto functions
-      // to the array. Note that `__proto__` is not supported on Internet
-      // Explorer. This method can be overriden in plugins.
-      zepto.Z = function(dom, selector) {
-        dom = dom || []
-        dom.__proto__ = $.fn
-        dom.selector = selector || ''
-        return dom
-      }
-
-      // `$.zepto.isZ` should return `true` if the given object is a Zepto
-      // collection. This method can be overriden in plugins.
-      zepto.isZ = function(object) {
-        return object instanceof zepto.Z
-      }
-
-      // `$.zepto.init` is Zepto's counterpart to jQuery's `$.fn.init` and
-      // takes a CSS selector and an optional context (and handles various
-      // special cases).
-      // This method can be overriden in plugins.
-      zepto.init = function(selector, context) {
-        var dom
-        // If nothing given, return an empty Zepto collection
-        if (!selector) return zepto.Z()
-        // Optimize for string selectors
-        else if (typeof selector == 'string') {
-          selector = selector.trim()
-          // If it's a html fragment, create nodes from it
-          // Note: In both Chrome 21 and Firefox 15, DOM error 12
-          // is thrown if the fragment doesn't begin with <
-          if (selector[0] == '<' && fragmentRE.test(selector))
-            dom = zepto.fragment(selector, RegExp.$1, context), selector = null
-          // If there's a context, create a collection on that context first, and select
-          // nodes from there
-          else if (context !== undefined) return $(context).find(selector)
-          // If it's a CSS selector, use it to select nodes.
-          else dom = zepto.qsa(document, selector)
-        }
-        // If a function is given, call it when the DOM is ready
-        else if (isFunction(selector)) return $(document).ready(selector)
-        // If a Zepto collection is given, just return it
-        else if (zepto.isZ(selector)) return selector
-        else {
-          // normalize array if an array of nodes is given
-          if (isArray(selector)) dom = compact(selector)
-          // Wrap DOM nodes.
-          else if (isObject(selector))
-            dom = [selector], selector = null
-          // If it's a html fragment, create nodes from it
-          else if (fragmentRE.test(selector))
-            dom = zepto.fragment(selector.trim(), RegExp.$1, context), selector = null
-          // If there's a context, create a collection on that context first, and select
-          // nodes from there
-          else if (context !== undefined) return $(context).find(selector)
-          // And last but no least, if it's a CSS selector, use it to select nodes.
-          else dom = zepto.qsa(document, selector)
-        }
-        // create a new Zepto collection from the nodes found
-        return zepto.Z(dom, selector)
-      }
-
-      // `$` will be the base `Zepto` object. When calling this
-      // function just call `$.zepto.init, which makes the implementation
-      // details of selecting nodes and creating Zepto collections
-      // patchable in plugins.
-      $ = function(selector, context){
-        return zepto.init(selector, context)
-      }
-
-      function extend(target, source, deep) {
-        for (key in source)
-          if (deep && (isPlainObject(source[key]) || isArray(source[key]))) {
-            if (isPlainObject(source[key]) && !isPlainObject(target[key]))
-              target[key] = {}
-            if (isArray(source[key]) && !isArray(target[key]))
-              target[key] = []
-            extend(target[key], source[key], deep)
-          }
-          else if (source[key] !== undefined) target[key] = source[key]
-      }
-
-      // Copy all but undefined properties from one or more
-      // objects to the `target` object.
-      $.extend = function(target){
-        var deep, args = slice.call(arguments, 1)
-        if (typeof target == 'boolean') {
-          deep = target
-          target = args.shift()
-        }
-        args.forEach(function(arg){ extend(target, arg, deep) })
-        return target
-      }
-
-      // `$.zepto.qsa` is Zepto's CSS selector implementation which
-      // uses `document.querySelectorAll` and optimizes for some special cases, like `#id`.
-      // This method can be overriden in plugins.
-      zepto.qsa = function(element, selector){
-        var found,
-            maybeID = selector[0] == '#',
-            maybeClass = !maybeID && selector[0] == '.',
-            nameOnly = maybeID || maybeClass ? selector.slice(1) : selector, // Ensure that a 1 char tag name still gets checked
-            isSimple = simpleSelectorRE.test(nameOnly)
-        return (isDocument(element) && isSimple && maybeID) ?
-          ( (found = element.getElementById(nameOnly)) ? [found] : [] ) :
-          (element.nodeType !== 1 && element.nodeType !== 9) ? [] :
-          slice.call(
-            isSimple && !maybeID ?
-              maybeClass ? element.getElementsByClassName(nameOnly) : // If it's simple, it could be a class
-              element.getElementsByTagName(selector) : // Or a tag
-              element.querySelectorAll(selector) // Or it's not simple, and we need to query all
-          )
-      }
-
-      function filtered(nodes, selector) {
-        return selector == null ? $(nodes) : $(nodes).filter(selector)
-      }
-
-      $.contains = function(parent, node) {
-        return parent !== node && parent.contains(node)
-      }
-
-      function funcArg(context, arg, idx, payload) {
-        return isFunction(arg) ? arg.call(context, idx, payload) : arg
-      }
-
-      function setAttribute(node, name, value) {
-        value == null ? node.removeAttribute(name) : node.setAttribute(name, value)
-      }
-
-      // access className property while respecting SVGAnimatedString
-      function className(node, value){
-        var klass = node.className,
-            svg   = klass && klass.baseVal !== undefined
-
-        if (value === undefined) return svg ? klass.baseVal : klass
-        svg ? (klass.baseVal = value) : (node.className = value)
-      }
-
-      // "true"  => true
-      // "false" => false
-      // "null"  => null
-      // "42"    => 42
-      // "42.5"  => 42.5
-      // "08"    => "08"
-      // JSON    => parse if valid
-      // String  => self
-      function deserializeValue(value) {
-        var num
-        try {
-          return value ?
-            value == "true" ||
-            ( value == "false" ? false :
-              value == "null" ? null :
-              !/^0/.test(value) && !isNaN(num = Number(value)) ? num :
-              /^[\[\{]/.test(value) ? $.parseJSON(value) :
-              value )
-            : value
-        } catch(e) {
-          return value
-        }
-      }
-
-      $.type = type
-      $.isFunction = isFunction
-      $.isWindow = isWindow
-      $.isArray = isArray
-      $.isPlainObject = isPlainObject
-
-      $.isEmptyObject = function(obj) {
-        var name
-        for (name in obj) return false
-        return true
-      }
-
-      $.inArray = function(elem, array, i){
-        return emptyArray.indexOf.call(array, elem, i)
-      }
-
-      $.camelCase = camelize
-      $.trim = function(str) {
-        return str == null ? "" : String.prototype.trim.call(str)
-      }
-
-      // plugin compatibility
-      $.uuid = 0
-      $.support = { }
-      $.expr = { }
-
-      $.map = function(elements, callback){
-        var value, values = [], i, key
-        if (likeArray(elements))
-          for (i = 0; i < elements.length; i++) {
-            value = callback(elements[i], i)
-            if (value != null) values.push(value)
-          }
-        else
-          for (key in elements) {
-            value = callback(elements[key], key)
-            if (value != null) values.push(value)
-          }
-        return flatten(values)
-      }
-
-      $.each = function(elements, callback){
-        var i, key
-        if (likeArray(elements)) {
-          for (i = 0; i < elements.length; i++)
-            if (callback.call(elements[i], i, elements[i]) === false) return elements
-        } else {
-          for (key in elements)
-            if (callback.call(elements[key], key, elements[key]) === false) return elements
-        }
-
-        return elements
-      }
-
-      $.grep = function(elements, callback){
-        return filter.call(elements, callback)
-      }
-
-      if (window.JSON) $.parseJSON = JSON.parse
-
-      // Populate the class2type map
-      $.each("Boolean Number String Function Array Date RegExp Object Error".split(" "), function(i, name) {
-        class2type[ "[object " + name + "]" ] = name.toLowerCase()
-      })
-
-      // Define methods that will be available on all
-      // Zepto collections
-      $.fn = {
-        // Because a collection acts like an array
-        // copy over these useful array functions.
-        forEach: emptyArray.forEach,
-        reduce: emptyArray.reduce,
-        push: emptyArray.push,
-        sort: emptyArray.sort,
-        indexOf: emptyArray.indexOf,
-        concat: emptyArray.concat,
-
-        // `map` and `slice` in the jQuery API work differently
-        // from their array counterparts
-        map: function(fn){
-          return $($.map(this, function(el, i){ return fn.call(el, i, el) }))
-        },
-        slice: function(){
-          return $(slice.apply(this, arguments))
-        },
-
-        ready: function(callback){
-          // need to check if document.body exists for IE as that browser reports
-          // document ready when it hasn't yet created the body element
-          if (readyRE.test(document.readyState) && document.body) callback($)
-          else document.addEventListener('DOMContentLoaded', function(){ callback($) }, false)
-          return this
-        },
-        get: function(idx){
-          return idx === undefined ? slice.call(this) : this[idx >= 0 ? idx : idx + this.length]
-        },
-        toArray: function(){ return this.get() },
-        size: function(){
-          return this.length
-        },
-        remove: function(){
-          return this.each(function(){
-            if (this.parentNode != null)
-              this.parentNode.removeChild(this)
-          })
-        },
-        each: function(callback){
-          emptyArray.every.call(this, function(el, idx){
-            return callback.call(el, idx, el) !== false
-          })
-          return this
-        },
-        filter: function(selector){
-          if (isFunction(selector)) return this.not(this.not(selector))
-          return $(filter.call(this, function(element){
-            return zepto.matches(element, selector)
-          }))
-        },
-        add: function(selector,context){
-          return $(uniq(this.concat($(selector,context))))
-        },
-        is: function(selector){
-          return this.length > 0 && zepto.matches(this[0], selector)
-        },
-        not: function(selector){
-          var nodes=[]
-          if (isFunction(selector) && selector.call !== undefined)
-            this.each(function(idx){
-              if (!selector.call(this,idx)) nodes.push(this)
-            })
-          else {
-            var excludes = typeof selector == 'string' ? this.filter(selector) :
-              (likeArray(selector) && isFunction(selector.item)) ? slice.call(selector) : $(selector)
-            this.forEach(function(el){
-              if (excludes.indexOf(el) < 0) nodes.push(el)
-            })
-          }
-          return $(nodes)
-        },
-        has: function(selector){
-          return this.filter(function(){
-            return isObject(selector) ?
-              $.contains(this, selector) :
-              $(this).find(selector).size()
-          })
-        },
-        eq: function(idx){
-          return idx === -1 ? this.slice(idx) : this.slice(idx, + idx + 1)
-        },
-        first: function(){
-          var el = this[0]
-          return el && !isObject(el) ? el : $(el)
-        },
-        last: function(){
-          var el = this[this.length - 1]
-          return el && !isObject(el) ? el : $(el)
-        },
-        find: function(selector){
-          var result, $this = this
-          if (typeof selector == 'object')
-            result = $(selector).filter(function(){
-              var node = this
-              return emptyArray.some.call($this, function(parent){
-                return $.contains(parent, node)
-              })
-            })
-          else if (this.length == 1) result = $(zepto.qsa(this[0], selector))
-          else result = this.map(function(){ return zepto.qsa(this, selector) })
-          return result
-        },
-        closest: function(selector, context){
-          var node = this[0], collection = false
-          if (typeof selector == 'object') collection = $(selector)
-          while (node && !(collection ? collection.indexOf(node) >= 0 : zepto.matches(node, selector)))
-            node = node !== context && !isDocument(node) && node.parentNode
-          return $(node)
-        },
-        parents: function(selector){
-          var ancestors = [], nodes = this
-          while (nodes.length > 0)
-            nodes = $.map(nodes, function(node){
-              if ((node = node.parentNode) && !isDocument(node) && ancestors.indexOf(node) < 0) {
-                ancestors.push(node)
-                return node
-              }
-            })
-          return filtered(ancestors, selector)
-        },
-        parent: function(selector){
-          return filtered(uniq(this.pluck('parentNode')), selector)
-        },
-        children: function(selector){
-          return filtered(this.map(function(){ return children(this) }), selector)
-        },
-        contents: function() {
-          return this.map(function() { return slice.call(this.childNodes) })
-        },
-        siblings: function(selector){
-          return filtered(this.map(function(i, el){
-            return filter.call(children(el.parentNode), function(child){ return child!==el })
-          }), selector)
-        },
-        empty: function(){
-          return this.each(function(){ this.innerHTML = '' })
-        },
-        // `pluck` is borrowed from Prototype.js
-        pluck: function(property){
-          return $.map(this, function(el){ return el[property] })
-        },
-        show: function(){
-          return this.each(function(){
-            this.style.display == "none" && (this.style.display = '')
-            if (getComputedStyle(this, '').getPropertyValue("display") == "none")
-              this.style.display = defaultDisplay(this.nodeName)
-          })
-        },
-        replaceWith: function(newContent){
-          return this.before(newContent).remove()
-        },
-        wrap: function(structure){
-          var func = isFunction(structure)
-          if (this[0] && !func)
-            var dom   = $(structure).get(0),
-                clone = dom.parentNode || this.length > 1
-
-          return this.each(function(index){
-            $(this).wrapAll(
-              func ? structure.call(this, index) :
-                clone ? dom.cloneNode(true) : dom
-            )
-          })
-        },
-        wrapAll: function(structure){
-          if (this[0]) {
-            $(this[0]).before(structure = $(structure))
-            var children
-            // drill down to the inmost element
-            while ((children = structure.children()).length) structure = children.first()
-            $(structure).append(this)
-          }
-          return this
-        },
-        wrapInner: function(structure){
-          var func = isFunction(structure)
-          return this.each(function(index){
-            var self = $(this), contents = self.contents(),
-                dom  = func ? structure.call(this, index) : structure
-            contents.length ? contents.wrapAll(dom) : self.append(dom)
-          })
-        },
-        unwrap: function(){
-          this.parent().each(function(){
-            $(this).replaceWith($(this).children())
-          })
-          return this
-        },
-        clone: function(){
-          return this.map(function(){ return this.cloneNode(true) })
-        },
-        hide: function(){
-          return this.css("display", "none")
-        },
-        toggle: function(setting){
-          return this.each(function(){
-            var el = $(this)
-            ;(setting === undefined ? el.css("display") == "none" : setting) ? el.show() : el.hide()
-          })
-        },
-        prev: function(selector){ return $(this.pluck('previousElementSibling')).filter(selector || '*') },
-        next: function(selector){ return $(this.pluck('nextElementSibling')).filter(selector || '*') },
-        html: function(html){
-          return arguments.length === 0 ?
-            (this.length > 0 ? this[0].innerHTML : null) :
-            this.each(function(idx){
-              var originHtml = this.innerHTML
-              $(this).empty().append( funcArg(this, html, idx, originHtml) )
-            })
-        },
-        text: function(text){
-          return arguments.length === 0 ?
-            (this.length > 0 ? this[0].textContent : null) :
-            this.each(function(){ this.textContent = (text === undefined) ? '' : ''+text })
-        },
-        attr: function(name, value){
-          var result
-          return (typeof name == 'string' && value === undefined) ?
-            (this.length == 0 || this[0].nodeType !== 1 ? undefined :
-              (name == 'value' && this[0].nodeName == 'INPUT') ? this.val() :
-              (!(result = this[0].getAttribute(name)) && name in this[0]) ? this[0][name] : result
-            ) :
-            this.each(function(idx){
-              if (this.nodeType !== 1) return
-              if (isObject(name)) for (key in name) setAttribute(this, key, name[key])
-              else setAttribute(this, name, funcArg(this, value, idx, this.getAttribute(name)))
-            })
-        },
-        removeAttr: function(name){
-          return this.each(function(){ this.nodeType === 1 && setAttribute(this, name) })
-        },
-        prop: function(name, value){
-          name = propMap[name] || name
-          return (value === undefined) ?
-            (this[0] && this[0][name]) :
-            this.each(function(idx){
-              this[name] = funcArg(this, value, idx, this[name])
-            })
-        },
-        data: function(name, value){
-          var data = this.attr('data-' + name.replace(capitalRE, '-$1').toLowerCase(), value)
-          return data !== null ? deserializeValue(data) : undefined
-        },
-        val: function(value){
-          return arguments.length === 0 ?
-            (this[0] && (this[0].multiple ?
-               $(this[0]).find('option').filter(function(){ return this.selected }).pluck('value') :
-               this[0].value)
-            ) :
-            this.each(function(idx){
-              this.value = funcArg(this, value, idx, this.value)
-            })
-        },
-        offset: function(coordinates){
-          if (coordinates) return this.each(function(index){
-            var $this = $(this),
-                coords = funcArg(this, coordinates, index, $this.offset()),
-                parentOffset = $this.offsetParent().offset(),
-                props = {
-                  top:  coords.top  - parentOffset.top,
-                  left: coords.left - parentOffset.left
-                }
-
-            if ($this.css('position') == 'static') props['position'] = 'relative'
-            $this.css(props)
-          })
-          if (this.length==0) return null
-          var obj = this[0].getBoundingClientRect()
-          return {
-            left: obj.left + window.pageXOffset,
-            top: obj.top + window.pageYOffset,
-            width: Math.round(obj.width),
-            height: Math.round(obj.height)
-          }
-        },
-        css: function(property, value){
-          if (arguments.length < 2) {
-            var element = this[0], computedStyle = getComputedStyle(element, '')
-            if(!element) return
-            if (typeof property == 'string')
-              return element.style[camelize(property)] || computedStyle.getPropertyValue(property)
-            else if (isArray(property)) {
-              var props = {}
-              $.each(isArray(property) ? property: [property], function(_, prop){
-                props[prop] = (element.style[camelize(prop)] || computedStyle.getPropertyValue(prop))
-              })
-              return props
-            }
-          }
-
-          var css = ''
-          if (type(property) == 'string') {
-            if (!value && value !== 0)
-              this.each(function(){ this.style.removeProperty(dasherize(property)) })
-            else
-              css = dasherize(property) + ":" + maybeAddPx(property, value)
-          } else {
-            for (key in property)
-              if (!property[key] && property[key] !== 0)
-                this.each(function(){ this.style.removeProperty(dasherize(key)) })
-              else
-                css += dasherize(key) + ':' + maybeAddPx(key, property[key]) + ';'
-          }
-
-          return this.each(function(){ this.style.cssText += ';' + css })
-        },
-        index: function(element){
-          return element ? this.indexOf($(element)[0]) : this.parent().children().indexOf(this[0])
-        },
-        hasClass: function(name){
-          if (!name) return false
-          return emptyArray.some.call(this, function(el){
-            return this.test(className(el))
-          }, classRE(name))
-        },
-        addClass: function(name){
-          if (!name) return this
-          return this.each(function(idx){
-            classList = []
-            var cls = className(this), newName = funcArg(this, name, idx, cls)
-            newName.split(/\s+/g).forEach(function(klass){
-              if (!$(this).hasClass(klass)) classList.push(klass)
-            }, this)
-            classList.length && className(this, cls + (cls ? " " : "") + classList.join(" "))
-          })
-        },
-        removeClass: function(name){
-          return this.each(function(idx){
-            if (name === undefined) return className(this, '')
-            classList = className(this)
-            funcArg(this, name, idx, classList).split(/\s+/g).forEach(function(klass){
-              classList = classList.replace(classRE(klass), " ")
-            })
-            className(this, classList.trim())
-          })
-        },
-        toggleClass: function(name, when){
-          if (!name) return this
-          return this.each(function(idx){
-            var $this = $(this), names = funcArg(this, name, idx, className(this))
-            names.split(/\s+/g).forEach(function(klass){
-              (when === undefined ? !$this.hasClass(klass) : when) ?
-                $this.addClass(klass) : $this.removeClass(klass)
-            })
-          })
-        },
-        scrollTop: function(value){
-          if (!this.length) return
-          var hasScrollTop = 'scrollTop' in this[0]
-          if (value === undefined) return hasScrollTop ? this[0].scrollTop : this[0].pageYOffset
-          return this.each(hasScrollTop ?
-            function(){ this.scrollTop = value } :
-            function(){ this.scrollTo(this.scrollX, value) })
-        },
-        scrollLeft: function(value){
-          if (!this.length) return
-          var hasScrollLeft = 'scrollLeft' in this[0]
-          if (value === undefined) return hasScrollLeft ? this[0].scrollLeft : this[0].pageXOffset
-          return this.each(hasScrollLeft ?
-            function(){ this.scrollLeft = value } :
-            function(){ this.scrollTo(value, this.scrollY) })
-        },
-        position: function() {
-          if (!this.length) return
-
-          var elem = this[0],
-            // Get *real* offsetParent
-            offsetParent = this.offsetParent(),
-            // Get correct offsets
-            offset       = this.offset(),
-            parentOffset = rootNodeRE.test(offsetParent[0].nodeName) ? { top: 0, left: 0 } : offsetParent.offset()
-
-          // Subtract element margins
-          // note: when an element has margin: auto the offsetLeft and marginLeft
-          // are the same in Safari causing offset.left to incorrectly be 0
-          offset.top  -= parseFloat( $(elem).css('margin-top') ) || 0
-          offset.left -= parseFloat( $(elem).css('margin-left') ) || 0
-
-          // Add offsetParent borders
-          parentOffset.top  += parseFloat( $(offsetParent[0]).css('border-top-width') ) || 0
-          parentOffset.left += parseFloat( $(offsetParent[0]).css('border-left-width') ) || 0
-
-          // Subtract the two offsets
-          return {
-            top:  offset.top  - parentOffset.top,
-            left: offset.left - parentOffset.left
-          }
-        },
-        offsetParent: function() {
-          return this.map(function(){
-            var parent = this.offsetParent || document.body
-            while (parent && !rootNodeRE.test(parent.nodeName) && $(parent).css("position") == "static")
-              parent = parent.offsetParent
-            return parent
-          })
-        }
-      }
-
-      // for now
-      $.fn.detach = $.fn.remove
-
-      // Generate the `width` and `height` functions
-      ;['width', 'height'].forEach(function(dimension){
-        var dimensionProperty =
-          dimension.replace(/./, function(m){ return m[0].toUpperCase() })
-
-        $.fn[dimension] = function(value){
-          var offset, el = this[0]
-          if (value === undefined) return isWindow(el) ? el['inner' + dimensionProperty] :
-            isDocument(el) ? el.documentElement['scroll' + dimensionProperty] :
-            (offset = this.offset()) && offset[dimension]
-          else return this.each(function(idx){
-            el = $(this)
-            el.css(dimension, funcArg(this, value, idx, el[dimension]()))
-          })
-        }
-      })
-
-      function traverseNode(node, fun) {
-        fun(node)
-        for (var key in node.childNodes) traverseNode(node.childNodes[key], fun)
-      }
-
-      // Generate the `after`, `prepend`, `before`, `append`,
-      // `insertAfter`, `insertBefore`, `appendTo`, and `prependTo` methods.
-      adjacencyOperators.forEach(function(operator, operatorIndex) {
-        var inside = operatorIndex % 2 //=> prepend, append
-
-        $.fn[operator] = function(){
-          // arguments can be nodes, arrays of nodes, Zepto objects and HTML strings
-          var argType, nodes = $.map(arguments, function(arg) {
-                argType = type(arg)
-                return argType == "object" || argType == "array" || arg == null ?
-                  arg : zepto.fragment(arg)
-              }),
-              parent, copyByClone = this.length > 1
-          if (nodes.length < 1) return this
-
-          return this.each(function(_, target){
-            parent = inside ? target : target.parentNode
-
-            // convert all methods to a "before" operation
-            target = operatorIndex == 0 ? target.nextSibling :
-                     operatorIndex == 1 ? target.firstChild :
-                     operatorIndex == 2 ? target :
-                     null
-
-            nodes.forEach(function(node){
-              if (copyByClone) node = node.cloneNode(true)
-              else if (!parent) return $(node).remove()
-
-              traverseNode(parent.insertBefore(node, target), function(el){
-                if (el.nodeName != null && el.nodeName.toUpperCase() === 'SCRIPT' &&
-                   (!el.type || el.type === 'text/javascript') && !el.src)
-                  window['eval'].call(window, el.innerHTML)
-              })
-            })
-          })
-        }
-
-        // after    => insertAfter
-        // prepend  => prependTo
-        // before   => insertBefore
-        // append   => appendTo
-        $.fn[inside ? operator+'To' : 'insert'+(operatorIndex ? 'Before' : 'After')] = function(html){
-          $(html)[operator](this)
-          return this
-        }
-      })
-
-      zepto.Z.prototype = $.fn
-
-      // Export internal API functions in the `$.zepto` namespace
-      zepto.uniq = uniq
-      zepto.deserializeValue = deserializeValue
-      $.zepto = zepto
-
-      return $
-    })()
-
-    window.Zepto = Zepto
-    window.$ === undefined && (window.$ = Zepto)
-
-    ;(function($){
-      var $$ = $.zepto.qsa, _zid = 1, undefined,
-          slice = Array.prototype.slice,
-          isFunction = $.isFunction,
-          isString = function(obj){ return typeof obj == 'string' },
-          handlers = {},
-          specialEvents={},
-          focusinSupported = 'onfocusin' in window,
-          focus = { focus: 'focusin', blur: 'focusout' },
-          hover = { mouseenter: 'mouseover', mouseleave: 'mouseout' }
-
-      specialEvents.click = specialEvents.mousedown = specialEvents.mouseup = specialEvents.mousemove = 'MouseEvents'
-
-      function zid(element) {
-        return element._zid || (element._zid = _zid++)
-      }
-      function findHandlers(element, event, fn, selector) {
-        event = parse(event)
-        if (event.ns) var matcher = matcherFor(event.ns)
-        return (handlers[zid(element)] || []).filter(function(handler) {
-          return handler
-            && (!event.e  || handler.e == event.e)
-            && (!event.ns || matcher.test(handler.ns))
-            && (!fn       || zid(handler.fn) === zid(fn))
-            && (!selector || handler.sel == selector)
-        })
-      }
-      function parse(event) {
-        var parts = ('' + event).split('.')
-        return {e: parts[0], ns: parts.slice(1).sort().join(' ')}
-      }
-      function matcherFor(ns) {
-        return new RegExp('(?:^| )' + ns.replace(' ', ' .* ?') + '(?: |$)')
-      }
-
-      function eventCapture(handler, captureSetting) {
-        return handler.del &&
-          (!focusinSupported && (handler.e in focus)) ||
-          !!captureSetting
-      }
-
-      function realEvent(type) {
-        return hover[type] || (focusinSupported && focus[type]) || type
-      }
-
-      function add(element, events, fn, data, selector, delegator, capture){
-        var id = zid(element), set = (handlers[id] || (handlers[id] = []))
-        events.split(/\s/).forEach(function(event){
-          if (event == 'ready') return $(document).ready(fn)
-          var handler   = parse(event)
-          handler.fn    = fn
-          handler.sel   = selector
-          // emulate mouseenter, mouseleave
-          if (handler.e in hover) fn = function(e){
-            var related = e.relatedTarget
-            if (!related || (related !== this && !$.contains(this, related)))
-              return handler.fn.apply(this, arguments)
-          }
-          handler.del   = delegator
-          var callback  = delegator || fn
-          handler.proxy = function(e){
-            e = compatible(e)
-            if (e.isImmediatePropagationStopped()) return
-            e.data = data
-            var result = callback.apply(element, e._args == undefined ? [e] : [e].concat(e._args))
-            if (result === false) e.preventDefault(), e.stopPropagation()
-            return result
-          }
-          handler.i = set.length
-          set.push(handler)
-          if ('addEventListener' in element)
-            element.addEventListener(realEvent(handler.e), handler.proxy, eventCapture(handler, capture))
-        })
-      }
-      function remove(element, events, fn, selector, capture){
-        var id = zid(element)
-        ;(events || '').split(/\s/).forEach(function(event){
-          findHandlers(element, event, fn, selector).forEach(function(handler){
-            delete handlers[id][handler.i]
-          if ('removeEventListener' in element)
-            element.removeEventListener(realEvent(handler.e), handler.proxy, eventCapture(handler, capture))
-          })
-        })
-      }
-
-      $.event = { add: add, remove: remove }
-
-      $.proxy = function(fn, context) {
-        if (isFunction(fn)) {
-          var proxyFn = function(){ return fn.apply(context, arguments) }
-          proxyFn._zid = zid(fn)
-          return proxyFn
-        } else if (isString(context)) {
-          return $.proxy(fn[context], fn)
-        } else {
-          throw new TypeError("expected function")
-        }
-      }
-
-      $.fn.bind = function(event, data, callback){
-        return this.on(event, data, callback)
-      }
-      $.fn.unbind = function(event, callback){
-        return this.off(event, callback)
-      }
-      $.fn.one = function(event, selector, data, callback){
-        return this.on(event, selector, data, callback, 1)
-      }
-
-      var returnTrue = function(){return true},
-          returnFalse = function(){return false},
-          ignoreProperties = /^([A-Z]|returnValue$|layer[XY]$)/,
-          eventMethods = {
-            preventDefault: 'isDefaultPrevented',
-            stopImmediatePropagation: 'isImmediatePropagationStopped',
-            stopPropagation: 'isPropagationStopped'
-          }
-
-      function compatible(event, source) {
-        if (source || !event.isDefaultPrevented) {
-          source || (source = event)
-
-          $.each(eventMethods, function(name, predicate) {
-            var sourceMethod = source[name]
-            event[name] = function(){
-              this[predicate] = returnTrue
-              return sourceMethod && sourceMethod.apply(source, arguments)
-            }
-            event[predicate] = returnFalse
-          })
-
-          if (source.defaultPrevented !== undefined ? source.defaultPrevented :
-              'returnValue' in source ? source.returnValue === false :
-              source.getPreventDefault && source.getPreventDefault())
-            event.isDefaultPrevented = returnTrue
-        }
-        return event
-      }
-
-      function createProxy(event) {
-        var key, proxy = { originalEvent: event }
-        for (key in event)
-          if (!ignoreProperties.test(key) && event[key] !== undefined) proxy[key] = event[key]
-
-        return compatible(proxy, event)
-      }
-
-      $.fn.delegate = function(selector, event, callback){
-        return this.on(event, selector, callback)
-      }
-      $.fn.undelegate = function(selector, event, callback){
-        return this.off(event, selector, callback)
-      }
-
-      $.fn.live = function(event, callback){
-        $(document.body).delegate(this.selector, event, callback)
-        return this
-      }
-      $.fn.die = function(event, callback){
-        $(document.body).undelegate(this.selector, event, callback)
-        return this
-      }
-
-      $.fn.on = function(event, selector, data, callback, one){
-        var autoRemove, delegator, $this = this
-        if (event && !isString(event)) {
-          $.each(event, function(type, fn){
-            $this.on(type, selector, data, fn, one)
-          })
-          return $this
-        }
-
-        if (!isString(selector) && !isFunction(callback) && callback !== false)
-          callback = data, data = selector, selector = undefined
-        if (isFunction(data) || data === false)
-          callback = data, data = undefined
-
-        if (callback === false) callback = returnFalse
-
-        return $this.each(function(_, element){
-          if (one) autoRemove = function(e){
-            remove(element, e.type, callback)
-            return callback.apply(this, arguments)
-          }
-
-          if (selector) delegator = function(e){
-            var evt, match = $(e.target).closest(selector, element).get(0)
-            if (match && match !== element) {
-              evt = $.extend(createProxy(e), {currentTarget: match, liveFired: element})
-              return (autoRemove || callback).apply(match, [evt].concat(slice.call(arguments, 1)))
-            }
-          }
-
-          add(element, event, callback, data, selector, delegator || autoRemove)
-        })
-      }
-      $.fn.off = function(event, selector, callback){
-        var $this = this
-        if (event && !isString(event)) {
-          $.each(event, function(type, fn){
-            $this.off(type, selector, fn)
-          })
-          return $this
-        }
-
-        if (!isString(selector) && !isFunction(callback) && callback !== false)
-          callback = selector, selector = undefined
-
-        if (callback === false) callback = returnFalse
-
-        return $this.each(function(){
-          remove(this, event, callback, selector)
-        })
-      }
-
-      $.fn.trigger = function(event, args){
-        event = (isString(event) || $.isPlainObject(event)) ? $.Event(event) : compatible(event)
-        event._args = args
-        return this.each(function(){
-          // items in the collection might not be DOM elements
-          if('dispatchEvent' in this) this.dispatchEvent(event)
-          else $(this).triggerHandler(event, args)
-        })
-      }
-
-      // triggers event handlers on current element just as if an event occurred,
-      // doesn't trigger an actual event, doesn't bubble
-      $.fn.triggerHandler = function(event, args){
-        var e, result
-        this.each(function(i, element){
-          e = createProxy(isString(event) ? $.Event(event) : event)
-          e._args = args
-          e.target = element
-          $.each(findHandlers(element, event.type || event), function(i, handler){
-            result = handler.proxy(e)
-            if (e.isImmediatePropagationStopped()) return false
-          })
-        })
-        return result
-      }
-
-      // shortcut methods for `.bind(event, fn)` for each event type
-      ;('focusin focusout load resize scroll unload click dblclick '+
-      'mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave '+
-      'change select keydown keypress keyup error').split(' ').forEach(function(event) {
-        $.fn[event] = function(callback) {
-          return callback ?
-            this.bind(event, callback) :
-            this.trigger(event)
-        }
-      })
-
-      ;['focus', 'blur'].forEach(function(name) {
-        $.fn[name] = function(callback) {
-          if (callback) this.bind(name, callback)
-          else this.each(function(){
-            try { this[name]() }
-            catch(e) {}
-          })
-          return this
-        }
-      })
-
-      $.Event = function(type, props) {
-        if (!isString(type)) props = type, type = props.type
-        var event = document.createEvent(specialEvents[type] || 'Events'), bubbles = true
-        if (props) for (var name in props) (name == 'bubbles') ? (bubbles = !!props[name]) : (event[name] = props[name])
-        event.initEvent(type, bubbles, true)
-        return compatible(event)
-      }
-
-    })(Zepto)
-
-    ;(function($){
-      var jsonpID = 0,
-          document = window.document,
-          key,
-          name,
-          rscript = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
-          scriptTypeRE = /^(?:text|application)\/javascript/i,
-          xmlTypeRE = /^(?:text|application)\/xml/i,
-          jsonType = 'application/json',
-          htmlType = 'text/html',
-          blankRE = /^\s*$/
-
-      // trigger a custom event and return false if it was cancelled
-      function triggerAndReturn(context, eventName, data) {
-        var event = $.Event(eventName)
-        $(context).trigger(event, data)
-        return !event.isDefaultPrevented()
-      }
-
-      // trigger an Ajax "global" event
-      function triggerGlobal(settings, context, eventName, data) {
-        if (settings.global) return triggerAndReturn(context || document, eventName, data)
-      }
-
-      // Number of active Ajax requests
-      $.active = 0
-
-      function ajaxStart(settings) {
-        if (settings.global && $.active++ === 0) triggerGlobal(settings, null, 'ajaxStart')
-      }
-      function ajaxStop(settings) {
-        if (settings.global && !(--$.active)) triggerGlobal(settings, null, 'ajaxStop')
-      }
-
-      // triggers an extra global event "ajaxBeforeSend" that's like "ajaxSend" but cancelable
-      function ajaxBeforeSend(xhr, settings) {
-        var context = settings.context
-        if (settings.beforeSend.call(context, xhr, settings) === false ||
-            triggerGlobal(settings, context, 'ajaxBeforeSend', [xhr, settings]) === false)
-          return false
-
-        triggerGlobal(settings, context, 'ajaxSend', [xhr, settings])
-      }
-      function ajaxSuccess(data, xhr, settings, deferred) {
-        var context = settings.context, status = 'success'
-        settings.success.call(context, data, status, xhr)
-        if (deferred) deferred.resolveWith(context, [data, status, xhr])
-        triggerGlobal(settings, context, 'ajaxSuccess', [xhr, settings, data])
-        ajaxComplete(status, xhr, settings)
-      }
-      // type: "timeout", "error", "abort", "parsererror"
-      function ajaxError(error, type, xhr, settings, deferred) {
-        var context = settings.context
-        settings.error.call(context, xhr, type, error)
-        if (deferred) deferred.rejectWith(context, [xhr, type, error])
-        triggerGlobal(settings, context, 'ajaxError', [xhr, settings, error || type])
-        ajaxComplete(type, xhr, settings)
-      }
-      // status: "success", "notmodified", "error", "timeout", "abort", "parsererror"
-      function ajaxComplete(status, xhr, settings) {
-        var context = settings.context
-        settings.complete.call(context, xhr, status)
-        triggerGlobal(settings, context, 'ajaxComplete', [xhr, settings])
-        ajaxStop(settings)
-      }
-
-      // Empty function, used as default callback
-      function empty() {}
-
-      $.ajaxJSONP = function(options, deferred){
-        if (!('type' in options)) return $.ajax(options)
-
-        var _callbackName = options.jsonpCallback,
-          callbackName = ($.isFunction(_callbackName) ?
-            _callbackName() : _callbackName) || ('jsonp' + (++jsonpID)),
-          script = document.createElement('script'),
-          originalCallback = window[callbackName],
-          responseData,
-          abort = function(errorType) {
-            $(script).triggerHandler('error', errorType || 'abort')
-          },
-          xhr = { abort: abort }, abortTimeout
-
-        if (deferred) deferred.promise(xhr)
-
-        $(script).on('load error', function(e, errorType){
-          clearTimeout(abortTimeout)
-          $(script).off().remove()
-
-          if (e.type == 'error' || !responseData) {
-            ajaxError(null, errorType || 'error', xhr, options, deferred)
-          } else {
-            ajaxSuccess(responseData[0], xhr, options, deferred)
-          }
-
-          window[callbackName] = originalCallback
-          if (responseData && $.isFunction(originalCallback))
-            originalCallback(responseData[0])
-
-          originalCallback = responseData = undefined
-        })
-
-        if (ajaxBeforeSend(xhr, options) === false) {
-          abort('abort')
-          return xhr
-        }
-
-        window[callbackName] = function(){
-          responseData = arguments
-        }
-
-        script.src = options.url.replace(/\?(.+)=\?/, '?$1=' + callbackName)
-        document.head.appendChild(script)
-
-        if (options.timeout > 0) abortTimeout = setTimeout(function(){
-          abort('timeout')
-        }, options.timeout)
-
-        return xhr
-      }
-
-      $.ajaxSettings = {
-        // Default type of request
-        type: 'GET',
-        // Callback that is executed before request
-        beforeSend: empty,
-        // Callback that is executed if the request succeeds
-        success: empty,
-        // Callback that is executed the the server drops error
-        error: empty,
-        // Callback that is executed on request complete (both: error and success)
-        complete: empty,
-        // The context for the callbacks
-        context: null,
-        // Whether to trigger "global" Ajax events
-        global: true,
-        // Transport
-        xhr: function () {
-          return new window.XMLHttpRequest()
-        },
-        // MIME types mapping
-        // IIS returns Javascript as "application/x-javascript"
-        accepts: {
-          script: 'text/javascript, application/javascript, application/x-javascript',
-          json:   jsonType,
-          xml:    'application/xml, text/xml',
-          html:   htmlType,
-          text:   'text/plain'
-        },
-        // Whether the request is to another domain
-        crossDomain: false,
-        // Default timeout
-        timeout: 0,
-        // Whether data should be serialized to string
-        processData: true,
-        // Whether the browser should be allowed to cache GET responses
-        cache: true
-      }
-
-      function mimeToDataType(mime) {
-        if (mime) mime = mime.split(';', 2)[0]
-        return mime && ( mime == htmlType ? 'html' :
-          mime == jsonType ? 'json' :
-          scriptTypeRE.test(mime) ? 'script' :
-          xmlTypeRE.test(mime) && 'xml' ) || 'text'
-      }
-
-      function appendQuery(url, query) {
-        if (query == '') return url
-        return (url + '&' + query).replace(/[&?]{1,2}/, '?')
-      }
-
-      // serialize payload and append it to the URL for GET requests
-      function serializeData(options) {
-        if (options.processData && options.data && $.type(options.data) != "string")
-          options.data = $.param(options.data, options.traditional)
-        if (options.data && (!options.type || options.type.toUpperCase() == 'GET'))
-          options.url = appendQuery(options.url, options.data), options.data = undefined
-      }
-
-      $.ajax = function(options){
-        var settings = $.extend({}, options || {}),
-            deferred = $.Deferred && $.Deferred()
-        for (key in $.ajaxSettings) if (settings[key] === undefined) settings[key] = $.ajaxSettings[key]
-
-        ajaxStart(settings)
-
-        if (!settings.crossDomain) settings.crossDomain = /^([\w-]+:)?\/\/([^\/]+)/.test(settings.url) &&
-          RegExp.$2 != window.location.host
-
-        if (!settings.url) settings.url = window.location.toString()
-        serializeData(settings)
-        if (settings.cache === false) settings.url = appendQuery(settings.url, '_=' + Date.now())
-
-        var dataType = settings.dataType, hasPlaceholder = /\?.+=\?/.test(settings.url)
-        if (dataType == 'jsonp' || hasPlaceholder) {
-          if (!hasPlaceholder)
-            settings.url = appendQuery(settings.url,
-              settings.jsonp ? (settings.jsonp + '=?') : settings.jsonp === false ? '' : 'callback=?')
-          return $.ajaxJSONP(settings, deferred)
-        }
-
-        var mime = settings.accepts[dataType],
-            headers = { },
-            setHeader = function(name, value) { headers[name.toLowerCase()] = [name, value] },
-            protocol = /^([\w-]+:)\/\//.test(settings.url) ? RegExp.$1 : window.location.protocol,
-            xhr = settings.xhr(),
-            nativeSetHeader = xhr.setRequestHeader,
-            abortTimeout
-
-        if (deferred) deferred.promise(xhr)
-
-        if (!settings.crossDomain) setHeader('X-Requested-With', 'XMLHttpRequest')
-        setHeader('Accept', mime || '*/*')
-        if (mime = settings.mimeType || mime) {
-          if (mime.indexOf(',') > -1) mime = mime.split(',', 2)[0]
-          xhr.overrideMimeType && xhr.overrideMimeType(mime)
-        }
-        if (settings.contentType || (settings.contentType !== false && settings.data && settings.type.toUpperCase() != 'GET'))
-          setHeader('Content-Type', settings.contentType || 'application/x-www-form-urlencoded')
-
-        if (settings.headers) for (name in settings.headers) setHeader(name, settings.headers[name])
-        xhr.setRequestHeader = setHeader
-
-        xhr.onreadystatechange = function(){
-          if (xhr.readyState == 4) {
-            xhr.onreadystatechange = empty
-            clearTimeout(abortTimeout)
-            var result, error = false
-            if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304 || (xhr.status == 0 && protocol == 'file:')) {
-              dataType = dataType || mimeToDataType(settings.mimeType || xhr.getResponseHeader('content-type'))
-              result = xhr.responseText
-
-              try {
-                // http://perfectionkills.com/global-eval-what-are-the-options/
-                if (dataType == 'script')    (1,eval)(result)
-                else if (dataType == 'xml')  result = xhr.responseXML
-                else if (dataType == 'json') result = blankRE.test(result) ? null : $.parseJSON(result)
-              } catch (e) { error = e }
-
-              if (error) ajaxError(error, 'parsererror', xhr, settings, deferred)
-              else ajaxSuccess(result, xhr, settings, deferred)
-            } else {
-              ajaxError(xhr.statusText || null, xhr.status ? 'error' : 'abort', xhr, settings, deferred)
-            }
-          }
-        }
-
-        if (ajaxBeforeSend(xhr, settings) === false) {
-          xhr.abort()
-          ajaxError(null, 'abort', xhr, settings, deferred)
-          return xhr
-        }
-
-        if (settings.xhrFields) for (name in settings.xhrFields) xhr[name] = settings.xhrFields[name]
-
-        var async = 'async' in settings ? settings.async : true
-        xhr.open(settings.type, settings.url, async, settings.username, settings.password)
-
-        for (name in headers) nativeSetHeader.apply(xhr, headers[name])
-
-        if (settings.timeout > 0) abortTimeout = setTimeout(function(){
-            xhr.onreadystatechange = empty
-            xhr.abort()
-            ajaxError(null, 'timeout', xhr, settings, deferred)
-          }, settings.timeout)
-
-        // avoid sending empty string (#319)
-        xhr.send(settings.data ? settings.data : null)
-        return xhr
-      }
-
-      // handle optional data/success arguments
-      function parseArguments(url, data, success, dataType) {
-        var hasData = !$.isFunction(data)
-        return {
-          url:      url,
-          data:     hasData  ? data : undefined,
-          success:  !hasData ? data : $.isFunction(success) ? success : undefined,
-          dataType: hasData  ? dataType || success : success
-        }
-      }
-
-      $.get = function(url, data, success, dataType){
-        return $.ajax(parseArguments.apply(null, arguments))
-      }
-
-      $.post = function(url, data, success, dataType){
-        var options = parseArguments.apply(null, arguments)
-        options.type = 'POST'
-        return $.ajax(options)
-      }
-
-      $.getJSON = function(url, data, success){
-        var options = parseArguments.apply(null, arguments)
-        options.dataType = 'json'
-        return $.ajax(options)
-      }
-
-      $.fn.load = function(url, data, success){
-        if (!this.length) return this
-        var self = this, parts = url.split(/\s/), selector,
-            options = parseArguments(url, data, success),
-            callback = options.success
-        if (parts.length > 1) options.url = parts[0], selector = parts[1]
-        options.success = function(response){
-          self.html(selector ?
-            $('<div>').html(response.replace(rscript, "")).find(selector)
-            : response)
-          callback && callback.apply(self, arguments)
-        }
-        $.ajax(options)
-        return this
-      }
-
-      var escape = encodeURIComponent
-
-      function serialize(params, obj, traditional, scope){
-        var type, array = $.isArray(obj), hash = $.isPlainObject(obj)
-        $.each(obj, function(key, value) {
-          type = $.type(value)
-          if (scope) key = traditional ? scope :
-            scope + '[' + (hash || type == 'object' || type == 'array' ? key : '') + ']'
-          // handle data in serializeArray() format
-          if (!scope && array) params.add(value.name, value.value)
-          // recurse into nested objects
-          else if (type == "array" || (!traditional && type == "object"))
-            serialize(params, value, traditional, key)
-          else params.add(key, value)
-        })
-      }
-
-      $.param = function(obj, traditional){
-        var params = []
-        params.add = function(k, v){ this.push(escape(k) + '=' + escape(v)) }
-        serialize(params, obj, traditional)
-        return params.join('&').replace(/%20/g, '+')
-      }
-    })(Zepto)
-
-    ;(function($){
-      $.fn.serializeArray = function() {
-        var result = [], el
-        $([].slice.call(this.get(0).elements)).each(function(){
-          el = $(this)
-          var type = el.attr('type')
-          if (this.nodeName.toLowerCase() != 'fieldset' &&
-            !this.disabled && type != 'submit' && type != 'reset' && type != 'button' &&
-            ((type != 'radio' && type != 'checkbox') || this.checked))
-            result.push({
-              name: el.attr('name'),
-              value: el.val()
-            })
-        })
-        return result
-      }
-
-      $.fn.serialize = function(){
-        var result = []
-        this.serializeArray().forEach(function(elm){
-          result.push(encodeURIComponent(elm.name) + '=' + encodeURIComponent(elm.value))
-        })
-        return result.join('&')
-      }
-
-      $.fn.submit = function(callback) {
-        if (callback) this.bind('submit', callback)
-        else if (this.length) {
-          var event = $.Event('submit')
-          this.eq(0).trigger(event)
-          if (!event.isDefaultPrevented()) this.get(0).submit()
-        }
-        return this
-      }
-
-    })(Zepto)
-
-    ;(function($){
-      // __proto__ doesn't exist on IE<11, so redefine
-      // the Z function to use object extension instead
-      if (!('__proto__' in {})) {
-        $.extend($.zepto, {
-          Z: function(dom, selector){
-            dom = dom || []
-            $.extend(dom, $.fn)
-            dom.selector = selector || ''
-            dom.__Z = true
-            return dom
-          },
-          // this is a kludge but works
-          isZ: function(object){
-            return $.type(object) === 'array' && '__Z' in object
-          }
-        })
-      }
-
-      // getComputedStyle shouldn't freak out when called
-      // without a valid element as argument
-      try {
-        getComputedStyle(undefined)
-      } catch(e) {
-        var nativeGetComputedStyle = getComputedStyle;
-        window.getComputedStyle = function(element){
-          try {
-            return nativeGetComputedStyle(element)
-          } catch(e) {
-            return null
-          }
-        }
-      }
-    })(Zepto)
-
-
-    VCO.getJSON = Zepto.getJSON;
+	/* Zepto v1.1.2-15-g59d3fe5 - zepto event ajax form ie - zeptojs.com/license */
+
+	var Zepto = (function() {
+		var undefined, key, $, classList, emptyArray = [], slice = emptyArray.slice, filter = emptyArray.filter,
+			document = window.document,
+			elementDisplay = {}, classCache = {},
+			cssNumber = { 'column-count': 1, 'columns': 1, 'font-weight': 1, 'line-height': 1,'opacity': 1, 'z-index': 1, 'zoom': 1 },
+			fragmentRE = /^\s*<(\w+|!)[^>]*>/,
+			singleTagRE = /^<(\w+)\s*\/?>(?:<\/\1>|)$/,
+			tagExpanderRE = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,
+			rootNodeRE = /^(?:body|html)$/i,
+			capitalRE = /([A-Z])/g,
+
+			// special attributes that should be get/set via method calls
+			methodAttributes = ['val', 'css', 'html', 'text', 'data', 'width', 'height', 'offset'],
+
+			adjacencyOperators = [ 'after', 'prepend', 'before', 'append' ],
+			table = document.createElement('table'),
+			tableRow = document.createElement('tr'),
+			containers = {
+			'tr': document.createElement('tbody'),
+			'tbody': table, 'thead': table, 'tfoot': table,
+			'td': tableRow, 'th': tableRow,
+			'*': document.createElement('div')
+		},
+			readyRE = /complete|loaded|interactive/,
+			classSelectorRE = /^\.([\w-]+)$/,
+			idSelectorRE = /^#([\w-]*)$/,
+			simpleSelectorRE = /^[\w-]*$/,
+			class2type = {},
+			toString = class2type.toString,
+			zepto = {},
+			camelize, uniq,
+			tempParent = document.createElement('div'),
+			propMap = {
+			'tabindex': 'tabIndex',
+			'readonly': 'readOnly',
+			'for': 'htmlFor',
+			'class': 'className',
+			'maxlength': 'maxLength',
+			'cellspacing': 'cellSpacing',
+			'cellpadding': 'cellPadding',
+			'rowspan': 'rowSpan',
+			'colspan': 'colSpan',
+			'usemap': 'useMap',
+			'frameborder': 'frameBorder',
+			'contenteditable': 'contentEditable'
+		},
+			isArray = Array.isArray ||
+			function(object){ return object instanceof Array }
+
+		zepto.matches = function(element, selector) {
+			if (!selector || !element || element.nodeType !== 1) return false
+			var matchesSelector = element.webkitMatchesSelector || element.mozMatchesSelector ||
+				element.oMatchesSelector || element.matchesSelector
+			if (matchesSelector) return matchesSelector.call(element, selector)
+			// fall back to performing a selector:
+			var match, parent = element.parentNode, temp = !parent
+			if (temp) (parent = tempParent).appendChild(element)
+			match = ~zepto.qsa(parent, selector).indexOf(element)
+			temp && tempParent.removeChild(element)
+			return match
+		}
+
+		function type(obj) {
+			return obj == null ? String(obj) :
+			class2type[toString.call(obj)] || "object"
+		}
+
+		function isFunction(value) { return type(value) == "function" }
+		function isWindow(obj)     { return obj != null && obj == obj.window }
+		function isDocument(obj)   { return obj != null && obj.nodeType == obj.DOCUMENT_NODE }
+		function isObject(obj)     { return type(obj) == "object" }
+		function isPlainObject(obj) {
+			return isObject(obj) && !isWindow(obj) && Object.getPrototypeOf(obj) == Object.prototype
+		}
+		function likeArray(obj) { return typeof obj.length == 'number' }
+
+		function compact(array) { return filter.call(array, function(item){ return item != null }) }
+		function flatten(array) { return array.length > 0 ? $.fn.concat.apply([], array) : array }
+		camelize = function(str){ return str.replace(/-+(.)?/g, function(match, chr){ return chr ? chr.toUpperCase() : '' }) }
+		function dasherize(str) {
+			return str.replace(/::/g, '/')
+				.replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
+				.replace(/([a-z\d])([A-Z])/g, '$1_$2')
+				.replace(/_/g, '-')
+				.toLowerCase()
+		}
+		uniq = function(array){ return filter.call(array, function(item, idx){ return array.indexOf(item) == idx }) }
+
+		function classRE(name) {
+			return name in classCache ?
+				classCache[name] : (classCache[name] = new RegExp('(^|\\s)' + name + '(\\s|$)'))
+		}
+
+		function maybeAddPx(name, value) {
+			return (typeof value == "number" && !cssNumber[dasherize(name)]) ? value + "px" : value
+		}
+
+		function defaultDisplay(nodeName) {
+			var element, display
+			if (!elementDisplay[nodeName]) {
+				element = document.createElement(nodeName)
+				document.body.appendChild(element)
+				display = getComputedStyle(element, '').getPropertyValue("display")
+				element.parentNode.removeChild(element)
+				display == "none" && (display = "block")
+				elementDisplay[nodeName] = display
+			}
+			return elementDisplay[nodeName]
+		}
+
+		function children(element) {
+			return 'children' in element ?
+				slice.call(element.children) :
+			$.map(element.childNodes, function(node){ if (node.nodeType == 1) return node })
+		}
+
+		// `$.zepto.fragment` takes a html string and an optional tag name
+		// to generate DOM nodes nodes from the given html string.
+		// The generated DOM nodes are returned as an array.
+		// This function can be overriden in plugins for example to make
+		// it compatible with browsers that don't support the DOM fully.
+		zepto.fragment = function(html, name, properties) {
+			var dom, nodes, container
+
+			// A special case optimization for a single tag
+			if (singleTagRE.test(html)) dom = $(document.createElement(RegExp.$1))
+
+			if (!dom) {
+				if (html.replace) html = html.replace(tagExpanderRE, "<$1></$2>")
+				if (name === undefined) name = fragmentRE.test(html) && RegExp.$1
+				if (!(name in containers)) name = '*'
+
+				container = containers[name]
+				container.innerHTML = '' + html
+				dom = $.each(slice.call(container.childNodes), function(){
+					container.removeChild(this)
+				})
+			}
+
+			if (isPlainObject(properties)) {
+				nodes = $(dom)
+				$.each(properties, function(key, value) {
+					if (methodAttributes.indexOf(key) > -1) nodes[key](value)
+					else nodes.attr(key, value)
+				})
+			}
+
+			return dom
+		}
+
+		// `$.zepto.Z` swaps out the prototype of the given `dom` array
+		// of nodes with `$.fn` and thus supplying all the Zepto functions
+		// to the array. Note that `__proto__` is not supported on Internet
+		// Explorer. This method can be overriden in plugins.
+		zepto.Z = function(dom, selector) {
+			dom = dom || []
+			dom.__proto__ = $.fn
+			dom.selector = selector || ''
+			return dom
+		}
+
+		// `$.zepto.isZ` should return `true` if the given object is a Zepto
+		// collection. This method can be overriden in plugins.
+		zepto.isZ = function(object) {
+			return object instanceof zepto.Z
+		}
+
+		// `$.zepto.init` is Zepto's counterpart to jQuery's `$.fn.init` and
+		// takes a CSS selector and an optional context (and handles various
+		// special cases).
+		// This method can be overriden in plugins.
+		zepto.init = function(selector, context) {
+			var dom
+			// If nothing given, return an empty Zepto collection
+			if (!selector) return zepto.Z()
+			// Optimize for string selectors
+			else if (typeof selector == 'string') {
+				selector = selector.trim()
+				// If it's a html fragment, create nodes from it
+				// Note: In both Chrome 21 and Firefox 15, DOM error 12
+				// is thrown if the fragment doesn't begin with <
+				if (selector[0] == '<' && fragmentRE.test(selector))
+					dom = zepto.fragment(selector, RegExp.$1, context), selector = null
+				// If there's a context, create a collection on that context first, and select
+				// nodes from there
+				else if (context !== undefined) return $(context).find(selector)
+				// If it's a CSS selector, use it to select nodes.
+				else dom = zepto.qsa(document, selector)
+			}
+			// If a function is given, call it when the DOM is ready
+			else if (isFunction(selector)) return $(document).ready(selector)
+			// If a Zepto collection is given, just return it
+			else if (zepto.isZ(selector)) return selector
+			else {
+				// normalize array if an array of nodes is given
+				if (isArray(selector)) dom = compact(selector)
+				// Wrap DOM nodes.
+				else if (isObject(selector))
+					dom = [selector], selector = null
+				// If it's a html fragment, create nodes from it
+				else if (fragmentRE.test(selector))
+					dom = zepto.fragment(selector.trim(), RegExp.$1, context), selector = null
+				// If there's a context, create a collection on that context first, and select
+				// nodes from there
+				else if (context !== undefined) return $(context).find(selector)
+				// And last but no least, if it's a CSS selector, use it to select nodes.
+				else dom = zepto.qsa(document, selector)
+			}
+			// create a new Zepto collection from the nodes found
+			return zepto.Z(dom, selector)
+		}
+
+		// `$` will be the base `Zepto` object. When calling this
+		// function just call `$.zepto.init, which makes the implementation
+		// details of selecting nodes and creating Zepto collections
+		// patchable in plugins.
+		$ = function(selector, context){
+			return zepto.init(selector, context)
+		}
+
+		function extend(target, source, deep) {
+			for (key in source)
+				if (deep && (isPlainObject(source[key]) || isArray(source[key]))) {
+					if (isPlainObject(source[key]) && !isPlainObject(target[key]))
+						target[key] = {}
+					if (isArray(source[key]) && !isArray(target[key]))
+						target[key] = []
+					extend(target[key], source[key], deep)
+				}
+				else if (source[key] !== undefined) target[key] = source[key]
+		}
+
+		// Copy all but undefined properties from one or more
+		// objects to the `target` object.
+		$.extend = function(target){
+			var deep, args = slice.call(arguments, 1)
+			if (typeof target == 'boolean') {
+				deep = target
+				target = args.shift()
+			}
+			args.forEach(function(arg){ extend(target, arg, deep) })
+			return target
+		}
+
+		// `$.zepto.qsa` is Zepto's CSS selector implementation which
+		// uses `document.querySelectorAll` and optimizes for some special cases, like `#id`.
+		// This method can be overriden in plugins.
+		zepto.qsa = function(element, selector){
+			var found,
+				maybeID = selector[0] == '#',
+				maybeClass = !maybeID && selector[0] == '.',
+				nameOnly = maybeID || maybeClass ? selector.slice(1) : selector, // Ensure that a 1 char tag name still gets checked
+				isSimple = simpleSelectorRE.test(nameOnly)
+			return (isDocument(element) && isSimple && maybeID) ?
+				( (found = element.getElementById(nameOnly)) ? [found] : [] ) :
+			(element.nodeType !== 1 && element.nodeType !== 9) ? [] :
+			slice.call(
+				isSimple && !maybeID ?
+				maybeClass ? element.getElementsByClassName(nameOnly) : // If it's simple, it could be a class
+				element.getElementsByTagName(selector) : // Or a tag
+				element.querySelectorAll(selector) // Or it's not simple, and we need to query all
+			)
+		}
+
+		function filtered(nodes, selector) {
+			return selector == null ? $(nodes) : $(nodes).filter(selector)
+		}
+
+		$.contains = function(parent, node) {
+			return parent !== node && parent.contains(node)
+		}
+
+		function funcArg(context, arg, idx, payload) {
+			return isFunction(arg) ? arg.call(context, idx, payload) : arg
+		}
+
+		function setAttribute(node, name, value) {
+			value == null ? node.removeAttribute(name) : node.setAttribute(name, value)
+		}
+
+		// access className property while respecting SVGAnimatedString
+		function className(node, value){
+			var klass = node.className,
+				svg   = klass && klass.baseVal !== undefined
+
+			if (value === undefined) return svg ? klass.baseVal : klass
+			svg ? (klass.baseVal = value) : (node.className = value)
+		}
+
+		// "true"  => true
+		// "false" => false
+		// "null"  => null
+		// "42"    => 42
+		// "42.5"  => 42.5
+		// "08"    => "08"
+		// JSON    => parse if valid
+		// String  => self
+		function deserializeValue(value) {
+			var num
+			try {
+				return value ?
+					value == "true" ||
+					( value == "false" ? false :
+					 value == "null" ? null :
+					 !/^0/.test(value) && !isNaN(num = Number(value)) ? num :
+					 /^[\[\{]/.test(value) ? $.parseJSON(value) :
+					 value )
+				: value
+			} catch(e) {
+				return value
+			}
+		}
+
+		$.type = type
+		$.isFunction = isFunction
+		$.isWindow = isWindow
+		$.isArray = isArray
+		$.isPlainObject = isPlainObject
+
+		$.isEmptyObject = function(obj) {
+			var name
+			for (name in obj) return false
+			return true
+		}
+
+		$.inArray = function(elem, array, i){
+			return emptyArray.indexOf.call(array, elem, i)
+		}
+
+		$.camelCase = camelize
+		$.trim = function(str) {
+			return str == null ? "" : String.prototype.trim.call(str)
+		}
+
+		// plugin compatibility
+		$.uuid = 0
+		$.support = { }
+		$.expr = { }
+
+		$.map = function(elements, callback){
+			var value, values = [], i, key
+			if (likeArray(elements))
+				for (i = 0; i < elements.length; i++) {
+					value = callback(elements[i], i)
+					if (value != null) values.push(value)
+				}
+			else
+				for (key in elements) {
+					value = callback(elements[key], key)
+					if (value != null) values.push(value)
+				}
+			return flatten(values)
+		}
+
+		$.each = function(elements, callback){
+			var i, key
+			if (likeArray(elements)) {
+				for (i = 0; i < elements.length; i++)
+					if (callback.call(elements[i], i, elements[i]) === false) return elements
+			} else {
+				for (key in elements)
+					if (callback.call(elements[key], key, elements[key]) === false) return elements
+			}
+
+			return elements
+		}
+
+		$.grep = function(elements, callback){
+			return filter.call(elements, callback)
+		}
+
+		if (window.JSON) $.parseJSON = JSON.parse
+
+		// Populate the class2type map
+		$.each("Boolean Number String Function Array Date RegExp Object Error".split(" "), function(i, name) {
+			class2type[ "[object " + name + "]" ] = name.toLowerCase()
+		})
+
+		// Define methods that will be available on all
+		// Zepto collections
+		$.fn = {
+			// Because a collection acts like an array
+			// copy over these useful array functions.
+			forEach: emptyArray.forEach,
+			reduce: emptyArray.reduce,
+			push: emptyArray.push,
+			sort: emptyArray.sort,
+			indexOf: emptyArray.indexOf,
+			concat: emptyArray.concat,
+
+			// `map` and `slice` in the jQuery API work differently
+			// from their array counterparts
+			map: function(fn){
+				return $($.map(this, function(el, i){ return fn.call(el, i, el) }))
+			},
+			slice: function(){
+				return $(slice.apply(this, arguments))
+			},
+
+			ready: function(callback){
+				// need to check if document.body exists for IE as that browser reports
+				// document ready when it hasn't yet created the body element
+				if (readyRE.test(document.readyState) && document.body) callback($)
+				else document.addEventListener('DOMContentLoaded', function(){ callback($) }, false)
+				return this
+			},
+			get: function(idx){
+				return idx === undefined ? slice.call(this) : this[idx >= 0 ? idx : idx + this.length]
+			},
+			toArray: function(){ return this.get() },
+			size: function(){
+				return this.length
+			},
+			remove: function(){
+				return this.each(function(){
+					if (this.parentNode != null)
+						this.parentNode.removeChild(this)
+				})
+			},
+			each: function(callback){
+				emptyArray.every.call(this, function(el, idx){
+					return callback.call(el, idx, el) !== false
+				})
+				return this
+			},
+			filter: function(selector){
+				if (isFunction(selector)) return this.not(this.not(selector))
+				return $(filter.call(this, function(element){
+					return zepto.matches(element, selector)
+				}))
+			},
+			add: function(selector,context){
+				return $(uniq(this.concat($(selector,context))))
+			},
+			is: function(selector){
+				return this.length > 0 && zepto.matches(this[0], selector)
+			},
+			not: function(selector){
+				var nodes=[]
+				if (isFunction(selector) && selector.call !== undefined)
+					this.each(function(idx){
+						if (!selector.call(this,idx)) nodes.push(this)
+					})
+				else {
+					var excludes = typeof selector == 'string' ? this.filter(selector) :
+					(likeArray(selector) && isFunction(selector.item)) ? slice.call(selector) : $(selector)
+					this.forEach(function(el){
+						if (excludes.indexOf(el) < 0) nodes.push(el)
+					})
+				}
+				return $(nodes)
+			},
+			has: function(selector){
+				return this.filter(function(){
+					return isObject(selector) ?
+						$.contains(this, selector) :
+					$(this).find(selector).size()
+				})
+			},
+			eq: function(idx){
+				return idx === -1 ? this.slice(idx) : this.slice(idx, + idx + 1)
+			},
+			first: function(){
+				var el = this[0]
+				return el && !isObject(el) ? el : $(el)
+			},
+			last: function(){
+				var el = this[this.length - 1]
+				return el && !isObject(el) ? el : $(el)
+			},
+			find: function(selector){
+				var result, $this = this
+				if (typeof selector == 'object')
+					result = $(selector).filter(function(){
+						var node = this
+						return emptyArray.some.call($this, function(parent){
+							return $.contains(parent, node)
+						})
+					})
+				else if (this.length == 1) result = $(zepto.qsa(this[0], selector))
+				else result = this.map(function(){ return zepto.qsa(this, selector) })
+				return result
+			},
+			closest: function(selector, context){
+				var node = this[0], collection = false
+				if (typeof selector == 'object') collection = $(selector)
+				while (node && !(collection ? collection.indexOf(node) >= 0 : zepto.matches(node, selector)))
+					node = node !== context && !isDocument(node) && node.parentNode
+				return $(node)
+			},
+			parents: function(selector){
+				var ancestors = [], nodes = this
+				while (nodes.length > 0)
+					nodes = $.map(nodes, function(node){
+						if ((node = node.parentNode) && !isDocument(node) && ancestors.indexOf(node) < 0) {
+							ancestors.push(node)
+							return node
+						}
+					})
+				return filtered(ancestors, selector)
+			},
+			parent: function(selector){
+				return filtered(uniq(this.pluck('parentNode')), selector)
+			},
+			children: function(selector){
+				return filtered(this.map(function(){ return children(this) }), selector)
+			},
+			contents: function() {
+				return this.map(function() { return slice.call(this.childNodes) })
+			},
+			siblings: function(selector){
+				return filtered(this.map(function(i, el){
+					return filter.call(children(el.parentNode), function(child){ return child!==el })
+				}), selector)
+			},
+			empty: function(){
+				return this.each(function(){ this.innerHTML = '' })
+			},
+			// `pluck` is borrowed from Prototype.js
+			pluck: function(property){
+				return $.map(this, function(el){ return el[property] })
+			},
+			show: function(){
+				return this.each(function(){
+					this.style.display == "none" && (this.style.display = '')
+					if (getComputedStyle(this, '').getPropertyValue("display") == "none")
+						this.style.display = defaultDisplay(this.nodeName)
+				})
+			},
+			replaceWith: function(newContent){
+				return this.before(newContent).remove()
+			},
+			wrap: function(structure){
+				var func = isFunction(structure)
+				if (this[0] && !func)
+					var dom   = $(structure).get(0),
+						clone = dom.parentNode || this.length > 1
+
+					return this.each(function(index){
+						$(this).wrapAll(
+							func ? structure.call(this, index) :
+							clone ? dom.cloneNode(true) : dom
+						)
+					})
+			},
+			wrapAll: function(structure){
+				if (this[0]) {
+					$(this[0]).before(structure = $(structure))
+					var children
+					// drill down to the inmost element
+					while ((children = structure.children()).length) structure = children.first()
+					$(structure).append(this)
+				}
+				return this
+			},
+			wrapInner: function(structure){
+				var func = isFunction(structure)
+				return this.each(function(index){
+					var self = $(this), contents = self.contents(),
+						dom  = func ? structure.call(this, index) : structure
+					contents.length ? contents.wrapAll(dom) : self.append(dom)
+				})
+			},
+			unwrap: function(){
+				this.parent().each(function(){
+					$(this).replaceWith($(this).children())
+				})
+				return this
+			},
+			clone: function(){
+				return this.map(function(){ return this.cloneNode(true) })
+			},
+			hide: function(){
+				return this.css("display", "none")
+			},
+			toggle: function(setting){
+				return this.each(function(){
+					var el = $(this)
+					;(setting === undefined ? el.css("display") == "none" : setting) ? el.show() : el.hide()
+				})
+			},
+			prev: function(selector){ return $(this.pluck('previousElementSibling')).filter(selector || '*') },
+			next: function(selector){ return $(this.pluck('nextElementSibling')).filter(selector || '*') },
+			html: function(html){
+				return arguments.length === 0 ?
+					(this.length > 0 ? this[0].innerHTML : null) :
+				this.each(function(idx){
+					var originHtml = this.innerHTML
+					$(this).empty().append( funcArg(this, html, idx, originHtml) )
+				})
+			},
+			text: function(text){
+				return arguments.length === 0 ?
+					(this.length > 0 ? this[0].textContent : null) :
+				this.each(function(){ this.textContent = (text === undefined) ? '' : ''+text })
+			},
+			attr: function(name, value){
+				var result
+				return (typeof name == 'string' && value === undefined) ?
+					(this.length == 0 || this[0].nodeType !== 1 ? undefined :
+					 (name == 'value' && this[0].nodeName == 'INPUT') ? this.val() :
+					 (!(result = this[0].getAttribute(name)) && name in this[0]) ? this[0][name] : result
+					) :
+				this.each(function(idx){
+					if (this.nodeType !== 1) return
+					if (isObject(name)) for (key in name) setAttribute(this, key, name[key])
+					else setAttribute(this, name, funcArg(this, value, idx, this.getAttribute(name)))
+				})
+			},
+			removeAttr: function(name){
+				return this.each(function(){ this.nodeType === 1 && setAttribute(this, name) })
+			},
+			prop: function(name, value){
+				name = propMap[name] || name
+				return (value === undefined) ?
+					(this[0] && this[0][name]) :
+				this.each(function(idx){
+					this[name] = funcArg(this, value, idx, this[name])
+				})
+			},
+			data: function(name, value){
+				var data = this.attr('data-' + name.replace(capitalRE, '-$1').toLowerCase(), value)
+				return data !== null ? deserializeValue(data) : undefined
+			},
+			val: function(value){
+				return arguments.length === 0 ?
+					(this[0] && (this[0].multiple ?
+								 $(this[0]).find('option').filter(function(){ return this.selected }).pluck('value') :
+								 this[0].value)
+					) :
+				this.each(function(idx){
+					this.value = funcArg(this, value, idx, this.value)
+				})
+			},
+			offset: function(coordinates){
+				if (coordinates) return this.each(function(index){
+					var $this = $(this),
+						coords = funcArg(this, coordinates, index, $this.offset()),
+						parentOffset = $this.offsetParent().offset(),
+						props = {
+							top:  coords.top  - parentOffset.top,
+							left: coords.left - parentOffset.left
+						}
+
+					if ($this.css('position') == 'static') props['position'] = 'relative'
+					$this.css(props)
+				})
+				if (this.length==0) return null
+				var obj = this[0].getBoundingClientRect()
+				return {
+					left: obj.left + window.pageXOffset,
+					top: obj.top + window.pageYOffset,
+					width: Math.round(obj.width),
+					height: Math.round(obj.height)
+				}
+			},
+			css: function(property, value){
+				if (arguments.length < 2) {
+					var element = this[0], computedStyle = getComputedStyle(element, '')
+					if(!element) return
+					if (typeof property == 'string')
+					return element.style[camelize(property)] || computedStyle.getPropertyValue(property)
+					else if (isArray(property)) {
+						var props = {}
+						$.each(isArray(property) ? property: [property], function(_, prop){
+							props[prop] = (element.style[camelize(prop)] || computedStyle.getPropertyValue(prop))
+						})
+						return props
+					}
+				}
+
+				var css = ''
+				if (type(property) == 'string') {
+					if (!value && value !== 0)
+						this.each(function(){ this.style.removeProperty(dasherize(property)) })
+					else
+						css = dasherize(property) + ":" + maybeAddPx(property, value)
+				} else {
+					for (key in property)
+						if (!property[key] && property[key] !== 0)
+							this.each(function(){ this.style.removeProperty(dasherize(key)) })
+					else
+						css += dasherize(key) + ':' + maybeAddPx(key, property[key]) + ';'
+				}
+
+				return this.each(function(){ this.style.cssText += ';' + css })
+			},
+			index: function(element){
+				return element ? this.indexOf($(element)[0]) : this.parent().children().indexOf(this[0])
+			},
+			hasClass: function(name){
+				if (!name) return false
+				return emptyArray.some.call(this, function(el){
+					return this.test(className(el))
+				}, classRE(name))
+			},
+			addClass: function(name){
+				if (!name) return this
+				return this.each(function(idx){
+					classList = []
+					var cls = className(this), newName = funcArg(this, name, idx, cls)
+					newName.split(/\s+/g).forEach(function(klass){
+						if (!$(this).hasClass(klass)) classList.push(klass)
+					}, this)
+					classList.length && className(this, cls + (cls ? " " : "") + classList.join(" "))
+				})
+			},
+			removeClass: function(name){
+				return this.each(function(idx){
+					if (name === undefined) return className(this, '')
+					classList = className(this)
+					funcArg(this, name, idx, classList).split(/\s+/g).forEach(function(klass){
+						classList = classList.replace(classRE(klass), " ")
+					})
+					className(this, classList.trim())
+				})
+			},
+			toggleClass: function(name, when){
+				if (!name) return this
+				return this.each(function(idx){
+					var $this = $(this), names = funcArg(this, name, idx, className(this))
+					names.split(/\s+/g).forEach(function(klass){
+						(when === undefined ? !$this.hasClass(klass) : when) ?
+							$this.addClass(klass) : $this.removeClass(klass)
+					})
+				})
+			},
+			scrollTop: function(value){
+				if (!this.length) return
+				var hasScrollTop = 'scrollTop' in this[0]
+				if (value === undefined) return hasScrollTop ? this[0].scrollTop : this[0].pageYOffset
+				return this.each(hasScrollTop ?
+								 function(){ this.scrollTop = value } :
+								 function(){ this.scrollTo(this.scrollX, value) })
+			},
+			scrollLeft: function(value){
+				if (!this.length) return
+				var hasScrollLeft = 'scrollLeft' in this[0]
+				if (value === undefined) return hasScrollLeft ? this[0].scrollLeft : this[0].pageXOffset
+				return this.each(hasScrollLeft ?
+								 function(){ this.scrollLeft = value } :
+								 function(){ this.scrollTo(value, this.scrollY) })
+			},
+			position: function() {
+				if (!this.length) return
+
+				var elem = this[0],
+					// Get *real* offsetParent
+					offsetParent = this.offsetParent(),
+					// Get correct offsets
+					offset       = this.offset(),
+					parentOffset = rootNodeRE.test(offsetParent[0].nodeName) ? { top: 0, left: 0 } : offsetParent.offset()
+
+				// Subtract element margins
+				// note: when an element has margin: auto the offsetLeft and marginLeft
+				// are the same in Safari causing offset.left to incorrectly be 0
+				offset.top  -= parseFloat( $(elem).css('margin-top') ) || 0
+				offset.left -= parseFloat( $(elem).css('margin-left') ) || 0
+
+				// Add offsetParent borders
+				parentOffset.top  += parseFloat( $(offsetParent[0]).css('border-top-width') ) || 0
+				parentOffset.left += parseFloat( $(offsetParent[0]).css('border-left-width') ) || 0
+
+				// Subtract the two offsets
+				return {
+					top:  offset.top  - parentOffset.top,
+					left: offset.left - parentOffset.left
+				}
+			},
+			offsetParent: function() {
+				return this.map(function(){
+					var parent = this.offsetParent || document.body
+					while (parent && !rootNodeRE.test(parent.nodeName) && $(parent).css("position") == "static")
+						parent = parent.offsetParent
+					return parent
+				})
+			}
+		}
+
+		// for now
+		$.fn.detach = $.fn.remove
+
+		// Generate the `width` and `height` functions
+		;['width', 'height'].forEach(function(dimension){
+			var dimensionProperty =
+				dimension.replace(/./, function(m){ return m[0].toUpperCase() })
+
+			$.fn[dimension] = function(value){
+				var offset, el = this[0]
+				if (value === undefined) return isWindow(el) ? el['inner' + dimensionProperty] :
+				isDocument(el) ? el.documentElement['scroll' + dimensionProperty] :
+				(offset = this.offset()) && offset[dimension]
+				else return this.each(function(idx){
+					el = $(this)
+					el.css(dimension, funcArg(this, value, idx, el[dimension]()))
+				})
+			}
+		})
+
+		function traverseNode(node, fun) {
+			fun(node)
+			for (var key in node.childNodes) traverseNode(node.childNodes[key], fun)
+		}
+
+		// Generate the `after`, `prepend`, `before`, `append`,
+		// `insertAfter`, `insertBefore`, `appendTo`, and `prependTo` methods.
+		adjacencyOperators.forEach(function(operator, operatorIndex) {
+			var inside = operatorIndex % 2 //=> prepend, append
+
+			$.fn[operator] = function(){
+				// arguments can be nodes, arrays of nodes, Zepto objects and HTML strings
+				var argType, nodes = $.map(arguments, function(arg) {
+					argType = type(arg)
+					return argType == "object" || argType == "array" || arg == null ?
+						arg : zepto.fragment(arg)
+				}),
+					parent, copyByClone = this.length > 1
+				if (nodes.length < 1) return this
+
+				return this.each(function(_, target){
+					parent = inside ? target : target.parentNode
+
+					// convert all methods to a "before" operation
+					target = operatorIndex == 0 ? target.nextSibling :
+					operatorIndex == 1 ? target.firstChild :
+					operatorIndex == 2 ? target :
+					null
+
+					nodes.forEach(function(node){
+						if (copyByClone) node = node.cloneNode(true)
+						else if (!parent) return $(node).remove()
+
+						traverseNode(parent.insertBefore(node, target), function(el){
+							if (el.nodeName != null && el.nodeName.toUpperCase() === 'SCRIPT' &&
+								(!el.type || el.type === 'text/javascript') && !el.src)
+								window['eval'].call(window, el.innerHTML)
+						})
+					})
+				})
+			}
+
+			// after    => insertAfter
+			// prepend  => prependTo
+			// before   => insertBefore
+			// append   => appendTo
+			$.fn[inside ? operator+'To' : 'insert'+(operatorIndex ? 'Before' : 'After')] = function(html){
+				$(html)[operator](this)
+				return this
+			}
+		})
+
+		zepto.Z.prototype = $.fn
+
+		// Export internal API functions in the `$.zepto` namespace
+		zepto.uniq = uniq
+		zepto.deserializeValue = deserializeValue
+		$.zepto = zepto
+
+		return $
+	})()
+
+	window.Zepto = Zepto
+	window.$ === undefined && (window.$ = Zepto)
+
+	;(function($){
+		var $$ = $.zepto.qsa, _zid = 1, undefined,
+			slice = Array.prototype.slice,
+			isFunction = $.isFunction,
+			isString = function(obj){ return typeof obj == 'string' },
+			handlers = {},
+			specialEvents={},
+			focusinSupported = 'onfocusin' in window,
+			focus = { focus: 'focusin', blur: 'focusout' },
+			hover = { mouseenter: 'mouseover', mouseleave: 'mouseout' }
+
+		specialEvents.click = specialEvents.mousedown = specialEvents.mouseup = specialEvents.mousemove = 'MouseEvents'
+
+		function zid(element) {
+			return element._zid || (element._zid = _zid++)
+		}
+		function findHandlers(element, event, fn, selector) {
+			event = parse(event)
+			if (event.ns) var matcher = matcherFor(event.ns)
+			return (handlers[zid(element)] || []).filter(function(handler) {
+				return handler
+				&& (!event.e  || handler.e == event.e)
+				&& (!event.ns || matcher.test(handler.ns))
+				&& (!fn       || zid(handler.fn) === zid(fn))
+				&& (!selector || handler.sel == selector)
+			})
+		}
+		function parse(event) {
+			var parts = ('' + event).split('.')
+			return {e: parts[0], ns: parts.slice(1).sort().join(' ')}
+		}
+		function matcherFor(ns) {
+			return new RegExp('(?:^| )' + ns.replace(' ', ' .* ?') + '(?: |$)')
+		}
+
+		function eventCapture(handler, captureSetting) {
+			return handler.del &&
+				(!focusinSupported && (handler.e in focus)) ||
+				!!captureSetting
+		}
+
+		function realEvent(type) {
+			return hover[type] || (focusinSupported && focus[type]) || type
+		}
+
+		function add(element, events, fn, data, selector, delegator, capture){
+			var id = zid(element), set = (handlers[id] || (handlers[id] = []))
+			events.split(/\s/).forEach(function(event){
+				if (event == 'ready') return $(document).ready(fn)
+				var handler   = parse(event)
+				handler.fn    = fn
+				handler.sel   = selector
+				// emulate mouseenter, mouseleave
+				if (handler.e in hover) fn = function(e){
+					var related = e.relatedTarget
+					if (!related || (related !== this && !$.contains(this, related)))
+						return handler.fn.apply(this, arguments)
+				}
+				handler.del   = delegator
+				var callback  = delegator || fn
+				handler.proxy = function(e){
+					e = compatible(e)
+					if (e.isImmediatePropagationStopped()) return
+					e.data = data
+					var result = callback.apply(element, e._args == undefined ? [e] : [e].concat(e._args))
+					if (result === false) e.preventDefault(), e.stopPropagation()
+					return result
+				}
+				handler.i = set.length
+				set.push(handler)
+				if ('addEventListener' in element)
+					element.addEventListener(realEvent(handler.e), handler.proxy, eventCapture(handler, capture))
+			})
+		}
+		function remove(element, events, fn, selector, capture){
+			var id = zid(element)
+			;(events || '').split(/\s/).forEach(function(event){
+				findHandlers(element, event, fn, selector).forEach(function(handler){
+					delete handlers[id][handler.i]
+					if ('removeEventListener' in element)
+						element.removeEventListener(realEvent(handler.e), handler.proxy, eventCapture(handler, capture))
+				})
+			})
+		}
+
+		$.event = { add: add, remove: remove }
+
+		$.proxy = function(fn, context) {
+			if (isFunction(fn)) {
+				var proxyFn = function(){ return fn.apply(context, arguments) }
+				proxyFn._zid = zid(fn)
+				return proxyFn
+			} else if (isString(context)) {
+				return $.proxy(fn[context], fn)
+			} else {
+				throw new TypeError("expected function")
+			}
+		}
+
+		$.fn.bind = function(event, data, callback){
+			return this.on(event, data, callback)
+		}
+		$.fn.unbind = function(event, callback){
+			return this.off(event, callback)
+		}
+		$.fn.one = function(event, selector, data, callback){
+			return this.on(event, selector, data, callback, 1)
+		}
+
+		var returnTrue = function(){return true},
+			returnFalse = function(){return false},
+			ignoreProperties = /^([A-Z]|returnValue$|layer[XY]$)/,
+			eventMethods = {
+				preventDefault: 'isDefaultPrevented',
+				stopImmediatePropagation: 'isImmediatePropagationStopped',
+				stopPropagation: 'isPropagationStopped'
+			}
+
+		function compatible(event, source) {
+			if (source || !event.isDefaultPrevented) {
+				source || (source = event)
+
+				$.each(eventMethods, function(name, predicate) {
+					var sourceMethod = source[name]
+					event[name] = function(){
+						this[predicate] = returnTrue
+						return sourceMethod && sourceMethod.apply(source, arguments)
+					}
+					event[predicate] = returnFalse
+				})
+
+				if (source.defaultPrevented !== undefined ? source.defaultPrevented :
+					'returnValue' in source ? source.returnValue === false :
+					source.getPreventDefault && source.getPreventDefault())
+					event.isDefaultPrevented = returnTrue
+			}
+			return event
+		}
+
+		function createProxy(event) {
+			var key, proxy = { originalEvent: event }
+			for (key in event)
+				if (!ignoreProperties.test(key) && event[key] !== undefined) proxy[key] = event[key]
+
+			return compatible(proxy, event)
+		}
+
+		$.fn.delegate = function(selector, event, callback){
+			return this.on(event, selector, callback)
+		}
+		$.fn.undelegate = function(selector, event, callback){
+			return this.off(event, selector, callback)
+		}
+
+		$.fn.live = function(event, callback){
+			$(document.body).delegate(this.selector, event, callback)
+			return this
+		}
+		$.fn.die = function(event, callback){
+			$(document.body).undelegate(this.selector, event, callback)
+			return this
+		}
+
+		$.fn.on = function(event, selector, data, callback, one){
+			var autoRemove, delegator, $this = this
+			if (event && !isString(event)) {
+				$.each(event, function(type, fn){
+					$this.on(type, selector, data, fn, one)
+				})
+				return $this
+			}
+
+			if (!isString(selector) && !isFunction(callback) && callback !== false)
+				callback = data, data = selector, selector = undefined
+			if (isFunction(data) || data === false)
+				callback = data, data = undefined
+
+			if (callback === false) callback = returnFalse
+
+			return $this.each(function(_, element){
+				if (one) autoRemove = function(e){
+					remove(element, e.type, callback)
+					return callback.apply(this, arguments)
+				}
+
+				if (selector) delegator = function(e){
+					var evt, match = $(e.target).closest(selector, element).get(0)
+					if (match && match !== element) {
+						evt = $.extend(createProxy(e), {currentTarget: match, liveFired: element})
+						return (autoRemove || callback).apply(match, [evt].concat(slice.call(arguments, 1)))
+					}
+				}
+
+				add(element, event, callback, data, selector, delegator || autoRemove)
+			})
+		}
+		$.fn.off = function(event, selector, callback){
+			var $this = this
+			if (event && !isString(event)) {
+				$.each(event, function(type, fn){
+					$this.off(type, selector, fn)
+				})
+				return $this
+			}
+
+			if (!isString(selector) && !isFunction(callback) && callback !== false)
+				callback = selector, selector = undefined
+
+			if (callback === false) callback = returnFalse
+
+			return $this.each(function(){
+				remove(this, event, callback, selector)
+			})
+		}
+
+		$.fn.trigger = function(event, args){
+			event = (isString(event) || $.isPlainObject(event)) ? $.Event(event) : compatible(event)
+			event._args = args
+			return this.each(function(){
+				// items in the collection might not be DOM elements
+				if('dispatchEvent' in this) this.dispatchEvent(event)
+				else $(this).triggerHandler(event, args)
+			})
+		}
+
+		// triggers event handlers on current element just as if an event occurred,
+		// doesn't trigger an actual event, doesn't bubble
+		$.fn.triggerHandler = function(event, args){
+			var e, result
+			this.each(function(i, element){
+				e = createProxy(isString(event) ? $.Event(event) : event)
+				e._args = args
+				e.target = element
+				$.each(findHandlers(element, event.type || event), function(i, handler){
+					result = handler.proxy(e)
+					if (e.isImmediatePropagationStopped()) return false
+				})
+			})
+			return result
+		}
+
+		// shortcut methods for `.bind(event, fn)` for each event type
+		;('focusin focusout load resize scroll unload click dblclick '+
+		  'mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave '+
+		  'change select keydown keypress keyup error').split(' ').forEach(function(event) {
+			$.fn[event] = function(callback) {
+				return callback ?
+					this.bind(event, callback) :
+				this.trigger(event)
+			}
+		})
+
+		;['focus', 'blur'].forEach(function(name) {
+			$.fn[name] = function(callback) {
+				if (callback) this.bind(name, callback)
+				else this.each(function(){
+					try { this[name]() }
+					catch(e) {}
+				})
+				return this
+			}
+		})
+
+		$.Event = function(type, props) {
+			if (!isString(type)) props = type, type = props.type
+			var event = document.createEvent(specialEvents[type] || 'Events'), bubbles = true
+			if (props) for (var name in props) (name == 'bubbles') ? (bubbles = !!props[name]) : (event[name] = props[name])
+			event.initEvent(type, bubbles, true)
+			return compatible(event)
+		}
+
+	})(Zepto)
+
+	;(function($){
+		var jsonpID = 0,
+			document = window.document,
+			key,
+			name,
+			rscript = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+			scriptTypeRE = /^(?:text|application)\/javascript/i,
+			xmlTypeRE = /^(?:text|application)\/xml/i,
+			jsonType = 'application/json',
+			htmlType = 'text/html',
+			blankRE = /^\s*$/
+
+		// trigger a custom event and return false if it was cancelled
+		function triggerAndReturn(context, eventName, data) {
+			var event = $.Event(eventName)
+			$(context).trigger(event, data)
+			return !event.isDefaultPrevented()
+		}
+
+		// trigger an Ajax "global" event
+		function triggerGlobal(settings, context, eventName, data) {
+			if (settings.global) return triggerAndReturn(context || document, eventName, data)
+		}
+
+		// Number of active Ajax requests
+		$.active = 0
+
+		function ajaxStart(settings) {
+			if (settings.global && $.active++ === 0) triggerGlobal(settings, null, 'ajaxStart')
+		}
+		function ajaxStop(settings) {
+			if (settings.global && !(--$.active)) triggerGlobal(settings, null, 'ajaxStop')
+		}
+
+		// triggers an extra global event "ajaxBeforeSend" that's like "ajaxSend" but cancelable
+		function ajaxBeforeSend(xhr, settings) {
+			var context = settings.context
+			if (settings.beforeSend.call(context, xhr, settings) === false ||
+				triggerGlobal(settings, context, 'ajaxBeforeSend', [xhr, settings]) === false)
+				return false
+
+			triggerGlobal(settings, context, 'ajaxSend', [xhr, settings])
+		}
+		function ajaxSuccess(data, xhr, settings, deferred) {
+			var context = settings.context, status = 'success'
+			settings.success.call(context, data, status, xhr)
+			if (deferred) deferred.resolveWith(context, [data, status, xhr])
+			triggerGlobal(settings, context, 'ajaxSuccess', [xhr, settings, data])
+			ajaxComplete(status, xhr, settings)
+		}
+		// type: "timeout", "error", "abort", "parsererror"
+		function ajaxError(error, type, xhr, settings, deferred) {
+			var context = settings.context
+			settings.error.call(context, xhr, type, error)
+			if (deferred) deferred.rejectWith(context, [xhr, type, error])
+			triggerGlobal(settings, context, 'ajaxError', [xhr, settings, error || type])
+			ajaxComplete(type, xhr, settings)
+		}
+		// status: "success", "notmodified", "error", "timeout", "abort", "parsererror"
+		function ajaxComplete(status, xhr, settings) {
+			var context = settings.context
+			settings.complete.call(context, xhr, status)
+			triggerGlobal(settings, context, 'ajaxComplete', [xhr, settings])
+			ajaxStop(settings)
+		}
+
+		// Empty function, used as default callback
+		function empty() {}
+
+		$.ajaxJSONP = function(options, deferred){
+			if (!('type' in options)) return $.ajax(options)
+
+			var _callbackName = options.jsonpCallback,
+				callbackName = ($.isFunction(_callbackName) ?
+								_callbackName() : _callbackName) || ('jsonp' + (++jsonpID)),
+				script = document.createElement('script'),
+				originalCallback = window[callbackName],
+				responseData,
+				abort = function(errorType) {
+					$(script).triggerHandler('error', errorType || 'abort')
+				},
+				xhr = { abort: abort }, abortTimeout
+
+			if (deferred) deferred.promise(xhr)
+
+			$(script).on('load error', function(e, errorType){
+				clearTimeout(abortTimeout)
+				$(script).off().remove()
+
+				if (e.type == 'error' || !responseData) {
+					ajaxError(null, errorType || 'error', xhr, options, deferred)
+				} else {
+					ajaxSuccess(responseData[0], xhr, options, deferred)
+				}
+
+				window[callbackName] = originalCallback
+				if (responseData && $.isFunction(originalCallback))
+					originalCallback(responseData[0])
+
+				originalCallback = responseData = undefined
+			})
+
+			if (ajaxBeforeSend(xhr, options) === false) {
+				abort('abort')
+				return xhr
+			}
+
+			window[callbackName] = function(){
+				responseData = arguments
+			}
+
+			script.src = options.url.replace(/\?(.+)=\?/, '?$1=' + callbackName)
+			document.head.appendChild(script)
+
+			if (options.timeout > 0) abortTimeout = setTimeout(function(){
+				abort('timeout')
+			}, options.timeout)
+
+			return xhr
+		}
+
+		$.ajaxSettings = {
+			// Default type of request
+			type: 'GET',
+			// Callback that is executed before request
+			beforeSend: empty,
+			// Callback that is executed if the request succeeds
+			success: empty,
+			// Callback that is executed the the server drops error
+			error: empty,
+			// Callback that is executed on request complete (both: error and success)
+			complete: empty,
+			// The context for the callbacks
+			context: null,
+			// Whether to trigger "global" Ajax events
+			global: true,
+			// Transport
+			xhr: function () {
+				return new window.XMLHttpRequest()
+			},
+			// MIME types mapping
+			// IIS returns Javascript as "application/x-javascript"
+			accepts: {
+				script: 'text/javascript, application/javascript, application/x-javascript',
+				json:   jsonType,
+				xml:    'application/xml, text/xml',
+				html:   htmlType,
+				text:   'text/plain'
+			},
+			// Whether the request is to another domain
+			crossDomain: false,
+			// Default timeout
+			timeout: 0,
+			// Whether data should be serialized to string
+			processData: true,
+			// Whether the browser should be allowed to cache GET responses
+			cache: true
+		}
+
+		function mimeToDataType(mime) {
+			if (mime) mime = mime.split(';', 2)[0]
+			return mime && ( mime == htmlType ? 'html' :
+							mime == jsonType ? 'json' :
+							scriptTypeRE.test(mime) ? 'script' :
+							xmlTypeRE.test(mime) && 'xml' ) || 'text'
+		}
+
+		function appendQuery(url, query) {
+			if (query == '') return url
+			return (url + '&' + query).replace(/[&?]{1,2}/, '?')
+		}
+
+		// serialize payload and append it to the URL for GET requests
+		function serializeData(options) {
+			if (options.processData && options.data && $.type(options.data) != "string")
+				options.data = $.param(options.data, options.traditional)
+			if (options.data && (!options.type || options.type.toUpperCase() == 'GET'))
+				options.url = appendQuery(options.url, options.data), options.data = undefined
+		}
+
+		$.ajax = function(options){
+			var settings = $.extend({}, options || {}),
+				deferred = $.Deferred && $.Deferred()
+			for (key in $.ajaxSettings) if (settings[key] === undefined) settings[key] = $.ajaxSettings[key]
+
+			ajaxStart(settings)
+
+			if (!settings.crossDomain) settings.crossDomain = /^([\w-]+:)?\/\/([^\/]+)/.test(settings.url) &&
+				RegExp.$2 != window.location.host
+
+			if (!settings.url) settings.url = window.location.toString()
+			serializeData(settings)
+			if (settings.cache === false) settings.url = appendQuery(settings.url, '_=' + Date.now())
+
+			var dataType = settings.dataType, hasPlaceholder = /\?.+=\?/.test(settings.url)
+			if (dataType == 'jsonp' || hasPlaceholder) {
+				if (!hasPlaceholder)
+					settings.url = appendQuery(settings.url,
+											   settings.jsonp ? (settings.jsonp + '=?') : settings.jsonp === false ? '' : 'callback=?')
+				return $.ajaxJSONP(settings, deferred)
+			}
+
+			var mime = settings.accepts[dataType],
+				headers = { },
+				setHeader = function(name, value) { headers[name.toLowerCase()] = [name, value] },
+				protocol = /^([\w-]+:)\/\//.test(settings.url) ? RegExp.$1 : window.location.protocol,
+				xhr = settings.xhr(),
+				nativeSetHeader = xhr.setRequestHeader,
+				abortTimeout
+
+			if (deferred) deferred.promise(xhr)
+
+			if (!settings.crossDomain) setHeader('X-Requested-With', 'XMLHttpRequest')
+			setHeader('Accept', mime || '*/*')
+			if (mime = settings.mimeType || mime) {
+				if (mime.indexOf(',') > -1) mime = mime.split(',', 2)[0]
+				xhr.overrideMimeType && xhr.overrideMimeType(mime)
+			}
+			if (settings.contentType || (settings.contentType !== false && settings.data && settings.type.toUpperCase() != 'GET'))
+				setHeader('Content-Type', settings.contentType || 'application/x-www-form-urlencoded')
+
+			if (settings.headers) for (name in settings.headers) setHeader(name, settings.headers[name])
+			xhr.setRequestHeader = setHeader
+
+			xhr.onreadystatechange = function(){
+				if (xhr.readyState == 4) {
+					xhr.onreadystatechange = empty
+					clearTimeout(abortTimeout)
+					var result, error = false
+					if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304 || (xhr.status == 0 && protocol == 'file:')) {
+						dataType = dataType || mimeToDataType(settings.mimeType || xhr.getResponseHeader('content-type'))
+						result = xhr.responseText
+
+						try {
+							// http://perfectionkills.com/global-eval-what-are-the-options/
+							if (dataType == 'script')    (1,eval)(result)
+							else if (dataType == 'xml')  result = xhr.responseXML
+							else if (dataType == 'json') result = blankRE.test(result) ? null : $.parseJSON(result)
+						} catch (e) { error = e }
+
+						if (error) ajaxError(error, 'parsererror', xhr, settings, deferred)
+						else ajaxSuccess(result, xhr, settings, deferred)
+					} else {
+						ajaxError(xhr.statusText || null, xhr.status ? 'error' : 'abort', xhr, settings, deferred)
+					}
+				}
+			}
+
+			if (ajaxBeforeSend(xhr, settings) === false) {
+				xhr.abort()
+				ajaxError(null, 'abort', xhr, settings, deferred)
+				return xhr
+			}
+
+			if (settings.xhrFields) for (name in settings.xhrFields) xhr[name] = settings.xhrFields[name]
+
+			var async = 'async' in settings ? settings.async : true
+			xhr.open(settings.type, settings.url, async, settings.username, settings.password)
+
+			for (name in headers) nativeSetHeader.apply(xhr, headers[name])
+
+			if (settings.timeout > 0) abortTimeout = setTimeout(function(){
+				xhr.onreadystatechange = empty
+				xhr.abort()
+				ajaxError(null, 'timeout', xhr, settings, deferred)
+			}, settings.timeout)
+
+			// avoid sending empty string (#319)
+			xhr.send(settings.data ? settings.data : null)
+			return xhr
+		}
+
+		// handle optional data/success arguments
+		function parseArguments(url, data, success, dataType) {
+			var hasData = !$.isFunction(data)
+			return {
+				url:      url,
+				data:     hasData  ? data : undefined,
+				success:  !hasData ? data : $.isFunction(success) ? success : undefined,
+				dataType: hasData  ? dataType || success : success
+			}
+		}
+
+		$.get = function(url, data, success, dataType){
+			return $.ajax(parseArguments.apply(null, arguments))
+		}
+
+		$.post = function(url, data, success, dataType){
+			var options = parseArguments.apply(null, arguments)
+			options.type = 'POST'
+			return $.ajax(options)
+		}
+
+		$.getJSON = function(url, data, success){
+			var options = parseArguments.apply(null, arguments)
+			options.dataType = 'json'
+			return $.ajax(options)
+		}
+
+		$.fn.load = function(url, data, success){
+			if (!this.length) return this
+			var self = this, parts = url.split(/\s/), selector,
+				options = parseArguments(url, data, success),
+				callback = options.success
+			if (parts.length > 1) options.url = parts[0], selector = parts[1]
+			options.success = function(response){
+				self.html(selector ?
+						  $('<div>').html(response.replace(rscript, "")).find(selector)
+						  : response)
+				callback && callback.apply(self, arguments)
+			}
+			$.ajax(options)
+			return this
+		}
+
+		var escape = encodeURIComponent
+
+		function serialize(params, obj, traditional, scope){
+			var type, array = $.isArray(obj), hash = $.isPlainObject(obj)
+			$.each(obj, function(key, value) {
+				type = $.type(value)
+				if (scope) key = traditional ? scope :
+				scope + '[' + (hash || type == 'object' || type == 'array' ? key : '') + ']'
+				// handle data in serializeArray() format
+				if (!scope && array) params.add(value.name, value.value)
+				// recurse into nested objects
+				else if (type == "array" || (!traditional && type == "object"))
+					serialize(params, value, traditional, key)
+				else params.add(key, value)
+			})
+		}
+
+		$.param = function(obj, traditional){
+			var params = []
+			params.add = function(k, v){ this.push(escape(k) + '=' + escape(v)) }
+			serialize(params, obj, traditional)
+			return params.join('&').replace(/%20/g, '+')
+		}
+	})(Zepto)
+
+	;(function($){
+		$.fn.serializeArray = function() {
+			var result = [], el
+			$([].slice.call(this.get(0).elements)).each(function(){
+				el = $(this)
+				var type = el.attr('type')
+				if (this.nodeName.toLowerCase() != 'fieldset' &&
+					!this.disabled && type != 'submit' && type != 'reset' && type != 'button' &&
+					((type != 'radio' && type != 'checkbox') || this.checked))
+					result.push({
+						name: el.attr('name'),
+						value: el.val()
+					})
+			})
+			return result
+		}
+
+		$.fn.serialize = function(){
+			var result = []
+			this.serializeArray().forEach(function(elm){
+				result.push(encodeURIComponent(elm.name) + '=' + encodeURIComponent(elm.value))
+			})
+			return result.join('&')
+		}
+
+		$.fn.submit = function(callback) {
+			if (callback) this.bind('submit', callback)
+			else if (this.length) {
+				var event = $.Event('submit')
+				this.eq(0).trigger(event)
+				if (!event.isDefaultPrevented()) this.get(0).submit()
+			}
+			return this
+		}
+
+	})(Zepto)
+
+	;(function($){
+		// __proto__ doesn't exist on IE<11, so redefine
+		// the Z function to use object extension instead
+		if (!('__proto__' in {})) {
+			$.extend($.zepto, {
+				Z: function(dom, selector){
+					dom = dom || []
+					$.extend(dom, $.fn)
+					dom.selector = selector || ''
+					dom.__Z = true
+					return dom
+				},
+				// this is a kludge but works
+				isZ: function(object){
+					return $.type(object) === 'array' && '__Z' in object
+				}
+			})
+		}
+
+		// getComputedStyle shouldn't freak out when called
+		// without a valid element as argument
+		try {
+			getComputedStyle(undefined)
+		} catch(e) {
+			var nativeGetComputedStyle = getComputedStyle;
+			window.getComputedStyle = function(element){
+				try {
+					return nativeGetComputedStyle(element)
+				} catch(e) {
+					return null
+				}
+			}
+		}
+	})(Zepto)
+
+
+	VCO.getJSON = Zepto.getJSON;
 	VCO.ajax = Zepto.ajax;
 })(VCO)
 
@@ -2116,7 +2116,7 @@ VCO.Events.fire = VCO.Events.fireEvent;
 			var w = window.innerWidth,
 				h = window.innerHeight,
 				_orientation = "portrait";
-			
+
 			if (w > h) {
 				_orientation = "landscape";
 			}
@@ -2136,29 +2136,29 @@ VCO.Events.fire = VCO.Events.fireEvent;
 
 VCO.Load = (function (doc) {
 	var loaded	= [];
-	
+
 	function isLoaded(url) {
-		
+
 		var i			= 0,
 			has_loaded	= false;
-		
+
 		for (i = 0; i < loaded.length; i++) {
 			if (loaded[i] == url) {
 				has_loaded = true;
 			}
 		}
-		
+
 		if (has_loaded) {
 			return true;
 		} else {
 			loaded.push(url);
 			return false;
 		}
-		
+
 	}
-	
+
 	return {
-		
+
 		css: function (urls, callback, obj, context) {
 			if (!isLoaded(urls)) {
 				VCO.LoadIt.css(urls, callback, obj, context);
@@ -2174,8 +2174,8 @@ VCO.Load = (function (doc) {
 				callback();
 			}
 		}
-    };
-	
+	};
+
 })(this.document);
 
 
@@ -2219,30 +2219,30 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 VCO.LoadIt = (function (doc) {
-  // -- Private Variables ------------------------------------------------------
+	// -- Private Variables ------------------------------------------------------
 
-  // User agent and feature test information.
-  var env,
+	// User agent and feature test information.
+	var env,
 
-  // Reference to the <head> element (populated lazily).
-  head,
+		// Reference to the <head> element (populated lazily).
+		head,
 
-  // Requests currently in progress, if any.
-  pending = {},
+		// Requests currently in progress, if any.
+		pending = {},
 
-  // Number of times we've polled to check whether a pending stylesheet has
-  // finished loading. If this gets too high, we're probably stalled.
-  pollCount = 0,
+		// Number of times we've polled to check whether a pending stylesheet has
+		// finished loading. If this gets too high, we're probably stalled.
+		pollCount = 0,
 
-  // Queued requests.
-  queue = {css: [], js: []},
+		// Queued requests.
+		queue = {css: [], js: []},
 
-  // Reference to the browser's list of stylesheets.
-  styleSheets = doc.styleSheets;
+		// Reference to the browser's list of stylesheets.
+		styleSheets = doc.styleSheets;
 
-  // -- Private Methods --------------------------------------------------------
+	// -- Private Methods --------------------------------------------------------
 
-  /**
+	/**
   Creates and returns an HTML element with the specified name and attributes.
 
   @method createNode
@@ -2251,19 +2251,19 @@ VCO.LoadIt = (function (doc) {
   @return {HTMLElement}
   @private
   */
-  function createNode(name, attrs) {
-    var node = doc.createElement(name), attr;
+	function createNode(name, attrs) {
+		var node = doc.createElement(name), attr;
 
-    for (attr in attrs) {
-      if (attrs.hasOwnProperty(attr)) {
-        node.setAttribute(attr, attrs[attr]);
-      }
-    }
+		for (attr in attrs) {
+			if (attrs.hasOwnProperty(attr)) {
+				node.setAttribute(attr, attrs[attr]);
+			}
+		}
 
-    return node;
-  }
+		return node;
+	}
 
-  /**
+	/**
   Called when the current pending resource of the specified type has finished
   loading. Executes the associated callback (if any) and loads the next
   resource in the queue.
@@ -2272,53 +2272,53 @@ VCO.LoadIt = (function (doc) {
   @param {String} type resource type ('css' or 'js')
   @private
   */
-  function finish(type) {
-    var p = pending[type],
-        callback,
-        urls;
+	function finish(type) {
+		var p = pending[type],
+			callback,
+			urls;
 
-    if (p) {
-      callback = p.callback;
-      urls     = p.urls;
+		if (p) {
+			callback = p.callback;
+			urls     = p.urls;
 
-      urls.shift();
-      pollCount = 0;
+			urls.shift();
+			pollCount = 0;
 
-      // If this is the last of the pending URLs, execute the callback and
-      // start the next request in the queue (if any).
-      if (!urls.length) {
-        callback && callback.call(p.context, p.obj);
-        pending[type] = null;
-        queue[type].length && load(type);
-      }
-    }
-  }
+			// If this is the last of the pending URLs, execute the callback and
+			// start the next request in the queue (if any).
+			if (!urls.length) {
+				callback && callback.call(p.context, p.obj);
+				pending[type] = null;
+				queue[type].length && load(type);
+			}
+		}
+	}
 
-  /**
+	/**
   Populates the <code>env</code> variable with user agent and feature test
   information.
 
   @method getEnv
   @private
   */
-  function getEnv() {
-    var ua = navigator.userAgent;
+	function getEnv() {
+		var ua = navigator.userAgent;
 
-    env = {
-      // True if this browser supports disabling async mode on dynamically
-      // created script nodes. See
-      // http://wiki.whatwg.org/wiki/Dynamic_Script_Execution_Order
-      async: doc.createElement('script').async === true
-    };
+		env = {
+			// True if this browser supports disabling async mode on dynamically
+			// created script nodes. See
+			// http://wiki.whatwg.org/wiki/Dynamic_Script_Execution_Order
+			async: doc.createElement('script').async === true
+		};
 
-    (env.webkit = /AppleWebKit\//.test(ua))
-      || (env.ie = /MSIE/.test(ua))
-      || (env.opera = /Opera/.test(ua))
-      || (env.gecko = /Gecko\//.test(ua))
-      || (env.unknown = true);
-  }
+		(env.webkit = /AppleWebKit\//.test(ua))
+		|| (env.ie = /MSIE/.test(ua))
+		|| (env.opera = /Opera/.test(ua))
+		|| (env.gecko = /Gecko\//.test(ua))
+		|| (env.unknown = true);
+	}
 
-  /**
+	/**
   Loads the specified resources, or the next resource of the specified type
   in the queue if no resources are specified. If a resource of the specified
   type is already being loaded, the new request will be queued until the
@@ -2340,110 +2340,110 @@ VCO.LoadIt = (function (doc) {
     be executed in this object's context
   @private
   */
-  function load(type, urls, callback, obj, context) {
-    var _finish = function () { finish(type); },
-        isCSS   = type === 'css',
-        nodes   = [],
-        i, len, node, p, pendingUrls, url;
+	function load(type, urls, callback, obj, context) {
+		var _finish = function () { finish(type); },
+			isCSS   = type === 'css',
+			nodes   = [],
+			i, len, node, p, pendingUrls, url;
 
-    env || getEnv();
+		env || getEnv();
 
-    if (urls) {
-      // If urls is a string, wrap it in an array. Otherwise assume it's an
-      // array and create a copy of it so modifications won't be made to the
-      // original.
-      urls = typeof urls === 'string' ? [urls] : urls.concat();
+		if (urls) {
+			// If urls is a string, wrap it in an array. Otherwise assume it's an
+			// array and create a copy of it so modifications won't be made to the
+			// original.
+			urls = typeof urls === 'string' ? [urls] : urls.concat();
 
-      // Create a request object for each URL. If multiple URLs are specified,
-      // the callback will only be executed after all URLs have been loaded.
-      //
-      // Sadly, Firefox and Opera are the only browsers capable of loading
-      // scripts in parallel while preserving execution order. In all other
-      // browsers, scripts must be loaded sequentially.
-      //
-      // All browsers respect CSS specificity based on the order of the link
-      // elements in the DOM, regardless of the order in which the stylesheets
-      // are actually downloaded.
-      if (isCSS || env.async || env.gecko || env.opera) {
-        // Load in parallel.
-        queue[type].push({
-          urls    : urls,
-          callback: callback,
-          obj     : obj,
-          context : context
-        });
-      } else {
-        // Load sequentially.
-        for (i = 0, len = urls.length; i < len; ++i) {
-          queue[type].push({
-            urls    : [urls[i]],
-            callback: i === len - 1 ? callback : null, // callback is only added to the last URL
-            obj     : obj,
-            context : context
-          });
-        }
-      }
-    }
+			// Create a request object for each URL. If multiple URLs are specified,
+			// the callback will only be executed after all URLs have been loaded.
+			//
+			// Sadly, Firefox and Opera are the only browsers capable of loading
+			// scripts in parallel while preserving execution order. In all other
+			// browsers, scripts must be loaded sequentially.
+			//
+			// All browsers respect CSS specificity based on the order of the link
+			// elements in the DOM, regardless of the order in which the stylesheets
+			// are actually downloaded.
+			if (isCSS || env.async || env.gecko || env.opera) {
+				// Load in parallel.
+				queue[type].push({
+					urls    : urls,
+					callback: callback,
+					obj     : obj,
+					context : context
+				});
+			} else {
+				// Load sequentially.
+				for (i = 0, len = urls.length; i < len; ++i) {
+					queue[type].push({
+						urls    : [urls[i]],
+						callback: i === len - 1 ? callback : null, // callback is only added to the last URL
+						obj     : obj,
+						context : context
+					});
+				}
+			}
+		}
 
-    // If a previous load request of this type is currently in progress, we'll
-    // wait our turn. Otherwise, grab the next item in the queue.
-    if (pending[type] || !(p = pending[type] = queue[type].shift())) {
-      return;
-    }
+		// If a previous load request of this type is currently in progress, we'll
+		// wait our turn. Otherwise, grab the next item in the queue.
+		if (pending[type] || !(p = pending[type] = queue[type].shift())) {
+			return;
+		}
 
-    head || (head = doc.head || doc.getElementsByTagName('head')[0]);
-    pendingUrls = p.urls;
+		head || (head = doc.head || doc.getElementsByTagName('head')[0]);
+		pendingUrls = p.urls;
 
-    for (i = 0, len = pendingUrls.length; i < len; ++i) {
-      url = pendingUrls[i];
+		for (i = 0, len = pendingUrls.length; i < len; ++i) {
+			url = pendingUrls[i];
 
-      if (isCSS) {
-          node = env.gecko ? createNode('style') : createNode('link', {
-            href: url,
-            rel : 'stylesheet'
-          });
-      } else {
-        node = createNode('script', {src: url});
-        node.async = false;
-      }
+			if (isCSS) {
+				node = env.gecko ? createNode('style') : createNode('link', {
+					href: url,
+					rel : 'stylesheet'
+				});
+			} else {
+				node = createNode('script', {src: url});
+				node.async = false;
+			}
 
-      node.className = 'lazyload';
-      node.setAttribute('charset', 'utf-8');
+			node.className = 'lazyload';
+			node.setAttribute('charset', 'utf-8');
 
-      if (env.ie && !isCSS) {
-        node.onreadystatechange = function () {
-          if (/loaded|complete/.test(node.readyState)) {
-            node.onreadystatechange = null;
-            _finish();
-          }
-        };
-      } else if (isCSS && (env.gecko || env.webkit)) {
-        // Gecko and WebKit don't support the onload event on link nodes.
-        if (env.webkit) {
-          // In WebKit, we can poll for changes to document.styleSheets to
-          // figure out when stylesheets have loaded.
-          p.urls[i] = node.href; // resolve relative URLs (or polling won't work)
-          pollWebKit();
-        } else {
-          // In Gecko, we can import the requested URL into a <style> node and
-          // poll for the existence of node.sheet.cssRules. Props to Zach
-          // Leatherman for calling my attention to this technique.
-          node.innerHTML = '@import "' + url + '";';
-          pollGecko(node);
-        }
-      } else {
-        node.onload = node.onerror = _finish;
-      }
+			if (env.ie && !isCSS) {
+				node.onreadystatechange = function () {
+					if (/loaded|complete/.test(node.readyState)) {
+						node.onreadystatechange = null;
+						_finish();
+					}
+				};
+			} else if (isCSS && (env.gecko || env.webkit)) {
+				// Gecko and WebKit don't support the onload event on link nodes.
+				if (env.webkit) {
+					// In WebKit, we can poll for changes to document.styleSheets to
+					// figure out when stylesheets have loaded.
+					p.urls[i] = node.href; // resolve relative URLs (or polling won't work)
+					pollWebKit();
+				} else {
+					// In Gecko, we can import the requested URL into a <style> node and
+					// poll for the existence of node.sheet.cssRules. Props to Zach
+					// Leatherman for calling my attention to this technique.
+					node.innerHTML = '@import "' + url + '";';
+					pollGecko(node);
+				}
+			} else {
+				node.onload = node.onerror = _finish;
+			}
 
-      nodes.push(node);
-    }
+			nodes.push(node);
+		}
 
-    for (i = 0, len = nodes.length; i < len; ++i) {
-      head.appendChild(nodes[i]);
-    }
-  }
+		for (i = 0, len = nodes.length; i < len; ++i) {
+			head.appendChild(nodes[i]);
+		}
+	}
 
-  /**
+	/**
   Begins polling to determine when the specified stylesheet has finished loading
   in Gecko. Polling stops when all pending stylesheets have loaded or after 10
   seconds (to prevent stalls).
@@ -2457,35 +2457,35 @@ VCO.LoadIt = (function (doc) {
   @param {HTMLElement} node Style node to poll.
   @private
   */
-  function pollGecko(node) {
-    var hasRules;
+	function pollGecko(node) {
+		var hasRules;
 
-    try {
-      // We don't really need to store this value or ever refer to it again, but
-      // if we don't store it, Closure Compiler assumes the code is useless and
-      // removes it.
-      hasRules = !!node.sheet.cssRules;
-    } catch (ex) {
-      // An exception means the stylesheet is still loading.
-      pollCount += 1;
+		try {
+			// We don't really need to store this value or ever refer to it again, but
+			// if we don't store it, Closure Compiler assumes the code is useless and
+			// removes it.
+			hasRules = !!node.sheet.cssRules;
+		} catch (ex) {
+			// An exception means the stylesheet is still loading.
+			pollCount += 1;
 
-      if (pollCount < 200) {
-        setTimeout(function () { pollGecko(node); }, 50);
-      } else {
-        // We've been polling for 10 seconds and nothing's happened. Stop
-        // polling and finish the pending requests to avoid blocking further
-        // requests.
-        hasRules && finish('css');
-      }
+			if (pollCount < 200) {
+				setTimeout(function () { pollGecko(node); }, 50);
+			} else {
+				// We've been polling for 10 seconds and nothing's happened. Stop
+				// polling and finish the pending requests to avoid blocking further
+				// requests.
+				hasRules && finish('css');
+			}
 
-      return;
-    }
+			return;
+		}
 
-    // If we get here, the stylesheet has loaded.
-    finish('css');
-  }
+		// If we get here, the stylesheet has loaded.
+		finish('css');
+	}
 
-  /**
+	/**
   Begins polling to determine when pending stylesheets have finished loading
   in WebKit. Polling stops when all pending stylesheets have loaded or after 10
   seconds (to prevent stalls).
@@ -2493,39 +2493,39 @@ VCO.LoadIt = (function (doc) {
   @method pollWebKit
   @private
   */
-  function pollWebKit() {
-    var css = pending.css, i;
+	function pollWebKit() {
+		var css = pending.css, i;
 
-    if (css) {
-      i = styleSheets.length;
+		if (css) {
+			i = styleSheets.length;
 
-      // Look for a stylesheet matching the pending URL.
-      while (--i >= 0) {
-        if (styleSheets[i].href === css.urls[0]) {
-          finish('css');
-          break;
-        }
-      }
+			// Look for a stylesheet matching the pending URL.
+			while (--i >= 0) {
+				if (styleSheets[i].href === css.urls[0]) {
+					finish('css');
+					break;
+				}
+			}
 
-      pollCount += 1;
+			pollCount += 1;
 
-      if (css) {
-        if (pollCount < 200) {
-          setTimeout(pollWebKit, 50);
-        } else {
-          // We've been polling for 10 seconds and nothing's happened, which may
-          // indicate that the stylesheet has been removed from the document
-          // before it had a chance to load. Stop polling and finish the pending
-          // request to prevent blocking further requests.
-          finish('css');
-        }
-      }
-    }
-  }
+			if (css) {
+				if (pollCount < 200) {
+					setTimeout(pollWebKit, 50);
+				} else {
+					// We've been polling for 10 seconds and nothing's happened, which may
+					// indicate that the stylesheet has been removed from the document
+					// before it had a chance to load. Stop polling and finish the pending
+					// request to prevent blocking further requests.
+					finish('css');
+				}
+			}
+		}
+	}
 
-  return {
+	return {
 
-    /**
+		/**
     Requests the specified CSS URL or URLs and executes the specified
     callback (if any) when they have finished loading. If an array of URLs is
     specified, the stylesheets will be loaded in parallel and the callback
@@ -2540,11 +2540,11 @@ VCO.LoadIt = (function (doc) {
       will be executed in this object's context
     @static
     */
-    css: function (urls, callback, obj, context) {
-      load('css', urls, callback, obj, context);
-    },
+		css: function (urls, callback, obj, context) {
+			load('css', urls, callback, obj, context);
+		},
 
-    /**
+		/**
     Requests the specified JavaScript URL or URLs and executes the specified
     callback (if any) when they have finished loading. If an array of URLs is
     specified and the browser supports it, the scripts will be loaded in
@@ -2564,11 +2564,11 @@ VCO.LoadIt = (function (doc) {
       will be executed in this object's context
     @static
     */
-    js: function (urls, callback, obj, context) {
-      load('js', urls, callback, obj, context);
-    }
+		js: function (urls, callback, obj, context) {
+			load('js', urls, callback, obj, context);
+		}
 
-  };
+	};
 })(this.document);
 
 
@@ -2581,11 +2581,11 @@ VCO.Language = {
 		start: 				"Start Exploring"
 	},
 	buttons: {
-	    map_overview: 		"Map Overview",
+		map_overview: 		"Map Overview",
 		overview: 			"Overview",
-	    backtostart: 		"Back To Beginning",
-	    collapse_toggle: 	"Hide Map",
-	    uncollapse_toggle: 	"Show Map"
+		backtostart: 		"Back To Beginning",
+		collapse_toggle: 	"Hide Map",
+		uncollapse_toggle: 	"Show Map"
 	}
 }
 
@@ -2671,16 +2671,16 @@ VCO.Emoji = function(str) {
  */
 
 VCO.Easings = {
-    ease:        [0.25, 0.1, 0.25, 1.0], 
-    linear:      [0.00, 0.0, 1.00, 1.0],
-    easein:     [0.42, 0.0, 1.00, 1.0],
-    easeout:    [0.00, 0.0, 0.58, 1.0],
-    easeinout: [0.42, 0.0, 0.58, 1.0]
+	ease:        [0.25, 0.1, 0.25, 1.0], 
+	linear:      [0.00, 0.0, 1.00, 1.0],
+	easein:     [0.42, 0.0, 1.00, 1.0],
+	easeout:    [0.00, 0.0, 0.58, 1.0],
+	easeinout: [0.42, 0.0, 0.58, 1.0]
 };
 
 VCO.Ease = {
 	KeySpline: function(a) {
-	//KeySpline: function(mX1, mY1, mX2, mY2) {
+		//KeySpline: function(mX1, mY1, mX2, mY2) {
 		this.get = function(aX) {
 			if (a[0] == a[1] && a[2] == a[3]) return aX; // linear
 			return CalcBezier(GetTForX(aX), a[1], a[3]);
@@ -2722,17 +2722,17 @@ VCO.Ease = {
 			return aGuessT;
 		}
 	},
-	
+
 	easeInSpline: function(t) {
 		var spline = new VCO.Ease.KeySpline(VCO.Easings.easein);
 		return spline.get(t);
 	},
-	
+
 	easeInOutExpo: function(t) {
 		var spline = new VCO.Ease.KeySpline(VCO.Easings.easein);
 		return spline.get(t);
 	},
-	
+
 	easeOut: function(t) {
 		return Math.sin(t * Math.PI / 2);
 	},
@@ -2852,7 +2852,7 @@ Math.easeInExpo = function (t, b, c, d) {
 	return c * Math.pow( 2, 10 * (t/d - 1) ) + b;
 };
 
-		
+
 
 // exponential easing out - decelerating to zero velocity
 
@@ -2861,7 +2861,7 @@ Math.easeOutExpo = function (t, b, c, d) {
 	return c * ( -Math.pow( 2, -10 * t/d ) + 1 ) + b;
 };
 
-		
+
 
 // exponential easing in/out - accelerating until halfway, then decelerating
 
@@ -2881,7 +2881,7 @@ Math.easeInOutExpo = function (t, b, c, d) {
 VCO.Animate = function(el, options) {
 	var animation = new vcoanimate(el, options),
 		webkit_timeout;
-		/*
+	/*
 		// POSSIBLE ISSUE WITH WEBKIT FUTURE BUILDS
 	var onWebKitTimeout = function() {
 
@@ -2919,7 +2919,7 @@ window.vcoanimate = (function() {
 		// these elements do not require 'px'
 		unitless = { lineHeight: 1, zoom: 1, zIndex: 1, opacity: 1, transform: 1};
 
-  // which property name does this browser use for transform
+	// which property name does this browser use for transform
 	var transform = function () {
 		var styles = doc.createElement('a').style,
 			props = ['webkitTransform', 'MozTransform', 'OTransform', 'msTransform', 'Transform'],
@@ -2937,143 +2937,143 @@ window.vcoanimate = (function() {
 
 	// initial style is determined by the elements themselves
 	var getStyle = doc.defaultView && doc.defaultView.getComputedStyle ?
-	function (el, property) {
-		property = property == 'transform' ? transform : property
-		property = camelize(property)
-		var value = null,
-			computed = doc.defaultView.getComputedStyle(el, '');
+		function (el, property) {
+			property = property == 'transform' ? transform : property
+			property = camelize(property)
+			var value = null,
+				computed = doc.defaultView.getComputedStyle(el, '');
 
-		computed && (value = computed[property]);
-		return el.style[property] || value;
-	} : html.currentStyle ?
+			computed && (value = computed[property]);
+			return el.style[property] || value;
+		} : html.currentStyle ?
 
-    function (el, property) {
-		property = camelize(property)
+		function (el, property) {
+			property = camelize(property)
 
-		if (property == 'opacity') {
-			var val = 100
-			try {
-				val = el.filters['DXImageTransform.Microsoft.Alpha'].opacity
-			} catch (e1) {
+			if (property == 'opacity') {
+				var val = 100
 				try {
-					val = el.filters('alpha').opacity
-				} catch (e2) {
+					val = el.filters['DXImageTransform.Microsoft.Alpha'].opacity
+				} catch (e1) {
+					try {
+						val = el.filters('alpha').opacity
+					} catch (e2) {
 
+					}
 				}
+				return val / 100
 			}
-			return val / 100
-		}
-		var value = el.currentStyle ? el.currentStyle[property] : null
-		return el.style[property] || value
-	} :
+			var value = el.currentStyle ? el.currentStyle[property] : null
+			return el.style[property] || value
+		} :
 
-    function (el, property) {
+	function (el, property) {
 		return el.style[camelize(property)]
-    }
+	}
 
-  var frame = function () {
-    // native animation frames
-    // http://webstuff.nfshost.com/anim-timing/Overview.html
-    // http://dev.chromium.org/developers/design-documents/requestanimationframe-implementation
-    return win.requestAnimationFrame  ||
-      win.webkitRequestAnimationFrame ||
-      win.mozRequestAnimationFrame    ||
-      win.msRequestAnimationFrame     ||
-      win.oRequestAnimationFrame      ||
-      function (callback) {
-        win.setTimeout(function () {
-          callback(+new Date())
-        }, 17) // when I was 17..
-      }
-  }()
+	var frame = function () {
+		// native animation frames
+		// http://webstuff.nfshost.com/anim-timing/Overview.html
+		// http://dev.chromium.org/developers/design-documents/requestanimationframe-implementation
+		return win.requestAnimationFrame  ||
+			win.webkitRequestAnimationFrame ||
+			win.mozRequestAnimationFrame    ||
+			win.msRequestAnimationFrame     ||
+			win.oRequestAnimationFrame      ||
+			function (callback) {
+			win.setTimeout(function () {
+				callback(+new Date())
+			}, 17) // when I was 17..
+		}
+	}()
 
-  var children = []
+	var children = []
 
 	frame(function(timestamp) {
-	  	// feature-detect if rAF and now() are of the same scale (epoch or high-res),
+		// feature-detect if rAF and now() are of the same scale (epoch or high-res),
 		// if not, we have to do a timestamp fix on each frame
 		fixTs = timestamp > 1e12 != now() > 1e12
 	})
 
-  function has(array, elem, i) {
-    if (Array.prototype.indexOf) return array.indexOf(elem)
-    for (i = 0; i < array.length; ++i) {
-      if (array[i] === elem) return i
-    }
-  }
+	function has(array, elem, i) {
+		if (Array.prototype.indexOf) return array.indexOf(elem)
+		for (i = 0; i < array.length; ++i) {
+			if (array[i] === elem) return i
+		}
+	}
 
-  function render(timestamp) {
-    var i, count = children.length
-    // if we're using a high res timer, make sure timestamp is not the old epoch-based value.
-    // http://updates.html5rocks.com/2012/05/requestAnimationFrame-API-now-with-sub-millisecond-precision
-    if (perfNow && timestamp > 1e12) timestamp = now()
-	if (fixTs) timestamp = now()
-    for (i = count; i--;) {
-      children[i](timestamp)
-    }
-    children.length && frame(render)
-  }
+	function render(timestamp) {
+		var i, count = children.length
+		// if we're using a high res timer, make sure timestamp is not the old epoch-based value.
+		// http://updates.html5rocks.com/2012/05/requestAnimationFrame-API-now-with-sub-millisecond-precision
+		if (perfNow && timestamp > 1e12) timestamp = now()
+		if (fixTs) timestamp = now()
+		for (i = count; i--;) {
+			children[i](timestamp)
+		}
+		children.length && frame(render)
+	}
 
-  function live(f) {
-    if (children.push(f) === 1) frame(render)
-  }
+	function live(f) {
+		if (children.push(f) === 1) frame(render)
+	}
 
-  function die(f) {
-    var rest, index = has(children, f)
-    if (index >= 0) {
-      rest = children.slice(index + 1)
-      children.length = index
-      children = children.concat(rest)
-    }
-  }
+	function die(f) {
+		var rest, index = has(children, f)
+		if (index >= 0) {
+			rest = children.slice(index + 1)
+			children.length = index
+			children = children.concat(rest)
+		}
+	}
 
-  function parseTransform(style, base) {
-    var values = {}, m
-    if (m = style.match(rotate)) values.rotate = by(m[1], base ? base.rotate : null)
-    if (m = style.match(scale)) values.scale = by(m[1], base ? base.scale : null)
-    if (m = style.match(skew)) {values.skewx = by(m[1], base ? base.skewx : null); values.skewy = by(m[3], base ? base.skewy : null)}
-    if (m = style.match(translate)) {values.translatex = by(m[1], base ? base.translatex : null); values.translatey = by(m[3], base ? base.translatey : null)}
-    return values
-  }
+	function parseTransform(style, base) {
+		var values = {}, m
+		if (m = style.match(rotate)) values.rotate = by(m[1], base ? base.rotate : null)
+		if (m = style.match(scale)) values.scale = by(m[1], base ? base.scale : null)
+		if (m = style.match(skew)) {values.skewx = by(m[1], base ? base.skewx : null); values.skewy = by(m[3], base ? base.skewy : null)}
+		if (m = style.match(translate)) {values.translatex = by(m[1], base ? base.translatex : null); values.translatey = by(m[3], base ? base.translatey : null)}
+		return values
+	}
 
-  function formatTransform(v) {
-    var s = ''
-    if ('rotate' in v) s += 'rotate(' + v.rotate + 'deg) '
-    if ('scale' in v) s += 'scale(' + v.scale + ') '
-    if ('translatex' in v) s += 'translate(' + v.translatex + 'px,' + v.translatey + 'px) '
-    if ('skewx' in v) s += 'skew(' + v.skewx + 'deg,' + v.skewy + 'deg)'
-    return s
-  }
+	function formatTransform(v) {
+		var s = ''
+		if ('rotate' in v) s += 'rotate(' + v.rotate + 'deg) '
+		if ('scale' in v) s += 'scale(' + v.scale + ') '
+		if ('translatex' in v) s += 'translate(' + v.translatex + 'px,' + v.translatey + 'px) '
+		if ('skewx' in v) s += 'skew(' + v.skewx + 'deg,' + v.skewy + 'deg)'
+		return s
+	}
 
-  function rgb(r, g, b) {
-    return '#' + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1)
-  }
+	function rgb(r, g, b) {
+		return '#' + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1)
+	}
 
-  // convert rgb and short hex to long hex
-  function toHex(c) {
-    var m = c.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/)
-    return (m ? rgb(m[1], m[2], m[3]) : c)
-      .replace(/#(\w)(\w)(\w)$/, '#$1$1$2$2$3$3') // short skirt to long jacket
-  }
+	// convert rgb and short hex to long hex
+	function toHex(c) {
+		var m = c.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/)
+		return (m ? rgb(m[1], m[2], m[3]) : c)
+			.replace(/#(\w)(\w)(\w)$/, '#$1$1$2$2$3$3') // short skirt to long jacket
+	}
 
-  // change font-size => fontSize etc.
-  function camelize(s) {
-    return s.replace(/-(.)/g, function (m, m1) {
-      return m1.toUpperCase()
-    })
-  }
+	// change font-size => fontSize etc.
+	function camelize(s) {
+		return s.replace(/-(.)/g, function (m, m1) {
+			return m1.toUpperCase()
+		})
+	}
 
-  // aren't we having it?
-  function fun(f) {
-    return typeof f == 'function'
-  }
+	// aren't we having it?
+	function fun(f) {
+		return typeof f == 'function'
+	}
 
-  function nativeTween(t) {
-    // default to a pleasant-to-the-eye easeOut (like native animations)
-    return Math.sin(t * Math.PI / 2)
-  }
+	function nativeTween(t) {
+		// default to a pleasant-to-the-eye easeOut (like native animations)
+		return Math.sin(t * Math.PI / 2)
+	}
 
-  /**
+	/**
     * Core tween method that requests each frame
     * @param duration: time in milliseconds. defaults to 1000
     * @param fn: tween frame callback function receiving 'position'
@@ -3083,42 +3083,42 @@ window.vcoanimate = (function() {
     * @param to {optional}: integer to end at
     * @returns method to stop the animation
     */
-  function tween(duration, fn, done, ease, from, to) {
-    ease = fun(ease) ? ease : morpheus.easings[ease] || nativeTween
-    var time = duration || thousand
-      , self = this
-      , diff = to - from
-      , start = now()
-      , stop = 0
-      , end = 0
+	function tween(duration, fn, done, ease, from, to) {
+		ease = fun(ease) ? ease : morpheus.easings[ease] || nativeTween
+		var time = duration || thousand
+		, self = this
+		, diff = to - from
+		, start = now()
+		, stop = 0
+		, end = 0
 
-    function run(t) {
-      var delta = t - start
-      if (delta > time || stop) {
-        to = isFinite(to) ? to : 1
-        stop ? end && fn(to) : fn(to)
-        die(run)
-        return done && done.apply(self)
-      }
-      // if you don't specify a 'to' you can use tween as a generic delta tweener
-      // cool, eh?
-      isFinite(to) ?
-        fn((diff * ease(delta / time)) + from) :
-        fn(ease(delta / time))
-    }
+		function run(t) {
+			var delta = t - start
+			if (delta > time || stop) {
+				to = isFinite(to) ? to : 1
+				stop ? end && fn(to) : fn(to)
+				die(run)
+				return done && done.apply(self)
+			}
+			// if you don't specify a 'to' you can use tween as a generic delta tweener
+			// cool, eh?
+			isFinite(to) ?
+				fn((diff * ease(delta / time)) + from) :
+			fn(ease(delta / time))
+		}
 
-    live(run)
+		live(run)
 
-    return {
-      stop: function (jump) {
-        stop = 1
-        end = jump // jump to end of animation?
-        if (!jump) done = null // remove callback if not jumping to end
-      }
-    }
-  }
+		return {
+			stop: function (jump) {
+				stop = 1
+				end = jump // jump to end of animation?
+				if (!jump) done = null // remove callback if not jumping to end
+			}
+		}
+	}
 
-  /**
+	/**
     * generic bezier method for animating x|y coordinates
     * minimum of 2 points required (start and end).
     * first point start, last point end
@@ -3128,60 +3128,60 @@ window.vcoanimate = (function() {
     * @param pos: current be(tween) position represented as float  0 - 1
     * @return [x, y]
     */
-  function bezier(points, pos) {
-    var n = points.length, r = [], i, j
-    for (i = 0; i < n; ++i) {
-      r[i] = [points[i][0], points[i][1]]
-    }
-    for (j = 1; j < n; ++j) {
-      for (i = 0; i < n - j; ++i) {
-        r[i][0] = (1 - pos) * r[i][0] + pos * r[parseInt(i + 1, 10)][0]
-        r[i][1] = (1 - pos) * r[i][1] + pos * r[parseInt(i + 1, 10)][1]
-      }
-    }
-    return [r[0][0], r[0][1]]
-  }
+	function bezier(points, pos) {
+		var n = points.length, r = [], i, j
+		for (i = 0; i < n; ++i) {
+			r[i] = [points[i][0], points[i][1]]
+		}
+		for (j = 1; j < n; ++j) {
+			for (i = 0; i < n - j; ++i) {
+				r[i][0] = (1 - pos) * r[i][0] + pos * r[parseInt(i + 1, 10)][0]
+				r[i][1] = (1 - pos) * r[i][1] + pos * r[parseInt(i + 1, 10)][1]
+			}
+		}
+		return [r[0][0], r[0][1]]
+	}
 
-  // this gets you the next hex in line according to a 'position'
-  function nextColor(pos, start, finish) {
-    var r = [], i, e, from, to
-    for (i = 0; i < 6; i++) {
-      from = Math.min(15, parseInt(start.charAt(i),  16))
-      to   = Math.min(15, parseInt(finish.charAt(i), 16))
-      e = Math.floor((to - from) * pos + from)
-      e = e > 15 ? 15 : e < 0 ? 0 : e
-      r[i] = e.toString(16)
-    }
-    return '#' + r.join('')
-  }
+	// this gets you the next hex in line according to a 'position'
+	function nextColor(pos, start, finish) {
+		var r = [], i, e, from, to
+		for (i = 0; i < 6; i++) {
+			from = Math.min(15, parseInt(start.charAt(i),  16))
+			to   = Math.min(15, parseInt(finish.charAt(i), 16))
+			e = Math.floor((to - from) * pos + from)
+			e = e > 15 ? 15 : e < 0 ? 0 : e
+			r[i] = e.toString(16)
+		}
+		return '#' + r.join('')
+	}
 
-  // this retreives the frame value within a sequence
-  function getTweenVal(pos, units, begin, end, k, i, v) {
-    if (k == 'transform') {
-      v = {}
-      for (var t in begin[i][k]) {
-        v[t] = (t in end[i][k]) ? Math.round(((end[i][k][t] - begin[i][k][t]) * pos + begin[i][k][t]) * thousand) / thousand : begin[i][k][t]
-      }
-      return v
-    } else if (typeof begin[i][k] == 'string') {
-      return nextColor(pos, begin[i][k], end[i][k])
-    } else {
-      // round so we don't get crazy long floats
-      v = Math.round(((end[i][k] - begin[i][k]) * pos + begin[i][k]) * thousand) / thousand
-      // some css properties don't require a unit (like zIndex, lineHeight, opacity)
-      if (!(k in unitless)) v += units[i][k] || 'px'
-      return v
-    }
-  }
+	// this retreives the frame value within a sequence
+	function getTweenVal(pos, units, begin, end, k, i, v) {
+		if (k == 'transform') {
+			v = {}
+			for (var t in begin[i][k]) {
+				v[t] = (t in end[i][k]) ? Math.round(((end[i][k][t] - begin[i][k][t]) * pos + begin[i][k][t]) * thousand) / thousand : begin[i][k][t]
+			}
+			return v
+		} else if (typeof begin[i][k] == 'string') {
+			return nextColor(pos, begin[i][k], end[i][k])
+		} else {
+			// round so we don't get crazy long floats
+			v = Math.round(((end[i][k] - begin[i][k]) * pos + begin[i][k]) * thousand) / thousand
+			// some css properties don't require a unit (like zIndex, lineHeight, opacity)
+			if (!(k in unitless)) v += units[i][k] || 'px'
+			return v
+		}
+	}
 
-  // support for relative movement via '+=n' or '-=n'
-  function by(val, start, m, r, i) {
-    return (m = relVal.exec(val)) ?
-      (i = parseFloat(m[2])) && (start + (m[1] == '+' ? 1 : -1) * i) :
-      parseFloat(val)
-  }
+	// support for relative movement via '+=n' or '-=n'
+	function by(val, start, m, r, i) {
+		return (m = relVal.exec(val)) ?
+			(i = parseFloat(m[2])) && (start + (m[1] == '+' ? 1 : -1) * i) :
+		parseFloat(val)
+	}
 
-  /**
+	/**
     * morpheus:
     * @param element(s): HTMLElement(s)
     * @param options: mixed bag between CSS Style properties & animation options
@@ -3195,114 +3195,114 @@ window.vcoanimate = (function() {
     *  - bezier: array of arrays containing x|y coordinates that define the bezier points. defaults to none
     *     - this may also be a function that receives element to be animated. it must return a value
     */
-  function morpheus(elements, options) {
-    var els = elements ? (els = isFinite(elements.length) ? elements : [elements]) : [], i
-      , complete = options.complete
-      , duration = options.duration
-      , ease = options.easing
-      , points = options.bezier
-      , begin = []
-      , end = []
-      , units = []
-      , bez = []
-      , originalLeft
-      , originalTop
+	function morpheus(elements, options) {
+		var els = elements ? (els = isFinite(elements.length) ? elements : [elements]) : [], i
+		, complete = options.complete
+		, duration = options.duration
+		, ease = options.easing
+		, points = options.bezier
+		, begin = []
+		, end = []
+		, units = []
+		, bez = []
+		, originalLeft
+		, originalTop
 
-    if (points) {
-      // remember the original values for top|left
-      originalLeft = options.left;
-      originalTop = options.top;
-      delete options.right;
-      delete options.bottom;
-      delete options.left;
-      delete options.top;
-    }
+		if (points) {
+			// remember the original values for top|left
+			originalLeft = options.left;
+			originalTop = options.top;
+			delete options.right;
+			delete options.bottom;
+			delete options.left;
+			delete options.top;
+		}
 
-    for (i = els.length; i--;) {
+		for (i = els.length; i--;) {
 
-      // record beginning and end states to calculate positions
-      begin[i] = {}
-      end[i] = {}
-      units[i] = {}
+			// record beginning and end states to calculate positions
+			begin[i] = {}
+			end[i] = {}
+			units[i] = {}
 
-      // are we 'moving'?
-      if (points) {
+			// are we 'moving'?
+			if (points) {
 
-        var left = getStyle(els[i], 'left')
-          , top = getStyle(els[i], 'top')
-          , xy = [by(fun(originalLeft) ? originalLeft(els[i]) : originalLeft || 0, parseFloat(left)),
-                  by(fun(originalTop) ? originalTop(els[i]) : originalTop || 0, parseFloat(top))]
+				var left = getStyle(els[i], 'left')
+				, top = getStyle(els[i], 'top')
+				, xy = [by(fun(originalLeft) ? originalLeft(els[i]) : originalLeft || 0, parseFloat(left)),
+						by(fun(originalTop) ? originalTop(els[i]) : originalTop || 0, parseFloat(top))]
 
-        bez[i] = fun(points) ? points(els[i], xy) : points
-        bez[i].push(xy)
-        bez[i].unshift([
-          parseInt(left, 10),
-          parseInt(top, 10)
-        ])
-      }
+				bez[i] = fun(points) ? points(els[i], xy) : points
+				bez[i].push(xy)
+				bez[i].unshift([
+					parseInt(left, 10),
+					parseInt(top, 10)
+				])
+			}
 
-      for (var k in options) {
-        switch (k) {
-        case 'complete':
-        case 'duration':
-        case 'easing':
-        case 'bezier':
-          continue
-        }
-        var v = getStyle(els[i], k), unit
-          , tmp = fun(options[k]) ? options[k](els[i]) : options[k]
-        if (typeof tmp == 'string' &&
-            rgbOhex.test(tmp) &&
-            !rgbOhex.test(v)) {
-          delete options[k]; // remove key :(
-          continue; // cannot animate colors like 'orange' or 'transparent'
-                    // only #xxx, #xxxxxx, rgb(n,n,n)
-        }
+			for (var k in options) {
+				switch (k) {
+					case 'complete':
+					case 'duration':
+					case 'easing':
+					case 'bezier':
+						continue
+				}
+				var v = getStyle(els[i], k), unit
+				, tmp = fun(options[k]) ? options[k](els[i]) : options[k]
+				if (typeof tmp == 'string' &&
+					rgbOhex.test(tmp) &&
+					!rgbOhex.test(v)) {
+					delete options[k]; // remove key :(
+					continue; // cannot animate colors like 'orange' or 'transparent'
+					// only #xxx, #xxxxxx, rgb(n,n,n)
+				}
 
-        begin[i][k] = k == 'transform' ? parseTransform(v) :
-          typeof tmp == 'string' && rgbOhex.test(tmp) ?
-            toHex(v).slice(1) :
-            parseFloat(v)
-        end[i][k] = k == 'transform' ? parseTransform(tmp, begin[i][k]) :
-          typeof tmp == 'string' && tmp.charAt(0) == '#' ?
-            toHex(tmp).slice(1) :
-            by(tmp, parseFloat(v));
-        // record original unit
-        (typeof tmp == 'string') && (unit = tmp.match(numUnit)) && (units[i][k] = unit[1])
-      }
-    }
-    // ONE TWEEN TO RULE THEM ALL
-    return tween.apply(els, [duration, function (pos, v, xy) {
-      // normally not a fan of optimizing for() loops, but we want something
-      // fast for animating
-      for (i = els.length; i--;) {
-        if (points) {
-          xy = bezier(bez[i], pos)
-          els[i].style.left = xy[0] + 'px'
-          els[i].style.top = xy[1] + 'px'
-        }
-        for (var k in options) {
-          v = getTweenVal(pos, units, begin, end, k, i)
-          k == 'transform' ?
-            els[i].style[transform] = formatTransform(v) :
-            k == 'opacity' && !opacity ?
-              (els[i].style.filter = 'alpha(opacity=' + (v * 100) + ')') :
-              (els[i].style[camelize(k)] = v)
-        }
-      }
-    }, complete, ease])
-  }
+				begin[i][k] = k == 'transform' ? parseTransform(v) :
+				typeof tmp == 'string' && rgbOhex.test(tmp) ?
+					toHex(v).slice(1) :
+				parseFloat(v)
+				end[i][k] = k == 'transform' ? parseTransform(tmp, begin[i][k]) :
+				typeof tmp == 'string' && tmp.charAt(0) == '#' ?
+					toHex(tmp).slice(1) :
+				by(tmp, parseFloat(v));
+				// record original unit
+				(typeof tmp == 'string') && (unit = tmp.match(numUnit)) && (units[i][k] = unit[1])
+			}
+		}
+		// ONE TWEEN TO RULE THEM ALL
+		return tween.apply(els, [duration, function (pos, v, xy) {
+			// normally not a fan of optimizing for() loops, but we want something
+			// fast for animating
+			for (i = els.length; i--;) {
+				if (points) {
+					xy = bezier(bez[i], pos)
+					els[i].style.left = xy[0] + 'px'
+					els[i].style.top = xy[1] + 'px'
+				}
+				for (var k in options) {
+					v = getTweenVal(pos, units, begin, end, k, i)
+					k == 'transform' ?
+						els[i].style[transform] = formatTransform(v) :
+					k == 'opacity' && !opacity ?
+						(els[i].style.filter = 'alpha(opacity=' + (v * 100) + ')') :
+					(els[i].style[camelize(k)] = v)
+				}
+			}
+		}, complete, ease])
+	}
 
-  // expose useful methods
-  morpheus.tween = tween
-  morpheus.getStyle = getStyle
-  morpheus.bezier = bezier
-  morpheus.transform = transform
-  morpheus.parseTransform = parseTransform
-  morpheus.formatTransform = formatTransform
-  morpheus.easings = {}
+	// expose useful methods
+	morpheus.tween = tween
+	morpheus.getStyle = getStyle
+	morpheus.bezier = bezier
+	morpheus.transform = transform
+	morpheus.parseTransform = parseTransform
+	morpheus.formatTransform = formatTransform
+	morpheus.easings = {}
 
-  return morpheus
+	return morpheus
 })();
 
 
@@ -3369,8 +3369,8 @@ VCO.Point.prototype = {
 
 	toString: function () {
 		return 'Point(' +
-				VCO.Util.formatNum(this.x) + ', ' +
-				VCO.Util.formatNum(this.y) + ')';
+			VCO.Util.formatNum(this.x) + ', ' +
+			VCO.Util.formatNum(this.y) + ')';
 	}
 };
 
@@ -3379,7 +3379,7 @@ VCO.Point.prototype = {
 	Assumes there is a _el.container and animator
 ================================================== */
 VCO.DomMixins = {
-	
+
 	/*	Adding, Hiding, Showing etc
 	================================================== */
 	show: function(animate) {
@@ -3395,21 +3395,21 @@ VCO.DomMixins = {
 			this._el.container.style.display = "block";
 		}
 	},
-	
+
 	hide: function(animate) {
 		this._el.container.style.display = "none";
 	},
-	
+
 	addTo: function(container) {
 		container.appendChild(this._el.container);
 		this.onAdd();
 	},
-	
+
 	removeFrom: function(container) {
 		container.removeChild(this._el.container);
 		this.onRemove();
 	},
-	
+
 	/*	Animate to Position
 	================================================== */
 	animatePosition: function(pos, el, use_percent) {
@@ -3424,23 +3424,23 @@ VCO.DomMixins = {
 				} else {
 					ani[name] = pos[name] + "px";
 				}
-				
+
 			}
 		}
-		
+
 		if (this.animator) {
 			this.animator.stop();
 		}
 		this.animator = VCO.Animate(el, ani);
 	},
-	
+
 	/*	Events
 	================================================== */
-	
+
 	onLoaded: function() {
 		this.fire("loaded", this.data);
 	},
-	
+
 	onAdd: function() {
 		this.fire("added", this.data);
 	},
@@ -3448,7 +3448,7 @@ VCO.DomMixins = {
 	onRemove: function() {
 		this.fire("removed", this.data);
 	},
-	
+
 	/*	Set the Position
 	================================================== */
 	setPosition: function(pos, el) {
@@ -3462,11 +3462,11 @@ VCO.DomMixins = {
 			}
 		}
 	},
-	
+
 	getPosition: function() {
 		return VCO.Dom.getPosition(this._el.container);
 	}
-	
+
 };
 
 
@@ -3479,13 +3479,13 @@ VCO.Dom = {
 	get: function(id) {
 		return (typeof id === 'string' ? document.getElementById(id) : id);
 	},
-	
+
 	getByClass: function(id) {
 		if (id) {
 			return document.getElementsByClassName(id);
 		}
 	},
-	
+
 	create: function(tagName, className, container) {
 		var el = document.createElement(tagName);
 		el.className = className;
@@ -3494,7 +3494,7 @@ VCO.Dom = {
 		}
 		return el;
 	},
-	
+
 	createText: function(content, container) {
 		var el = document.createTextNode(content);
 		if (container) {
@@ -3502,13 +3502,13 @@ VCO.Dom = {
 		}
 		return el;
 	},
-	
+
 	getTranslateString: function (point) {
 		return VCO.Dom.TRANSLATE_OPEN +
-				point.x + 'px,' + point.y + 'px' +
-				VCO.Dom.TRANSLATE_CLOSE;
+			point.x + 'px,' + point.y + 'px' +
+			VCO.Dom.TRANSLATE_CLOSE;
 	},
-	
+
 	setPosition: function (el, point) {
 		el._vco_pos = point;
 		if (VCO.Browser.webkit3d) {
@@ -3523,18 +3523,18 @@ VCO.Dom = {
 			el.style.top = point.y + 'px';
 		}
 	},
-	
+
 	getPosition: function(el){
-	    var pos = {
-	    	x: 0,
+		var pos = {
+			x: 0,
 			y: 0
-	    }
-	    while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
-	        pos.x += el.offsetLeft// - el.scrollLeft;
-	        pos.y += el.offsetTop// - el.scrollTop;
-	        el = el.offsetParent;
-	    }
-	    return pos;
+		}
+		while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
+			pos.x += el.offsetLeft// - el.scrollLeft;
+			pos.y += el.offsetTop// - el.scrollTop;
+			el = el.offsetParent;
+		}
+		return pos;
 	},
 
 	testProp: function(props) {
@@ -3547,7 +3547,7 @@ VCO.Dom = {
 		}
 		return false;
 	}
-	
+
 };
 
 VCO.Util.extend(VCO.Dom, {
@@ -3593,7 +3593,7 @@ VCO.DomUtil = {
 			left += el.offsetLeft || 0;
 
 			if (el.offsetParent === docBody &&
-					VCO.DomUtil.getStyle(el, 'position') === 'absolute') {
+				VCO.DomUtil.getStyle(el, 'position') === 'absolute') {
 				break;
 			}
 			el = el.offsetParent;
@@ -3641,7 +3641,7 @@ VCO.DomUtil = {
 
 	hasClass: function (el, name) {
 		return (el.className.length > 0) &&
-				new RegExp("(^|\\s)" + name + "(\\s|$)").test(el.className);
+			new RegExp("(^|\\s)" + name + "(\\s|$)").test(el.className);
 	},
 
 	addClass: function (el, name) {
@@ -3682,8 +3682,8 @@ VCO.DomUtil = {
 	getTranslateString: function (point) {
 
 		return VCO.DomUtil.TRANSLATE_OPEN +
-				point.x + 'px,' + point.y + 'px' +
-				VCO.DomUtil.TRANSLATE_CLOSE;
+			point.x + 'px,' + point.y + 'px' +
+			VCO.DomUtil.TRANSLATE_CLOSE;
 	},
 
 	getScaleString: function (scale, origin) {
@@ -3828,7 +3828,7 @@ VCO.DomEvent = {
 			e.cancelBubble = true;
 		}
 	},
-	
+
 	// TODO VCO.Draggable.START
 	disableClickPropagation: function (/*HTMLElement*/ el) {
 		VCO.DomEvent.addListener(el, VCO.Draggable.START, VCO.DomEvent.stopPropagation);
@@ -3871,18 +3871,18 @@ VCO.DomEvent = {
 ================================================== */
 
 VCO.Draggable = VCO.Class.extend({
-	
+
 	includes: VCO.Events,
-	
+
 	_el: {},
-	
+
 	mousedrag: {
 		down:		"mousedown",
 		up:			"mouseup",
 		leave:		"mouseleave",
 		move:		"mousemove"
 	},
-	
+
 	touchdrag: {
 		down:		"touchstart",
 		up:			"touchend",
@@ -3891,18 +3891,18 @@ VCO.Draggable = VCO.Class.extend({
 	},
 
 	initialize: function (drag_elem, options, move_elem) {
-		
+
 		// DOM ELements 
 		this._el = {
 			drag: drag_elem,
 			move: drag_elem
 		};
-		
+
 		if (move_elem) {
 			this._el.move = move_elem;
 		}
-		
-		
+
+
 		//Options
 		this.options = {
 			enable:	{
@@ -3919,18 +3919,18 @@ VCO.Draggable = VCO.Class.extend({
 			duration: 				1000,
 			ease: 					VCO.Ease.easeInOutQuint
 		};
-		
-		
+
+
 		// Animation Object
 		this.animator = null;
-		
+
 		// Drag Event Type
 		this.dragevent = this.mousedrag;
-		
+
 		if (VCO.Browser.touch) {
 			this.dragevent = this.touchdrag;
 		}
-		
+
 		// Draggable Data
 		this.data = {
 			sliding:		false,
@@ -3967,18 +3967,18 @@ VCO.Draggable = VCO.Class.extend({
 			},
 			touch:			false
 		};
-		
+
 		// Merge Data and Options
 		VCO.Util.mergeData(this.options, options);
-		
-		
+
+
 	},
-	
+
 	enable: function(e) {
 		// Temporarily disableing this until I have time to fix some issues.
 		//VCO.DomEvent.addListener(this._el.drag, this.dragevent.down, this._onDragStart, this);
 		//VCO.DomEvent.addListener(this._el.drag, this.dragevent.up, this._onDragEnd, this);
-		
+
 		this.data.pos.start = 0; //VCO.Dom.getPosition(this._el.move);
 		this._el.move.style.left = this.data.pos.start.x + "px";
 		this._el.move.style.top = this.data.pos.start.y + "px";
@@ -3986,26 +3986,26 @@ VCO.Draggable = VCO.Class.extend({
 		//this._el.move.style.zIndex = "11";
 		//this._el.move.style.cursor = "move";
 	},
-	
+
 	disable: function() {
 		VCO.DomEvent.removeListener(this._el.drag, this.dragevent.down, this._onDragStart, this);
 		VCO.DomEvent.removeListener(this._el.drag, this.dragevent.up, this._onDragEnd, this);
 	},
-	
+
 	stopMomentum: function() {
 		if (this.animator) {
 			this.animator.stop();
 		}
 
 	},
-	
+
 	updateConstraint: function(c) {
 		this.options.constraint = c;
-		
+
 		// Temporary until issues are fixed
-		
+
 	},
-	
+
 	/*	Private Methods
 	================================================== */
 	_onDragStart: function(e) {
@@ -4021,38 +4021,38 @@ VCO.Draggable = VCO.Class.extend({
 			this.data.pagex.start = e.pageX;
 			this.data.pagey.start = e.pageY;
 		}
-		
+
 		// Center element to finger or mouse
 		if (this.options.enable.x) {
 			this._el.move.style.left = this.data.pagex.start - (this._el.move.offsetWidth / 2) + "px";
 		}
-		
+
 		if (this.options.enable.y) {
 			this._el.move.style.top = this.data.pagey.start - (this._el.move.offsetHeight / 2) + "px";
 		}
-		
+
 		this.data.pos.start = VCO.Dom.getPosition(this._el.drag);
 		this.data.time.start = new Date().getTime();
-		
+
 		this.fire("dragstart", this.data);
 		VCO.DomEvent.addListener(this._el.drag, this.dragevent.move, this._onDragMove, this);
 		VCO.DomEvent.addListener(this._el.drag, this.dragevent.leave, this._onDragEnd, this);
 	},
-	
+
 	_onDragEnd: function(e) {
 		this.data.sliding = false;
 		VCO.DomEvent.removeListener(this._el.drag, this.dragevent.move, this._onDragMove, this);
 		VCO.DomEvent.removeListener(this._el.drag, this.dragevent.leave, this._onDragEnd, this);
 		this.fire("dragend", this.data);
-		
+
 		//  momentum
 		this._momentum();
 	},
-	
+
 	_onDragMove: function(e) {
 		e.preventDefault();
 		this.data.sliding = true;
-		
+
 		if (VCO.Browser.touch) {
 			if (e.originalEvent) {
 				this.data.pagex.end = e.originalEvent.touches[0].screenX;
@@ -4066,28 +4066,28 @@ VCO.Draggable = VCO.Class.extend({
 			this.data.pagex.end = e.pageX;
 			this.data.pagey.end = e.pageY;
 		}
-		
+
 		this.data.pos.end = VCO.Dom.getPosition(this._el.drag);
 		this.data.new_pos.x = -(this.data.pagex.start - this.data.pagex.end - this.data.pos.start.x)//-(this.data.pagex.start - this.data.pagex.end - this.data.pos.end.x);
 		this.data.new_pos.y = -(this.data.pagey.start - this.data.pagey.end - this.data.pos.start.y );
-		
+
 		if (this.options.enable.x) {
 			this._el.move.style.left = this.data.new_pos.x + "px";
 		}
-		
+
 		if (this.options.enable.y) {
 			this._el.move.style.top = this.data.new_pos.y + "px";
 		}
-		
+
 		this.fire("dragmove", this.data);
 	},
-	
+
 	_momentum: function() {
 		var pos_adjust = {
-				x: 0,
-				y: 0,
-				time: 0
-			},
+			x: 0,
+			y: 0,
+			time: 0
+		},
 			pos_change = {
 				x: 0,
 				y: 0,
@@ -4095,42 +4095,42 @@ VCO.Draggable = VCO.Class.extend({
 			},
 			swipe = false,
 			swipe_direction = "";
-		
-		
+
+
 		if (VCO.Browser.touch) {
 			//this.options.momentum_multiplier = this.options.momentum_multiplier * 2;
 		}
-		
+
 		pos_adjust.time = (new Date().getTime() - this.data.time.start) * 10;
 		pos_change.time = (new Date().getTime() - this.data.time.start) * 10;
-		
+
 		pos_change.x = this.options.momentum_multiplier * (Math.abs(this.data.pagex.end) - Math.abs(this.data.pagex.start));
 		pos_change.y = this.options.momentum_multiplier * (Math.abs(this.data.pagey.end) - Math.abs(this.data.pagey.start));
-		
+
 		pos_adjust.x = Math.round(pos_change.x / pos_change.time);
 		pos_adjust.y = Math.round(pos_change.y / pos_change.time);
-		
+
 		this.data.new_pos.x = Math.min(this.data.pos.end.x + pos_adjust.x);
 		this.data.new_pos.y = Math.min(this.data.pos.end.y + pos_adjust.y);
 
-		
+
 		if (!this.options.enable.x) {
 			this.data.new_pos.x = this.data.pos.start.x;
 		} else if (this.data.new_pos.x < 0) {
 			this.data.new_pos.x = 0;
 		}
-		
+
 		if (!this.options.enable.y) {
 			this.data.new_pos.y = this.data.pos.start.y;
 		} else if (this.data.new_pos.y < 0) {
 			this.data.new_pos.y = 0;
 		}
-		
+
 		// Detect Swipe
 		if (pos_change.time < 3000) {
 			swipe = true;
 		}
-		
+
 		// Detect Direction
 		if (Math.abs(pos_change.x) > 10000) {
 			this.data.direction = "left";
@@ -4149,20 +4149,20 @@ VCO.Draggable = VCO.Class.extend({
 		if (swipe) {
 			this.fire("swipe_" + this.data.direction, this.data);
 		}
-		
+
 	},
-	
-	
+
+
 	_animateMomentum: function() {
 		var pos = {
-				x: this.data.new_pos.x,
-				y: this.data.new_pos.y
-			},
+			x: this.data.new_pos.x,
+			y: this.data.new_pos.y
+		},
 			animate = {
 				duration: 	this.options.duration,
 				easing: 	VCO.Ease.easeOutStrong
 			};
-		
+
 		if (this.options.enable.y) {
 			if (this.options.constraint.top || this.options.constraint.bottom) {
 				if (pos.y > this.options.constraint.bottom) {
@@ -4173,7 +4173,7 @@ VCO.Draggable = VCO.Class.extend({
 			}
 			animate.top = Math.floor(pos.y) + "px";
 		}
-		
+
 		if (this.options.enable.x) {
 			if (this.options.constraint.left || this.options.constraint.right) {
 				if (pos.x > this.options.constraint.left) {
@@ -4184,9 +4184,9 @@ VCO.Draggable = VCO.Class.extend({
 			}
 			animate.left = Math.floor(pos.x) + "px";
 		}
-		
+
 		this.animator = VCO.Animate(this._el.move, animate);
-		
+
 		this.fire("momentum", this.data);
 	}
 });
@@ -4198,18 +4198,18 @@ VCO.Draggable = VCO.Class.extend({
 ================================================== */
 
 VCO.Swipable = VCO.Class.extend({
-	
+
 	includes: VCO.Events,
-	
+
 	_el: {},
-	
+
 	mousedrag: {
 		down:		"mousedown",
 		up:			"mouseup",
 		leave:		"mouseleave",
 		move:		"mousemove"
 	},
-	
+
 	touchdrag: {
 		down:		"touchstart",
 		up:			"touchend",
@@ -4218,18 +4218,18 @@ VCO.Swipable = VCO.Class.extend({
 	},
 
 	initialize: function (drag_elem, move_elem, options) {
-		
+
 		// DOM ELements 
 		this._el = {
 			drag: drag_elem,
 			move: drag_elem
 		};
-		
+
 		if (move_elem) {
 			this._el.move = move_elem;
 		}
-		
-		
+
+
 		//Options
 		this.options = {
 			snap: false,
@@ -4247,18 +4247,18 @@ VCO.Swipable = VCO.Class.extend({
 			duration: 				1000,
 			ease: 					VCO.Ease.easeInOutQuint
 		};
-		
-		
+
+
 		// Animation Object
 		this.animator = null;
-		
+
 		// Drag Event Type
 		this.dragevent = this.mousedrag;
-		
+
 		if (VCO.Browser.touch) {
 			this.dragevent = this.touchdrag;
 		}
-		
+
 		// Draggable Data
 		this.data = {
 			sliding:		false,
@@ -4295,17 +4295,17 @@ VCO.Swipable = VCO.Class.extend({
 			},
 			touch:			false
 		};
-		
+
 		// Merge Data and Options
 		VCO.Util.mergeData(this.options, options);
-		
-		
+
+
 	},
-	
+
 	enable: function(e) {
 		VCO.DomEvent.addListener(this._el.drag, this.dragevent.down, this._onDragStart, this);
 		VCO.DomEvent.addListener(this._el.drag, this.dragevent.up, this._onDragEnd, this);
-		
+
 		this.data.pos.start = 0; //VCO.Dom.getPosition(this._el.move);
 		this._el.move.style.left = this.data.pos.start.x + "px";
 		this._el.move.style.top = this.data.pos.start.y + "px";
@@ -4313,34 +4313,34 @@ VCO.Swipable = VCO.Class.extend({
 		//this._el.move.style.zIndex = "11";
 		//this._el.move.style.cursor = "move";
 	},
-	
+
 	disable: function() {
 		VCO.DomEvent.removeListener(this._el.drag, this.dragevent.down, this._onDragStart, this);
 		VCO.DomEvent.removeListener(this._el.drag, this.dragevent.up, this._onDragEnd, this);
 	},
-	
+
 	stopMomentum: function() {
 		if (this.animator) {
 			this.animator.stop();
 		}
 
 	},
-	
+
 	updateConstraint: function(c) {
 		this.options.constraint = c;
-		
+
 		// Temporary until issues are fixed
-		
+
 	},
-	
+
 	/*	Private Methods
 	================================================== */
 	_onDragStart: function(e) {
-		
+
 		if (this.animator) {
 			this.animator.stop();
 		}
-		
+
 		if (VCO.Browser.touch) {
 			if (e.originalEvent) {
 				this.data.pagex.start = e.originalEvent.touches[0].screenX;
@@ -4353,36 +4353,36 @@ VCO.Swipable = VCO.Class.extend({
 			this.data.pagex.start = e.pageX;
 			this.data.pagey.start = e.pageY;
 		}
-		
+
 		// Center element to finger or mouse
 		if (this.options.enable.x) {
 			//this._el.move.style.left = this.data.pagex.start - (this._el.move.offsetWidth / 2) + "px";
 		}
-		
+
 		if (this.options.enable.y) {
 			//this._el.move.style.top = this.data.pagey.start - (this._el.move.offsetHeight / 2) + "px";
 		}
-		
+
 		this.data.pos.start = {x:this._el.move.offsetLeft, y:this._el.move.offsetTop};
-		
-		
+
+
 		this.data.time.start 			= new Date().getTime();
-		
+
 		this.fire("dragstart", this.data);
 		VCO.DomEvent.addListener(this._el.drag, this.dragevent.move, this._onDragMove, this);
 		VCO.DomEvent.addListener(this._el.drag, this.dragevent.leave, this._onDragEnd, this);
 	},
-	
+
 	_onDragEnd: function(e) {
 		this.data.sliding = false;
 		VCO.DomEvent.removeListener(this._el.drag, this.dragevent.move, this._onDragMove, this);
 		VCO.DomEvent.removeListener(this._el.drag, this.dragevent.leave, this._onDragEnd, this);
 		this.fire("dragend", this.data);
-		
+
 		//  momentum
 		this._momentum();
 	},
-	
+
 	_onDragMove: function(e) {
 		var change = {
 			x:0,
@@ -4390,7 +4390,7 @@ VCO.Swipable = VCO.Class.extend({
 		}
 		//e.preventDefault();
 		this.data.sliding = true;
-		
+
 		if (VCO.Browser.touch) {
 			if (e.originalEvent) {
 				this.data.pagex.end = e.originalEvent.touches[0].screenX;
@@ -4404,35 +4404,35 @@ VCO.Swipable = VCO.Class.extend({
 			this.data.pagex.end = e.pageX;
 			this.data.pagey.end = e.pageY;
 		}
-		
+
 		change.x = this.data.pagex.start - this.data.pagex.end;
 		change.y = this.data.pagey.start - this.data.pagey.end;
-		
+
 		this.data.pos.end = {x:this._el.drag.offsetLeft, y:this._el.drag.offsetTop};
-		
+
 		this.data.new_pos.x = -(change.x - this.data.pos.start.x);
 		this.data.new_pos.y = -(change.y - this.data.pos.start.y );
-		
-		
+
+
 		if (this.options.enable.x && ( Math.abs(change.x) > Math.abs(change.y) ) ) {
 			e.preventDefault();
 			this._el.move.style.left = this.data.new_pos.x + "px";
 		}
-		
+
 		if (this.options.enable.y && ( Math.abs(change.y) > Math.abs(change.y) ) ) {
 			e.preventDefault();
 			this._el.move.style.top = this.data.new_pos.y + "px";
 		}
-		
+
 		this.fire("dragmove", this.data);
 	},
-	
+
 	_momentum: function() {
 		var pos_adjust = {
-				x: 0,
-				y: 0,
-				time: 0
-			},
+			x: 0,
+			y: 0,
+			time: 0
+		},
 			pos_change = {
 				x: 0,
 				y: 0,
@@ -4444,41 +4444,41 @@ VCO.Swipable = VCO.Class.extend({
 			},
 			swipe = false,
 			swipe_direction = "";
-		
-		
+
+
 		this.data.direction = null;
-		
+
 		pos_adjust.time = (new Date().getTime() - this.data.time.start) * 10;
 		pos_change.time = (new Date().getTime() - this.data.time.start) * 10;
-		
+
 		pos_change.x = this.options.momentum_multiplier * (Math.abs(this.data.pagex.end) - Math.abs(this.data.pagex.start));
 		pos_change.y = this.options.momentum_multiplier * (Math.abs(this.data.pagey.end) - Math.abs(this.data.pagey.start));
-		
+
 		pos_adjust.x = Math.round(pos_change.x / pos_change.time);
 		pos_adjust.y = Math.round(pos_change.y / pos_change.time);
-		
+
 		this.data.new_pos.x = Math.min(this.data.pos.end.x + pos_adjust.x);
 		this.data.new_pos.y = Math.min(this.data.pos.end.y + pos_adjust.y);
 
-		
+
 		if (!this.options.enable.x) {
 			this.data.new_pos.x = this.data.pos.start.x;
 		} else if (this.data.new_pos.x > 0) {
 			this.data.new_pos.x = 0;
 		}
-		
+
 		if (!this.options.enable.y) {
 			this.data.new_pos.y = this.data.pos.start.y;
 		} else if (this.data.new_pos.y < 0) {
 			this.data.new_pos.y = 0;
 		}
-		
+
 		// Detect Swipe
 		if (pos_change.time < 2000) {
 			swipe = true;
 		}
-		
-		
+
+
 		if (this.options.enable.x && this.options.enable.y) {
 			if (Math.abs(pos_change.x) > Math.abs(pos_change.y)) {
 				swipe_detect.x = true;
@@ -4494,15 +4494,15 @@ VCO.Swipable = VCO.Class.extend({
 				swipe_detect.y = true;
 			}
 		}
-		
+
 		// Detect Direction and long swipe
 		if (swipe_detect.x) {
-			
+
 			// Long Swipe
 			if (Math.abs(pos_change.x) > (this._el.drag.offsetWidth/2)) {
 				swipe = true;
 			}
-			
+
 			if (Math.abs(pos_change.x) > 10000) {
 				this.data.direction = "left";
 				if (pos_change.x > 0) {
@@ -4510,14 +4510,14 @@ VCO.Swipable = VCO.Class.extend({
 				}
 			}
 		}
-		
+
 		if (swipe_detect.y) {
-			
+
 			// Long Swipe
 			if (Math.abs(pos_change.y) > (this._el.drag.offsetHeight/2)) {
 				swipe = true;
 			}
-			
+
 			if (Math.abs(pos_change.y) > 10000) {
 				this.data.direction = "up";
 				if (pos_change.y > 0) {
@@ -4525,7 +4525,7 @@ VCO.Swipable = VCO.Class.extend({
 				}
 			}
 		}
-		
+
 		this._animateMomentum();
 		if (swipe && this.data.direction) {
 			this.fire("swipe_" + this.data.direction, this.data);
@@ -4533,7 +4533,7 @@ VCO.Swipable = VCO.Class.extend({
 			this.fire("swipe_nodirection", this.data);
 		} else if (this.options.snap) {
 			this.animator.stop();
-			
+
 			this.animator = VCO.Animate(this._el.move, {
 				top: 		this.data.pos.start.y,
 				left: 		this.data.pos.start.x,
@@ -4541,20 +4541,20 @@ VCO.Swipable = VCO.Class.extend({
 				easing: 	VCO.Ease.easeOutStrong
 			});
 		}
-		
+
 	},
-	
-	
+
+
 	_animateMomentum: function() {
 		var pos = {
-				x: this.data.new_pos.x,
-				y: this.data.new_pos.y
-			},
+			x: this.data.new_pos.x,
+			y: this.data.new_pos.y
+		},
 			animate = {
 				duration: 	this.options.duration,
 				easing: 	VCO.Ease.easeOutStrong
 			};
-		
+
 		if (this.options.enable.y) {
 			if (this.options.constraint.top || this.options.constraint.bottom) {
 				if (pos.y > this.options.constraint.bottom) {
@@ -4565,7 +4565,7 @@ VCO.Swipable = VCO.Class.extend({
 			}
 			animate.top = Math.floor(pos.y) + "px";
 		}
-		
+
 		if (this.options.enable.x) {
 			if (this.options.constraint.left || this.options.constraint.right) {
 				if (pos.x >= this.options.constraint.left) {
@@ -4576,9 +4576,9 @@ VCO.Swipable = VCO.Class.extend({
 			}
 			animate.left = Math.floor(pos.x) + "px";
 		}
-		
+
 		this.animator = VCO.Animate(this._el.move, animate);
-		
+
 		this.fire("momentum", this.data);
 	}
 });
@@ -4587,13 +4587,13 @@ VCO.Swipable = VCO.Class.extend({
 /*	VCO.MenuBar
 	Draggable component to control size
 ================================================== */
- 
+
 VCO.MenuBar = VCO.Class.extend({
-	
+
 	includes: [VCO.Events, VCO.DomMixins],
-	
+
 	_el: {},
-	
+
 	/*	Constructor
 	================================================== */
 	initialize: function(elem, parent_elem, options) {
@@ -4609,19 +4609,19 @@ VCO.MenuBar = VCO.Class.extend({
 			coverbar: {},
 			grip: {}
 		};
-		
+
 		this.collapsed = false;
-		
+
 		if (typeof elem === 'object') {
 			this._el.container = elem;
 		} else {
 			this._el.container = VCO.Dom.get(elem);
 		}
-		
+
 		if (parent_elem) {
 			this._el.parent = parent_elem;
 		}
-	
+
 		//Options
 		this.options = {
 			width: 					600,
@@ -4630,21 +4630,21 @@ VCO.MenuBar = VCO.Class.extend({
 			ease: 					VCO.Ease.easeInOutQuint,
 			menubar_default_y: 		0
 		};
-		
+
 		// Animation
 		this.animator = {};
-		
+
 		// Merge Data and Options
 		VCO.Util.mergeData(this.options, options);
-		
+
 		this._initLayout();
 		this._initEvents();
 	},
-	
+
 	/*	Public
 	================================================== */
 	show: function(d) {
-		
+
 		var duration = this.options.duration;
 		if (d) {
 			duration = d;
@@ -4657,7 +4657,7 @@ VCO.MenuBar = VCO.Class.extend({
 		});
 		*/
 	},
-	
+
 	hide: function(top) {
 		/*
 		this.animator = VCO.Animate(this._el.container, {
@@ -4667,12 +4667,12 @@ VCO.MenuBar = VCO.Class.extend({
 		});
 		*/
 	},
-		
-	
+
+
 	setSticky: function(y) {
 		this.options.menubar_default_y = y;
 	},
-	
+
 	/*	Color
 	================================================== */
 	setColor: function(inverted) {
@@ -4682,26 +4682,26 @@ VCO.MenuBar = VCO.Class.extend({
 			this._el.container.className = 'vco-menubar';
 		}
 	},
-	
+
 	/*	Update Display
 	================================================== */
 	updateDisplay: function(w, h, a, l) {
 		this._updateDisplay(w, h, a, l);
 	},
-	
+
 
 	/*	Events
 	================================================== */
 
-	
+
 	_onButtonOverview: function(e) {
 		this.fire("overview", e);
 	},
-	
+
 	_onButtonBackToStart: function(e) {
 		this.fire("back_to_start", e);
 	},
-	
+
 	_onButtonCollapseMap: function(e) {
 		if (this.collapsed) {
 			this.collapsed = false;
@@ -4725,52 +4725,52 @@ VCO.MenuBar = VCO.Class.extend({
 			}
 		}
 	},
-	
+
 	/*	Private Methods
 	================================================== */
 	_initLayout: function () {
 		// Create Layout
-		
+
 		// Buttons
 		this._el.button_overview 						= VCO.Dom.create('span', 'vco-menubar-button', this._el.container);
 		VCO.DomEvent.addListener(this._el.button_overview, 'click', this._onButtonOverview, this);
-		
+
 		this._el.button_backtostart 					= VCO.Dom.create('span', 'vco-menubar-button', this._el.container);
 		VCO.DomEvent.addListener(this._el.button_backtostart, 'click', this._onButtonBackToStart, this);
-		
+
 		this._el.button_collapse_toggle 				= VCO.Dom.create('span', 'vco-menubar-button', this._el.container);
 		VCO.DomEvent.addListener(this._el.button_collapse_toggle, 'click', this._onButtonCollapseMap, this);
-		
+
 		if (this.options.map_as_image) {
 			this._el.button_overview.innerHTML			= VCO.Language.buttons.overview;
 		} else {
 			this._el.button_overview.innerHTML			= VCO.Language.buttons.map_overview;
 		}
-		
+
 		if (VCO.Browser.mobile) {
-			
+
 			this._el.button_backtostart.innerHTML		= "<span class='vco-icon-goback'></span>";
 			this._el.button_collapse_toggle.innerHTML	= "<span class='vco-icon-arrow-up'></span>";
 			this._el.container.setAttribute("ontouchstart"," ");
 		} else {
-			
+
 			this._el.button_backtostart.innerHTML		= VCO.Language.buttons.backtostart + " <span class='vco-icon-goback'></span>";
 			this._el.button_collapse_toggle.innerHTML	= VCO.Language.buttons.collapse_toggle + "<span class='vco-icon-arrow-up'></span>";
 		}
-		
+
 		if (this.options.layout == "landscape") {
 			this._el.button_collapse_toggle.style.display = "none";
 		}
-		
+
 	},
-	
+
 	_initEvents: function () {
-		
+
 	},
-	
+
 	// Update Display
 	_updateDisplay: function(width, height, animate) {
-		
+
 		if (width) {
 			this.options.width = width;
 		}
@@ -4778,19 +4778,19 @@ VCO.MenuBar = VCO.Class.extend({
 			this.options.height = height;
 		}
 	}
-	
+
 });
 
 /*	VCO.SizeBar
 	Draggable component to control size
 ================================================== */
- 
+
 VCO.Message = VCO.Class.extend({
-	
+
 	includes: [VCO.Events, VCO.DomMixins],
-	
+
 	_el: {},
-	
+
 	/*	Constructor
 	================================================== */
 	initialize: function(data, options, add_to_container) {
@@ -4802,7 +4802,7 @@ VCO.Message = VCO.Class.extend({
 			loading_icon: {},
 			message: {}
 		};
-	
+
 		//Options
 		this.options = {
 			width: 					600,
@@ -4810,40 +4810,40 @@ VCO.Message = VCO.Class.extend({
 			message_class: 			"vco-message",
 			message_icon_class: 	"vco-loading-icon"
 		};
-		
+
 		// Merge Data and Options
 		VCO.Util.mergeData(this.data, data);
 		VCO.Util.mergeData(this.options, options);
-		
+
 		this._el.container = VCO.Dom.create("div", this.options.message_class);
-		
+
 		if (add_to_container) {
 			add_to_container.appendChild(this._el.container);
 			this._el.parent = add_to_container;
 		};
-		
-		
+
+
 		// Animation
 		this.animator = {};
-		
-		
+
+
 		this._initLayout();
 		this._initEvents();
 	},
-	
+
 	/*	Public
 	================================================== */
 	updateMessage: function(t) {
 		this._updateMessage(t);
 	},
-	
-	
+
+
 	/*	Update Display
 	================================================== */
 	updateDisplay: function(w, h) {
 		this._updateDisplay(w, h);
 	},
-	
+
 	_updateMessage: function(t) {
 		if (!t) {
 			if (VCO.Language) {
@@ -4855,39 +4855,39 @@ VCO.Message = VCO.Class.extend({
 			this._el.message.innerHTML = t;
 		}
 	},
-	
+
 
 	/*	Events
 	================================================== */
 
-	
+
 	_onMouseClick: function() {
 		this.fire("clicked", this.options);
 	},
 
-	
+
 	/*	Private Methods
 	================================================== */
 	_initLayout: function () {
-		
+
 		// Create Layout
 		this._el.message_container = VCO.Dom.create("div", "vco-message-container", this._el.container);
 		this._el.loading_icon = VCO.Dom.create("div", this.options.message_icon_class, this._el.message_container);
 		this._el.message = VCO.Dom.create("div", "vco-message-content", this._el.message_container);
-		
+
 		this._updateMessage();
-		
+
 	},
-	
+
 	_initEvents: function () {
 		VCO.DomEvent.addListener(this._el.container, 'click', this._onMouseClick, this);
 	},
-	
+
 	// Update Display
 	_updateDisplay: function(width, height, animate) {
-		
+
 	}
-	
+
 });
 
 /*	VCO.MediaType
@@ -5018,7 +5018,7 @@ VCO.MediaType = function(m) {
 				cls: 		VCO.Media
 			}
 		];
-	
+
 	for (var i = 0; i < media_types.length; i++) {
 		if (m instanceof Array) {
 			return media = {
@@ -5032,9 +5032,9 @@ VCO.MediaType = function(m) {
 			break;
 		}
 	};
-	
+
 	return false;
-	
+
 }
 
 
@@ -5045,11 +5045,11 @@ VCO.MediaType = function(m) {
 // TODO add link
 
 VCO.Media = VCO.Class.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	_el: {},
-	
+
 	/*	Constructor
 	================================================== */
 	initialize: function(data, options, add_to_container) {
@@ -5065,27 +5065,27 @@ VCO.Media = VCO.Class.extend({
 			parent: {},
 			link: null
 		};
-		
+
 		// Player (If Needed)
 		this.player = null;
-		
+
 		// Timer (If Needed)
 		this.timer = null;
 		this.load_timer = null;
-		
+
 		// Message
 		this.message = null;
-		
+
 		// Media ID
 		this.media_id = null;
-		
+
 		// State
 		this._state = {
 			loaded: false,
 			show_meta: false,
 			media_loaded: false
 		};
-	
+
 		// Data
 		this.data = {
 			uniqueid: 			null,
@@ -5095,39 +5095,39 @@ VCO.Media = VCO.Class.extend({
 			link: 				null,
 			link_target: 		null
 		};
-	
+
 		//Options
 		this.options = {
 			api_key_flickr: 		"f2cc870b4d233dd0a5bfe73fd0d64ef0",
 			credit_height: 			0,
 			caption_height: 		0
 		};
-	
+
 		this.animator = {};
-		
+
 		// Merge Data and Options
 		VCO.Util.mergeData(this.options, options);
 		VCO.Util.mergeData(this.data, data);
-		
+
 		this._el.container = VCO.Dom.create("div", "vco-media");
-		
+
 		if (this.data.uniqueid) {
 			this._el.container.id = this.data.uniqueid;
 		}
-		
-		
+
+
 		this._initLayout();
-		
+
 		if (add_to_container) {
 			add_to_container.appendChild(this._el.container);
 			this._el.parent = add_to_container;
 		};
-		
+
 	},
-	
+
 	loadMedia: function() {
 		var self = this;
-		
+
 		if (!this._state.loaded) {
 			try {
 				this.load_timer = setTimeout(function() {
@@ -5139,23 +5139,23 @@ VCO.Media = VCO.Class.extend({
 				trace("Error loading media for ", this._media);
 				trace(e);
 			}
-			
+
 			//this._state.loaded = true;
 		}
 	},
-	
+
 	loadingMessage: function() {
 		this.message.updateMessage(this._('loading') + " " + this.options.media_name);
 	},
-	
+
 	updateMediaDisplay: function(layout) {
 		if (this._state.loaded) {
 			this._updateMediaDisplay(layout);
-			
+
 			if (!VCO.Browser.mobile && layout != "portrait") {
 				this._el.content_item.style.maxHeight = (this.options.height/2) + "px";
 			}
-			
+
 			if (this._state.media_loaded) {
 				if (this._el.credit) {
 					this._el.credit.style.width		= "auto";
@@ -5164,15 +5164,15 @@ VCO.Media = VCO.Class.extend({
 					this._el.caption.style.width	= "auto";
 				}
 			}
-			
+
 			// Fix for max-width issues in Firefox
 			if (VCO.Browser.firefox) {
 				if (this._el.content_item.offsetWidth > this._el.content_item.offsetHeight) {
 					this._el.content_item.style.width = "100%";
 					this._el.content_item.style.maxWidth = "100%";
-					
+
 				}
-				
+
 				if (layout == "portrait") {
 					this._el.content_item.style.maxHeight = "none"; 
 				}
@@ -5185,55 +5185,55 @@ VCO.Media = VCO.Class.extend({
 					this._el.caption.style.width	= this._el.content_item.offsetWidth + "px";
 				}
 			}
-			
-			
+
+
 		}
 	},
-	
+
 	/*	Media Specific
 	================================================== */
-		_loadMedia: function() {
-		
-		},
-		
-		_updateMediaDisplay: function(l) {
-			//this._el.content_item.style.maxHeight = (this.options.height - this.options.credit_height - this.options.caption_height - 16) + "px";
-		},
-	
+	_loadMedia: function() {
+
+	},
+
+	_updateMediaDisplay: function(l) {
+		//this._el.content_item.style.maxHeight = (this.options.height - this.options.credit_height - this.options.caption_height - 16) + "px";
+	},
+
 	/*	Public
 	================================================== */
 	show: function() {
-		
+
 	},
-	
+
 	hide: function() {
-		
+
 	},
-	
+
 	addTo: function(container) {
 		container.appendChild(this._el.container);
 		this.onAdd();
 	},
-	
+
 	removeFrom: function(container) {
 		container.removeChild(this._el.container);
 		this.onRemove();
 	},
-	
+
 	// Update Display
 	updateDisplay: function(w, h, l) {
 		this._updateDisplay(w, h, l);
 	},
-	
+
 	stopMedia: function() {
 		this._stopMedia();
 	},
-	
+
 	loadErrorDisplay: function(message) {
 		this._el.content.removeChild(this._el.content_item);
 		this._el.content_item	= VCO.Dom.create("div", "vco-media-item vco-media-loaderror", this._el.content);
 		this._el.content_item.innerHTML = "<div class='vco-icon-" + this.options.media_type + "'></div><p>" + message + "</p>";
-		
+
 		// After Loaded
 		this.onLoaded(true);
 	},
@@ -5251,7 +5251,7 @@ VCO.Media = VCO.Class.extend({
 		}
 		this.updateDisplay();
 	},
-	
+
 	onMediaLoaded: function(e) {
 		this._state.media_loaded = true;
 		this.fire("media_loaded", this.data);
@@ -5262,7 +5262,7 @@ VCO.Media = VCO.Class.extend({
 			this._el.caption.style.width		= this._el.content_item.offsetWidth + "px";
 		}
 	},
-	
+
 	showMeta: function(credit, caption) {
 		this._state.show_meta = true;
 		// Credit
@@ -5271,7 +5271,7 @@ VCO.Media = VCO.Class.extend({
 			this._el.credit.innerHTML		= this.data.credit;
 			this.options.credit_height 		= this._el.credit.offsetHeight;
 		}
-		
+
 		// Caption
 		if (this.data.caption && this.data.caption != "" && !this._el.caption) {
 			this._el.caption				= VCO.Dom.create("div", "vco-caption", this._el.content_container);
@@ -5279,7 +5279,7 @@ VCO.Media = VCO.Class.extend({
 			this.options.caption_height 	= this._el.caption.offsetHeight;
 		}
 	},
-	
+
 	onAdd: function() {
 		this.fire("added", this.data);
 	},
@@ -5287,21 +5287,21 @@ VCO.Media = VCO.Class.extend({
 	onRemove: function() {
 		this.fire("removed", this.data);
 	},
-	
+
 	/*	Private Methods
 	================================================== */
 	_initLayout: function () {
-		
+
 		// Message
 		this.message = new VCO.Message({}, this.options);
 		this.message.addTo(this._el.container);
-		
+
 		// Create Layout
 		this._el.content_container = VCO.Dom.create("div", "vco-media-content-container", this._el.container);
-		
+
 		// Link
 		if (this.data.link && this.data.link != "") {
-			
+
 			this._el.link = VCO.Dom.create("a", "vco-media-link", this._el.content_container);
 			this._el.link.href = this.data.link;
 			if (this.data.link_target && this.data.link_target != "") {
@@ -5309,16 +5309,16 @@ VCO.Media = VCO.Class.extend({
 			} else {
 				this._el.link.target = "_blank";
 			}
-			
+
 			this._el.content = VCO.Dom.create("div", "vco-media-content", this._el.link);
-			
+
 		} else {
 			this._el.content = VCO.Dom.create("div", "vco-media-content", this._el.content_container);
 		}
-		
-		
+
+
 	},
-	
+
 	// Update Display
 	_updateDisplay: function(w, h, l) {
 		if (w) {
@@ -5327,64 +5327,64 @@ VCO.Media = VCO.Class.extend({
 		if (h) {
 			this.options.height = h;
 		}
-		
+
 		if (l) {
 			this.options.layout = l;
 		} 
-		
+
 		if (this._el.credit) {
 			this.options.credit_height 		= this._el.credit.offsetHeight;
 		}
 		if (this._el.caption) {
 			this.options.caption_height 	= this._el.caption.offsetHeight + 5;
 		}
-		
+
 		this.updateMediaDisplay(this.options.layout);
-		
+
 	},
-	
+
 	_stopMedia: function() {
-		
+
 	}
-	
+
 });
 
 /*	VCO.Media.Blockquote
 ================================================== */
 
 VCO.Media.Blockquote = VCO.Media.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	/*	Load the media
 	================================================== */
 	_loadMedia: function() {
-		
+
 		// Loading Message
 		this.message.updateMessage(VCO.Language.messages.loading + " " + this.options.media_name);
-		
+
 		// Create Dom element
 		this._el.content_item	= VCO.Dom.create("div", "vco-media-item vco-media-blockquote", this._el.content);
-		
+
 		// Get Media ID
 		this.media_id = this.data.url;
-		
+
 		// API Call
 		this._el.content_item.innerHTML = this.media_id;
-		
+
 		// After Loaded
 		this.onLoaded();
 	},
-	
+
 	updateMediaDisplay: function() {
-		
+
 	},
-	
+
 	_updateMediaDisplay: function() {
-		
+
 	}
 
-	
+
 });
 
 
@@ -5393,32 +5393,32 @@ VCO.Media.Blockquote = VCO.Media.extend({
 ================================================== */
 
 VCO.Media.Flickr = VCO.Media.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	/*	Load the media
 	================================================== */
 	_loadMedia: function() {
 		var api_url,
 			self = this;
-		
+
 		// Loading Message
 		this.message.updateMessage(VCO.Language.messages.loading + " " + this.options.media_name);
-		
+
 		// Create Dom element
 		this._el.content_item	= VCO.Dom.create("img", "vco-media-item vco-media-image vco-media-flickr vco-media-shadow", this._el.content);
-		
+
 		// Media Loaded Event
 		this._el.content_item.addEventListener('load', function(e) {
 			self.onMediaLoaded();
 		});
-		
+
 		// Get Media ID
 		this.establishMediaID();
-		
+
 		// API URL
 		api_url = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + this.options.api_key_flickr + "&photo_id=" + this.media_id + "&format=json&jsoncallback=?";
-		
+
 		// API Call
 		VCO.getJSON(api_url, function(d) {
 			if (d.stat == "ok") {
@@ -5427,7 +5427,7 @@ VCO.Media.Flickr = VCO.Media.extend({
 				self.loadErrorDisplay("Photo not found or private.");
 			}
 		});
-		
+
 	},
 
 	establishMediaID: function() {
@@ -5437,27 +5437,27 @@ VCO.Media.Flickr = VCO.Media.extend({
 		var pos = idx + marker.length;
 		this.media_id = this.data.url.substr(pos).split("/")[1];
 	},
-	
+
 	createMedia: function(d) {
 		var best_size 	= this.sizes(this.options.height),
 			size 		= d.sizes.size[d.sizes.size.length - 2].source;
-		
+
 		for(var i = 0; i < d.sizes.size.length; i++) {
 			if (d.sizes.size[i].label == best_size) {
 				size = d.sizes.size[i].source;
 			}
 		}
-		
+
 		// Set Image Source
 		this._el.content_item.src			= size;
-		
+
 		// After Loaded
 		this.onLoaded();
 	},
-	
+
 	sizes: function(s) {
 		var _size = "";
-		
+
 		if (s <= 75) {
 			if (s <= 0) {
 				_size = "Large";
@@ -5477,12 +5477,12 @@ VCO.Media.Flickr = VCO.Media.extend({
 		} else {
 			_size = "Large";
 		}
-		
+
 		return _size;
 	}
-	
-	
-	
+
+
+
 });
 
 
@@ -5491,41 +5491,41 @@ VCO.Media.Flickr = VCO.Media.extend({
 ================================================== */
 
 VCO.Media.Instagram = VCO.Media.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	/*	Load the media
 	================================================== */
 	_loadMedia: function() {
 		var api_url,
 			self = this;
-		
+
 		// Loading Message
 		this.message.updateMessage(VCO.Language.messages.loading + " " + this.options.media_name);
-		
+
 		// Get Media ID
 		this.media_id = this.data.url.split("\/p\/")[1].split("/")[0];
-		
+
 		// Link
 		this._el.content_link 				= VCO.Dom.create("a", "", this._el.content);
 		this._el.content_link.href 			= this.data.url;
 		this._el.content_link.target 		= "_blank";
-		
+
 		// Photo
 		this._el.content_item				= VCO.Dom.create("img", "vco-media-item vco-media-image vco-media-instagram vco-media-shadow", this._el.content_link);
-		
+
 		// Media Loaded Event
 		this._el.content_item.addEventListener('load', function(e) {
 			self.onMediaLoaded();
 		});
-		
+
 		// Set source
 		this._el.content_item.src			= "http://instagr.am/p/" + this.media_id + "/media/?size=" + this.sizes(this._el.content.offsetWidth);
-		
+
 		this.onLoaded();
-		
+
 	},
-	
+
 	sizes: function(s) {
 		var _size = "";
 		if (s <= 150) {
@@ -5535,12 +5535,12 @@ VCO.Media.Instagram = VCO.Media.extend({
 		} else {
 			_size = "l";
 		}
-		
+
 		return _size;
 	}
-	
-	
-	
+
+
+
 });
 
 
@@ -5549,29 +5549,29 @@ VCO.Media.Instagram = VCO.Media.extend({
 ================================================== */
 
 VCO.Media.Profile = VCO.Media.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	/*	Load the media
 	================================================== */
 	_loadMedia: function() {
 		// Loading Message
 		this.message.updateMessage(VCO.Language.messages.loading + " " + this.options.media_name);
-		
+
 		this._el.content_item				= VCO.Dom.create("img", "vco-media-item vco-media-image vco-media-profile vco-media-shadow", this._el.content);
 		this._el.content_item.src			= this.data.url;
-		
+
 		this.onLoaded();
 	},
-	
+
 	_updateMediaDisplay: function(layout) {
-		
-		
+
+
 		if(VCO.Browser.firefox) {
 			this._el.content_item.style.maxWidth = (this.options.width/2) - 40 + "px";
 		}
 	}
-	
+
 });
 
 /*	VCO.Media.GoogleDoc
@@ -5579,44 +5579,44 @@ VCO.Media.Profile = VCO.Media.extend({
 ================================================== */
 
 VCO.Media.GoogleDoc = VCO.Media.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	/*	Load the media
 	================================================== */
 	_loadMedia: function() {
 		var api_url,
 			self = this;
-		
+
 		// Loading Message
 		this.message.updateMessage(VCO.Language.messages.loading + " " + this.options.media_name);
-		
+
 		// Create Dom element
 		this._el.content_item	= VCO.Dom.create("div", "vco-media-item vco-media-iframe", this._el.content);
-		
+
 		// Get Media ID
 		this.media_id = this.data.url;
-		
+
 		// API URL
 		api_url = this.media_id;
-		
+
 		// API Call
 		if (this.media_id.match(/docs.google.com/i)) {
 			this._el.content_item.innerHTML	=	"<iframe class='doc' frameborder='0' width='100%' height='100%' src='" + this.media_id + "&amp;embedded=true'></iframe>";
 		} else {
 			this._el.content_item.innerHTML	=	"<iframe class='doc' frameborder='0' width='100%' height='100%' src='" + "http://docs.google.com/viewer?url=" + this.media_id + "&amp;embedded=true'></iframe>";
 		}
-		
+
 		// After Loaded
 		this.onLoaded();
 	},
-	
+
 	// Update Media Display
 	_updateMediaDisplay: function() {
 		this._el.content_item.style.height = this.options.height + "px";
 	}
 
-	
+
 });
 
 
@@ -5624,40 +5624,40 @@ VCO.Media.GoogleDoc = VCO.Media.extend({
 ================================================== */
 
 VCO.Media.GooglePlus = VCO.Media.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	/*	Load the media
 	================================================== */
 	_loadMedia: function() {
 		var api_url,
 			self = this;
-		
+
 		// Loading Message
 		this.message.updateMessage(VCO.Language.messages.loading + " " + this.options.media_name);
-		
+
 		// Create Dom element
 		this._el.content_item	= VCO.Dom.create("div", "vco-media-item vco-media-googleplus", this._el.content);
-		
+
 		// Get Media ID
 		this.media_id = this.data.url;
-		
+
 		// API URL
 		api_url = this.media_id;
-		
+
 		// API Call
 		this._el.content_item.innerHTML = "<iframe frameborder='0' width='100%' height='100%' src='" + api_url + "'></iframe>"		
-		
+
 		// After Loaded
 		this.onLoaded();
 	},
-	
+
 	// Update Media Display
 	_updateMediaDisplay: function() {
 		this._el.content_item.style.height = this.options.height + "px";
 	}
 
-	
+
 });
 
 
@@ -5665,39 +5665,39 @@ VCO.Media.GooglePlus = VCO.Media.extend({
 ================================================== */
 
 VCO.Media.IFrame = VCO.Media.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	/*	Load the media
 	================================================== */
 	_loadMedia: function() {
 		var api_url,
 			self = this;
-		
+
 		// Loading Message
 		this.message.updateMessage(VCO.Language.messages.loading + " " + this.options.media_name);
-		
+
 		// Create Dom element
 		this._el.content_item	= VCO.Dom.create("div", "vco-media-item vco-media-iframe", this._el.content);
-		
+
 		// Get Media ID
 		this.media_id = this.data.url;
-		
+
 		// API URL
 		api_url = this.media_id;
-		
+
 		// API Call
 		this._el.content_item.innerHTML = api_url;
-		
+
 		// After Loaded
 		this.onLoaded();
 	},
-	
+
 	// Update Media Display
 	_updateMediaDisplay: function() {
 		this._el.content_item.style.height = this.options.height + "px";
 	}
-	
+
 });
 
 
@@ -5707,16 +5707,16 @@ VCO.Media.IFrame = VCO.Media.extend({
 ================================================== */
 
 VCO.Media.Image = VCO.Media.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	/*	Load the media
 	================================================== */
 	_loadMedia: function() {
 		var self = this;
 		// Loading Message
 		this.message.updateMessage(VCO.Language.messages.loading + " " + this.options.media_name);
-		
+
 		// Link
 		if (this.data.link) {
 			this._el.content_link 				= VCO.Dom.create("a", "", this._el.content);
@@ -5726,67 +5726,67 @@ VCO.Media.Image = VCO.Media.extend({
 		} else {
 			this._el.content_item				= VCO.Dom.create("img", "vco-media-item vco-media-image vco-media-shadow", this._el.content);
 		}
-		
+
 		// Media Loaded Event
 		this._el.content_item.addEventListener('load', function(e) {
 			self.onMediaLoaded();
 		});
-		
+
 		this._el.content_item.src			= this.data.url;
-		
+
 		this.onLoaded();
 	},
-	
+
 	_updateMediaDisplay: function(layout) {
-		
-		
+
+
 		if(VCO.Browser.firefox) { 
 			//this._el.content_item.style.maxWidth = (this.options.width/2) - 40 + "px";
 			this._el.content_item.style.width = "auto";
 		}
 	}
-	
+
 });
 
 /*	VCO.Media.SoundCloud
 ================================================== */
 
 VCO.Media.SoundCloud = VCO.Media.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	/*	Load the media
 	================================================== */
 	_loadMedia: function() {
 		var api_url,
 			self = this;
-		
+
 		// Loading Message
 		this.message.updateMessage(VCO.Language.messages.loading + " " + this.options.media_name);
-		
+
 		// Create Dom element
 		this._el.content_item	= VCO.Dom.create("div", "vco-media-item vco-media-iframe vco-media-soundcloud vco-media-shadow", this._el.content);
-		
+
 		// Get Media ID
 		this.media_id = this.data.url;
-		
+
 		// API URL
 		api_url = "http://soundcloud.com/oembed?url=" + this.media_id + "&format=js&callback=?"
-		
+
 		// API Call
 		VCO.getJSON(api_url, function(d) {
 			self.createMedia(d);
 		});
-		
+
 	},
-	
+
 	createMedia: function(d) {
 		this._el.content_item.innerHTML = d.html;
-		
+
 		// After Loaded
 		this.onLoaded();
 	}
-	
+
 });
 
 
@@ -5794,47 +5794,47 @@ VCO.Media.SoundCloud = VCO.Media.extend({
 ================================================== */
 
 VCO.Media.Storify = VCO.Media.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	/*	Load the media
 	================================================== */
 	_loadMedia: function() {
 		var content;
-		
+
 		// Loading Message
 		this.message.updateMessage(VCO.Language.messages.loading + " " + this.options.media_name);
-		
+
 		// Create Dom element
 		this._el.content_item	= VCO.Dom.create("div", "vco-media-item vco-media-iframe vco-media-storify", this._el.content);
-		
+
 		// Get Media ID
 		this.media_id = this.data.url;
-		
+
 		// Content
 		content =	"<iframe frameborder='0' width='100%' height='100%' src='" + this.media_id + "/embed'></iframe>";
 		content +=	"<script src='" + this.media_id + ".js'></script>";
-		
+
 		// API Call
 		this._el.content_item.innerHTML = content;
-		
+
 		// After Loaded
 		this.onLoaded();
 	},
-	
+
 	// Update Media Display
 	_updateMediaDisplay: function() {
 		this._el.content_item.style.height = this.options.height + "px";
 	}
-	
-	
+
+
 });
 
 
 VCO.Media.Text = VCO.Class.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	// DOM ELEMENTS
 	_el: {
 		container: {},
@@ -5844,72 +5844,72 @@ VCO.Media.Text = VCO.Class.extend({
 		date: {},
 		start_btn: {}
 	},
-	
+
 	// Data
 	data: {
 		uniqueid: 			"",
 		headline: 			"headline",
 		text: 				"text"
 	},
-	
+
 	// Options
 	options: {
 		title: 			false
 	},
-	
+
 	/*	Constructor
 	================================================== */
 	initialize: function(data, options, add_to_container) {
-		
+
 		VCO.Util.setData(this, data);
-		
+
 		// Merge Options
 		VCO.Util.mergeData(this.options, options);
-		
+
 		this._el.container = VCO.Dom.create("div", "vco-text");
 		this._el.container.id = this.data.uniqueid;
-		
+
 		this._initLayout();
-		
+
 		if (add_to_container) {
 			add_to_container.appendChild(this._el.container);
 		};
-		
+
 	},
-	
+
 	/*	Adding, Hiding, Showing etc
 	================================================== */
 	show: function() {
-		
+
 	},
-	
+
 	hide: function() {
-		
+
 	},
-	
+
 	addTo: function(container) {
 		container.appendChild(this._el.container);
 		//this.onAdd();
 	},
-	
+
 	removeFrom: function(container) {
 		container.removeChild(this._el.container);
 	},
-	
+
 	headlineHeight: function() {
 		return this._el.headline.offsetHeight + 40;
 	},
-	
+
 	addDateText: function(str) {
 		this._el.date.innerHTML = str;
 	},
-	
+
 	/*	Events
 	================================================== */
 	onLoaded: function() {
 		this.fire("loaded", this.data);
 	},
-	
+
 	onAdd: function() {
 		this.fire("added", this.data);
 	},
@@ -5917,17 +5917,17 @@ VCO.Media.Text = VCO.Class.extend({
 	onRemove: function() {
 		this.fire("removed", this.data);
 	},
-	
+
 	/*	Private Methods
 	================================================== */
 	_initLayout: function () {
-		
+
 		// Create Layout
 		this._el.content_container			= VCO.Dom.create("div", "vco-text-content-container", this._el.container);
-		
+
 		// Date
 		this._el.date 				= VCO.Dom.create("h3", "vco-headline-date", this._el.content_container);
-		
+
 		// Headline
 		if (this.data.headline != "") {
 			var headline_class = "vco-headline";
@@ -5937,39 +5937,39 @@ VCO.Media.Text = VCO.Class.extend({
 			this._el.headline				= VCO.Dom.create("h2", headline_class, this._el.content_container);
 			this._el.headline.innerHTML		= this.data.headline;
 		}
-		
+
 		// Text
 		if (this.data.text != "") {
 			var text_content = "";
-			
+
 			text_content 					+= VCO.Util.htmlify(this.data.text);
-			
+
 			// Date
 			if (this.data.date && this.data.date.created_time && this.data.date.created_time != "") {
 				if (this.data.date.created_time.length > 10) {
 					if (typeof(moment) !== 'undefined') {
 						text_content 	+= "<div class='vco-text-date'>" + moment(this.data.date.created_time, 'YYYY-MM-DD h:mm:ss').fromNow() + "</div>";
-					
+
 					} else {
 						text_content 	+= "<div class='vco-text-date'>" + VCO.Util.convertUnixTime(this.data.date.created_time) + "</div>";
 					}
 				}
 			}
-			
-			
+
+
 			this._el.content				= VCO.Dom.create("div", "vco-text-content", this._el.content_container);
 			this._el.content.innerHTML		= text_content;
-			
+
 		}
-		
-		
+
+
 		// Fire event that the slide is loaded
 		this.onLoaded();
-		
-		
-		
+
+
+
 	}
-	
+
 });
 
 /*	VCO.Media.Twitter
@@ -5977,21 +5977,21 @@ VCO.Media.Text = VCO.Class.extend({
 ================================================== */
 
 VCO.Media.Twitter = VCO.Media.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	/*	Load the media
 	================================================== */
 	_loadMedia: function() {
 		var api_url,
 			self = this;
-			
+
 		// Loading Message
 		this.message.updateMessage(VCO.Language.messages.loading + " " + this.options.media_name);
-		
+
 		// Create Dom element
 		this._el.content_item = VCO.Dom.create("div", "vco-media-twitter", this._el.content);
-		
+
 		// Get Media ID
 		if (this.data.url.match("status\/")) {
 			this.media_id = this.data.url.split("status\/")[1];
@@ -6000,10 +6000,10 @@ VCO.Media.Twitter = VCO.Media.extend({
 		} else {
 			this.media_id = "";
 		}
-		
+
 		// API URL
 		api_url = "https://api.twitter.com/1/statuses/oembed.json?id=" + this.media_id + "&omit_script=true&include_entities=true&callback=?";
-		
+
 		// API Call
 		VCO.ajax({
 			type: 'GET',
@@ -6018,9 +6018,9 @@ VCO.Media.Twitter = VCO.Media.extend({
 				self.loadErrorDisplay(error_text);
 			}
 		});
-		 
+
 	},
-	
+
 	createMedia: function(d) {	
 		trace("create_media")	
 		var tweet				= "",
@@ -6029,17 +6029,17 @@ VCO.Media.Twitter = VCO.Media.extend({
 			tweet_status_temp 	= "",
 			tweet_status_url 	= "",
 			tweet_status_date 	= "";
-			
+
 		//	TWEET CONTENT
 		tweet_text 			= d.html.split("<\/p>\&mdash;")[0] + "</p></blockquote>";
 		tweetuser			= d.author_url.split("twitter.com\/")[1];
 		tweet_status_temp 	= d.html.split("<\/p>\&mdash;")[1].split("<a href=\"")[1];
 		tweet_status_url 	= tweet_status_temp.split("\"\>")[0];
 		tweet_status_date 	= tweet_status_temp.split("\"\>")[1].split("<\/a>")[0];
-		
+
 		// 	TWEET CONTENT
 		tweet += tweet_text;
-		
+
 		//	TWEET AUTHOR
 		tweet += "<div class='vcard'>";
 		tweet += "<a href='" + tweet_status_url + "' class='twitter-date' target='_blank'>" + tweet_status_date + "</a>";
@@ -6051,26 +6051,26 @@ VCO.Media.Twitter = VCO.Media.extend({
 		tweet += "</a>";
 		tweet += "</div>";
 		tweet += "</div>";
-		
-		
+
+
 		// Add to DOM
 		this._el.content_item.innerHTML	= tweet;
-		
+
 		// After Loaded
 		this.onLoaded();
-			
+
 	},
-	
+
 	updateMediaDisplay: function() {
-		
+
 	},
-	
+
 	_updateMediaDisplay: function() {
-		
+
 	}
-	
-	
-	
+
+
+
 });
 
 
@@ -6078,54 +6078,54 @@ VCO.Media.Twitter = VCO.Media.extend({
 ================================================== */
 
 VCO.Media.Vimeo = VCO.Media.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	/*	Load the media
 	================================================== */
 	_loadMedia: function() {
 		var api_url,
 			self = this;
-		
+
 		// Loading Message
 		this.message.updateMessage(VCO.Language.messages.loading + " " + this.options.media_name);
-		
+
 		// Create Dom element
 		this._el.content_item	= VCO.Dom.create("div", "vco-media-item vco-media-iframe vco-media-vimeo vco-media-shadow", this._el.content);
-		
+
 		// Get Media ID
 		this.media_id = this.data.url.split(/video\/|\/\/vimeo\.com\//)[1].split(/[?&]/)[0];
-		
+
 		// API URL
 		api_url = "http://player.vimeo.com/video/" + this.media_id + "?api=1&title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff";
-		
+
 		this.player = VCO.Dom.create("iframe", "", this._el.content_item);
 		this.player.width 		= "100%";
 		this.player.height 		= "100%";
 		this.player.frameBorder = "0";
 		this.player.src 		= api_url;
-		
+
 		// After Loaded
 		this.onLoaded();
 	},
-	
+
 	// Update Media Display
 	_updateMediaDisplay: function() {
 		this._el.content_item.style.height = VCO.Util.ratio.r16_9({w:this._el.content_item.offsetWidth}) + "px";
-		
+
 	},
-	
+
 	_stopMedia: function() {
-		
+
 		try {
 			this.player.contentWindow.postMessage(JSON.stringify({method: "pause"}), "http://player.vimeo.com");
 		}
 		catch(err) {
 			trace(err);
 		}
-		
+
 	}
-	
+
 });
 
 
@@ -6133,43 +6133,43 @@ VCO.Media.Vimeo = VCO.Media.extend({
 ================================================== */
 
 VCO.Media.DailyMotion = VCO.Media.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	/*	Load the media
 	================================================== */
 	_loadMedia: function() {
 		var api_url,
 			self = this;
-		
+
 		// Loading Message
 		this.message.updateMessage(VCO.Language.messages.loading + " " + this.options.media_name);
-		
+
 		// Create Dom element
 		this._el.content_item	= VCO.Dom.create("div", "vco-media-item vco-media-iframe vco-media-dailymotion", this._el.content);
-		
+
 		// Get Media ID
 		if (this.data.url.match("video")) {
 			this.media_id = this.data.url.split("video\/")[1].split(/[?&]/)[0];
 		} else {
 			this.media_id = this.data.url.split("embed\/")[1].split(/[?&]/)[0];
 		}
-		
+
 		// API URL
 		api_url = "http://www.dailymotion.com/embed/video/" + this.media_id;
-		
+
 		// API Call
 		this._el.content_item.innerHTML = "<iframe autostart='false' frameborder='0' width='100%' height='100%' src='" + api_url + "'></iframe>"		
-		
+
 		// After Loaded
 		this.onLoaded();
 	},
-	
+
 	// Update Media Display
 	_updateMediaDisplay: function() {
 		this._el.content_item.style.height = VCO.Util.ratio.r16_9({w:this._el.content_item.offsetWidth}) + "px";
 	}
-	
+
 });
 
 
@@ -6178,40 +6178,40 @@ VCO.Media.DailyMotion = VCO.Media.extend({
 ================================================== */
 
 VCO.Media.Vine = VCO.Media.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	/*	Load the media
 	================================================== */
 	_loadMedia: function() {
 		var api_url,
 			self = this;
-		
+
 		// Loading Message
 		this.message.updateMessage(VCO.Language.messages.loading + " " + this.options.media_name);
-		
+
 		// Create Dom element
 		this._el.content_item	= VCO.Dom.create("div", "vco-media-item vco-media-iframe vco-media-vine vco-media-shadow", this._el.content);
-		
+
 		// Get Media ID
 		this.media_id = this.data.url.split("vine.co/v/")[1];
-		
+
 		// API URL
 		api_url = "https://vine.co/v/" + this.media_id + "/embed/simple";
-		
+
 		// API Call
 		this._el.content_item.innerHTML = "<iframe frameborder='0' width='100%' height='100%' src='" + api_url + "'></iframe><script async src='http://platform.vine.co/static/scripts/embed.js' charset='utf-8'></script>"		
-		
+
 		// After Loaded
 		this.onLoaded();
 	},
-	
+
 	// Update Media Display
 	_updateMediaDisplay: function() {
 		var size = VCO.Util.ratio.square({w:this._el.content_item.offsetWidth , h:this.options.height});
 		this._el.content_item.style.height = size.h + "px";
 	}
-	
+
 });
 
 
@@ -6219,26 +6219,26 @@ VCO.Media.Vine = VCO.Media.extend({
 ================================================== */
 
 VCO.Media.Website = VCO.Media.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	/*	Load the media
 	================================================== */
 	_loadMedia: function() {
-		
-		
+
+
 	},
-	
+
 	createMedia: function(d) {		
 
-		
+
 		// After Loaded
 		this.onLoaded();
-			
+
 	}
-	
-	
-	
+
+
+
 });
 
 
@@ -6246,37 +6246,37 @@ VCO.Media.Website = VCO.Media.extend({
 ================================================== */
 
 VCO.Media.Wikipedia = VCO.Media.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	/*	Load the media
 	================================================== */
 	_loadMedia: function() {
 		var api_url,
 			api_language,
 			self = this;
-		
+
 		// Loading Message
 		this.message.updateMessage(VCO.Language.messages.loading + " " + this.options.media_name);
-		
+
 		// Create Dom element
 		this._el.content_item	= VCO.Dom.create("div", "vco-media-item vco-media-wikipedia", this._el.content);
-		
+
 		// Get Media ID
 		this.media_id	 = this.data.url.split("wiki\/")[1].split("#")[0].replace("_", " ");
 		this.media_id	 = this.media_id.replace(" ", "%20");
 		api_language	 = this.data.url.split("//")[1].split(".wikipedia")[0];
-		
+
 		// API URL
 		api_url = "http://" + api_language + ".wikipedia.org/w/api.php?action=query&prop=extracts&redirects=&titles=" + this.media_id + "&exintro=1&format=json&callback=?";
-		
+
 		// API Call
-		
+
 		VCO.ajax({
 			type: 'GET',
 			url: api_url,
 			dataType: 'json', //json data type
-			
+
 			success: function(d){
 				self.createMedia(d);
 			},
@@ -6286,12 +6286,12 @@ VCO.Media.Wikipedia = VCO.Media.extend({
 				self.loadErrorDisplay(error_text);
 			}
 		});
-		
+
 	},
-	
+
 	createMedia: function(d) {
 		var wiki = "";
-		
+
 		if (d.query) {
 			var content,
 				wiki = {
@@ -6302,49 +6302,49 @@ VCO.Media.Wikipedia = VCO.Media.extend({
 					paragraphs: 1,
 					text_array: []
 				};
-			
+
 			wiki.entry		 = VCO.Util.getObjectAttributeByIndex(d.query.pages, 0);
 			wiki.extract	 = wiki.entry.extract;
 			wiki.title		 = wiki.entry.title;
-			
+
 			if (wiki.extract.match("<p>")) {
 				wiki.text_array = wiki.extract.split("<p>");
 			} else {
 				wiki.text_array.push(wiki.extract);
 			}
-			
+
 			for(var i = 0; i < wiki.text_array.length; i++) {
 				if (i+1 <= wiki.paragraphs && i+1 < wiki.text_array.length) {
 					wiki.text	+= "<p>" + wiki.text_array[i+1];
 				}
 			}
-			
+
 			content		=	"<h4><a href='" + this.data.url + "' target='_blank'>" + wiki.title + "</a></h4>";
 			content		+=	"<span class='wiki-source'>" + VCO.Language.messages.wikipedia + "</span>";
 			content		+=	wiki.text;
-			
+
 			if (wiki.extract.match("REDIRECT")) {
-			
+
 			} else {
 				// Add to DOM
 				this._el.content_item.innerHTML	= content;
 				// After Loaded
 				this.onLoaded();
 			}
-			
-			
+
+
 		}
-			
+
 	},
-	
+
 	updateMediaDisplay: function() {
-		
+
 	},
-	
+
 	_updateMediaDisplay: function() {
-		
+
 	}
-	
+
 });
 
 
@@ -6352,30 +6352,30 @@ VCO.Media.Wikipedia = VCO.Media.extend({
 ================================================== */
 
 VCO.Media.YouTube = VCO.Media.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	/*	Load the media
 	================================================== */
 	_loadMedia: function() {
 		var self = this,
 			url_vars;
-		
+
 		// Loading Message 
 		this.message.updateMessage(VCO.Language.messages.loading + " " + this.options.media_name);
-		
+
 		this.youtube_loaded = false;
-		
+
 		// Create Dom element
 		this._el.content_item	= VCO.Dom.create("div", "vco-media-item vco-media-youtube vco-media-shadow", this._el.content);
 		this._el.content_item.id = VCO.Util.unique_ID(7)
-		
+
 		// URL Vars
 		url_vars = VCO.Util.getUrlVars(this.data.url);
-		
+
 		// Get Media ID
 		this.media_id = {};
-		
+
 		if (this.data.url.match('v=')) {
 			this.media_id.id	= url_vars["v"];
 		} else if (this.data.url.match('\/embed\/')) {
@@ -6385,23 +6385,23 @@ VCO.Media.YouTube = VCO.Media.extend({
 		} else {
 			trace("YOUTUBE IN URL BUT NOT A VALID VIDEO");
 		}
-		
+
 		this.media_id.start		= url_vars["t"];
 		this.media_id.hd		= url_vars["hd"];
-		
-		
+
+
 		// API Call
 		VCO.Load.js('https://www.youtube.com/player_api', function() {
 			self.createMedia();
 		});
-		
+
 	},
-	
+
 	// Update Media Display
 	_updateMediaDisplay: function() {
 		this._el.content_item.style.height = VCO.Util.ratio.r16_9({w:this._el.content_item.offsetWidth}) + "px";
 	},
-	
+
 	_stopMedia: function() {
 		if (this.youtube_loaded) {
 			try {
@@ -6410,20 +6410,20 @@ VCO.Media.YouTube = VCO.Media.extend({
 			catch(err) {
 				trace(err);
 			}
-			
+
 		}
 	},
-	
+
 	createMedia: function() {
 		var self = this;
-		
+
 		// Determine Start of Media
 		if (typeof(this.media_id.start) != 'undefined') {
-			
+
 			var vidstart			= this.media_id.start.toString(),
 				vid_start_minutes	= 0,
 				vid_start_seconds	= 0;
-				
+
 			if (vidstart.match('m')) {
 				vid_start_minutes = parseInt(vidstart.split("m")[0], 10);
 				vid_start_seconds = parseInt(vidstart.split("m")[1].split("s")[0], 10);
@@ -6434,24 +6434,24 @@ VCO.Media.YouTube = VCO.Media.extend({
 		} else {
 			this.media_id.start = 0;
 		}
-		
+
 		// Determine HD
 		if (typeof(this.media_id.hd) != 'undefined') {
 			this.media_id.hd = true;
 		} else {
 			this.media_id.hd = false;
 		}
-		
+
 		this.createPlayer();
-		
-			
+
+
 	},
-	
+
 	createPlayer: function() {
 		var self = this;
-		
+
 		clearTimeout(this.timer);
-		
+
 		if(typeof YT != 'undefined' && typeof YT.Player != 'undefined') {
 			// Create Player
 			this.player = new YT.Player(this._el.content_item.id, {
@@ -6480,26 +6480,26 @@ VCO.Media.YouTube = VCO.Media.extend({
 				self.createPlayer();
 			}, 1000);
 		}
-		
+
 		this.onLoaded();
-		
+
 	},
-	
+
 	/*	Events
 	================================================== */
 	onPlayerReady: function(e) {
-		
+
 		this.youtube_loaded = true;
 		this._el.content_item = document.getElementById(this._el.content_item.id);
 		this.onMediaLoaded();
 		this.onLoaded();
 	},
-	
+
 	onStateChange: function(e) {
-		
+
 	}
 
-	
+
 });
 
 
@@ -6511,19 +6511,19 @@ VCO.Media.YouTube = VCO.Media.extend({
 ================================================== */
 
 VCO.Media.Slider = VCO.Media.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	/*	Load the media
 	================================================== */
 	_loadMedia: function() {
-		
+
 		this._el.content_item				= VCO.Dom.create("img", "vco-media-item vco-media-image", this._el.content);
 		this._el.content_item.src			= this.data.url;
-		
+
 		this.onLoaded();
 	}
-	
+
 });
 
 /*	VCO.Slide
@@ -6532,15 +6532,15 @@ VCO.Media.Slider = VCO.Media.extend({
 ================================================== */
 
 VCO.Slide = VCO.Class.extend({
-	
+
 	includes: [VCO.Events, VCO.DomMixins],
-	
+
 	_el: {},
-	
+
 	/*	Constructor
 	================================================== */
 	initialize: function(data, options, title_slide) {
-		
+
 		// DOM Elements
 		this._el = {
 			container: {},
@@ -6550,17 +6550,17 @@ VCO.Slide = VCO.Class.extend({
 			content: {},
 			call_to_action: null
 		};
-	
+
 		// Components
 		this._media 		= null;
 		this._mediaclass	= {};
 		this._text			= {};
-	
+
 		// State
 		this._state = {
 			loaded: 		false
 		};
-		
+
 		this.has = {
 			headline: 	false,
 			text: 		false,
@@ -6572,11 +6572,11 @@ VCO.Slide = VCO.Class.extend({
 				color_value :""
 			}
 		}
-		
+
 		this.has.title = title_slide;
-		
+
 		this.title = "";
-		
+
 		// Data
 		this.data = {
 			uniqueid: 				null,
@@ -6586,7 +6586,7 @@ VCO.Slide = VCO.Class.extend({
 			text: 					null,
 			media: 					null
 		};
-	
+
 		// Options
 		this.options = {
 			// animation
@@ -6598,23 +6598,23 @@ VCO.Slide = VCO.Class.extend({
 			skinny_size: 		650,
 			media_name: 		""
 		};
-		
+
 		// Actively Displaying
 		this.active = false;
-		
+
 		// Animation Object
 		this.animator = {};
-		
+
 		// Merge Data and Options
 		VCO.Util.mergeData(this.options, options);
 		VCO.Util.mergeData(this.data, data);
-		
+
 		this._initLayout();
 		this._initEvents();
-		
-		
+
+
 	},
-	
+
 	/*	Adding, Hiding, Showing etc
 	================================================== */
 	show: function() {
@@ -6624,14 +6624,14 @@ VCO.Slide = VCO.Class.extend({
 			easing: 	this.options.ease
 		});
 	},
-	
+
 	hide: function() {
-		
+
 	},
-	
+
 	setActive: function(is_active) {
 		this.active = is_active;
-		
+
 		if (this.active) {
 			if (this.data.background) {
 				this.fire("background_change", this.has.background);
@@ -6641,58 +6641,58 @@ VCO.Slide = VCO.Class.extend({
 			this.stopMedia();
 		}
 	},
-	
+
 	addTo: function(container) {
 		container.appendChild(this._el.container);
 		//this.onAdd();
 	},
-	
+
 	removeFrom: function(container) {
 		container.removeChild(this._el.container);
 	},
-	
+
 	updateDisplay: function(w, h, l) {
 		this._updateDisplay(w, h, l);
 	},
-	
+
 	loadMedia: function() {
-		
+
 		if (this._media && !this._state.loaded) {
 			this._media.loadMedia();
 			this._state.loaded = true;
 		}
 	},
-	
+
 	stopMedia: function() {
 		if (this._media && this._state.loaded) {
 			this._media.stopMedia();
 		}
 	},
-	
+
 	getBackground: function() {
 		return this.has.background;
 	},
-	
+
 	scrollToTop: function() {
 		this._el.container.scrollTop = 0;
 	},
-	
+
 	addCallToAction: function(str) {
 		this._el.call_to_action = VCO.Dom.create("div", "vco-slide-calltoaction", this._el.content_container);
 		this._el.call_to_action.innerHTML = "<span class='vco-slide-calltoaction-button-text'>" + str + "</span>";
 		VCO.DomEvent.addListener(this._el.call_to_action, 'click', this._onCallToAction, this);
 	},
-	
+
 	/*	Events
 	================================================== */
 	_onCallToAction: function(e) {
 		this.fire("call_to_action", e);
 	},
-	
+
 	/*	Private Methods
 	================================================== */
 	_initLayout: function () {
-		
+
 		// Create Layout
 		this._el.container 				= VCO.Dom.create("div", "vco-slide");
 		if (this.data.uniqueid) {
@@ -6723,11 +6723,11 @@ VCO.Slide = VCO.Class.extend({
 			if (this.data.background.text_background) {
 				this._el.container.className 				+= ' vco-text-background';
 			}
-			
+
 		} 
-		
-		
-		
+
+
+
 		// Determine Assets for layout and loading
 		if (this.data.media && this.data.media.url && this.data.media.url != "") {
 			this.has.media = true;
@@ -6739,25 +6739,25 @@ VCO.Slide = VCO.Class.extend({
 			this.has.headline = true;
 			this.title = this.data.text.headline;
 		}
-		
+
 		// Create Media
 		if (this.has.media) {
-			
+
 			// Determine the media type
 			this.data.media.mediatype 	= VCO.MediaType(this.data.media);
 			this.options.media_name 	= this.data.media.mediatype.name;
 			this.options.media_type 	= this.data.media.mediatype.type;
-			
+
 			// Create a media object using the matched class name
 			this._media = new this.data.media.mediatype.cls(this.data.media, this.options);
-			
+
 		}
-		
+
 		// Create Text
 		if (this.has.text || this.has.headline) {
 			this._text = new VCO.Media.Text(this.data.text, {title:this.has.title});
 		}
-		
+
 		// Add to DOM
 		if (!this.has.text && !this.has.headline && this.has.media) {
 			this._el.container.className += ' vco-slide-media-only';
@@ -6773,26 +6773,26 @@ VCO.Slide = VCO.Class.extend({
 			this._el.container.className += ' vco-slide-text-only';
 			this._text.addTo(this._el.content);
 		}
-		
+
 		// Fire event that the slide is loaded
 		this.onLoaded();
-		
+
 	},
-	
+
 	_initEvents: function() {
-		
+
 	},
-	
+
 	// Update Display
 	_updateDisplay: function(width, height, layout) {
 		var pad_left, pad_right, new_width;
-		
+
 		if (width) {
 			this.options.width 					= width;
 		} else {
 			this.options.width 					= this._el.container.offsetWidth;
 		}
-		
+
 		if(VCO.Browser.mobile && (this.options.width <= this.options.skinny_size)) {
 			pad_left 	= 0 + "px";
 			pad_right 	= 0 + "px";
@@ -6801,7 +6801,7 @@ VCO.Slide = VCO.Class.extend({
 			pad_left 	= 40 + "px";
 			pad_right	= 75 + "px";
 			new_width	= this.options.width - (75 + 40) + "px";
-		
+
 		} else if (this.options.width <= this.options.skinny_size) {
 			pad_left 	= this.options.slide_padding_lr + "px";
 			pad_right 	= this.options.slide_padding_lr + "px";
@@ -6811,25 +6811,25 @@ VCO.Slide = VCO.Class.extend({
 			pad_right 	= this.options.slide_padding_lr + "px";
 			new_width	= this.options.width - (this.options.slide_padding_lr * 2) + "px";
 		}
-		
+
 		this._el.content.style.paddingLeft 	= pad_left;
 		this._el.content.style.paddingRight = pad_right;
 		this._el.content.style.width		= new_width;
-		
+
 		if (this._el.call_to_action) {
 			this._el.call_to_action.style.paddingLeft 	= pad_left;
 			this._el.call_to_action.style.paddingRight = pad_right;
 			this._el.call_to_action.style.width		= new_width;
 		}
-		
+
 		if (height) {
 			this.options.height = height;
 			//this._el.scroll_container.style.height		= this.options.height + "px";
-			
+
 		} else {
 			this.options.height = this._el.container.offsetHeight;
 		}
-		
+
 		if (this._media) {
 			if (!this.has.text && this.has.headline) {
 				this._media.updateDisplay(this.options.width, (this.options.height - this._text.headlineHeight()), layout);
@@ -6837,9 +6837,9 @@ VCO.Slide = VCO.Class.extend({
 				this._media.updateDisplay(this.options.width, this.options.height, layout);
 			}
 		}
-		
+
 	}
-	
+
 });
 
 
@@ -6849,11 +6849,11 @@ VCO.Slide = VCO.Class.extend({
 // TODO null out data
 
 VCO.SlideNav = VCO.Class.extend({
-	
+
 	includes: [VCO.Events, VCO.DomMixins],
-	
+
 	_el: {},
-	
+
 	/*	Constructor
 	================================================== */
 	initialize: function(data, options, add_to_container) {
@@ -6865,50 +6865,50 @@ VCO.SlideNav = VCO.Class.extend({
 			title: {},
 			description: {}
 		};
-	
+
 		// Media Type
 		this.mediatype = {};
-		
+
 		// Data
 		this.data = {
 			title: "Navigation",
 			description: "Description"
 		};
-	
+
 		//Options
 		this.options = {
 			direction: 			"previous"
 		};
-	
+
 		this.animator = null;
 		this.animator_position = null;
-		
+
 		// Merge Data and Options
 		VCO.Util.mergeData(this.options, options);
 		VCO.Util.mergeData(this.data, data);
-		
-		
+
+
 		this._el.container = VCO.Dom.create("div", "vco-slidenav-" + this.options.direction);
-		
+
 		if (VCO.Browser.mobile) {
 			this._el.container.setAttribute("ontouchstart"," ");
 		}
-		
+
 		this._initLayout();
 		this._initEvents();
-		
+
 		if (add_to_container) {
 			add_to_container.appendChild(this._el.container);
 		};
-		
+
 	},
-	
+
 	/*	Update Content
 	================================================== */
 	update: function(d) {
 		this._update(d);
 	},
-	
+
 	/*	Color
 	================================================== */
 	setColor: function(inverted) {
@@ -6918,7 +6918,7 @@ VCO.SlideNav = VCO.Class.extend({
 			this._el.content_container.className = 'vco-slidenav-content-container';
 		}
 	},
-	
+
 	/*	Position
 	================================================== */
 	updatePosition: function(pos, use_percent, duration, ease, start_value, return_to_default) {
@@ -6931,7 +6931,7 @@ VCO.SlideNav = VCO.Class.extend({
 				}
 			};
 		var _start_value = start_value;
-		
+
 		for (var name in pos) {
 			if (pos.hasOwnProperty(name)) {
 				if (use_percent) {
@@ -6939,14 +6939,14 @@ VCO.SlideNav = VCO.Class.extend({
 				} else {
 					ani[name] = pos[name] + "px";
 				}
-			
+
 			}
 		}
-		
+
 		if (this.animator_position) {
 			this.animator_position.stop();
 		}
-		
+
 		var prop_to_set;
 		if (ani.right) {
 			prop_to_set = "right";
@@ -6958,59 +6958,59 @@ VCO.SlideNav = VCO.Class.extend({
 		} else {
 			this._el.container.style[prop_to_set] = _start_value + "px";
 		}
-		
+
 		this.animator_position = VCO.Animate(this._el.container, ani);
 
 	},
-	
+
 	_onUpdatePositionComplete: function(return_to_default) {
 		if (return_to_default) {
 			this._el.container.style.left = "";
 			this._el.container.style.right = "";
 		}
 	},
-	
+
 	/*	Events
 	================================================== */
 	_onMouseClick: function() {
 		this.fire("clicked", this.options);
 	},
-	
+
 	/*	Private Methods
 	================================================== */
 	_update: function(d) {
 		// update data
 		this.data = VCO.Util.mergeData(this.data, d);
-		
+
 		// Title
 		if (this.data.title != "") {
 			this._el.title.innerHTML		= this.data.title;
 		}
-		
+
 		// Date
 		if (this.data.date != "") {
 			this._el.description.innerHTML	= this.data.description;
 		}
 	},
-	
+
 	_initLayout: function () {
-		
+
 		// Create Layout
 		this._el.content_container			= VCO.Dom.create("div", "vco-slidenav-content-container", this._el.container);
 		this._el.icon						= VCO.Dom.create("div", "vco-slidenav-icon", this._el.content_container);
 		this._el.title						= VCO.Dom.create("div", "vco-slidenav-title", this._el.content_container);
 		this._el.description				= VCO.Dom.create("div", "vco-slidenav-description", this._el.content_container);
-		
+
 		this._el.icon.innerHTML				= "&nbsp;"
-		
+
 		this._update();
 	},
-	
+
 	_initEvents: function () {
 		VCO.DomEvent.addListener(this._el.container, 'click', this._onMouseClick, this);
 	}
-	
-	
+
+
 });
 
 /*	StorySlider
@@ -7025,17 +7025,17 @@ VCO.SlideNav = VCO.Class.extend({
 	slideLoaded
 	slideRemoved
 
-	
+
 ================================================== */
 
 VCO.StorySlider = VCO.Class.extend({
-	
+
 	includes: VCO.Events,
-	
+
 	/*	Private Methods
 	================================================== */
 	initialize: function (elem, data, options, init) {
-		
+
 		// DOM ELEMENTS
 		this._el = {
 			container: {},
@@ -7044,35 +7044,35 @@ VCO.StorySlider = VCO.Class.extend({
 			slider_container: {},
 			slider_item_container: {}
 		};
-		
+
 		this._nav = {};
 		this._nav.previous = {};
 		this._nav.next = {};
-		
+
 		// Slide Spacing
 		this.slide_spacing = 0;
-		
+
 		// Slides Array
 		this._slides = [];
-		
+
 		// Swipe Object
 		this._swipable;
-		
+
 		// Preload Timer
 		this.preloadTimer;
-		
+
 		// Message
 		this._message;
-		
+
 		// Current Slide
 		this.current_slide = 0;
-		
+
 		// Current Background Color
 		this.current_bg_color = null;
-		
+
 		// Data Object
 		this.data = {};
-		
+
 		this.options = {
 			id: 					"",
 			layout: 				"portrait",
@@ -7089,7 +7089,7 @@ VCO.StorySlider = VCO.Class.extend({
 			dragging: 				true,
 			trackResize: 			true
 		};
-		
+
 		// Main element ID
 		if (typeof elem === 'object') {
 			this._el.container = elem;
@@ -7102,49 +7102,49 @@ VCO.StorySlider = VCO.Class.extend({
 		if (!this._el.container.id) {
 			this._el.container.id = this.options.id;
 		}
-		
+
 		// Animation Object
 		this.animator = null;
 		this.animator_background = null;
-		
+
 		// Merge Data and Options
 		VCO.Util.mergeData(this.options, options);
 		VCO.Util.mergeData(this.data, data);
-		
+
 		if (init) {
 			this.init();
 		}
 	},
-	
+
 	init: function() {
 		this._initLayout();
 		this._initEvents();
 		this._initData();
 		this._updateDisplay();
-		
+
 		// Go to initial slide
 		this.goTo(this.options.start_at_slide);
-		
+
 		this._onLoaded();
 		this._introInterface();
 	},
-	
+
 	/*	Public
 	================================================== */
 	updateDisplay: function(w, h, a, l) {
 		this._updateDisplay(w, h, a, l);
 	},
-	
+
 	// Create a slide
 	createSlide: function(d) {
 		this._createSlide(d);
 	},
-	
+
 	// Create Many Slides from an array
 	createSlides: function(array) {
 		this._createSlides(array);
 	},
-	
+
 	/*	Create Slides
 	================================================== */
 	_createSlides: function(array) {
@@ -7157,16 +7157,16 @@ VCO.StorySlider = VCO.Class.extend({
 			} else {
 				this._createSlide(array[i], false);
 			}
-			
+
 		};
 	},
-	
+
 	_createSlide: function(d, title_slide) {
 		var slide = new VCO.Slide(d, this.options, title_slide);
 		this._addSlide(slide);
 		this._slides.push(slide);
 	},
-	
+
 	_destroySlide: function(slide) {
 		this._removeSlide(slide);
 		for (var i = 0; i < this._slides.length; i++) {
@@ -7175,22 +7175,22 @@ VCO.StorySlider = VCO.Class.extend({
 			}
 		}
 	},
-	
+
 	_addSlide:function(slide) {
 		slide.addTo(this._el.slider_item_container);
 		slide.on('added', this._onSlideAdded, this);
 		slide.on('background_change', this._onBackgroundChange, this);
 	},
-	
+
 	_removeSlide: function(slide) {
 		slide.removeFrom(this._el.slider_item_container);
 		slide.off('added', this._onSlideAdded, this);
 		slide.off('background_change', this._onBackgroundChange);
 	},
-	
+
 	/*	Message
 	================================================== */
-	
+
 	/*	Navigation
 	================================================== */
 	goToId: function(n, fast, displayupdate) {
@@ -7200,29 +7200,29 @@ VCO.StorySlider = VCO.Class.extend({
 			_n = n;
 		}
 		this.goTo(_n, fast, displayupdate);
-		
+
 	},
-	
+
 	goTo: function(n, fast, displayupdate) {
 		var self = this;
-		
+
 		this.changeBackground({color_value:"", image:false});
-		
+
 		// Clear Preloader Timer
 		if (this.preloadTimer) {
 			clearTimeout(this.preloadTimer);
 		}
-		
+
 		// Set Slide Active State
 		for (var i = 0; i < this._slides.length; i++) {
 			this._slides[i].setActive(false);
 		}
-		
+
 		if (n < this._slides.length && n >= 0) {
-			
-			
+
+
 			this.current_slide = n;
-			
+
 			// Stop animation
 			if (this.animator) {
 				this.animator.stop();
@@ -7230,7 +7230,7 @@ VCO.StorySlider = VCO.Class.extend({
 			if (this._swipable) {
 				this._swipable.stopMomentum();
 			}
-			
+
 			if (fast) {
 				this._el.slider_container.style.left = -(this.slide_spacing * n) + "px";
 				this._onSlideChange(displayupdate);
@@ -7241,12 +7241,12 @@ VCO.StorySlider = VCO.Class.extend({
 					easing: 	this.options.ease,
 					complete: 	this._onSlideChange(displayupdate)
 				});
-				
+
 			}
-			
+
 			// Set Slide Active State
 			this._slides[this.current_slide].setActive(true);
-			
+
 			// Update Navigation and Info
 			if (this._slides[this.current_slide + 1]) {
 				this.showNav(this._nav.next, true);
@@ -7260,16 +7260,16 @@ VCO.StorySlider = VCO.Class.extend({
 			} else {
 				this.showNav(this._nav.previous, false);
 			}
-			
-			
+
+
 			// Preload Slides
 			this.preloadTimer = setTimeout(function() {
 				self.preloadSlides();
 			}, this.options.duration);
-			
+
 		}
 	},
-	
+
 	preloadSlides: function() {
 		if (this._slides[this.current_slide + 1]) {
 			this._slides[this.current_slide + 1].loadMedia();
@@ -7288,14 +7288,14 @@ VCO.StorySlider = VCO.Class.extend({
 			this._slides[this.current_slide - 2].scrollToTop();
 		}
 	},
-	
-	
+
+
 	getNavInfo: function(slide) {
 		var n = {
 			title: "",
 			description: ""
 		};
-		
+
 		if (slide.data.text) {
 			if (slide.data.text.headline) {
 				n.title = slide.data.text.headline;
@@ -7309,11 +7309,11 @@ VCO.StorySlider = VCO.Class.extend({
 			}
 			*/
 		}
-		
+
 		return n;
-		
+
 	},
-	
+
 	next: function() {
 		if ((this.current_slide +1) < (this._slides.length)) {
 			this.goTo(this.current_slide +1);
@@ -7321,7 +7321,7 @@ VCO.StorySlider = VCO.Class.extend({
 			this.goTo(this.current_slide);
 		}
 	},
-	
+
 	previous: function() {
 		if (this.current_slide -1 >= 0) {
 			this.goTo(this.current_slide -1);
@@ -7329,25 +7329,25 @@ VCO.StorySlider = VCO.Class.extend({
 			this.goTo(this.current_slide);
 		}
 	},
-	
+
 	showNav: function(nav_obj, show) {
-		
+
 		if (this.options.width <= 500 && VCO.Browser.mobile) {
-			
+
 		} else {
 			if (show) {
 				nav_obj.show();
 			} else {
 				nav_obj.hide();
 			}
-			
+
 		}
 	},
-	
+
 	changeBackground: function(bg) {
 		var self = this,
 			do_animation = false;
-		
+
 		var bg_color = {r:256, g:256, b:256},
 			bg_color_rgb,
 			bg_percent_start 	= this.options.slide_default_fade,
@@ -7355,59 +7355,59 @@ VCO.StorySlider = VCO.Class.extend({
 			bg_alpha_end 		= "0.87",
 			bg_css 				= "",
 			bg_old 				= this._el.background.getAttribute('style');
-		
+
 		if (bg.color_value) {
 			bg_color = VCO.Util.hexToRgb(bg.color_value);
 		} else {
 			bg_color = this.options.default_bg_color;
 		}
-		
-		
+
+
 		// Stop animation
 		if (this.animator_background) {
 			this.animator_background.stop();
 		}
-		
+
 		bg_color_rgb 	= bg_color.r + "," + bg_color.g + "," + bg_color.b;
-		
+
 		if (!this.current_bg_color || this.current_bg_color != bg_color_rgb) {
 			this.current_bg_color = bg_color_rgb;
 			do_animation = true;
 		} 
-		
-		
-		
+
+
+
 		if (do_animation) {
 
 			// Figure out CSS
 			if (this.options.layout == "landscape") {
-			
+
 				this._nav.next.setColor(false);
 				this._nav.previous.setColor(false);
-			
+
 				// If background is not white, less fade is better
 				if (bg_color.r < 255 && bg_color.g < 255 && bg_color.b < 255) {
 					bg_percent_start = "15%";
 				}
-			
+
 				if (bg.image) {
 					bg_percent_start = "0%";
-				
+
 				} 
 				bg_css 	+= "opacity:0;"
 				bg_css 	+= "background-image: -webkit-linear-gradient(left, color-stop(rgba(" + bg_color_rgb + ",0.0001 ) " + bg_percent_start + "), color-stop(rgba(" + bg_color_rgb + "," + bg_alpha_end + ") " + bg_percent_end + "));";
 				bg_css 	+= "background-image: linear-gradient(to right, rgba(" + bg_color_rgb + ",0.0001 ) "+ bg_percent_start + ", rgba(" + bg_color_rgb + "," + bg_alpha_end + ") " + bg_percent_end + ");";
 				bg_css 	+= "background-repeat: repeat-x;";
 				bg_css 	+= "filter: e(%('progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)',argb(" + bg_color_rgb + ", 0.0001),argb(" + bg_color_rgb + ",0.80)));";
-			
-			
+
+
 			} else {
 				if (bg.color_value) {
 					bg_css 	+= 'background-color:' + bg.color_value + ";";
 				} else {
 					bg_css 	+= "background-color:#FFF;";
 				}
-			
+
 				if (bg_color.r < 255 && bg_color.g < 255 && bg_color.b < 255 || bg.image) {
 					this._nav.next.setColor(true);
 					this._nav.previous.setColor(true);
@@ -7416,7 +7416,7 @@ VCO.StorySlider = VCO.Class.extend({
 					this._nav.previous.setColor(false);
 				}
 			}
-		
+
 			// FADE OUT IN
 			this.animator_background = VCO.Animate(this._el.background, {
 				opacity: 	0,
@@ -7427,76 +7427,76 @@ VCO.StorySlider = VCO.Class.extend({
 				}
 			});
 		}
-		
-		
+
+
 	},
-	
+
 	fadeInBackground: function(bg_css) {
 		if (this.animator_background) {
 			this.animator_background.stop();
 		}
-		
+
 		if (bg_css) {
 			this._el.background.setAttribute("style", bg_css);
 		}
-		
+
 		this.animator_background = VCO.Animate(this._el.background, {
 			opacity: 	1,
 			duration: 	this.options.duration/2,
 			easing: 	this.options.ease
 		});
-		
+
 	},
-	
+
 	/*	Private Methods
 	================================================== */
-	
+
 	// Update Display
 	_updateDisplay: function(width, height, animate, layout) {
 		var nav_pos, _layout;
-		
+
 		if(typeof layout === 'undefined'){
 			_layout = this.options.layout;
 		} else {
 			_layout = layout;
 		}
-		
+
 		this.options.layout = _layout;
-		
+
 		this.slide_spacing = this.options.width*2;
-		
+
 		if (width) {
 			this.options.width = width;
 		} else {
 			this.options.width = this._el.container.offsetWidth;
 		}
-		
+
 		if (height) {
 			this.options.height = height;
 		} else {
 			this.options.height = this._el.container.offsetHeight;
 		}
-		
+
 		//this._el.container.style.height = this.options.height;
-		
+
 		// position navigation
 		nav_pos = (this.options.height/2);
 		this._nav.next.setPosition({top:nav_pos});
 		this._nav.previous.setPosition({top:nav_pos});
-		
-		
+
+
 		// Position slides
 		for (var i = 0; i < this._slides.length; i++) {
 			this._slides[i].updateDisplay(this.options.width, this.options.height, _layout);
 			this._slides[i].setPosition({left:(this.slide_spacing * i), top:0});
 		};
-		
+
 		// Go to the current slide
 		this.goTo(this.current_slide, true, true);
 	},
-	
+
 	_introInterface: function() {
-		
+
 		if (this.options.call_to_action) {
 			var _str = VCO.Language.messages.start;
 			if (this.options.call_to_action_text != "") {
@@ -7505,44 +7505,44 @@ VCO.StorySlider = VCO.Class.extend({
 			this._slides[0].addCallToAction(_str);
 			this._slides[0].on('call_to_action', this.next, this);
 		}
-		
+
 		if (this.options.width <= this.options.skinny_size) {
-			
+
 		} else {
 			this._nav.next.updatePosition({right:"130"}, false, this.options.duration*3, this.options.ease, -100, true);
 			this._nav.previous.updatePosition({left:"-100"}, true, this.options.duration*3, this.options.ease, -200, true);
 		}
 	},
-	
+
 	/*	Init
 	================================================== */
 	_initLayout: function () {
-		
+
 		this._el.container.className += ' vco-storyslider';
-		
+
 		// Create Layout
 		this._el.slider_container_mask		= VCO.Dom.create('div', 'vco-slider-container-mask', this._el.container);
 		this._el.background 				= VCO.Dom.create('div', 'vco-slider-background', this._el.container); 
 		this._el.slider_container			= VCO.Dom.create('div', 'vco-slider-container vcoanimate', this._el.slider_container_mask);
 		this._el.slider_item_container		= VCO.Dom.create('div', 'vco-slider-item-container', this._el.slider_container);
-		
-		
+
+
 		// Update Size
 		this.options.width = this._el.container.offsetWidth;
 		this.options.height = this._el.container.offsetHeight;
-		
+
 		// Create Navigation
 		this._nav.previous = new VCO.SlideNav({title: "Previous", description: "description"}, {direction:"previous"});
 		this._nav.next = new VCO.SlideNav({title: "Next",description: "description"}, {direction:"next"});
-		
+
 		// add the navigation to the dom
 		this._nav.next.addTo(this._el.container);
 		this._nav.previous.addTo(this._el.container);
-		
-		
-				
+
+
+
 		this._el.slider_container.style.left="0px";
-		
+
 		if (VCO.Browser.touch) {
 			//this._el.slider_touch_mask = VCO.Dom.create('div', 'vco-slider-touch-mask', this._el.slider_container_mask);
 			this._swipable = new VCO.Swipable(this._el.slider_container_mask, this._el.slider_container, {
@@ -7550,7 +7550,7 @@ VCO.StorySlider = VCO.Class.extend({
 				snap: 	true
 			});
 			this._swipable.enable();
-			
+
 			// Message
 			this._message = new VCO.Message({}, {
 				message_class: 		"vco-message-full",
@@ -7560,29 +7560,29 @@ VCO.StorySlider = VCO.Class.extend({
 			this._message.addTo(this._el.container);
 		}
 	},
-	
+
 	_initEvents: function () {
 		this._nav.next.on('clicked', this._onNavigation, this);
 		this._nav.previous.on('clicked', this._onNavigation, this);
-		
+
 		if (this._message) {
 			this._message.on('clicked', this._onMessageClick, this);
 		}
-		
+
 		if (this._swipable) {
 			this._swipable.on('swipe_left', this._onNavigation, this);
 			this._swipable.on('swipe_right', this._onNavigation, this);
 			this._swipable.on('swipe_nodirection', this._onSwipeNoDirection, this);
 		}
-		
-		
+
+
 	},
-	
+
 	_initData: function() {
 		// Create Slides and then add them
 		this._createSlides(this.data.slides);
 	},
-	
+
 	/*	Events
 	================================================== */
 	_onBackgroundChange: function(e) {
@@ -7590,17 +7590,17 @@ VCO.StorySlider = VCO.Class.extend({
 		this.changeBackground(e);
 		this.fire("colorchange", slide_background);
 	},
-	
+
 	_onMessageClick: function(e) {
 		this._message.hide();
 	},
-	
+
 	_onSwipeNoDirection: function(e) {
 		this.goTo(this.current_slide);
 	},
-	
+
 	_onNavigation: function(e) {
-		
+
 		if (e.direction == "next" || e.direction == "left") {
 			this.next();
 		} else if (e.direction == "previous" || e.direction == "right") {
@@ -7608,27 +7608,27 @@ VCO.StorySlider = VCO.Class.extend({
 		} 
 		this.fire("nav_" + e.direction, this.data);
 	},
-	
+
 	_onSlideAdded: function(e) {
 		trace("slideadded")
 		this.fire("slideAdded", this.data);
 	},
-	
+
 	_onSlideRemoved: function(e) {
 		this.fire("slideAdded", this.data);
 	},
-	
+
 	_onSlideChange: function(displayupdate) {
-		
+
 		if (!displayupdate) {
 			this.fire("change", {current_slide:this.current_slide, uniqueid:this._slides[this.current_slide].data.uniqueid});
 		}
 	},
-	
+
 	_onMouseClick: function(e) {
-		
+
 	},
-	
+
 	_fireMouseEvent: function (e) {
 		if (!this._loaded) {
 			return;
@@ -7644,27 +7644,27 @@ VCO.StorySlider = VCO.Class.extend({
 		if (type === 'contextmenu') {
 			VCO.DomEvent.preventDefault(e);
 		}
-		
+
 		this.fire(type, {
 			latlng: "something", //this.mouseEventToLatLng(e),
 			layerPoint: "something else" //this.mouseEventToLayerPoint(e)
 		});
 	},
-	
+
 	_onLoaded: function() {
 		this.fire("loaded", this.data);
 		this.fire("title", {title:this._slides[0].title});
-		
+
 	}
-	
-	
+
+
 });
 
 
 
 
 var oldL = window.L,
-    L = {};
+	L = {};
 
 L.version = '0.7.2';
 
@@ -7672,7 +7672,7 @@ L.version = '0.7.2';
 if (typeof module === 'object' && typeof module.exports === 'object') {
 	module.exports = L;
 
-// define Leaflet as an AMD module
+	// define Leaflet as an AMD module
 } else if (typeof define === 'function' && define.amd) {
 	define(L);
 }
@@ -7694,7 +7694,7 @@ window.L = L;
 L.Util = {
 	extend: function (dest) { // (Object[, Object, ...]) ->
 		var sources = Array.prototype.slice.call(arguments, 1),
-		    i, j, len, src;
+			i, j, len, src;
 
 		for (j = 0, len = sources.length; j < len; j++) {
 			src = sources[j] || {};
@@ -7716,7 +7716,7 @@ L.Util = {
 
 	stamp: (function () {
 		var lastId = 0,
-		    key = '_leaflet_id';
+			key = '_leaflet_id';
 		return function (obj) {
 			obj[key] = obj[key] || ++lastId;
 			return obj[key];
@@ -7818,7 +7818,7 @@ L.Util = {
 
 	function getPrefixed(name) {
 		var i, fn,
-		    prefixes = ['webkit', 'moz', 'o', 'ms'];
+			prefixes = ['webkit', 'moz', 'o', 'ms'];
 
 		for (i = 0; i < prefixes.length && !fn; i++) {
 			fn = window[prefixes[i] + name];
@@ -7831,19 +7831,19 @@ L.Util = {
 
 	function timeoutDefer(fn) {
 		var time = +new Date(),
-		    timeToCall = Math.max(0, 16 - (time - lastTime));
+			timeToCall = Math.max(0, 16 - (time - lastTime));
 
 		lastTime = time + timeToCall;
 		return window.setTimeout(fn, timeToCall);
 	}
 
 	var requestFn = window.requestAnimationFrame ||
-	        getPrefixed('RequestAnimationFrame') || timeoutDefer;
+		getPrefixed('RequestAnimationFrame') || timeoutDefer;
 
 	var cancelFn = window.cancelAnimationFrame ||
-	        getPrefixed('CancelAnimationFrame') ||
-	        getPrefixed('CancelRequestAnimationFrame') ||
-	        function (id) { window.clearTimeout(id); };
+		getPrefixed('CancelAnimationFrame') ||
+		getPrefixed('CancelRequestAnimationFrame') ||
+		function (id) { window.clearTimeout(id); };
 
 
 	L.Util.requestAnimFrame = function (fn, context, immediate, element) {
@@ -7995,8 +7995,8 @@ L.Mixin.Events = {
 		if (L.Util.invokeEach(types, this.addEventListener, this, fn, context)) { return this; }
 
 		var events = this[eventsKey] = this[eventsKey] || {},
-		    contextId = context && context !== this && L.stamp(context),
-		    i, len, event, type, indexKey, indexLenKey, typeIndex;
+			contextId = context && context !== this && L.stamp(context),
+			i, len, event, type, indexKey, indexLenKey, typeIndex;
 
 		// types can be a string of space-separated words
 		types = L.Util.splitWords(types);
@@ -8039,7 +8039,7 @@ L.Mixin.Events = {
 	hasEventListeners: function (type) { // (String) -> Boolean
 		var events = this[eventsKey];
 		return !!events && ((type in events && events[type].length > 0) ||
-		                    (type + '_idx' in events && events[type + '_idx_len'] > 0));
+							(type + '_idx' in events && events[type + '_idx_len'] > 0));
 	},
 
 	removeEventListener: function (types, fn, context) { // ([String, Function, Object]) or (Object[, Object])
@@ -8055,8 +8055,8 @@ L.Mixin.Events = {
 		if (L.Util.invokeEach(types, this.removeEventListener, this, fn, context)) { return this; }
 
 		var events = this[eventsKey],
-		    contextId = context && context !== this && L.stamp(context),
-		    i, len, type, listeners, j, indexKey, indexLenKey, typeIndex, removed;
+			contextId = context && context !== this && L.stamp(context),
+			i, len, type, listeners, j, indexKey, indexLenKey, typeIndex, removed;
 
 		types = L.Util.splitWords(types);
 
@@ -8110,7 +8110,7 @@ L.Mixin.Events = {
 		var event = L.Util.extend({}, data, { type: type, target: this });
 
 		var events = this[eventsKey],
-		    listeners, i, len, typeIndex, contextId;
+			listeners, i, len, typeIndex, contextId;
 
 		if (events[type]) {
 			// make sure adding/removing listeners inside other listeners won't cause infinite loop
@@ -8143,13 +8143,13 @@ L.Mixin.Events = {
 
 		var handler = L.bind(function () {
 			this
-			    .removeEventListener(types, fn, context)
-			    .removeEventListener(types, handler, context);
+				.removeEventListener(types, fn, context)
+				.removeEventListener(types, handler, context);
 		}, this);
 
 		return this
-		    .addEventListener(types, fn, context)
-		    .addEventListener(types, handler, context);
+			.addEventListener(types, fn, context)
+			.addEventListener(types, handler, context);
 	}
 };
 
@@ -8168,30 +8168,30 @@ L.Mixin.Events.fire = L.Mixin.Events.fireEvent;
 	var ie = 'ActiveXObject' in window,
 		ielt9 = ie && !document.addEventListener,
 
-	    // terrible browser detection to work around Safari / iOS / Android browser bugs
-	    ua = navigator.userAgent.toLowerCase(),
-	    webkit = ua.indexOf('webkit') !== -1,
-	    chrome = ua.indexOf('chrome') !== -1,
-	    phantomjs = ua.indexOf('phantom') !== -1,
-	    android = ua.indexOf('android') !== -1,
-	    android23 = ua.search('android [23]') !== -1,
+		// terrible browser detection to work around Safari / iOS / Android browser bugs
+		ua = navigator.userAgent.toLowerCase(),
+		webkit = ua.indexOf('webkit') !== -1,
+		chrome = ua.indexOf('chrome') !== -1,
+		phantomjs = ua.indexOf('phantom') !== -1,
+		android = ua.indexOf('android') !== -1,
+		android23 = ua.search('android [23]') !== -1,
 		gecko = ua.indexOf('gecko') !== -1,
 
-	    mobile = typeof orientation !== undefined + '',
-	    msPointer = window.navigator && window.navigator.msPointerEnabled &&
-	              window.navigator.msMaxTouchPoints && !window.PointerEvent,
+		mobile = typeof orientation !== undefined + '',
+		msPointer = window.navigator && window.navigator.msPointerEnabled &&
+		window.navigator.msMaxTouchPoints && !window.PointerEvent,
 		pointer = (window.PointerEvent && window.navigator.pointerEnabled && window.navigator.maxTouchPoints) ||
-				  msPointer,
-	    retina = ('devicePixelRatio' in window && window.devicePixelRatio > 1) ||
-	             ('matchMedia' in window && window.matchMedia('(min-resolution:144dpi)') &&
-	              window.matchMedia('(min-resolution:144dpi)').matches),
+		msPointer,
+		retina = ('devicePixelRatio' in window && window.devicePixelRatio > 1) ||
+		('matchMedia' in window && window.matchMedia('(min-resolution:144dpi)') &&
+		 window.matchMedia('(min-resolution:144dpi)').matches),
 
-	    doc = document.documentElement,
-	    ie3d = ie && ('transition' in doc.style),
-	    webkit3d = ('WebKitCSSMatrix' in window) && ('m11' in new window.WebKitCSSMatrix()) && !android23,
-	    gecko3d = 'MozPerspective' in doc.style,
-	    opera3d = 'OTransition' in doc.style,
-	    any3d = !window.L_DISABLE_3D && (ie3d || webkit3d || gecko3d || opera3d) && !phantomjs;
+		doc = document.documentElement,
+		ie3d = ie && ('transition' in doc.style),
+		webkit3d = ('WebKitCSSMatrix' in window) && ('m11' in new window.WebKitCSSMatrix()) && !android23,
+		gecko3d = 'MozPerspective' in doc.style,
+		opera3d = 'OTransition' in doc.style,
+		any3d = !window.L_DISABLE_3D && (ie3d || webkit3d || gecko3d || opera3d) && !phantomjs;
 
 
 	// PhantomJS has 'ontouchstart' in document.documentElement, but doesn't actually support touch.
@@ -8208,7 +8208,7 @@ L.Mixin.Events.fire = L.Mixin.Events.fireEvent;
 
 		// Firefox/Gecko
 		var div = document.createElement('div'),
-		    supported = false;
+			supported = false;
 
 		if (!div.setAttribute) {
 			return false;
@@ -8339,7 +8339,7 @@ L.Point.prototype = {
 		point = L.point(point);
 
 		var x = point.x - this.x,
-		    y = point.y - this.y;
+			y = point.y - this.y;
 
 		return Math.sqrt(x * x + y * y);
 	},
@@ -8348,20 +8348,20 @@ L.Point.prototype = {
 		point = L.point(point);
 
 		return point.x === this.x &&
-		       point.y === this.y;
+			point.y === this.y;
 	},
 
 	contains: function (point) {
 		point = L.point(point);
 
 		return Math.abs(point.x) <= Math.abs(this.x) &&
-		       Math.abs(point.y) <= Math.abs(this.y);
+			Math.abs(point.y) <= Math.abs(this.y);
 	},
 
 	toString: function () {
 		return 'Point(' +
-		        L.Util.formatNum(this.x) + ', ' +
-		        L.Util.formatNum(this.y) + ')';
+			L.Util.formatNum(this.x) + ', ' +
+			L.Util.formatNum(this.y) + ')';
 	}
 };
 
@@ -8412,8 +8412,8 @@ L.Bounds.prototype = {
 
 	getCenter: function (round) { // (Boolean) -> Point
 		return new L.Point(
-		        (this.min.x + this.max.x) / 2,
-		        (this.min.y + this.max.y) / 2, round);
+			(this.min.x + this.max.x) / 2,
+			(this.min.y + this.max.y) / 2, round);
 	},
 
 	getBottomLeft: function () { // -> Point
@@ -8445,20 +8445,20 @@ L.Bounds.prototype = {
 		}
 
 		return (min.x >= this.min.x) &&
-		       (max.x <= this.max.x) &&
-		       (min.y >= this.min.y) &&
-		       (max.y <= this.max.y);
+			(max.x <= this.max.x) &&
+			(min.y >= this.min.y) &&
+			(max.y <= this.max.y);
 	},
 
 	intersects: function (bounds) { // (Bounds) -> Boolean
 		bounds = L.bounds(bounds);
 
 		var min = this.min,
-		    max = this.max,
-		    min2 = bounds.min,
-		    max2 = bounds.max,
-		    xIntersects = (max2.x >= min.x) && (min2.x <= max.x),
-		    yIntersects = (max2.y >= min.y) && (min2.y <= max.y);
+			max = this.max,
+			min2 = bounds.min,
+			max2 = bounds.max,
+			xIntersects = (max2.x >= min.x) && (min2.x <= max.x),
+			yIntersects = (max2.y >= min.y) && (min2.y <= max.y);
 
 		return xIntersects && yIntersects;
 	},
@@ -8503,8 +8503,8 @@ L.Transformation.prototype = {
 	untransform: function (point, scale) {
 		scale = scale || 1;
 		return new L.Point(
-		        (point.x / scale - this._b) / this._a,
-		        (point.y / scale - this._d) / this._c);
+			(point.x / scale - this._b) / this._a,
+			(point.y / scale - this._d) / this._c);
 	}
 };
 
@@ -8537,11 +8537,11 @@ L.DomUtil = {
 	getViewportOffset: function (element) {
 
 		var top = 0,
-		    left = 0,
-		    el = element,
-		    docBody = document.body,
-		    docEl = document.documentElement,
-		    pos;
+			left = 0,
+			el = element,
+			docBody = document.body,
+			docEl = document.documentElement,
+			pos;
 
 		do {
 			top  += el.offsetTop  || 0;
@@ -8563,8 +8563,8 @@ L.DomUtil = {
 
 			if (pos === 'relative' && !el.offsetLeft) {
 				var width = L.DomUtil.getStyle(el, 'width'),
-				    maxWidth = L.DomUtil.getStyle(el, 'max-width'),
-				    r = el.getBoundingClientRect();
+					maxWidth = L.DomUtil.getStyle(el, 'max-width'),
+					r = el.getBoundingClientRect();
 
 				if (width !== 'none' || maxWidth !== 'none') {
 					left += r.left + el.clientLeft;
@@ -8663,7 +8663,7 @@ L.DomUtil = {
 		} else if ('filter' in el.style) {
 
 			var filter = false,
-			    filterName = 'DXImageTransform.Microsoft.Alpha';
+				filterName = 'DXImageTransform.Microsoft.Alpha';
 
 			// filters collection throws an error if we try to retrieve a filter that doesn't exist
 			try {
@@ -8703,8 +8703,8 @@ L.DomUtil = {
 		// (same speed either way), Opera 12 doesn't support translate3d
 
 		var is3d = L.Browser.webkit3d,
-		    open = 'translate' + (is3d ? '3d' : '') + '(',
-		    close = (is3d ? ',0' : '') + ')';
+			open = 'translate' + (is3d ? '3d' : '') + '(',
+			close = (is3d ? ',0' : '') + ')';
 
 		return open + point.x + 'px,' + point.y + 'px' + close;
 	},
@@ -8712,7 +8712,7 @@ L.DomUtil = {
 	getScaleString: function (scale, origin) {
 
 		var preTranslateStr = L.DomUtil.getTranslateString(origin.add(origin.multiplyBy(-1 * scale))),
-		    scaleStr = ' scale(' + scale + ') ';
+			scaleStr = ' scale(' + scale + ') ';
 
 		return preTranslateStr + scaleStr;
 	},
@@ -8743,50 +8743,50 @@ L.DomUtil = {
 // prefix style property names
 
 L.DomUtil.TRANSFORM = L.DomUtil.testProp(
-        ['transform', 'WebkitTransform', 'OTransform', 'MozTransform', 'msTransform']);
+	['transform', 'WebkitTransform', 'OTransform', 'MozTransform', 'msTransform']);
 
 // webkitTransition comes first because some browser versions that drop vendor prefix don't do
 // the same for the transitionend event, in particular the Android 4.1 stock browser
 
 L.DomUtil.TRANSITION = L.DomUtil.testProp(
-        ['webkitTransition', 'transition', 'OTransition', 'MozTransition', 'msTransition']);
+	['webkitTransition', 'transition', 'OTransition', 'MozTransition', 'msTransition']);
 
 L.DomUtil.TRANSITION_END =
-        L.DomUtil.TRANSITION === 'webkitTransition' || L.DomUtil.TRANSITION === 'OTransition' ?
-        L.DomUtil.TRANSITION + 'End' : 'transitionend';
+	L.DomUtil.TRANSITION === 'webkitTransition' || L.DomUtil.TRANSITION === 'OTransition' ?
+	L.DomUtil.TRANSITION + 'End' : 'transitionend';
 
 (function () {
-    if ('onselectstart' in document) {
-        L.extend(L.DomUtil, {
-            disableTextSelection: function () {
-                L.DomEvent.on(window, 'selectstart', L.DomEvent.preventDefault);
-            },
+	if ('onselectstart' in document) {
+		L.extend(L.DomUtil, {
+			disableTextSelection: function () {
+				L.DomEvent.on(window, 'selectstart', L.DomEvent.preventDefault);
+			},
 
-            enableTextSelection: function () {
-                L.DomEvent.off(window, 'selectstart', L.DomEvent.preventDefault);
-            }
-        });
-    } else {
-        var userSelectProperty = L.DomUtil.testProp(
-            ['userSelect', 'WebkitUserSelect', 'OUserSelect', 'MozUserSelect', 'msUserSelect']);
+			enableTextSelection: function () {
+				L.DomEvent.off(window, 'selectstart', L.DomEvent.preventDefault);
+			}
+		});
+	} else {
+		var userSelectProperty = L.DomUtil.testProp(
+			['userSelect', 'WebkitUserSelect', 'OUserSelect', 'MozUserSelect', 'msUserSelect']);
 
-        L.extend(L.DomUtil, {
-            disableTextSelection: function () {
-                if (userSelectProperty) {
-                    var style = document.documentElement.style;
-                    this._userSelect = style[userSelectProperty];
-                    style[userSelectProperty] = 'none';
-                }
-            },
+		L.extend(L.DomUtil, {
+			disableTextSelection: function () {
+				if (userSelectProperty) {
+					var style = document.documentElement.style;
+					this._userSelect = style[userSelectProperty];
+					style[userSelectProperty] = 'none';
+				}
+			},
 
-            enableTextSelection: function () {
-                if (userSelectProperty) {
-                    document.documentElement.style[userSelectProperty] = this._userSelect;
-                    delete this._userSelect;
-                }
-            }
-        });
-    }
+			enableTextSelection: function () {
+				if (userSelectProperty) {
+					document.documentElement.style[userSelectProperty] = this._userSelect;
+					delete this._userSelect;
+				}
+			}
+		});
+	}
 
 	L.extend(L.DomUtil, {
 		disableImageDrag: function () {
@@ -8833,16 +8833,16 @@ L.LatLng.prototype = {
 		obj = L.latLng(obj);
 
 		var margin = Math.max(
-		        Math.abs(this.lat - obj.lat),
-		        Math.abs(this.lng - obj.lng));
+			Math.abs(this.lat - obj.lat),
+			Math.abs(this.lng - obj.lng));
 
 		return margin <= L.LatLng.MAX_MARGIN;
 	},
 
 	toString: function (precision) { // (Number) -> String
 		return 'LatLng(' +
-		        L.Util.formatNum(this.lat, precision) + ', ' +
-		        L.Util.formatNum(this.lng, precision) + ')';
+			L.Util.formatNum(this.lat, precision) + ', ' +
+			L.Util.formatNum(this.lng, precision) + ')';
 	},
 
 	// Haversine distance formula, see http://en.wikipedia.org/wiki/Haversine_formula
@@ -8851,13 +8851,13 @@ L.LatLng.prototype = {
 		other = L.latLng(other);
 
 		var R = 6378137, // earth radius in meters
-		    d2r = L.LatLng.DEG_TO_RAD,
-		    dLat = (other.lat - this.lat) * d2r,
-		    dLon = (other.lng - this.lng) * d2r,
-		    lat1 = this.lat * d2r,
-		    lat2 = other.lat * d2r,
-		    sin1 = Math.sin(dLat / 2),
-		    sin2 = Math.sin(dLon / 2);
+			d2r = L.LatLng.DEG_TO_RAD,
+			dLat = (other.lat - this.lat) * d2r,
+			dLon = (other.lng - this.lng) * d2r,
+			lat1 = this.lat * d2r,
+			lat2 = other.lat * d2r,
+			sin1 = Math.sin(dLat / 2),
+			sin2 = Math.sin(dLon / 2);
 
 		var a = sin1 * sin1 + sin2 * sin2 * Math.cos(lat1) * Math.cos(lat2);
 
@@ -8948,19 +8948,19 @@ L.LatLngBounds.prototype = {
 	// extend the bounds by a percentage
 	pad: function (bufferRatio) { // (Number) -> LatLngBounds
 		var sw = this._southWest,
-		    ne = this._northEast,
-		    heightBuffer = Math.abs(sw.lat - ne.lat) * bufferRatio,
-		    widthBuffer = Math.abs(sw.lng - ne.lng) * bufferRatio;
+			ne = this._northEast,
+			heightBuffer = Math.abs(sw.lat - ne.lat) * bufferRatio,
+			widthBuffer = Math.abs(sw.lng - ne.lng) * bufferRatio;
 
 		return new L.LatLngBounds(
-		        new L.LatLng(sw.lat - heightBuffer, sw.lng - widthBuffer),
-		        new L.LatLng(ne.lat + heightBuffer, ne.lng + widthBuffer));
+			new L.LatLng(sw.lat - heightBuffer, sw.lng - widthBuffer),
+			new L.LatLng(ne.lat + heightBuffer, ne.lng + widthBuffer));
 	},
 
 	getCenter: function () { // -> LatLng
 		return new L.LatLng(
-		        (this._southWest.lat + this._northEast.lat) / 2,
-		        (this._southWest.lng + this._northEast.lng) / 2);
+			(this._southWest.lat + this._northEast.lat) / 2,
+			(this._southWest.lng + this._northEast.lng) / 2);
 	},
 
 	getSouthWest: function () {
@@ -9003,8 +9003,8 @@ L.LatLngBounds.prototype = {
 		}
 
 		var sw = this._southWest,
-		    ne = this._northEast,
-		    sw2, ne2;
+			ne = this._northEast,
+			sw2, ne2;
 
 		if (obj instanceof L.LatLngBounds) {
 			sw2 = obj.getSouthWest();
@@ -9014,19 +9014,19 @@ L.LatLngBounds.prototype = {
 		}
 
 		return (sw2.lat >= sw.lat) && (ne2.lat <= ne.lat) &&
-		       (sw2.lng >= sw.lng) && (ne2.lng <= ne.lng);
+			(sw2.lng >= sw.lng) && (ne2.lng <= ne.lng);
 	},
 
 	intersects: function (bounds) { // (LatLngBounds)
 		bounds = L.latLngBounds(bounds);
 
 		var sw = this._southWest,
-		    ne = this._northEast,
-		    sw2 = bounds.getSouthWest(),
-		    ne2 = bounds.getNorthEast(),
+			ne = this._northEast,
+			sw2 = bounds.getSouthWest(),
+			ne2 = bounds.getNorthEast(),
 
-		    latIntersects = (ne2.lat >= sw.lat) && (sw2.lat <= ne.lat),
-		    lngIntersects = (ne2.lng >= sw.lng) && (sw2.lng <= ne.lng);
+			latIntersects = (ne2.lat >= sw.lat) && (sw2.lat <= ne.lat),
+			lngIntersects = (ne2.lng >= sw.lng) && (sw2.lng <= ne.lng);
 
 		return latIntersects && lngIntersects;
 	},
@@ -9041,7 +9041,7 @@ L.LatLngBounds.prototype = {
 		bounds = L.latLngBounds(bounds);
 
 		return this._southWest.equals(bounds.getSouthWest()) &&
-		       this._northEast.equals(bounds.getNorthEast());
+			this._northEast.equals(bounds.getNorthEast());
 	},
 
 	isValid: function () {
@@ -9075,10 +9075,10 @@ L.Projection.SphericalMercator = {
 
 	project: function (latlng) { // (LatLng) -> Point
 		var d = L.LatLng.DEG_TO_RAD,
-		    max = this.MAX_LATITUDE,
-		    lat = Math.max(Math.min(max, latlng.lat), -max),
-		    x = latlng.lng * d,
-		    y = lat * d;
+			max = this.MAX_LATITUDE,
+			lat = Math.max(Math.min(max, latlng.lat), -max),
+			x = latlng.lng * d,
+			y = lat * d;
 
 		y = Math.log(Math.tan((Math.PI / 4) + (y / 2)));
 
@@ -9087,8 +9087,8 @@ L.Projection.SphericalMercator = {
 
 	unproject: function (point) { // (Point, Boolean) -> LatLng
 		var d = L.LatLng.RAD_TO_DEG,
-		    lng = point.x * d,
-		    lat = (2 * Math.atan(Math.exp(point.y)) - (Math.PI / 2)) * d;
+			lng = point.x * d,
+			lat = (2 * Math.atan(Math.exp(point.y)) - (Math.PI / 2)) * d;
 
 		return new L.LatLng(lat, lng);
 	}
@@ -9117,14 +9117,14 @@ L.Projection.LonLat = {
 L.CRS = {
 	latLngToPoint: function (latlng, zoom) { // (LatLng, Number) -> Point
 		var projectedPoint = this.projection.project(latlng),
-		    scale = this.scale(zoom);
+			scale = this.scale(zoom);
 
 		return this.transformation._transform(projectedPoint, scale);
 	},
 
 	pointToLatLng: function (point, zoom) { // (Point, Number[, Boolean]) -> LatLng
 		var scale = this.scale(zoom),
-		    untransformedPoint = this.transformation.untransform(point, scale);
+			untransformedPoint = this.transformation.untransform(point, scale);
 
 		return this.projection.unproject(untransformedPoint);
 	},
@@ -9171,7 +9171,7 @@ L.CRS.EPSG3857 = L.extend({}, L.CRS, {
 
 	project: function (latlng) { // (LatLng) -> Point
 		var projectedPoint = this.projection.project(latlng),
-		    earthRadius = 6378137;
+			earthRadius = 6378137;
 		return projectedPoint.multiplyBy(earthRadius);
 	}
 });
@@ -9274,11 +9274,11 @@ L.Map = L.Class.extend({
 
 	setZoomAround: function (latlng, zoom, options) {
 		var scale = this.getZoomScale(zoom),
-		    viewHalf = this.getSize().divideBy(2),
-		    containerPoint = latlng instanceof L.Point ? latlng : this.latLngToContainerPoint(latlng),
+			viewHalf = this.getSize().divideBy(2),
+			containerPoint = latlng instanceof L.Point ? latlng : this.latLngToContainerPoint(latlng),
 
-		    centerOffset = containerPoint.subtract(viewHalf).multiplyBy(1 - 1 / scale),
-		    newCenter = this.containerPointToLatLng(viewHalf.add(centerOffset));
+			centerOffset = containerPoint.subtract(viewHalf).multiplyBy(1 - 1 / scale),
+			newCenter = this.containerPointToLatLng(viewHalf.add(centerOffset));
 
 		return this.setView(newCenter, zoom, {zoom: options});
 	},
@@ -9289,14 +9289,14 @@ L.Map = L.Class.extend({
 		bounds = bounds.getBounds ? bounds.getBounds() : L.latLngBounds(bounds);
 
 		var paddingTL = L.point(options.paddingTopLeft || options.padding || [0, 0]),
-		    paddingBR = L.point(options.paddingBottomRight || options.padding || [0, 0]),
+			paddingBR = L.point(options.paddingBottomRight || options.padding || [0, 0]),
 
-		    zoom = this.getBoundsZoom(bounds, false, paddingTL.add(paddingBR)),
-		    paddingOffset = paddingBR.subtract(paddingTL).divideBy(2),
+			zoom = this.getBoundsZoom(bounds, false, paddingTL.add(paddingBR)),
+			paddingOffset = paddingBR.subtract(paddingTL).divideBy(2),
 
-		    swPoint = this.project(bounds.getSouthWest(), zoom),
-		    nePoint = this.project(bounds.getNorthEast(), zoom),
-		    center = this.unproject(swPoint.add(nePoint).divideBy(2).add(paddingOffset), zoom);
+			swPoint = this.project(bounds.getSouthWest(), zoom),
+			nePoint = this.project(bounds.getNorthEast(), zoom),
+			center = this.unproject(swPoint.add(nePoint).divideBy(2).add(paddingOffset), zoom);
 
 		zoom = options && options.maxZoom ? Math.min(options.maxZoom, zoom) : zoom;
 
@@ -9431,9 +9431,9 @@ L.Map = L.Class.extend({
 		this._initialCenter = null;
 
 		var newSize = this.getSize(),
-		    oldCenter = oldSize.divideBy(2).round(),
-		    newCenter = newSize.divideBy(2).round(),
-		    offset = oldCenter.subtract(newCenter);
+			oldCenter = oldSize.divideBy(2).round(),
+			newCenter = newSize.divideBy(2).round(),
+			offset = oldCenter.subtract(newCenter);
 
 		if (!offset.x && !offset.y) { return this; }
 
@@ -9518,8 +9518,8 @@ L.Map = L.Class.extend({
 
 	getBounds: function () {
 		var bounds = this.getPixelBounds(),
-		    sw = this.unproject(bounds.getBottomLeft()),
-		    ne = this.unproject(bounds.getTopRight());
+			sw = this.unproject(bounds.getBottomLeft()),
+			ne = this.unproject(bounds.getTopRight());
 
 		return new L.LatLngBounds(sw, ne);
 	},
@@ -9527,27 +9527,27 @@ L.Map = L.Class.extend({
 	getMinZoom: function () {
 		return this.options.minZoom === undefined ?
 			(this._layersMinZoom === undefined ? 0 : this._layersMinZoom) :
-			this.options.minZoom;
+		this.options.minZoom;
 	},
 
 	getMaxZoom: function () {
 		return this.options.maxZoom === undefined ?
 			(this._layersMaxZoom === undefined ? Infinity : this._layersMaxZoom) :
-			this.options.maxZoom;
+		this.options.maxZoom;
 	},
 
 	getBoundsZoom: function (bounds, inside, padding) { // (LatLngBounds[, Boolean, Point]) -> Number
 		bounds = L.latLngBounds(bounds);
 
 		var zoom = this.getMinZoom() - (inside ? 1 : 0),
-		    maxZoom = this.getMaxZoom(),
-		    size = this.getSize(),
+			maxZoom = this.getMaxZoom(),
+			size = this.getSize(),
 
-		    nw = bounds.getNorthWest(),
-		    se = bounds.getSouthEast(),
+			nw = bounds.getNorthWest(),
+			se = bounds.getSouthEast(),
 
-		    zoomNotFound = true,
-		    boundsSize;
+			zoomNotFound = true,
+			boundsSize;
 
 		padding = L.point(padding || [0, 0]);
 
@@ -9677,10 +9677,10 @@ L.Map = L.Class.extend({
 		var container = this._container;
 
 		L.DomUtil.addClass(container, 'leaflet-container' +
-			(L.Browser.touch ? ' leaflet-touch' : '') +
-			(L.Browser.retina ? ' leaflet-retina' : '') +
-			(L.Browser.ielt9 ? ' leaflet-oldie' : '') +
-			(this.options.fadeAnimation ? ' leaflet-fade-anim' : ''));
+						   (L.Browser.touch ? ' leaflet-touch' : '') +
+						   (L.Browser.retina ? ' leaflet-retina' : '') +
+						   (L.Browser.ielt9 ? ' leaflet-oldie' : '') +
+						   (this.options.fadeAnimation ? ' leaflet-fade-anim' : ''));
 
 		var position = L.DomUtil.getStyle(container, 'position');
 
@@ -9835,8 +9835,8 @@ L.Map = L.Class.extend({
 		L.DomEvent[onOff](this._container, 'click', this._onMouseClick, this);
 
 		var events = ['dblclick', 'mousedown', 'mouseup', 'mouseenter',
-		              'mouseleave', 'mousemove', 'contextmenu'],
-		    i, len;
+					  'mouseleave', 'mousemove', 'contextmenu'],
+			i, len;
 
 		for (i = 0, len = events.length; i < len; i++) {
 			L.DomEvent[onOff](this._container, events[i], this._fireMouseEvent, this);
@@ -9850,14 +9850,14 @@ L.Map = L.Class.extend({
 	_onResize: function () {
 		L.Util.cancelAnimFrame(this._resizeRequest);
 		this._resizeRequest = L.Util.requestAnimFrame(
-		        function () { this.invalidateSize({debounceMoveend: true}); }, this, false, this._container);
+			function () { this.invalidateSize({debounceMoveend: true}); }, this, false, this._container);
 	},
 
 	_onMouseClick: function (e) {
 		if (!this._loaded || (!e._simulated &&
-		        ((this.dragging && this.dragging.moved()) ||
-		         (this.boxZoom  && this.boxZoom.moved()))) ||
-		            L.DomEvent._skipped(e)) { return; }
+							  ((this.dragging && this.dragging.moved()) ||
+							   (this.boxZoom  && this.boxZoom.moved()))) ||
+			L.DomEvent._skipped(e)) { return; }
 
 		this.fire('preclick');
 		this._fireMouseEvent(e);
@@ -9877,8 +9877,8 @@ L.Map = L.Class.extend({
 		}
 
 		var containerPoint = this.mouseEventToContainerPoint(e),
-		    layerPoint = this.containerPointToLayerPoint(containerPoint),
-		    latlng = this.layerPointToLatLng(layerPoint);
+			layerPoint = this.containerPointToLayerPoint(containerPoint),
+			latlng = this.layerPointToLatLng(layerPoint);
 
 		this.fire(type, {
 			latlng: latlng,
@@ -9958,9 +9958,9 @@ L.Map = L.Class.extend({
 		if (!bounds) { return center; }
 
 		var centerPoint = this.project(center, zoom),
-		    viewHalf = this.getSize().divideBy(2),
-		    viewBounds = new L.Bounds(centerPoint.subtract(viewHalf), centerPoint.add(viewHalf)),
-		    offset = this._getBoundsOffset(viewBounds, bounds, zoom);
+			viewHalf = this.getSize().divideBy(2),
+			viewBounds = new L.Bounds(centerPoint.subtract(viewHalf), centerPoint.add(viewHalf)),
+			offset = this._getBoundsOffset(viewBounds, bounds, zoom);
 
 		return this.unproject(centerPoint.add(offset), zoom);
 	},
@@ -9970,7 +9970,7 @@ L.Map = L.Class.extend({
 		if (!bounds) { return offset; }
 
 		var viewBounds = this.getPixelBounds(),
-		    newBounds = new L.Bounds(viewBounds.min.add(offset), viewBounds.max.add(offset));
+			newBounds = new L.Bounds(viewBounds.min.add(offset), viewBounds.max.add(offset));
 
 		return offset.add(this._getBoundsOffset(newBounds, bounds));
 	},
@@ -9978,10 +9978,10 @@ L.Map = L.Class.extend({
 	// returns offset needed for pxBounds to get inside maxBounds at a specified zoom
 	_getBoundsOffset: function (pxBounds, maxBounds, zoom) {
 		var nwOffset = this.project(maxBounds.getNorthWest(), zoom).subtract(pxBounds.min),
-		    seOffset = this.project(maxBounds.getSouthEast(), zoom).subtract(pxBounds.max),
+			seOffset = this.project(maxBounds.getSouthEast(), zoom).subtract(pxBounds.max),
 
-		    dx = this._rebound(nwOffset.x, -seOffset.x),
-		    dy = this._rebound(nwOffset.y, -seOffset.y);
+			dx = this._rebound(nwOffset.x, -seOffset.x),
+			dy = this._rebound(nwOffset.y, -seOffset.y);
 
 		return new L.Point(dx, dy);
 	},
@@ -9989,12 +9989,12 @@ L.Map = L.Class.extend({
 	_rebound: function (left, right) {
 		return left + right > 0 ?
 			Math.round(left - right) / 2 :
-			Math.max(0, Math.ceil(left)) - Math.max(0, Math.floor(right));
+		Math.max(0, Math.ceil(left)) - Math.max(0, Math.floor(right));
 	},
 
 	_limitZoom: function (zoom) {
 		var min = this.getMinZoom(),
-		    max = this.getMaxZoom();
+			max = this.getMaxZoom();
 
 		return Math.max(min, Math.min(max, zoom));
 	}
@@ -10014,8 +10014,8 @@ L.DomEvent = {
 	addListener: function (obj, type, fn, context) { // (HTMLElement, String, Function[, Object])
 
 		var id = L.stamp(fn),
-		    key = '_leaflet_' + type + id,
-		    handler, originalHandler, newType;
+			key = '_leaflet_' + type + id,
+			handler, originalHandler, newType;
 
 		if (obj[key]) { return this; }
 
@@ -10071,8 +10071,8 @@ L.DomEvent = {
 	removeListener: function (obj, type, fn) {  // (HTMLElement, String, Function)
 
 		var id = L.stamp(fn),
-		    key = '_leaflet_' + type + id,
-		    handler = obj[key];
+			key = '_leaflet_' + type + id,
+			handler = obj[key];
 
 		if (!handler) { return this; }
 
@@ -10314,8 +10314,8 @@ L.Draggable = L.Class.extend({
 		this._startPos = this._newPos = L.DomUtil.getPosition(this._element);
 
 		L.DomEvent
-		    .on(document, L.Draggable.MOVE[e.type], this._onMove, this)
-		    .on(document, L.Draggable.END[e.type], this._onUp, this);
+			.on(document, L.Draggable.MOVE[e.type], this._onMove, this)
+			.on(document, L.Draggable.END[e.type], this._onUp, this);
 	},
 
 	_onMove: function (e) {
@@ -10325,8 +10325,8 @@ L.Draggable = L.Class.extend({
 		}
 
 		var first = (e.touches && e.touches.length === 1 ? e.touches[0] : e),
-		    newPoint = new L.Point(first.clientX, first.clientY),
-		    offset = newPoint.subtract(this._startPoint);
+			newPoint = new L.Point(first.clientX, first.clientY),
+			offset = newPoint.subtract(this._startPoint);
 
 		if (!offset.x && !offset.y) { return; }
 
@@ -10361,8 +10361,8 @@ L.Draggable = L.Class.extend({
 
 		for (var i in L.Draggable.MOVE) {
 			L.DomEvent
-			    .off(document, L.Draggable.MOVE[i], this._onMove)
-			    .off(document, L.Draggable.END[i], this._onUp);
+				.off(document, L.Draggable.MOVE[i], this._onMove)
+				.off(document, L.Draggable.END[i], this._onUp);
 		}
 
 		L.DomUtil.enableImageDrag();
@@ -10454,8 +10454,8 @@ L.Control = L.Class.extend({
 		this._map = map;
 
 		var container = this._container = this.onAdd(map),
-		    pos = this.getPosition(),
-		    corner = map._controlCorners[pos];
+			pos = this.getPosition(),
+			corner = map._controlCorners[pos];
 
 		L.DomUtil.addClass(container, 'leaflet-control');
 
@@ -10470,7 +10470,7 @@ L.Control = L.Class.extend({
 
 	removeFrom: function (map) {
 		var pos = this.getPosition(),
-		    corner = map._controlCorners[pos];
+			corner = map._controlCorners[pos];
 
 		corner.removeChild(this._container);
 		this._map = null;
@@ -10509,9 +10509,9 @@ L.Map.include({
 
 	_initControlPos: function () {
 		var corners = this._controlCorners = {},
-		    l = 'leaflet-',
-		    container = this._controlContainer =
-		            L.DomUtil.create('div', l + 'control-container', this._container);
+			l = 'leaflet-',
+			container = this._controlContainer =
+			L.DomUtil.create('div', l + 'control-container', this._container);
 
 		function createCorner(vSide, hSide) {
 			var className = l + vSide + ' ' + l + hSide;
@@ -10721,8 +10721,8 @@ L.TileLayer = L.Class.extend({
 	_setAutoZIndex: function (pane, compare) {
 
 		var layers = pane.children,
-		    edgeZIndex = -compare(Infinity, -Infinity), // -Infinity for max, Infinity for min
-		    zIndex, i, len;
+			edgeZIndex = -compare(Infinity, -Infinity), // -Infinity for max, Infinity for min
+			zIndex, i, len;
 
 		for (i = 0, len = layers.length; i < len; i++) {
 
@@ -10736,12 +10736,12 @@ L.TileLayer = L.Class.extend({
 		}
 
 		this.options.zIndex = this._container.style.zIndex =
-		        (isFinite(edgeZIndex) ? edgeZIndex : 0) + compare(1, -1);
+			(isFinite(edgeZIndex) ? edgeZIndex : 0) + compare(1, -1);
 	},
 
 	_updateOpacity: function () {
 		var i,
-		    tiles = this._tiles;
+			tiles = this._tiles;
 
 		if (L.Browser.ielt9) {
 			for (i in tiles) {
@@ -10801,9 +10801,9 @@ L.TileLayer = L.Class.extend({
 
 	_getTileSize: function () {
 		var map = this._map,
-		    zoom = map.getZoom() + this.options.zoomOffset,
-		    zoomN = this.options.maxNativeZoom,
-		    tileSize = this.options.tileSize;
+			zoom = map.getZoom() + this.options.zoomOffset,
+			zoomN = this.options.maxNativeZoom,
+			tileSize = this.options.tileSize;
 
 		if (zoomN && zoom > zoomN) {
 			tileSize = Math.round(map.getZoomScale(zoom) / map.getZoomScale(zoomN) * tileSize);
@@ -10817,9 +10817,9 @@ L.TileLayer = L.Class.extend({
 		if (!this._map) { return; }
 
 		var map = this._map,
-		    bounds = map.getPixelBounds(),
-		    zoom = map.getZoom(),
-		    tileSize = this._getTileSize();
+			bounds = map.getPixelBounds(),
+			zoom = map.getZoom(),
+			tileSize = this._getTileSize();
 
 		if (isNaN(map.getZoom())) {
 			zoom = this.options.minZoom || 1;
@@ -10831,8 +10831,8 @@ L.TileLayer = L.Class.extend({
 		}
 
 		var tileBounds = L.bounds(
-		        bounds.min.divideBy(tileSize)._floor(),
-		        bounds.max.divideBy(tileSize)._floor());
+			bounds.min.divideBy(tileSize)._floor(),
+			bounds.max.divideBy(tileSize)._floor());
 
 		this._addTilesFromCenterOut(tileBounds);
 
@@ -10843,7 +10843,7 @@ L.TileLayer = L.Class.extend({
 
 	_addTilesFromCenterOut: function (bounds) {
 		var queue = [],
-		    center = bounds.getCenter();
+			center = bounds.getCenter();
 
 		var j, i, point;
 
@@ -10899,10 +10899,10 @@ L.TileLayer = L.Class.extend({
 
 		if (options.bounds) {
 			var tileSize = options.tileSize,
-			    nwPoint = tilePoint.multiplyBy(tileSize),
-			    sePoint = nwPoint.add([tileSize, tileSize]),
-			    nw = this._map.unproject(nwPoint),
-			    se = this._map.unproject(sePoint);
+				nwPoint = tilePoint.multiplyBy(tileSize),
+				sePoint = nwPoint.add([tileSize, tileSize]),
+				nw = this._map.unproject(nwPoint),
+				se = this._map.unproject(sePoint);
 
 			// TODO temporary hack, will be removed after refactoring projections
 			// https://github.com/Leaflet/Leaflet/issues/1618
@@ -10980,7 +10980,7 @@ L.TileLayer = L.Class.extend({
 	_getZoomForUrl: function () {
 
 		var options = this.options,
-		    zoom = this._map.getZoom();
+			zoom = this._map.getZoom();
 
 		if (options.zoomReverse) {
 			zoom = options.maxZoom - zoom;
@@ -10993,7 +10993,7 @@ L.TileLayer = L.Class.extend({
 
 	_getTilePos: function (tilePoint) {
 		var origin = this._map.getPixelOrigin(),
-		    tileSize = this._getTileSize();
+			tileSize = this._getTileSize();
 
 		return tilePoint.multiplyBy(tileSize).subtract(origin);
 	},
@@ -11011,7 +11011,7 @@ L.TileLayer = L.Class.extend({
 
 	_getWrapTileNum: function () {
 		var crs = this._map.options.crs,
-		    size = crs.getSize(this._map.getZoom());
+			size = crs.getSize(this._map.getZoom());
 		return size.divideBy(this._getTileSize())._floor();
 	},
 
@@ -11304,23 +11304,23 @@ L.ImageOverlay = L.Class.extend({
 
 	_animateZoom: function (e) {
 		var map = this._map,
-		    image = this._image,
-		    scale = map.getZoomScale(e.zoom),
-		    nw = this._bounds.getNorthWest(),
-		    se = this._bounds.getSouthEast(),
+			image = this._image,
+			scale = map.getZoomScale(e.zoom),
+			nw = this._bounds.getNorthWest(),
+			se = this._bounds.getSouthEast(),
 
-		    topLeft = map._latLngToNewLayerPoint(nw, e.zoom, e.center),
-		    size = map._latLngToNewLayerPoint(se, e.zoom, e.center)._subtract(topLeft),
-		    origin = topLeft._add(size._multiplyBy((1 / 2) * (1 - 1 / scale)));
+			topLeft = map._latLngToNewLayerPoint(nw, e.zoom, e.center),
+			size = map._latLngToNewLayerPoint(se, e.zoom, e.center)._subtract(topLeft),
+			origin = topLeft._add(size._multiplyBy((1 / 2) * (1 - 1 / scale)));
 
 		image.style[L.DomUtil.TRANSFORM] =
-		        L.DomUtil.getTranslateString(origin) + ' scale(' + scale + ') ';
+			L.DomUtil.getTranslateString(origin) + ' scale(' + scale + ') ';
 	},
 
 	_reset: function () {
 		var image   = this._image,
-		    topLeft = this._map.latLngToLayerPoint(this._bounds.getNorthWest()),
-		    size = this._map.latLngToLayerPoint(this._bounds.getSouthEast())._subtract(topLeft);
+			topLeft = this._map.latLngToLayerPoint(this._bounds.getNorthWest()),
+			size = this._map.latLngToLayerPoint(this._bounds.getSouthEast())._subtract(topLeft);
 
 		L.DomUtil.setPosition(image, topLeft);
 
@@ -11397,8 +11397,8 @@ L.Icon = L.Class.extend({
 
 	_setIconStyles: function (img, name) {
 		var options = this.options,
-		    size = L.point(options[name + 'Size']),
-		    anchor;
+			size = L.point(options[name + 'Size']),
+			anchor;
 
 		if (name === 'shadow') {
 			anchor = L.point(options.shadowAnchor || options.iconAnchor);
@@ -11479,7 +11479,7 @@ L.Icon.Default = L.Icon.extend({
 
 L.Icon.Default.imagePath = (function () {
 	var scripts = document.getElementsByTagName('script'),
-	    leafletRe = /[\/^]leaflet[\-\._]?([\w\-\._]*)\.js\??/;
+		leafletRe = /[\/^]leaflet[\-\._]?([\w\-\._]*)\.js\??/;
 
 	var i, len, src, matches, path;
 
@@ -11604,9 +11604,9 @@ L.Marker = L.Class.extend({
 
 	_initIcon: function () {
 		var options = this.options,
-		    map = this._map,
-		    animation = (map.options.zoomAnimation && map.options.markerZoomAnimation),
-		    classToAdd = animation ? 'leaflet-zoom-animated' : 'leaflet-zoom-hide';
+			map = this._map,
+			animation = (map.options.zoomAnimation && map.options.markerZoomAnimation),
+			classToAdd = animation ? 'leaflet-zoom-animated' : 'leaflet-zoom-hide';
 
 		var icon = options.icon.createIcon(this._icon),
 			addIcon = false;
@@ -11621,7 +11621,7 @@ L.Marker = L.Class.extend({
 			if (options.title) {
 				icon.title = options.title;
 			}
-			
+
 			if (options.alt) {
 				icon.alt = options.alt;
 			}
@@ -11676,8 +11676,8 @@ L.Marker = L.Class.extend({
 	_removeIcon: function () {
 		if (this.options.riseOnHover) {
 			L.DomEvent
-			    .off(this._icon, 'mouseover', this._bringToFront)
-			    .off(this._icon, 'mouseout', this._resetZIndex);
+				.off(this._icon, 'mouseover', this._bringToFront)
+				.off(this._icon, 'mouseout', this._resetZIndex);
 		}
 
 		this._map._panes.markerPane.removeChild(this._icon);
@@ -11721,7 +11721,7 @@ L.Marker = L.Class.extend({
 		// TODO refactor into something shared with Map/Path/etc. to DRY it up
 
 		var icon = this._icon,
-		    events = ['dblclick', 'mousedown', 'mouseover', 'mouseout', 'contextmenu'];
+			events = ['dblclick', 'mousedown', 'mouseover', 'mouseout', 'contextmenu'];
 
 		L.DomUtil.addClass(icon, 'leaflet-clickable');
 		L.DomEvent.on(icon, 'click', this._onMouseClick, this);
@@ -11835,7 +11835,7 @@ L.DivIcon = L.Icon.extend({
 
 	createIcon: function (oldIcon) {
 		var div = (oldIcon && oldIcon.tagName === 'DIV') ? oldIcon : document.createElement('div'),
-		    options = this.options;
+			options = this.options;
 
 		if (options.html !== false) {
 			div.innerHTML = options.html;
@@ -11845,7 +11845,7 @@ L.DivIcon = L.Icon.extend({
 
 		if (options.bgPos) {
 			div.style.backgroundPosition =
-			        (-options.bgPos.x) + 'px ' + (-options.bgPos.y) + 'px';
+				(-options.bgPos.x) + 'px ' + (-options.bgPos.y) + 'px';
 		}
 
 		this._setIconStyles(div, 'icon');
@@ -11917,7 +11917,7 @@ L.LayerGroup = L.Class.extend({
 
 	invoke: function (methodName) {
 		var args = Array.prototype.slice.call(arguments, 1),
-		    i, layer;
+			i, layer;
 
 		for (i in this._layers) {
 			layer = this._layers[i];
@@ -12092,7 +12092,7 @@ L.Path = L.Class.extend({
 		// set it so that SVG element doesn't exceed 1280px (vectors flicker on dragend if it is)
 		CLIP_PADDING: (function () {
 			var max = L.Browser.mobile ? 1280 : 2000,
-			    target = (max / Math.max(window.outerWidth, window.outerHeight) - 1) / 2;
+				target = (max / Math.max(window.outerWidth, window.outerHeight) - 1) / 2;
 			return Math.max(0, Math.min(0.5, target));
 		})()
 	},
@@ -12190,10 +12190,10 @@ L.Path = L.Class.extend({
 L.Map.include({
 	_updatePathViewport: function () {
 		var p = L.Path.CLIP_PADDING,
-		    size = this.getSize(),
-		    panePos = L.DomUtil.getPosition(this._mapPane),
-		    min = panePos.multiplyBy(-1)._subtract(size.multiplyBy(p)._round()),
-		    max = min.add(size.multiplyBy(1 + p * 2)._round());
+			size = this.getSize(),
+			panePos = L.DomUtil.getPosition(this._mapPane),
+			min = panePos.multiplyBy(-1)._subtract(size.multiplyBy(p)._round()),
+			max = min.add(size.multiplyBy(1 + p * 2)._round());
 
 		this._pathViewport = new L.Bounds(min, max);
 	}
@@ -12215,7 +12215,7 @@ L.Path = L.Path.extend({
 
 	bringToFront: function () {
 		var root = this._map._pathRoot,
-		    path = this._container;
+			path = this._container;
 
 		if (path && root.lastChild !== path) {
 			root.appendChild(path);
@@ -12225,8 +12225,8 @@ L.Path = L.Path.extend({
 
 	bringToBack: function () {
 		var root = this._map._pathRoot,
-		    path = this._container,
-		    first = root.firstChild;
+			path = this._container,
+			first = root.firstChild;
 
 		if (path && first !== path) {
 			root.insertBefore(path, first);
@@ -12323,7 +12323,7 @@ L.Path = L.Path.extend({
 			L.DomEvent.on(this._container, 'click', this._onMouseClick, this);
 
 			var events = ['dblclick', 'mousedown', 'mouseover',
-			              'mouseout', 'mousemove', 'contextmenu'];
+						  'mouseout', 'mousemove', 'contextmenu'];
 			for (var i = 0; i < events.length; i++) {
 				L.DomEvent.on(this._container, events[i], this._fireMouseEvent, this);
 			}
@@ -12340,9 +12340,9 @@ L.Path = L.Path.extend({
 		if (!this.hasEventListeners(e.type)) { return; }
 
 		var map = this._map,
-		    containerPoint = map.mouseEventToContainerPoint(e),
-		    layerPoint = map.containerPointToLayerPoint(containerPoint),
-		    latlng = map.layerPointToLatLng(layerPoint);
+			containerPoint = map.mouseEventToContainerPoint(e),
+			layerPoint = map.containerPointToLayerPoint(containerPoint),
+			latlng = map.layerPointToLatLng(layerPoint);
 
 		this.fire(e.type, {
 			latlng: latlng,
@@ -12384,10 +12384,10 @@ L.Map.include({
 
 	_animatePathZoom: function (e) {
 		var scale = this.getZoomScale(e.zoom),
-		    offset = this._getCenterOffset(e.center)._multiplyBy(-scale)._add(this._pathViewport.min);
+			offset = this._getCenterOffset(e.center)._multiplyBy(-scale)._add(this._pathViewport.min);
 
 		this._pathRoot.style[L.DomUtil.TRANSFORM] =
-		        L.DomUtil.getTranslateString(offset) + ' scale(' + scale + ') ';
+			L.DomUtil.getTranslateString(offset) + ' scale(' + scale + ') ';
 
 		this._pathZooming = true;
 	},
@@ -12408,12 +12408,12 @@ L.Map.include({
 		this._updatePathViewport();
 
 		var vp = this._pathViewport,
-		    min = vp.min,
-		    max = vp.max,
-		    width = max.x - min.x,
-		    height = max.y - min.y,
-		    root = this._pathRoot,
-		    pane = this._panes.overlayPane;
+			min = vp.min,
+			max = vp.max,
+			width = max.x - min.x,
+			height = max.y - min.y,
+			root = this._pathRoot,
+			pane = this._panes.overlayPane;
 
 		// Hack to make flicker on drag end on mobile webkit less irritating
 		if (L.Browser.mobileWebkit) {
@@ -12467,8 +12467,8 @@ L.Path = (L.Path.SVG && !window.L_PREFER_CANVAS) || !L.Browser.canvas ? L.Path :
 
 	onRemove: function (map) {
 		map
-		    .off('viewreset', this.projectLatlngs, this)
-		    .off('moveend', this._updatePath, this);
+			.off('viewreset', this.projectLatlngs, this)
+			.off('moveend', this._updatePath, this);
 
 		if (this.options.clickable) {
 			this._map.off('click', this._onClick, this);
@@ -12535,7 +12535,7 @@ L.Path = (L.Path.SVG && !window.L_PREFER_CANVAS) || !L.Browser.canvas ? L.Path :
 		if (this._checkIfEmpty()) { return; }
 
 		var ctx = this._ctx,
-		    options = this.options;
+			options = this.options;
 
 		this._drawPath();
 		ctx.save();
@@ -12590,7 +12590,7 @@ L.Path = (L.Path.SVG && !window.L_PREFER_CANVAS) || !L.Browser.canvas ? L.Path :
 L.Map.include((L.Path.SVG && !window.L_PREFER_CANVAS) || !L.Browser.canvas ? {} : {
 	_initPathRoot: function () {
 		var root = this._pathRoot,
-		    ctx;
+			ctx;
 
 		if (!root) {
 			root = this._pathRoot = document.createElement('canvas');
@@ -12618,9 +12618,9 @@ L.Map.include((L.Path.SVG && !window.L_PREFER_CANVAS) || !L.Browser.canvas ? {} 
 		this._updatePathViewport();
 
 		var vp = this._pathViewport,
-		    min = vp.min,
-		    size = vp.max.subtract(min),
-		    root = this._pathRoot;
+			min = vp.min,
+			size = vp.max.subtract(min),
+			root = this._pathRoot;
 
 		//TODO check if this works properly on mobile webkit
 		L.DomUtil.setPosition(root, min);
@@ -12672,15 +12672,15 @@ L.LineUtil = {
 	_simplifyDP: function (points, sqTolerance) {
 
 		var len = points.length,
-		    ArrayConstructor = typeof Uint8Array !== undefined + '' ? Uint8Array : Array,
-		    markers = new ArrayConstructor(len);
+			ArrayConstructor = typeof Uint8Array !== undefined + '' ? Uint8Array : Array,
+			markers = new ArrayConstructor(len);
 
 		markers[0] = markers[len - 1] = 1;
 
 		this._simplifyDPStep(points, markers, sqTolerance, 0, len - 1);
 
 		var i,
-		    newPoints = [];
+			newPoints = [];
 
 		for (i = 0; i < len; i++) {
 			if (markers[i]) {
@@ -12694,7 +12694,7 @@ L.LineUtil = {
 	_simplifyDPStep: function (points, markers, sqTolerance, first, last) {
 
 		var maxSqDist = 0,
-		    index, i, sqDist;
+			index, i, sqDist;
 
 		for (i = first + 1; i <= last - 1; i++) {
 			sqDist = this._sqClosestPointOnSegment(points[i], points[first], points[last], true);
@@ -12734,9 +12734,9 @@ L.LineUtil = {
 
 	clipSegment: function (a, b, bounds, useLastCode) {
 		var codeA = useLastCode ? this._lastCode : this._getBitCode(a, bounds),
-		    codeB = this._getBitCode(b, bounds),
+			codeB = this._getBitCode(b, bounds),
 
-		    codeOut, p, newCode;
+			codeOut, p, newCode;
 
 		// save 2nd code to avoid calculating it on the next segment
 		this._lastCode = codeB;
@@ -12745,10 +12745,10 @@ L.LineUtil = {
 			// if a,b is inside the clip window (trivial accept)
 			if (!(codeA | codeB)) {
 				return [a, b];
-			// if a,b is outside the clip window (trivial reject)
+				// if a,b is outside the clip window (trivial reject)
 			} else if (codeA & codeB) {
 				return false;
-			// other cases
+				// other cases
 			} else {
 				codeOut = codeA || codeB;
 				p = this._getEdgeIntersection(a, b, codeOut, bounds);
@@ -12767,9 +12767,9 @@ L.LineUtil = {
 
 	_getEdgeIntersection: function (a, b, code, bounds) {
 		var dx = b.x - a.x,
-		    dy = b.y - a.y,
-		    min = bounds.min,
-		    max = bounds.max;
+			dy = b.y - a.y,
+			min = bounds.min,
+			max = bounds.max;
 
 		if (code & 8) { // top
 			return new L.Point(a.x + dx * (max.y - a.y) / dy, max.y);
@@ -12802,18 +12802,18 @@ L.LineUtil = {
 	// square distance (to avoid unnecessary Math.sqrt calls)
 	_sqDist: function (p1, p2) {
 		var dx = p2.x - p1.x,
-		    dy = p2.y - p1.y;
+			dy = p2.y - p1.y;
 		return dx * dx + dy * dy;
 	},
 
 	// return closest point on segment or distance to that point
 	_sqClosestPointOnSegment: function (p, p1, p2, sqDist) {
 		var x = p1.x,
-		    y = p1.y,
-		    dx = p2.x - x,
-		    dy = p2.y - y,
-		    dot = dx * dx + dy * dy,
-		    t;
+			y = p1.y,
+			dx = p2.x - x,
+			dy = p2.y - y,
+			dot = dx * dx + dy * dy,
+			t;
 
 		if (dot > 0) {
 			t = ((p.x - x) * dx + (p.y - y) * dy) / dot;
@@ -12945,8 +12945,8 @@ L.Polyline = L.Path.extend({
 
 	_clipPoints: function () {
 		var points = this._originalPoints,
-		    len = points.length,
-		    i, k, segment;
+			len = points.length,
+			i, k, segment;
 
 		if (this.options.noClip) {
 			this._parts = [points];
@@ -12956,8 +12956,8 @@ L.Polyline = L.Path.extend({
 		this._parts = [];
 
 		var parts = this._parts,
-		    vp = this._map._pathViewport,
-		    lu = L.LineUtil;
+			vp = this._map._pathViewport,
+			lu = L.LineUtil;
 
 		for (i = 0, k = 0; i < len - 1; i++) {
 			segment = lu.clipSegment(points[i], points[i + 1], vp, i);
@@ -12979,7 +12979,7 @@ L.Polyline = L.Path.extend({
 	// simplify each clipped part of the polyline
 	_simplifyPoints: function () {
 		var parts = this._parts,
-		    lu = L.LineUtil;
+			lu = L.LineUtil;
 
 		for (var i = 0, len = parts.length; i < len; i++) {
 			parts[i] = lu.simplify(parts[i], this.options.smoothFactor);
@@ -13015,11 +13015,11 @@ L.PolyUtil = {};
  */
 L.PolyUtil.clipPolygon = function (points, bounds) {
 	var clippedPoints,
-	    edges = [1, 4, 2, 8],
-	    i, j, k,
-	    a, b,
-	    len, edge, p,
-	    lu = L.LineUtil;
+		edges = [1, 4, 2, 8],
+		i, j, k,
+		a, b,
+		len, edge, p,
+		lu = L.LineUtil;
 
 	for (i = 0, len = points.length; i < len; i++) {
 		points[i]._code = lu._getBitCode(points[i], bounds);
@@ -13044,7 +13044,7 @@ L.PolyUtil.clipPolygon = function (points, bounds) {
 				}
 				clippedPoints.push(a);
 
-			// else if b is inside the clip window (a->b enters the screen)
+				// else if b is inside the clip window (a->b enters the screen)
 			} else if (!(b._code & edge)) {
 				p = lu._getEdgeIntersection(b, a, edge, bounds);
 				p._code = lu._getBitCode(p, bounds);
@@ -13125,7 +13125,7 @@ L.Polygon = L.Polyline.extend({
 
 	_clipPoints: function () {
 		var points = this._originalPoints,
-		    newParts = [];
+			newParts = [];
 
 		this._parts = [points].concat(this._holePoints);
 
@@ -13169,7 +13169,7 @@ L.polygon = function (latlngs, options) {
 
 			setLatLngs: function (latlngs) {
 				var i = 0,
-				    len = latlngs.length;
+					len = latlngs.length;
 
 				this.eachLayer(function (layer) {
 					if (i < len) {
@@ -13268,8 +13268,8 @@ L.Circle = L.Path.extend({
 
 	projectLatlngs: function () {
 		var lngRadius = this._getLngRadius(),
-		    latlng = this._latlng,
-		    pointLeft = this._map.latLngToLayerPoint([latlng.lat, latlng.lng - lngRadius]);
+			latlng = this._latlng,
+			pointLeft = this._map.latLngToLayerPoint([latlng.lat, latlng.lng - lngRadius]);
 
 		this._point = this._map.latLngToLayerPoint(latlng);
 		this._radius = Math.max(this._point.x - pointLeft.x, 1);
@@ -13277,12 +13277,12 @@ L.Circle = L.Path.extend({
 
 	getBounds: function () {
 		var lngRadius = this._getLngRadius(),
-		    latRadius = (this._mRadius / 40075017) * 360,
-		    latlng = this._latlng;
+			latRadius = (this._mRadius / 40075017) * 360,
+			latlng = this._latlng;
 
 		return new L.LatLngBounds(
-		        [latlng.lat - latRadius, latlng.lng - lngRadius],
-		        [latlng.lat + latRadius, latlng.lng + lngRadius]);
+			[latlng.lat - latRadius, latlng.lng - lngRadius],
+			[latlng.lat + latRadius, latlng.lng + lngRadius]);
 	},
 
 	getLatLng: function () {
@@ -13291,7 +13291,7 @@ L.Circle = L.Path.extend({
 
 	getPathString: function () {
 		var p = this._point,
-		    r = this._radius;
+			r = this._radius;
 
 		if (this._checkIfEmpty()) {
 			return '';
@@ -13299,8 +13299,8 @@ L.Circle = L.Path.extend({
 
 		if (L.Browser.svg) {
 			return 'M' + p.x + ',' + (p.y - r) +
-			       'A' + r + ',' + r + ',0,1,1,' +
-			       (p.x - 0.1) + ',' + (p.y - r) + ' z';
+				'A' + r + ',' + r + ',0,1,1,' +
+				(p.x - 0.1) + ',' + (p.y - r) + ' z';
 		} else {
 			p._round();
 			r = Math.round(r);
@@ -13327,11 +13327,11 @@ L.Circle = L.Path.extend({
 			return false;
 		}
 		var vp = this._map._pathViewport,
-		    r = this._radius,
-		    p = this._point;
+			r = this._radius,
+			p = this._point;
 
 		return p.x - r > vp.max.x || p.y - r > vp.max.y ||
-		       p.x + r < vp.min.x || p.y + r < vp.min.y;
+			p.x + r < vp.min.x || p.y + r < vp.min.y;
 	}
 });
 
@@ -13394,7 +13394,7 @@ L.circleMarker = function (latlng, options) {
 L.Polyline.include(!L.Path.CANVAS ? {} : {
 	_containsPoint: function (p, closed) {
 		var i, j, k, len, len2, dist, part,
-		    w = this.options.weight / 2;
+			w = this.options.weight / 2;
 
 		if (L.Browser.touch) {
 			w += 10; // polyline click tolerance on touch devices
@@ -13475,8 +13475,8 @@ L.Map.Drag = L.Handler.extend({
 		}
 
 		map
-		    .fire('movestart')
-		    .fire('dragstart');
+			.fire('movestart')
+			.fire('dragstart');
 
 		if (map.options.inertia) {
 			this._positions = [];
@@ -13487,7 +13487,7 @@ L.Map.Drag = L.Handler.extend({
 	_onDrag: function () {
 		if (this._map.options.inertia) {
 			var time = this._lastTime = +new Date(),
-			    pos = this._lastPos = this._draggable._newPos;
+				pos = this._lastPos = this._draggable._newPos;
 
 			this._positions.push(pos);
 			this._times.push(time);
@@ -13499,14 +13499,14 @@ L.Map.Drag = L.Handler.extend({
 		}
 
 		this._map
-		    .fire('move')
-		    .fire('drag');
+			.fire('move')
+			.fire('drag');
 	},
 
 	_onViewReset: function () {
 		// TODO fix hardcoded Earth values
 		var pxCenter = this._map.getSize()._divideBy(2),
-		    pxWorldCenter = this._map.latLngToLayerPoint([0, 0]);
+			pxWorldCenter = this._map.latLngToLayerPoint([0, 0]);
 
 		this._initialWorldOffset = pxWorldCenter.subtract(pxCenter).x;
 		this._worldWidth = this._map.project([0, 180]).x;
@@ -13515,22 +13515,22 @@ L.Map.Drag = L.Handler.extend({
 	_onPreDrag: function () {
 		// TODO refactor to be able to adjust map pane position after zoom
 		var worldWidth = this._worldWidth,
-		    halfWidth = Math.round(worldWidth / 2),
-		    dx = this._initialWorldOffset,
-		    x = this._draggable._newPos.x,
-		    newX1 = (x - halfWidth + dx) % worldWidth + halfWidth - dx,
-		    newX2 = (x + halfWidth + dx) % worldWidth - halfWidth - dx,
-		    newX = Math.abs(newX1 + dx) < Math.abs(newX2 + dx) ? newX1 : newX2;
+			halfWidth = Math.round(worldWidth / 2),
+			dx = this._initialWorldOffset,
+			x = this._draggable._newPos.x,
+			newX1 = (x - halfWidth + dx) % worldWidth + halfWidth - dx,
+			newX2 = (x + halfWidth + dx) % worldWidth - halfWidth - dx,
+			newX = Math.abs(newX1 + dx) < Math.abs(newX2 + dx) ? newX1 : newX2;
 
 		this._draggable._newPos.x = newX;
 	},
 
 	_onDragEnd: function (e) {
 		var map = this._map,
-		    options = map.options,
-		    delay = +new Date() - this._lastTime,
+			options = map.options,
+			delay = +new Date() - this._lastTime,
 
-		    noInertia = !options.inertia || delay > options.inertiaThreshold || !this._positions[0];
+			noInertia = !options.inertia || delay > options.inertiaThreshold || !this._positions[0];
 
 		map.fire('dragend', e);
 
@@ -13540,17 +13540,17 @@ L.Map.Drag = L.Handler.extend({
 		} else {
 
 			var direction = this._lastPos.subtract(this._positions[0]),
-			    duration = (this._lastTime + delay - this._times[0]) / 1000,
-			    ease = options.easeLinearity,
+				duration = (this._lastTime + delay - this._times[0]) / 1000,
+				ease = options.easeLinearity,
 
-			    speedVector = direction.multiplyBy(ease / duration),
-			    speed = speedVector.distanceTo([0, 0]),
+				speedVector = direction.multiplyBy(ease / duration),
+				speed = speedVector.distanceTo([0, 0]),
 
-			    limitedSpeed = Math.min(options.inertiaMaxSpeed, speed),
-			    limitedSpeedVector = speedVector.multiplyBy(limitedSpeed / speed),
+				limitedSpeed = Math.min(options.inertiaMaxSpeed, speed),
+				limitedSpeedVector = speedVector.multiplyBy(limitedSpeed / speed),
 
-			    decelerationDuration = limitedSpeed / (options.inertiaDeceleration * ease),
-			    offset = limitedSpeedVector.multiplyBy(-decelerationDuration / 2).round();
+				decelerationDuration = limitedSpeed / (options.inertiaDeceleration * ease),
+				offset = limitedSpeedVector.multiplyBy(-decelerationDuration / 2).round();
 
 			if (!offset.x || !offset.y) {
 				map.fire('moveend');
@@ -13592,7 +13592,7 @@ L.Map.DoubleClickZoom = L.Handler.extend({
 
 	_onDoubleClick: function (e) {
 		var map = this._map,
-		    zoom = map.getZoom() + (e.originalEvent.shiftKey ? -1 : 1);
+			zoom = map.getZoom() + (e.originalEvent.shiftKey ? -1 : 1);
 
 		if (map.options.doubleClickZoom === 'center') {
 			map.setZoom(zoom);
@@ -13646,8 +13646,8 @@ L.Map.ScrollWheelZoom = L.Handler.extend({
 
 	_performZoom: function () {
 		var map = this._map,
-		    delta = this._delta,
-		    zoom = map.getZoom();
+			delta = this._delta,
+			zoom = map.getZoom();
 
 		delta = delta > 0 ? Math.ceil(delta) : Math.floor(delta);
 		delta = Math.max(Math.min(delta, 4), -4);
@@ -13681,13 +13681,13 @@ L.extend(L.DomEvent, {
 	// inspired by Zepto touch code by Thomas Fuchs
 	addDoubleTapListener: function (obj, handler, id) {
 		var last,
-		    doubleTap = false,
-		    delay = 250,
-		    touch,
-		    pre = '_leaflet_',
-		    touchstart = this._touchstart,
-		    touchend = this._touchend,
-		    trackedTouches = [];
+			doubleTap = false,
+			delay = 250,
+			touch,
+			pre = '_leaflet_',
+			touchstart = this._touchstart,
+			touchend = this._touchend,
+			trackedTouches = [];
 
 		function onTouchStart(e) {
 			var count;
@@ -13763,11 +13763,11 @@ L.extend(L.DomEvent, {
 
 		obj.removeEventListener(this._touchstart, obj[pre + this._touchstart + id], false);
 		(L.Browser.pointer ? document.documentElement : obj).removeEventListener(
-		        this._touchend, obj[pre + this._touchend + id], false);
+			this._touchend, obj[pre + this._touchend + id], false);
 
 		if (L.Browser.pointer) {
 			document.documentElement.removeEventListener(L.DomEvent.POINTER_CANCEL, obj[pre + this._touchend + id],
-				false);
+														 false);
 		}
 
 		return this;
@@ -13797,20 +13797,20 @@ L.extend(L.DomEvent, {
 	addPointerListener: function (obj, type, handler, id) {
 
 		switch (type) {
-		case 'touchstart':
-			return this.addPointerListenerStart(obj, type, handler, id);
-		case 'touchend':
-			return this.addPointerListenerEnd(obj, type, handler, id);
-		case 'touchmove':
-			return this.addPointerListenerMove(obj, type, handler, id);
-		default:
-			throw 'Unknown touch event type';
+			case 'touchstart':
+				return this.addPointerListenerStart(obj, type, handler, id);
+			case 'touchend':
+				return this.addPointerListenerEnd(obj, type, handler, id);
+			case 'touchmove':
+				return this.addPointerListenerMove(obj, type, handler, id);
+			default:
+				throw 'Unknown touch event type';
 		}
 	},
 
 	addPointerListenerStart: function (obj, type, handler, id) {
 		var pre = '_leaflet_',
-		    pointers = this._pointers;
+			pointers = this._pointers;
 
 		var cb = function (e) {
 
@@ -13859,7 +13859,7 @@ L.extend(L.DomEvent, {
 
 	addPointerListenerMove: function (obj, type, handler, id) {
 		var pre = '_leaflet_',
-		    touches = this._pointers;
+			touches = this._pointers;
 
 		function cb(e) {
 
@@ -13887,7 +13887,7 @@ L.extend(L.DomEvent, {
 
 	addPointerListenerEnd: function (obj, type, handler, id) {
 		var pre = '_leaflet_',
-		    touches = this._pointers;
+			touches = this._pointers;
 
 		var cb = function (e) {
 			for (var i = 0; i < touches.length; i++) {
@@ -13912,19 +13912,19 @@ L.extend(L.DomEvent, {
 
 	removePointerListener: function (obj, type, id) {
 		var pre = '_leaflet_',
-		    cb = obj[pre + type + id];
+			cb = obj[pre + type + id];
 
 		switch (type) {
-		case 'touchstart':
-			obj.removeEventListener(this.POINTER_DOWN, cb, false);
-			break;
-		case 'touchmove':
-			obj.removeEventListener(this.POINTER_MOVE, cb, false);
-			break;
-		case 'touchend':
-			obj.removeEventListener(this.POINTER_UP, cb, false);
-			obj.removeEventListener(this.POINTER_CANCEL, cb, false);
-			break;
+			case 'touchstart':
+				obj.removeEventListener(this.POINTER_DOWN, cb, false);
+				break;
+			case 'touchmove':
+				obj.removeEventListener(this.POINTER_MOVE, cb, false);
+				break;
+			case 'touchend':
+				obj.removeEventListener(this.POINTER_UP, cb, false);
+				obj.removeEventListener(this.POINTER_CANCEL, cb, false);
+				break;
 		}
 
 		return this;
@@ -13956,8 +13956,8 @@ L.Map.TouchZoom = L.Handler.extend({
 		if (!e.touches || e.touches.length !== 2 || map._animatingZoom || this._zooming) { return; }
 
 		var p1 = map.mouseEventToLayerPoint(e.touches[0]),
-		    p2 = map.mouseEventToLayerPoint(e.touches[1]),
-		    viewCenter = map._getCenterLayerPoint();
+			p2 = map.mouseEventToLayerPoint(e.touches[1]),
+			viewCenter = map._getCenterLayerPoint();
 
 		this._startCenter = p1.add(p2)._divideBy(2);
 		this._startDist = p1.distanceTo(p2);
@@ -13972,8 +13972,8 @@ L.Map.TouchZoom = L.Handler.extend({
 		}
 
 		L.DomEvent
-		    .on(document, 'touchmove', this._onTouchMove, this)
-		    .on(document, 'touchend', this._onTouchEnd, this);
+			.on(document, 'touchmove', this._onTouchMove, this)
+			.on(document, 'touchend', this._onTouchEnd, this);
 
 		L.DomEvent.preventDefault(e);
 	},
@@ -13984,7 +13984,7 @@ L.Map.TouchZoom = L.Handler.extend({
 		if (!e.touches || e.touches.length !== 2 || !this._zooming) { return; }
 
 		var p1 = map.mouseEventToLayerPoint(e.touches[0]),
-		    p2 = map.mouseEventToLayerPoint(e.touches[1]);
+			p2 = map.mouseEventToLayerPoint(e.touches[1]);
 
 		this._scale = p1.distanceTo(p2) / this._startDist;
 		this._delta = p1._add(p2)._divideBy(2)._subtract(this._startCenter);
@@ -13993,31 +13993,31 @@ L.Map.TouchZoom = L.Handler.extend({
 
 		if (!map.options.bounceAtZoomLimits) {
 			if ((map.getZoom() === map.getMinZoom() && this._scale < 1) ||
-			    (map.getZoom() === map.getMaxZoom() && this._scale > 1)) { return; }
+				(map.getZoom() === map.getMaxZoom() && this._scale > 1)) { return; }
 		}
 
 		if (!this._moved) {
 			L.DomUtil.addClass(map._mapPane, 'leaflet-touching');
 
 			map
-			    .fire('movestart')
-			    .fire('zoomstart');
+				.fire('movestart')
+				.fire('zoomstart');
 
 			this._moved = true;
 		}
 
 		L.Util.cancelAnimFrame(this._animRequest);
 		this._animRequest = L.Util.requestAnimFrame(
-		        this._updateOnMove, this, true, this._map._container);
+			this._updateOnMove, this, true, this._map._container);
 
 		L.DomEvent.preventDefault(e);
 	},
 
 	_updateOnMove: function () {
 		var map = this._map,
-		    origin = this._getScaleOrigin(),
-		    center = map.layerPointToLatLng(origin),
-		    zoom = map.getScaleZoom(this._scale);
+			origin = this._getScaleOrigin(),
+			center = map.layerPointToLatLng(origin),
+			zoom = map.getScaleZoom(this._scale);
 
 		map._animateZoom(center, zoom, this._startCenter, this._scale, this._delta);
 	},
@@ -14035,19 +14035,19 @@ L.Map.TouchZoom = L.Handler.extend({
 		L.Util.cancelAnimFrame(this._animRequest);
 
 		L.DomEvent
-		    .off(document, 'touchmove', this._onTouchMove)
-		    .off(document, 'touchend', this._onTouchEnd);
+			.off(document, 'touchmove', this._onTouchMove)
+			.off(document, 'touchend', this._onTouchEnd);
 
 		var origin = this._getScaleOrigin(),
-		    center = map.layerPointToLatLng(origin),
+			center = map.layerPointToLatLng(origin),
 
-		    oldZoom = map.getZoom(),
-		    floatZoomDelta = map.getScaleZoom(this._scale) - oldZoom,
-		    roundZoomDelta = (floatZoomDelta > 0 ?
-		            Math.ceil(floatZoomDelta) : Math.floor(floatZoomDelta)),
+			oldZoom = map.getZoom(),
+			floatZoomDelta = map.getScaleZoom(this._scale) - oldZoom,
+			roundZoomDelta = (floatZoomDelta > 0 ?
+							  Math.ceil(floatZoomDelta) : Math.floor(floatZoomDelta)),
 
-		    zoom = map._limitZoom(oldZoom + roundZoomDelta),
-		    scale = map.getZoomScale(zoom) / this._scale;
+			zoom = map._limitZoom(oldZoom + roundZoomDelta),
+			scale = map.getZoomScale(zoom) / this._scale;
 
 		map._animateZoom(center, zoom, origin, scale);
 	},
@@ -14094,7 +14094,7 @@ L.Map.Tap = L.Handler.extend({
 		}
 
 		var first = e.touches[0],
-		    el = first.target;
+			el = first.target;
 
 		this._startPos = this._newPos = new L.Point(first.clientX, first.clientY);
 
@@ -14127,7 +14127,7 @@ L.Map.Tap = L.Handler.extend({
 		if (this._fireClick && e && e.changedTouches) {
 
 			var first = e.changedTouches[0],
-			    el = first.target;
+				el = first.target;
 
 			if (el && el.tagName && el.tagName.toLowerCase() === 'a') {
 				L.DomUtil.removeClass(el, 'leaflet-active');
@@ -14156,10 +14156,10 @@ L.Map.Tap = L.Handler.extend({
 		e.target._simulatedClick = true;
 
 		simulatedEvent.initMouseEvent(
-		        type, true, true, window, 1,
-		        e.screenX, e.screenY,
-		        e.clientX, e.clientY,
-		        false, false, false, false, 0, null);
+			type, true, true, window, 1,
+			e.screenX, e.screenY,
+			e.clientX, e.clientY,
+			false, false, false, false, 0, null);
 
 		e.target.dispatchEvent(simulatedEvent);
 	}
@@ -14185,16 +14185,16 @@ L.Control.Zoom = L.Control.extend({
 
 	onAdd: function (map) {
 		var zoomName = 'leaflet-control-zoom',
-		    container = L.DomUtil.create('div', zoomName + ' leaflet-bar');
+			container = L.DomUtil.create('div', zoomName + ' leaflet-bar');
 
 		this._map = map;
 
 		this._zoomInButton  = this._createButton(
-		        this.options.zoomInText, this.options.zoomInTitle,
-		        zoomName + '-in',  container, this._zoomIn,  this);
+			this.options.zoomInText, this.options.zoomInTitle,
+			zoomName + '-in',  container, this._zoomIn,  this);
 		this._zoomOutButton = this._createButton(
-		        this.options.zoomOutText, this.options.zoomOutTitle,
-		        zoomName + '-out', container, this._zoomOut, this);
+			this.options.zoomOutText, this.options.zoomOutTitle,
+			zoomName + '-out', container, this._zoomOut, this);
 
 		this._updateDisabled();
 		map.on('zoomend zoomlevelschange', this._updateDisabled, this);
@@ -14223,12 +14223,12 @@ L.Control.Zoom = L.Control.extend({
 		var stop = L.DomEvent.stopPropagation;
 
 		L.DomEvent
-		    .on(link, 'click', stop)
-		    .on(link, 'mousedown', stop)
-		    .on(link, 'dblclick', stop)
-		    .on(link, 'click', L.DomEvent.preventDefault)
-		    .on(link, 'click', fn, context)
-		    .on(link, 'click', this._refocusOnMap, context);
+			.on(link, 'click', stop)
+			.on(link, 'mousedown', stop)
+			.on(link, 'dblclick', stop)
+			.on(link, 'click', L.DomEvent.preventDefault)
+			.on(link, 'click', fn, context)
+			.on(link, 'click', this._refocusOnMap, context);
 
 		return link;
 	},
@@ -14291,10 +14291,10 @@ L.Control.Attribution = L.Control.extend({
 				this.addAttribution(map._layers[i].getAttribution());
 			}
 		}
-		
+
 		map
-		    .on('layeradd', this._onLayerAdd, this)
-		    .on('layerremove', this._onLayerRemove, this);
+			.on('layeradd', this._onLayerAdd, this)
+			.on('layerremove', this._onLayerRemove, this);
 
 		this._update();
 
@@ -14303,8 +14303,8 @@ L.Control.Attribution = L.Control.extend({
 
 	onRemove: function (map) {
 		map
-		    .off('layeradd', this._onLayerAdd)
-		    .off('layerremove', this._onLayerRemove);
+			.off('layeradd', this._onLayerAdd)
+			.off('layerremove', this._onLayerRemove);
 
 	},
 
@@ -14406,7 +14406,7 @@ L.PosAnimation = L.Class.extend({
 		this.fire('start');
 
 		el.style[L.DomUtil.TRANSITION] = 'all ' + (duration || 0.25) +
-		        's cubic-bezier(0,0,' + (easeLinearity || 0.5) + ',1)';
+			's cubic-bezier(0,0,' + (easeLinearity || 0.5) + ',1)';
 
 		L.DomEvent.on(el, L.DomUtil.TRANSITION_END, this._onTransitionEnd, this);
 		L.DomUtil.setPosition(el, newPos);
@@ -14449,8 +14449,8 @@ L.PosAnimation = L.Class.extend({
 
 	_getPos: function () {
 		var left, top, matches,
-		    el = this._el,
-		    style = window.getComputedStyle(el);
+			el = this._el,
+			style = window.getComputedStyle(el);
 
 		if (L.Browser.any3d) {
 			matches = style[L.DomUtil.TRANSFORM].match(this._transformRe);
@@ -14511,7 +14511,7 @@ L.Map.include({
 			// try animating pan or zoom
 			var animated = (this._zoom !== zoom) ?
 				this._tryAnimatedZoom && this._tryAnimatedZoom(center, zoom, options.zoom) :
-				this._tryAnimatedPan(center, options.pan);
+			this._tryAnimatedPan(center, options.pan);
 
 			if (animated) {
 				// prevent resize handler call, the view will refresh after animation anyway
@@ -14624,7 +14624,7 @@ L.PosAnimation = L.DomUtil.TRANSITION ? L.PosAnimation : L.PosAnimation.extend({
 
 	_step: function () {
 		var elapsed = (+new Date()) - this._startTime,
-		    duration = this._duration * 1000;
+			duration = this._duration * 1000;
 
 		if (elapsed < duration) {
 			this._runFrame(this._easeOut(elapsed / duration));
@@ -14668,7 +14668,7 @@ if (L.DomUtil.TRANSITION) {
 	L.Map.addInitHook(function () {
 		// don't animate on browsers without hardware-accelerated transitions or old Android/Opera
 		this._zoomAnimated = this.options.zoomAnimation && L.DomUtil.TRANSITION &&
-				L.Browser.any3d && !L.Browser.android23 && !L.Browser.mobileOpera;
+			L.Browser.any3d && !L.Browser.android23 && !L.Browser.mobileOpera;
 
 		// zoom transitions run with the same duration for all layers, so if one of transitionend events
 		// happens after starting zoom animation (propagating to the map pane), we know that it ended globally
@@ -14698,19 +14698,19 @@ L.Map.include(!L.DomUtil.TRANSITION ? {} : {
 
 		// don't animate if disabled, not supported or zoom difference is too large
 		if (!this._zoomAnimated || options.animate === false || this._nothingToAnimate() ||
-		        Math.abs(zoom - this._zoom) > this.options.zoomAnimationThreshold) { return false; }
+			Math.abs(zoom - this._zoom) > this.options.zoomAnimationThreshold) { return false; }
 
 		// offset is the pixel coords of the zoom origin relative to the current center
 		var scale = this.getZoomScale(zoom),
-		    offset = this._getCenterOffset(center)._divideBy(1 - 1 / scale),
+			offset = this._getCenterOffset(center)._divideBy(1 - 1 / scale),
 			origin = this._getCenterLayerPoint()._add(offset);
 
 		// don't animate if the zoom origin isn't within one screen from the current center, unless forced
 		if (options.animate !== true && !this.getSize().contains(offset)) { return false; }
 
 		this
-		    .fire('movestart')
-		    .fire('zoomstart');
+			.fire('movestart')
+			.fire('zoomstart');
 
 		this._animateZoom(center, zoom, origin, scale, null, true);
 
@@ -14770,18 +14770,18 @@ L.TileLayer.include({
 		}
 
 		var bg = this._bgBuffer,
-		    transform = L.DomUtil.TRANSFORM,
-		    initialTransform = e.delta ? L.DomUtil.getTranslateString(e.delta) : bg.style[transform],
-		    scaleStr = L.DomUtil.getScaleString(e.scale, e.origin);
+			transform = L.DomUtil.TRANSFORM,
+			initialTransform = e.delta ? L.DomUtil.getTranslateString(e.delta) : bg.style[transform],
+			scaleStr = L.DomUtil.getScaleString(e.scale, e.origin);
 
 		bg.style[transform] = e.backwards ?
-				scaleStr + ' ' + initialTransform :
-				initialTransform + ' ' + scaleStr;
+			scaleStr + ' ' + initialTransform :
+		initialTransform + ' ' + scaleStr;
 	},
 
 	_endZoomAnim: function () {
 		var front = this._tileContainer,
-		    bg = this._bgBuffer;
+			bg = this._bgBuffer;
 
 		front.style.visibility = '';
 		front.parentNode.appendChild(front); // Bring to fore
@@ -14804,13 +14804,13 @@ L.TileLayer.include({
 	_prepareBgBuffer: function () {
 
 		var front = this._tileContainer,
-		    bg = this._bgBuffer;
+			bg = this._bgBuffer;
 
 		// if foreground layer doesn't have many tiles but bg layer does,
 		// keep the existing bg layer and just zoom it some more
 
 		var bgLoaded = this._getLoadedTilesPercentage(bg),
-		    frontLoaded = this._getLoadedTilesPercentage(front);
+			frontLoaded = this._getLoadedTilesPercentage(front);
 
 		if (bg && bgLoaded > 0.5 && frontLoaded < 0.5) {
 
@@ -14835,7 +14835,7 @@ L.TileLayer.include({
 
 	_getLoadedTilesPercentage: function (container) {
 		var tiles = container.getElementsByTagName('img'),
-		    i, len, count = 0;
+			i, len, count = 0;
 
 		for (i = 0, len = tiles.length; i < len; i++) {
 			if (tiles[i].complete) {
@@ -14848,7 +14848,7 @@ L.TileLayer.include({
 	// stops loading all tiles in the background layer
 	_stopLoadingImages: function (container) {
 		var tiles = Array.prototype.slice.call(container.getElementsByTagName('img')),
-		    i, len, tile;
+			i, len, tile;
 
 		for (i = 0, len = tiles.length; i < len; i++) {
 			tile = tiles[i];
@@ -14880,22 +14880,22 @@ L.TileLayer.Zoomify = L.TileLayer.extend({
 		options = L.setOptions(this, options);
 		this._url = url;
 
-    	var imageSize = L.point(options.width, options.height),
-	    	tileSize = options.tileSize;
+		var imageSize = L.point(options.width, options.height),
+			tileSize = options.tileSize;
 
-    	this._imageSize = [imageSize];
-    	this._gridSize = [this._getGridSize(imageSize)];
+		this._imageSize = [imageSize];
+		this._gridSize = [this._getGridSize(imageSize)];
 
-        while (imageSize.x > tileSize || imageSize.y > tileSize) {
-        	imageSize = imageSize.divideBy(2).floor();
-        	this._imageSize.push(imageSize);
-        	this._gridSize.push(this._getGridSize(imageSize));
-        }
+		while (imageSize.x > tileSize || imageSize.y > tileSize) {
+			imageSize = imageSize.divideBy(2).floor();
+			this._imageSize.push(imageSize);
+			this._gridSize.push(this._getGridSize(imageSize));
+		}
 
 		this._imageSize.reverse();
 		this._gridSize.reverse();
 
-        this.options.maxZoom = this._gridSize.length - 1;
+		this.options.maxZoom = this._gridSize.length - 1;
 	},
 
 	onAdd: function (map) {
@@ -14908,25 +14908,25 @@ L.TileLayer.Zoomify = L.TileLayer.extend({
 
 		//map.setView(center, zoom, true);
 	},
-	
+
 	getZoomifyBounds: function(map) {
 		//return "getZoomifyBounds";
 		var imageSize 	= this._imageSize[0],
 			topleft 	= map.options.crs.pointToLatLng(L.point(0, 0), 0),
-		    bottomright = map.options.crs.pointToLatLng(L.point(imageSize.x, imageSize.y), 0),
-		    bounds 		= L.latLngBounds(topleft, bottomright);
-			
-			
+			bottomright = map.options.crs.pointToLatLng(L.point(imageSize.x, imageSize.y), 0),
+			bounds 		= L.latLngBounds(topleft, bottomright);
+
+
 		return bounds;
 		//[[75, -132], [-30, 128]]
 	},
-	
+
 	getCenterZoom: function(map) {
 		var mapSize = map.getSize(),
 			zoom = this._getBestFitZoom(mapSize),
 			imageSize = this._imageSize[zoom],
 			center = map.options.crs.pointToLatLng(L.point(imageSize.x / 2, imageSize.y / 2), zoom);
-			
+
 		return {
 			center: center,
 			lat: 	center.lat,
@@ -15007,7 +15007,7 @@ L.TileLayer.Zoomify = L.TileLayer.extend({
 		}	
 
 		num += tilePoint.y * this._gridSize[zoom].x + tilePoint.x;
-      	return Math.floor(num / 256);;
+		return Math.floor(num / 256);;
 	}
 
 });
@@ -15018,91 +15018,91 @@ L.tileLayer.zoomify = function (url, options) {
 
 /*
 	https://github.com/Norkart/Leaflet-MiniMap
-	
+
 */
 
 L.Control.MiniMap = L.Control.extend({
-    options: {
-        position: 'bottomright',
-        toggleDisplay: false,
-        zoomLevelOffset: -5,
-        zoomLevelFixed: false,
-        zoomAnimation: false,
-        autoToggleDisplay: false,
+	options: {
+		position: 'bottomright',
+		toggleDisplay: false,
+		zoomLevelOffset: -5,
+		zoomLevelFixed: false,
+		zoomAnimation: false,
+		autoToggleDisplay: false,
 		show_view: true,
-        width: 150,
-        height: 150,
-        aimingRectOptions: {
-            color: "#c34528",
-            weight: 1,
-            clickable: false,
+		width: 150,
+		height: 150,
+		aimingRectOptions: {
+			color: "#c34528",
+			weight: 1,
+			clickable: false,
 			stroke:true
-        },
-        shadowRectOptions: {
-            color: "#000000",
-            weight: 1,
-            clickable: false,
-            opacity: 0,
-            fillOpacity: 0
-        }
-    },
+		},
+		shadowRectOptions: {
+			color: "#000000",
+			weight: 1,
+			clickable: false,
+			opacity: 0,
+			fillOpacity: 0
+		}
+	},
 
-    hideText: 'Hide MiniMap',
+	hideText: 'Hide MiniMap',
 
-    showText: 'Show MiniMap',
+	showText: 'Show MiniMap',
 
-    //layer is the map layer to be shown in the minimap
-    initialize: function(layer, options) {
-        L.Util.setOptions(this, options);
-        //Make sure the aiming rects are non-clickable even if the user tries to set them clickable (most likely by forgetting to specify them false)
-        this.options.aimingRectOptions.clickable = false;
-        this.options.shadowRectOptions.clickable = false;
-        this._layer = layer;
-    },
+	//layer is the map layer to be shown in the minimap
+	initialize: function(layer, options) {
+		L.Util.setOptions(this, options);
+		//Make sure the aiming rects are non-clickable even if the user tries to set them clickable (most likely by forgetting to specify them false)
+		this.options.aimingRectOptions.clickable = false;
+		this.options.shadowRectOptions.clickable = false;
+		this._layer = layer;
+	},
 
-    onAdd: function(map) {
+	onAdd: function(map) {
 
-        this._mainMap = map;
+		this._mainMap = map;
 
-        //Creating the container and stopping events from spilling through to the main map.
-        this._container = L.DomUtil.create('div', 'leaflet-control-minimap');
-        this._container.style.width = this.options.width + 'px';
-        this._container.style.height = this.options.height + 'px';
-        L.DomEvent.disableClickPropagation(this._container);
-        L.DomEvent.on(this._container, 'mousewheel', L.DomEvent.stopPropagation);
+		//Creating the container and stopping events from spilling through to the main map.
+		this._container = L.DomUtil.create('div', 'leaflet-control-minimap');
+		this._container.style.width = this.options.width + 'px';
+		this._container.style.height = this.options.height + 'px';
+		L.DomEvent.disableClickPropagation(this._container);
+		L.DomEvent.on(this._container, 'mousewheel', L.DomEvent.stopPropagation);
 
 
-        this._miniMap = new L.Map(this._container, {
-            attributionControl: false,
-            zoomControl: false,
-            zoomAnimation: this.options.zoomAnimation,
-            autoToggleDisplay: this.options.autoToggleDisplay,
-            touchZoom: false,
-            scrollWheelZoom: false,
-            doubleClickZoom: false,
-            boxZoom: false,
+		this._miniMap = new L.Map(this._container, {
+			attributionControl: false,
+			zoomControl: false,
+			zoomAnimation: this.options.zoomAnimation,
+			autoToggleDisplay: this.options.autoToggleDisplay,
+			touchZoom: false,
+			scrollWheelZoom: false,
+			doubleClickZoom: false,
+			boxZoom: false,
 			dragging:false,
-            crs: map.options.crs
-        });
+			crs: map.options.crs
+		});
 
-        this._miniMap.addLayer(this._layer);
+		this._miniMap.addLayer(this._layer);
 
-        //These bools are used to prevent infinite loops of the two maps notifying each other that they've moved.
-        this._mainMapMoving = false;
-        this._miniMapMoving = false;
+		//These bools are used to prevent infinite loops of the two maps notifying each other that they've moved.
+		this._mainMapMoving = false;
+		this._miniMapMoving = false;
 
-        //Keep a record of this to prevent auto toggling when the user explicitly doesn't want it.
-        this._userToggledDisplay = false;
-        this._minimized = false;
+		//Keep a record of this to prevent auto toggling when the user explicitly doesn't want it.
+		this._userToggledDisplay = false;
+		this._minimized = false;
 
-        if (this.options.toggleDisplay) {
-            this._addToggleButton();
-        }
+		if (this.options.toggleDisplay) {
+			this._addToggleButton();
+		}
 
-        this._miniMap.whenReady(L.Util.bind(function() {
-            this._aimingRect = L.rectangle(this._mainMap.getBounds(), this.options.aimingRectOptions).addTo(this._miniMap);
-            this._shadowRect = L.rectangle(this._mainMap.getBounds(), this.options.shadowRectOptions).addTo(this._miniMap);
-			
+		this._miniMap.whenReady(L.Util.bind(function() {
+			this._aimingRect = L.rectangle(this._mainMap.getBounds(), this.options.aimingRectOptions).addTo(this._miniMap);
+			this._shadowRect = L.rectangle(this._mainMap.getBounds(), this.options.shadowRectOptions).addTo(this._miniMap);
+
 			this._locationCircle = L.circleMarker(this._mainMap.getCenter(), {
 				fillColor: "#c34528",
 				color: "#FFFFFF",
@@ -15114,26 +15114,26 @@ L.Control.MiniMap = L.Control.extend({
 				clickable: false
 			}).addTo(this._miniMap);
 			this._locationCircle.setRadius(5);
-			
-            this._mainMap.on('moveend', this._onMainMapMoved, this);
-            this._mainMap.on('move', this._onMainMapMoving, this);
-            //this._miniMap.on('movestart', this._onMiniMapMoveStarted, this);
-            //this._miniMap.on('move', this._onMiniMapMoving, this);
-            //this._miniMap.on('moveend', this._onMiniMapMoved, this);
+
+			this._mainMap.on('moveend', this._onMainMapMoved, this);
+			this._mainMap.on('move', this._onMainMapMoving, this);
+			//this._miniMap.on('movestart', this._onMiniMapMoveStarted, this);
+			//this._miniMap.on('move', this._onMiniMapMoving, this);
+			//this._miniMap.on('moveend', this._onMiniMapMoved, this);
 			if (this.options.bounds_array) {
 				this._miniMap.fitBounds(this.options.bounds_array, {padding:[15,15]});
 			}
-        }, this));
+		}, this));
 
-        return this._container;
-    },
-	
+		return this._container;
+	},
+
 	minimize: function(hide_completely) {
 		if (!this._minimized) {
 			this._minimize();
 		}
 	},
-	
+
 	restore: function() {
 		if (this._minimized) {
 			this._restore();
@@ -15141,138 +15141,138 @@ L.Control.MiniMap = L.Control.extend({
 		}
 	},
 
-    addTo: function(map) {
-        L.Control.prototype.addTo.call(this, map);
-        this._miniMap.setView(this._mainMap.getCenter(), this._decideZoom(true));
-        this._setDisplay(this._decideMinimized());
-        return this;
-    },
+	addTo: function(map) {
+		L.Control.prototype.addTo.call(this, map);
+		this._miniMap.setView(this._mainMap.getCenter(), this._decideZoom(true));
+		this._setDisplay(this._decideMinimized());
+		return this;
+	},
 
-    onRemove: function(map) {
-        this._mainMap.off('moveend', this._onMainMapMoved, this);
-        this._mainMap.off('move', this._onMainMapMoving, this);
-        this._miniMap.off('moveend', this._onMiniMapMoved, this);
+	onRemove: function(map) {
+		this._mainMap.off('moveend', this._onMainMapMoved, this);
+		this._mainMap.off('move', this._onMainMapMoving, this);
+		this._miniMap.off('moveend', this._onMiniMapMoved, this);
 
-        this._miniMap.removeLayer(this._layer);
-    },
+		this._miniMap.removeLayer(this._layer);
+	},
 
-    _addToggleButton: function() {
-        this._toggleDisplayButton = this.options.toggleDisplay ? this._createButton('', this.hideText, 'leaflet-control-minimap-toggle-display', this._container, this._toggleDisplayButtonClicked, this) : undefined;
-    },
+	_addToggleButton: function() {
+		this._toggleDisplayButton = this.options.toggleDisplay ? this._createButton('', this.hideText, 'leaflet-control-minimap-toggle-display', this._container, this._toggleDisplayButtonClicked, this) : undefined;
+	},
 
-    _createButton: function(html, title, className, container, fn, context) {
-        var link = L.DomUtil.create('a', className, container);
-        link.innerHTML = html;
-        link.href = '#';
-        link.title = title;
+	_createButton: function(html, title, className, container, fn, context) {
+		var link = L.DomUtil.create('a', className, container);
+		link.innerHTML = html;
+		link.href = '#';
+		link.title = title;
 
-        var stop = L.DomEvent.stopPropagation;
+		var stop = L.DomEvent.stopPropagation;
 
-        L.DomEvent.on(link, 'click', stop)
-            .on(link, 'mousedown', stop)
-            .on(link, 'dblclick', stop)
-            .on(link, 'click', L.DomEvent.preventDefault)
-            .on(link, 'click', fn, context);
+		L.DomEvent.on(link, 'click', stop)
+			.on(link, 'mousedown', stop)
+			.on(link, 'dblclick', stop)
+			.on(link, 'click', L.DomEvent.preventDefault)
+			.on(link, 'click', fn, context);
 
-        return link;
-    },
+		return link;
+	},
 
-    _toggleDisplayButtonClicked: function() {
-        this._userToggledDisplay = true;
-        if (!this._minimized) {
-            this._minimize();
-            this._toggleDisplayButton.title = this.showText;
-        } else {
-            this._restore();
-            this._toggleDisplayButton.title = this.hideText;
-        }
-    },
+	_toggleDisplayButtonClicked: function() {
+		this._userToggledDisplay = true;
+		if (!this._minimized) {
+			this._minimize();
+			this._toggleDisplayButton.title = this.showText;
+		} else {
+			this._restore();
+			this._toggleDisplayButton.title = this.hideText;
+		}
+	},
 
-    _setDisplay: function(minimize) {
-        if (minimize != this._minimized) {
-            if (!this._minimized) {
-                this._minimize();
-            } else {
-                this._restore();
-            }
-        }
-    },
+	_setDisplay: function(minimize) {
+		if (minimize != this._minimized) {
+			if (!this._minimized) {
+				this._minimize();
+			} else {
+				this._restore();
+			}
+		}
+	},
 
-    _minimize: function() {
-        this._container.style.width = '0px';
-        this._container.style.height = '0px';
-        this._minimized = true;
-    },
+	_minimize: function() {
+		this._container.style.width = '0px';
+		this._container.style.height = '0px';
+		this._minimized = true;
+	},
 
-    _restore: function() {
-        this._container.style.width = this.options.width + 'px';
-        this._container.style.height = this.options.height + 'px';
-        this._minimized = false;
-    },
+	_restore: function() {
+		this._container.style.width = this.options.width + 'px';
+		this._container.style.height = this.options.height + 'px';
+		this._minimized = false;
+	},
 
-    _onMainMapMoved: function(e) {
-        if (!this._miniMapMoving) {
+	_onMainMapMoved: function(e) {
+		if (!this._miniMapMoving) {
 			var zoom = this._decideZoom(true);
 			if (zoom != 0) {
 				//this._miniMap.setView(this._mainMap.getCenter(), this._decideZoom(true));
 				//this._miniMap.setView(this._mainMap.getCenter());
 			}
-            this._mainMapMoving = true;
+			this._mainMapMoving = true;
 
-            this._setDisplay(this._decideMinimized());
-        } else {
-            this._miniMapMoving = false;
-        }
+			this._setDisplay(this._decideMinimized());
+		} else {
+			this._miniMapMoving = false;
+		}
 		if (this.options.show_view) {
 			this._aimingRect.setBounds(this._mainMap.getBounds());
 		}
 		this._locationCircle.setLatLng(this._mainMap.getCenter());
-        
-    },
 
-    _onMainMapMoving: function(e) {
+	},
+
+	_onMainMapMoving: function(e) {
 		if (this.options.show_view) {
 			this._aimingRect.setBounds(this._mainMap.getBounds());
 		}
 		this._locationCircle.setLatLng(this._mainMap.getCenter());
-    },
+	},
 
-    _onMiniMapMoveStarted: function(e) {
-        var lastAimingRect = this._aimingRect.getBounds();
-        var sw = this._miniMap.latLngToContainerPoint(lastAimingRect.getSouthWest());
-        var ne = this._miniMap.latLngToContainerPoint(lastAimingRect.getNorthEast());
-        this._lastAimingRectPosition = {
-            sw: sw,
-            ne: ne
-        };
-    },
+	_onMiniMapMoveStarted: function(e) {
+		var lastAimingRect = this._aimingRect.getBounds();
+		var sw = this._miniMap.latLngToContainerPoint(lastAimingRect.getSouthWest());
+		var ne = this._miniMap.latLngToContainerPoint(lastAimingRect.getNorthEast());
+		this._lastAimingRectPosition = {
+			sw: sw,
+			ne: ne
+		};
+	},
 
-    _onMiniMapMoving: function(e) {
-        if (!this._mainMapMoving && this._lastAimingRectPosition) {
-            this._shadowRect.setBounds(new L.LatLngBounds(this._miniMap.containerPointToLatLng(this._lastAimingRectPosition.sw), this._miniMap.containerPointToLatLng(this._lastAimingRectPosition.ne)));
-            this._shadowRect.setStyle({
-                opacity: 1,
-                fillOpacity: 0.3
-            });
-        }
-    },
+	_onMiniMapMoving: function(e) {
+		if (!this._mainMapMoving && this._lastAimingRectPosition) {
+			this._shadowRect.setBounds(new L.LatLngBounds(this._miniMap.containerPointToLatLng(this._lastAimingRectPosition.sw), this._miniMap.containerPointToLatLng(this._lastAimingRectPosition.ne)));
+			this._shadowRect.setStyle({
+				opacity: 1,
+				fillOpacity: 0.3
+			});
+		}
+	},
 
-    _onMiniMapMoved: function(e) {
-        if (!this._mainMapMoving) {
-            this._miniMapMoving = true;
-            this._mainMap.setView(this._miniMap.getCenter(), this._decideZoom(false));
-            this._shadowRect.setStyle({
-                opacity: 0,
-                fillOpacity: 0
-            });
-        } else {
-            this._mainMapMoving = false;
-        }
-    },
+	_onMiniMapMoved: function(e) {
+		if (!this._mainMapMoving) {
+			this._miniMapMoving = true;
+			this._mainMap.setView(this._miniMap.getCenter(), this._decideZoom(false));
+			this._shadowRect.setStyle({
+				opacity: 0,
+				fillOpacity: 0
+			});
+		} else {
+			this._mainMapMoving = false;
+		}
+	},
 
-    _decideZoom: function(fromMaintoMini) {
-        if (!this.options.zoomLevelFixed && this.options.zoomLevelFixed != 0) {
-            if (fromMaintoMini) {
+	_decideZoom: function(fromMaintoMini) {
+		if (!this.options.zoomLevelFixed && this.options.zoomLevelFixed != 0) {
+			if (fromMaintoMini) {
 				return this._mainMap.getZoom() + this.options.zoomLevelOffset;
 			} else {
 				var currentDiff = this._miniMap.getZoom() - this._mainMap.getZoom();
@@ -15280,62 +15280,62 @@ L.Control.MiniMap = L.Control.extend({
 				var toRet;
 
 				if (currentDiff > this.options.zoomLevelOffset && this._mainMap.getZoom() < this._miniMap.getMinZoom() - this.options.zoomLevelOffset) {
-				    //This means the miniMap is zoomed out to the minimum zoom level and can't zoom any more.
-				    if (this._miniMap.getZoom() > this._lastMiniMapZoom) {
-				        //This means the user is trying to zoom in by using the minimap, zoom the main map.
-				        toRet = this._mainMap.getZoom() + 1;
-				        //Also we cheat and zoom the minimap out again to keep it visually consistent.
-				        this._miniMap.setZoom(this._miniMap.getZoom() - 1);
-				    } else {
-				        //Either the user is trying to zoom out past the mini map's min zoom or has just panned using it, we can't tell the difference.
-				        //Therefore, we ignore it!
-				        toRet = this._mainMap.getZoom();
-				    }
+					//This means the miniMap is zoomed out to the minimum zoom level and can't zoom any more.
+					if (this._miniMap.getZoom() > this._lastMiniMapZoom) {
+						//This means the user is trying to zoom in by using the minimap, zoom the main map.
+						toRet = this._mainMap.getZoom() + 1;
+						//Also we cheat and zoom the minimap out again to keep it visually consistent.
+						this._miniMap.setZoom(this._miniMap.getZoom() - 1);
+					} else {
+						//Either the user is trying to zoom out past the mini map's min zoom or has just panned using it, we can't tell the difference.
+						//Therefore, we ignore it!
+						toRet = this._mainMap.getZoom();
+					}
 				} else {
-				    //This is what happens in the majority of cases, and always if you configure the min levels + offset in a sane fashion.
-				    toRet = proposedZoom;
+					//This is what happens in the majority of cases, and always if you configure the min levels + offset in a sane fashion.
+					toRet = proposedZoom;
 				}
 				this._lastMiniMapZoom = this._miniMap.getZoom();
 				return toRet;
-            }
-        } else {
-            if (fromMaintoMini) {
+			}
+		} else {
+			if (fromMaintoMini) {
 				return this.options.zoomLevelFixed;
 			} else {
 				return this._mainMap.getZoom();
 			}
-             
-        }
-    },
 
-    _decideMinimized: function() {
-        if (this._userToggledDisplay) {
-            return this._minimized;
-        }
+		}
+	},
 
-        if (this.options.autoToggleDisplay) {
-            if (this._mainMap.getBounds().contains(this._miniMap.getBounds())) {
-                return true;
-            }
-            return false;
-        }
+	_decideMinimized: function() {
+		if (this._userToggledDisplay) {
+			return this._minimized;
+		}
 
-        return this._minimized;
-    }
+		if (this.options.autoToggleDisplay) {
+			if (this._mainMap.getBounds().contains(this._miniMap.getBounds())) {
+				return true;
+			}
+			return false;
+		}
+
+		return this._minimized;
+	}
 });
 
 L.Map.mergeOptions({
-    miniMapControl: false
+	miniMapControl: false
 });
 
 L.Map.addInitHook(function() {
-    if (this.options.miniMapControl) {
-        this.miniMapControl = (new L.Control.MiniMap()).addTo(this);
-    }
+	if (this.options.miniMapControl) {
+		this.miniMapControl = (new L.Control.MiniMap()).addTo(this);
+	}
 });
 
 L.control.minimap = function(options) {
-    return new L.Control.MiniMap(options);
+	return new L.Control.MiniMap(options);
 };
 
 
@@ -15355,38 +15355,38 @@ L.control.minimap = function(options) {
 				"type":         type,
 				"subdomains":   SUBDOMAINS.slice(),
 				"minZoom":      minZoom,
-	            "maxZoom":      maxZoom,
-	            "attribution":  [
+				"maxZoom":      maxZoom,
+				"attribution":  [
 					"<a href='http://leafletjs.com' title='A JS library for interactive maps'>Leaflet</a> | ",
-	                'Map tiles by <a href="http://stamen.com">Stamen Design</a>, ',
-	                'under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. ',
-	                'Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, ',
-	                'under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
-	            ].join("")
-	        };
-	    },
-	    PROVIDERS =  {
-	        "toner":        MAKE_PROVIDER("toner", "png", 0, 20),
-	        "terrain":      MAKE_PROVIDER("terrain", "jpg", 4, 18),
-	        "watercolor":   MAKE_PROVIDER("watercolor", "jpg", 1, 16),
-	        "trees-cabs-crime": {
-	            "url": "http://{S}.tiles.mapbox.com/v3/stamen.trees-cabs-crime/{Z}/{X}/{Y}.png",
-	            "type": "png",
-	            "subdomains": "a b c d".split(" "),
-	            "minZoom": 11,
-	            "maxZoom": 18,
-	            "extent": [
-	                {"lat": 37.853, "lon": -122.577},
-	                {"lat": 37.684, "lon": -122.313}
-	            ],
-	            "attribution": [
-	                'Design by Shawn Allen at <a href="http://stamen.com">Stamen</a>.',
-	                'Data courtesy of <a href="http://fuf.net">FuF</a>,',
-	                '<a href="http://www.yellowcabsf.com">Yellow Cab</a>',
-	                '&amp; <a href="http://sf-police.org">SFPD</a>.'
-	            ].join(" ")
-	        }
-	    };
+					'Map tiles by <a href="http://stamen.com">Stamen Design</a>, ',
+					'under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. ',
+					'Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, ',
+					'under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
+				].join("")
+			};
+		},
+		PROVIDERS =  {
+			"toner":        MAKE_PROVIDER("toner", "png", 0, 20),
+			"terrain":      MAKE_PROVIDER("terrain", "jpg", 4, 18),
+			"watercolor":   MAKE_PROVIDER("watercolor", "jpg", 1, 16),
+			"trees-cabs-crime": {
+				"url": "http://{S}.tiles.mapbox.com/v3/stamen.trees-cabs-crime/{Z}/{X}/{Y}.png",
+				"type": "png",
+				"subdomains": "a b c d".split(" "),
+				"minZoom": 11,
+				"maxZoom": 18,
+				"extent": [
+					{"lat": 37.853, "lon": -122.577},
+					{"lat": 37.684, "lon": -122.313}
+				],
+				"attribution": [
+					'Design by Shawn Allen at <a href="http://stamen.com">Stamen</a>.',
+					'Data courtesy of <a href="http://fuf.net">FuF</a>,',
+					'<a href="http://www.yellowcabsf.com">Yellow Cab</a>',
+					'&amp; <a href="http://sf-police.org">SFPD</a>.'
+				].join(" ")
+			}
+		};
 
 	// set up toner and terrain flavors
 	setupFlavors("toner", ["hybrid", "labels", "lines", "background", "lite"]);
@@ -15410,22 +15410,22 @@ L.control.minimap = function(options) {
 		same type and zoom range.
 	================================================== */
 	function setupFlavors(base, flavors, type) {
-	    var provider = getProvider(base);
-	    for (var i = 0; i < flavors.length; i++) {
-	        var flavor = [base, flavors[i]].join("-");
-	        PROVIDERS[flavor] = MAKE_PROVIDER(flavor, type || provider.type, provider.minZoom, provider.maxZoom);
-	    }
+		var provider = getProvider(base);
+		for (var i = 0; i < flavors.length; i++) {
+			var flavor = [base, flavors[i]].join("-");
+			PROVIDERS[flavor] = MAKE_PROVIDER(flavor, type || provider.type, provider.minZoom, provider.maxZoom);
+		}
 	}
 
 	/*	Get the named provider, or throw an exception 
 		if it doesn't exist.
 	================================================== */
 	function getProvider(name) {
-	    if (name in PROVIDERS) {
-	        return PROVIDERS[name];
-	    } else {
-	        throw 'No such provider (' + name + ')';
-	    }
+		if (name in PROVIDERS) {
+			return PROVIDERS[name];
+		} else {
+			throw 'No such provider (' + name + ')';
+		}
 	}
 
 	/*	StamenTileLayer for modestmaps-js
@@ -15433,33 +15433,33 @@ L.control.minimap = function(options) {
 		Works with both 1.x and 2.x by checking for the existence of MM.Template.
 	================================================== */
 	if (typeof MM === "object") {
-	    var ModestTemplate = (typeof MM.Template === "function")
-	        ? MM.Template
-	        : MM.TemplatedMapProvider;
-	    MM.StamenTileLayer = function(name) {
-	        var provider = getProvider(name);
-	        this._provider = provider;
-	        MM.Layer.call(this, new ModestTemplate(provider.url, provider.subdomains));
-	        this.provider.setZoomRange(provider.minZoom, provider.maxZoom);
-	        this.attribution = provider.attribution;
-	    };
+		var ModestTemplate = (typeof MM.Template === "function")
+		? MM.Template
+		: MM.TemplatedMapProvider;
+		MM.StamenTileLayer = function(name) {
+			var provider = getProvider(name);
+			this._provider = provider;
+			MM.Layer.call(this, new ModestTemplate(provider.url, provider.subdomains));
+			this.provider.setZoomRange(provider.minZoom, provider.maxZoom);
+			this.attribution = provider.attribution;
+		};
 
-	    MM.StamenTileLayer.prototype = {
-	        setCoordLimits: function(map) {
-	            var provider = this._provider;
-	            if (provider.extent) {
-	                map.coordLimits = [
-	                    map.locationCoordinate(provider.extent[0]).zoomTo(provider.minZoom),
-	                    map.locationCoordinate(provider.extent[1]).zoomTo(provider.maxZoom)
-	                ];
-	                return true;
-	            } else {
-	                return false;
-	            }
-	        }
-	    };
+		MM.StamenTileLayer.prototype = {
+			setCoordLimits: function(map) {
+				var provider = this._provider;
+				if (provider.extent) {
+					map.coordLimits = [
+						map.locationCoordinate(provider.extent[0]).zoomTo(provider.minZoom),
+						map.locationCoordinate(provider.extent[1]).zoomTo(provider.maxZoom)
+					];
+					return true;
+				} else {
+					return false;
+				}
+			}
+		};
 
-	    MM.extend(MM.StamenTileLayer, MM.Layer);
+		MM.extend(MM.StamenTileLayer, MM.Layer);
 	}
 
 	/*	StamenTileLayer for Leaflet
@@ -15467,12 +15467,12 @@ L.control.minimap = function(options) {
 		Tested with version 0.3 and 0.4, but should work on all 0.x releases.
 	================================================== */
 	if (typeof L === "object") {
-	    L.StamenTileLayer = L.TileLayer.extend({
-	        initialize: function(name, options) {
-	            var provider = getProvider(name),
-	                url = provider.url.replace(/({[A-Z]})/g, function(s) {
-	                    return s.toLowerCase();
-	                }), 
+		L.StamenTileLayer = L.TileLayer.extend({
+			initialize: function(name, options) {
+				var provider = getProvider(name),
+					url = provider.url.replace(/({[A-Z]})/g, function(s) {
+						return s.toLowerCase();
+					}), 
 					_options = {
 						minZoom: 		provider.minZoom,
 						maxZoom: 		provider.maxZoom,
@@ -15480,44 +15480,44 @@ L.control.minimap = function(options) {
 						scheme: 		"xyz",
 						attribution: 	provider.attribution
 					};
-					
+
 				if (options) {
 					VCO.Util.mergeData(_options, options);
 				}
-				
-	            L.TileLayer.prototype.initialize.call(this, url, _options);
-	        }
-	    });
+
+				L.TileLayer.prototype.initialize.call(this, url, _options);
+			}
+		});
 	}
 
 	/*	 StamenMapType for Google Maps API V3
 		<https://developers.google.com/maps/documentation/javascript/>
 	================================================== */
 	if (typeof google === "object" && typeof google.maps === "object") {
-	    google.maps.StamenMapType = function(name) {
-	        var provider = getProvider(name),
-	            subdomains = provider.subdomains;
-	        return google.maps.ImageMapType.call(this, {
-	            "getTileUrl": function(coord, zoom) {
-	                var numTiles = 1 << zoom,
-	                    wx = coord.x % numTiles,
-	                    x = (wx < 0) ? wx + numTiles : wx,
-	                    y = coord.y,
-	                    index = (zoom + x + y) % subdomains.length;
-	                return provider.url
-	                    .replace("{S}", subdomains[index])
-	                    .replace("{Z}", zoom)
-	                    .replace("{X}", x)
-	                    .replace("{Y}", y);
-	            },
-	            "tileSize": new google.maps.Size(256, 256),
-	            "name":     name,
-	            "minZoom":  provider.minZoom,
-	            "maxZoom":  provider.maxZoom
-	        });
-	    };
-	    // FIXME: is there a better way to extend classes in Google land?
-	    google.maps.StamenMapType.prototype = new google.maps.ImageMapType("_");
+		google.maps.StamenMapType = function(name) {
+			var provider = getProvider(name),
+				subdomains = provider.subdomains;
+			return google.maps.ImageMapType.call(this, {
+				"getTileUrl": function(coord, zoom) {
+					var numTiles = 1 << zoom,
+						wx = coord.x % numTiles,
+						x = (wx < 0) ? wx + numTiles : wx,
+						y = coord.y,
+						index = (zoom + x + y) % subdomains.length;
+					return provider.url
+						.replace("{S}", subdomains[index])
+						.replace("{Z}", zoom)
+						.replace("{X}", x)
+						.replace("{Y}", y);
+				},
+				"tileSize": new google.maps.Size(256, 256),
+				"name":     name,
+				"minZoom":  provider.minZoom,
+				"maxZoom":  provider.maxZoom
+			});
+		};
+		// FIXME: is there a better way to extend classes in Google land?
+		google.maps.StamenMapType.prototype = new google.maps.ImageMapType("_");
 	}
 
 })(typeof exports === "undefined" ? this : exports);
@@ -15529,41 +15529,41 @@ L.control.minimap = function(options) {
 ================================================== */
 
 VCO.MapMarker = VCO.Class.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	/*	Constructor
 	================================================== */
 	initialize: function(data, options) {
-		
+
 		// DOM Elements
 		this._el = {
 			container: {},
 			content_container: {},
 			content: {}
 		};
-	
+
 		// Components
 		this._marker = {};
-		
+
 		// Icon
 		this._icon = {};
 		this._custom_icon = false;
 		this._custom_icon_url = "";
 		this._custom_image_icon = false;
-		
+
 		// Marker Number
 		this.marker_number = 0;
-		
+
 		// Media Icon
 		this.media_icon_class = "";
-		
+
 		// Timer
 		this.timer = {};
-	
+
 		// Data
 		this.data = {};
-	
+
 		// Options
 		this.options = {
 			// animation
@@ -15574,102 +15574,102 @@ VCO.MapMarker = VCO.Class.extend({
 			map_popup: 			false,
 			use_custom_markers: false
 		};
-		
-		
+
+
 		// Animation Object
 		this.animator = null;
-		
+
 		// Merge Data and Options
 		VCO.Util.mergeData(this.options, options);
 		VCO.Util.mergeData(this.data, data);
-		
+
 		this._initLayout();
-		
-		
+
+
 	},
-	
+
 	/*	Public
 	================================================== */
 	show: function() {
-		
+
 	},
-	
+
 	hide: function() {
-		
+
 	},
-	
+
 	addTo: function(m) {
 		this._addTo(m);
 	},
-	
+
 	removeFrom: function(m) {
 		this._removeFrom(m)
 	},
-	
+
 	updateDisplay: function(w, h, a) {
 		this._updateDisplay(w, h, a);
 	},
-	
+
 	createMarker: function(d, o) {
 		this._createMarker(d, o);
 	},
-	
+
 	createPopup: function(d, o) {
 		this._createPopup(d, o);
 	},
-	
+
 	active: function(a) {
 		this._active(a);
 	},
-	
+
 	location: function() {
 		return this._location();
 	},
-	
+
 	/*	Marker Specific
 		Specific to Map API
 	================================================== */
-		_createMarker: function(d, o) {
-			
-		},
-		
-		_addTo: function(m) {
-			
-		},
-		
-		_removeFrom: function(m) {
-			
-		},
-		
-		_createPopup: function(d, o) {
-		
-		},
-		
-		_active: function(a) {
-			
-		},
-		
-		_location: function() {
-			return {lat:0, lng:0}
-		},
-	
+	_createMarker: function(d, o) {
+
+	},
+
+	_addTo: function(m) {
+
+	},
+
+	_removeFrom: function(m) {
+
+	},
+
+	_createPopup: function(d, o) {
+
+	},
+
+	_active: function(a) {
+
+	},
+
+	_location: function() {
+		return {lat:0, lng:0}
+	},
+
 	/*	Events
 	================================================== */
 	_onMarkerClick: function(e) {
 		this.fire("markerclick", {marker_number: this.marker_number});
 	},
-	
+
 	/*	Private Methods
 	================================================== */
 	_initLayout: function () {
 		this._createMarker(this.data, this.options);
 	},
-	
+
 	// Update Display
 	_updateDisplay: function(width, height, animate) {
-		
+
 	}
-	
+
 });
 
 
@@ -15682,13 +15682,13 @@ VCO.MapMarker = VCO.Class.extend({
 
 
 ================================================== */
- 
+
 VCO.Map = VCO.Class.extend({
-	
+
 	includes: [VCO.Events, VCO.DomMixins],
-	
+
 	_el: {},
-	
+
 	/*	Constructor
 	================================================== */
 	initialize: function(elem, data, options) {
@@ -15698,59 +15698,59 @@ VCO.Map = VCO.Class.extend({
 			map: {},
 			map_mask: {}
 		};
-		
+
 		if (typeof elem === 'object') {
 			this._el.container = elem;
 		} else {
 			this._el.container = VCO.Dom.get(elem);
 		}
-		
+
 		// LOADED
 		this._loaded = {
 			data: 	false,
 			map: 	false
 		};
-		
+
 		// MAP
 		this._map = null;
-		
+
 		// MINI MAP
 		this._mini_map = null;
-		
+
 		// Markers
 		this._markers = [];
-		
+
 		// Marker Zoom Miniumum and Maximum
 		this.zoom_min_max = {
 			min: null,
 			max: null
 		};
-		
+
 		// Line
 		this._line = null;
 		this._line_active = null;
-		
+
 		// Current Marker
 		this.current_marker = 0;
-		
+
 		// Markers Bounds Array
 		this.bounds_array = null;
-		
+
 		// Map Tiles Layer
 		this._tile_layer = null;
-		
+
 		// Map Tiles Layer for Mini Map
 		this._tile_layer_mini = null;
-		
+
 		// Image Layer (for zoomify)
 		this._image_layer = null;
-	
+
 		// Data
 		this.data = {
 			uniqueid: 			"",
 			slides: 				[{test:"yes"}, {test:"yes"}, {test:"yes"}]
 		};
-	
+
 		//Options
 		this.options = {
 			map_type: 			"stamen:toner-lite",
@@ -15784,54 +15784,54 @@ VCO.Map = VCO.Class.extend({
 			use_custom_markers: false,
 			map_center_offset:  null // takes object {top:0,left:0}
 		};
-		
+
 		// Animation
 		this.animator = null;
-		
+
 		// Timer
 		this.timer = null;
-		
+
 		// Touchpad Events
 		this.touch_scale = 1;
 		this.scroll = {
 			start_time: null
 		};
-		
+
 		// Merge Data and Options
 		VCO.Util.mergeData(this.options, options);
 		VCO.Util.mergeData(this.data, data);
-		
+
 		this._initLayout();
 		this._initEvents();
 		this._createMap();
 		this._initData();
-		
-		
+
+
 	},
-	
+
 	/*	Public
 	================================================== */
 	updateDisplay: function(w, h, animate, d, offset) {
 		this._updateDisplay(w, h, animate, d, offset);
 	},
-	
+
 	goTo: function(n, change) {
 		if (n < this._markers.length && n >= 0) {
 			var zoom = 0,
 				previous_marker = this.current_marker;
-				
+
 			this.current_marker = n;
-			
+
 			var marker = this._markers[this.current_marker];
-			
+
 			// Stop animation
 			if (this.animator) {
 				this.animator.stop();
 			}
-			
+
 			// Reset Active Markers
 			this._resetMarkersActive();
-			
+
 			// Check to see if it's an overview
 			if (marker.data.type && marker.data.type == "overview") {
 				this._markerOverview();
@@ -15841,32 +15841,32 @@ VCO.Map = VCO.Class.extend({
 			} else {
 				// Make marker active
 				marker.active(true);
-				
+
 				if (change) {
 					// Set Map View
 					if (marker.data.location) {
 						this._viewTo(marker.data.location);
 					} else {
-						
+
 					}
-					
-					
+
+
 				} else {
 					if (marker.data.location && marker.data.location.lat) {
-						
+
 						// Calculate Zoom
 						zoom = this._calculateZoomChange(this._getMapCenter(true), marker.location());
-						
+
 						// Set Map View
 						this._viewTo(marker.data.location, {calculate_zoom: this.options.calculate_zoom, zoom:zoom});
-					
+
 						// Show Line
 						if (this.options.line_follows_path) {
 							if (this.options.show_history_line && marker.data.real_marker && this._markers[previous_marker].data.real_marker) {
 								var lines_array = [],
 									line_num = previous_marker,
 									point;
-							
+
 								if (line_num < this.current_marker) {
 									while (line_num < this.current_marker) {
 										if (this._markers[line_num].data.location && this._markers[line_num].data.location.lat) {
@@ -15876,7 +15876,7 @@ VCO.Map = VCO.Class.extend({
 											}
 											lines_array.push(point);
 										}
-										
+
 										line_num++;
 									}
 								} else if (line_num > this.current_marker) {
@@ -15888,16 +15888,16 @@ VCO.Map = VCO.Class.extend({
 											}
 											lines_array.push(point);
 										}
-										
+
 										line_num--;
 									}
 								}
-						
+
 								lines_array.push({
 									lat:marker.data.location.lat,
 									lon:marker.data.location.lon
 								});
-						
+
 								this._replaceLines(this._line_active, lines_array);
 							}
 						} else {
@@ -15914,80 +15914,80 @@ VCO.Map = VCO.Class.extend({
 									}
 								])
 							}
-						
+
 						}
 					} else {
 						this._markerOverview();
 						if (!change) {
 							this._onMarkerChange();
 						}
-						
+
 					}
 
 					// Fire Event
 					this._onMarkerChange();
-					
+
 				}
-				
+
 			}
-			
+
 		}
 	},
-	
+
 	panTo: function(loc, animate) {
 		this._panTo(loc, animate);
 	},
-	
+
 	zoomTo: function(z, animate) {
 		this._zoomTo(z, animate);
 	},
-	
+
 	viewTo: function(loc, opts) {
 		this._viewTo(loc, opts);
 	},
-	
+
 	getBoundsZoom: function(m1, m2, inside, padding) {
 		this.__getBoundsZoom(m1, m2, inside, padding); // (LatLngBounds[, Boolean, Point]) -> Number
 	},
-	
+
 	markerOverview: function() {
 		this._markerOverview();
 	},
-	
+
 	calculateMarkerZooms: function() {
 		this._calculateMarkerZooms();
 	},
-	
+
 	createMiniMap: function() {
 		this._createMiniMap();
 	},
-	
+
 	setMapOffset: function(left, top) {
 		// Update Component Displays
 		this.options.map_center_offset.left = left;
 		this.options.map_center_offset.top 	= top;
 	},
-	
+
 	calculateMinMaxZoom: function() {
 		for (var i = 0; i < this._markers.length; i++) {
-			
+
 			if (this._markers[i].data.location && this._markers[i].data.location.zoom) {
 				this.updateMinMaxZoom(this._markers[i].data.location.zoom);
 			}
-			
+
 		}
 		trace("MAX ZOOM: " + this.zoom_min_max.max + " MIN ZOOM: " + this.zoom_min_max.min);
 	},
-	
+
 	updateMinMaxZoom: function(zoom) {
 		if (!this.zoom_min_max.max) {
 			this.zoom_min_max.max = zoom;
 		}
-		
+
 		if (!this.zoom_min_max.min) {
 			this.zoom_min_max.min = zoom;
 		}
-		
+
 		if (this.zoom_min_max.max < zoom) {
 			this.zoom_min_max.max = zoom;
 		}
@@ -15995,44 +15995,44 @@ VCO.Map = VCO.Class.extend({
 			this.zoom_min_max.min = zoom;
 		}
 	},
-	
+
 	initialMapLocation: function() {
 		if (this._loaded.data && this._loaded.map) {
 			this.goTo(this.options.start_at_slide, true);
 			this._initialMapLocation();
 		}
 	},
-	
+
 	/*	Adding, Hiding, Showing etc
 	================================================== */
 	show: function() {
-		
+
 	},
-	
+
 	hide: function() {
-		
+
 	},
-	
+
 	addTo: function(container) {
 		container.appendChild(this._el.container);
 		this.onAdd();
 	},
-	
+
 	removeFrom: function(container) {
 		container.removeChild(this._el.container);
 		this.onRemove();
 	},
-	
+
 	/*	Adding and Removing Markers
 	================================================== */
 	createMarkers: function(array) {
 		this._createMarkers(array)
 	},
-	
+
 	createMarker: function(d) {
 		this._createMarker(d);
 	},
-	
+
 	_destroyMarker: function(marker) {
 		this._removeMarker(marker);
 		for (var i = 0; i < this._markers.length; i++) {
@@ -16042,7 +16042,7 @@ VCO.Map = VCO.Class.extend({
 		}
 		this.fire("markerRemoved", marker);
 	},
-	
+
 	_createMarkers: function(array) {
 		for (var i = 0; i < array.length; i++) {
 			this._createMarker(array[i]);
@@ -16050,235 +16050,235 @@ VCO.Map = VCO.Class.extend({
 				this._addToLine(this._line, array[i]);
 			}
 		};
-		
+
 	},
-	
+
 	_createLines: function(array) {
-		
+
 	},
-	
-	
+
+
 	/*	Map Specific
 	================================================== */
-	
-		/*	Map Specific Create
+
+	/*	Map Specific Create
 		================================================== */
-		// Extend this map class and use this to create the map using preferred API
-		_createMap: function() {
-			
-		},
-		
-		/*	Mini Map Specific Create
+	// Extend this map class and use this to create the map using preferred API
+	_createMap: function() {
+
+	},
+
+	/*	Mini Map Specific Create
 		================================================== */
-		// Extend this map class and use this to create the map using preferred API
-		_createMiniMap: function() {
-			
-		},
-	
-		/*	Map Specific Marker
+	// Extend this map class and use this to create the map using preferred API
+	_createMiniMap: function() {
+
+	},
+
+	/*	Map Specific Marker
 		================================================== */
-		
-		// Specific Marker Methods based on preferred Map API
-		_createMarker: function(d) {
-			var marker = {};
-			marker.on("markerclick", this._onMarkerClick);
-			this._addMarker(marker);
-			this._markers.push(marker);
-			marker.marker_number = this._markers.length - 1;
-			this.fire("markerAdded", marker);
-		},
-	
-		_addMarker: function(marker) {
-		
-		},
-	
-		_removeMarker: function(marker) {
-		
-		},
-		
-		_resetMarkersActive: function() {
-			for (var i = 0; i < this._markers.length; i++) {
-				this._markers[i].active(false);
-			};
-		},
-		
-		_calculateMarkerZooms: function() {
-			
-		},
-		
-		/*	Map Specific Line
+
+	// Specific Marker Methods based on preferred Map API
+	_createMarker: function(d) {
+		var marker = {};
+		marker.on("markerclick", this._onMarkerClick);
+		this._addMarker(marker);
+		this._markers.push(marker);
+		marker.marker_number = this._markers.length - 1;
+		this.fire("markerAdded", marker);
+	},
+
+	_addMarker: function(marker) {
+
+	},
+
+	_removeMarker: function(marker) {
+
+	},
+
+	_resetMarkersActive: function() {
+		for (var i = 0; i < this._markers.length; i++) {
+			this._markers[i].active(false);
+		};
+	},
+
+	_calculateMarkerZooms: function() {
+
+	},
+
+	/*	Map Specific Line
 		================================================== */
-		
-		_createLine: function(d) {
-			return {data: d};
-		},
-		
-		_addToLine: function(line, d) {
-			
-		},
-		
-		_replaceLines: function(line, d) {
-		
-		},
-		
-		_addLineToMap: function(line) {
-			
-		},
-		
-		
-		/*	Map Specific Methods
+
+	_createLine: function(d) {
+		return {data: d};
+	},
+
+	_addToLine: function(line, d) {
+
+	},
+
+	_replaceLines: function(line, d) {
+
+	},
+
+	_addLineToMap: function(line) {
+
+	},
+
+
+	/*	Map Specific Methods
 		================================================== */
-		
-		_panTo: function(loc, animate) {
-			
-		},
-		
-		_zoomTo: function(z, animate) {
-		
-		},
-		
-		_viewTo: function(loc, opts) {
-		
-		},
-		
-		_updateMapDisplay: function(animate, d) {
-			
-		},
-		
-		_refreshMap: function() {
-			
-		},
-		
-		_getMapLocation: function(m) {
-			return {x:0, y:0};
-		},
-		
-		_getMapZoom: function() {
-			return 1;
-		},
-		
-		_getMapCenter: function() {
-			return {lat:0, lng:0};
-		},
-		
-		_getBoundsZoom: function(m1, m2, inside, padding) {
-		
-		},
-		
-		_markerOverview: function() {
-			
-		},
-	
-		_initialMapLocation: function() {
-			
-		},
-	
+
+	_panTo: function(loc, animate) {
+
+	},
+
+	_zoomTo: function(z, animate) {
+
+	},
+
+	_viewTo: function(loc, opts) {
+
+	},
+
+	_updateMapDisplay: function(animate, d) {
+
+	},
+
+	_refreshMap: function() {
+
+	},
+
+	_getMapLocation: function(m) {
+		return {x:0, y:0};
+	},
+
+	_getMapZoom: function() {
+		return 1;
+	},
+
+	_getMapCenter: function() {
+		return {lat:0, lng:0};
+	},
+
+	_getBoundsZoom: function(m1, m2, inside, padding) {
+
+	},
+
+	_markerOverview: function() {
+
+	},
+
+	_initialMapLocation: function() {
+
+	},
+
 	/*	Events
 	================================================== */
 	_onMarkerChange: function(e) {
 		this.fire("change", {current_marker:this.current_marker});
 	},
-	
+
 	_onMarkerClick: function(e) {
 		if (this.current_marker != e.marker_number) {
 			this.goTo(e.marker_number);
 		}
 	},
-	
+
 	_onMapLoaded: function(e) {
 		this._loaded.map = true;
-		
-		
+
+
 		if (this.options.calculate_zoom) {
 			this.calculateMarkerZooms();
 		}
-		
+
 		this.calculateMinMaxZoom();
-		
+
 		if (this.options.map_mini && !VCO.Browser.touch) {
 			this.createMiniMap();
 		}
-		
+
 		this.initialMapLocation();
 		this.fire("loaded", this.data);
 	},
-	
+
 	_onWheel: function(e) {
 		// borrowed from http://jsbin.com/qiyaseza/5/edit
 		var self = this;
-		
+
 		if (e.ctrlKey) {
 			var s = Math.exp(-e.deltaY/100);
 			this.touch_scale *= s;
 			e.preventDefault();
 			e.stopPropagation(e);
 		} 
-		
+
 		if (!this.scroll.start_time) {
 			this.scroll.start_time = +new Date();
 		};
-		
+
 		var time_left = Math.max(40 - (+new Date() - this.scroll.start_time), 0);
-		
+
 		clearTimeout(this.scroll.timer);
-		
+
 		this.scroll.timer = setTimeout(function() {
 			self._scollZoom();
 			//e.preventDefault();
 			//e.stopPropagation(e);
 		}, time_left);
-		
-		
+
+
 	},
-	
+
 	_scollZoom: function(e) {
 		var self = this,
 			current_zoom = this._getMapZoom();
-			
+
 		this.scroll.start_time = null;
 		//VCO.DomUtil.addClass(this._el.container, 'vco-map-touch-zoom');
 		clearTimeout(this.scroll.timer);
 		clearTimeout(this.scroll.timer_done);
-		
+
 		this.scroll.timer_done = setTimeout(function() {
 			self._scollZoomDone();
 		}, 1000);
-		
+
 		this.zoomTo(Math.round(current_zoom * this.touch_scale));
 	},
-	
+
 	_scollZoomDone: function(e) {
 		//VCO.DomUtil.removeClass(this._el.container, 'vco-map-touch-zoom');
 		this.touch_scale = 1;
 	},
-	
+
 	/*	Private Methods
 	================================================== */
-	
+
 	_calculateZoomChange: function(origin, destination, correct_for_center) {
 		return this._getBoundsZoom(origin, destination, correct_for_center);
 	},
-	
+
 	_updateDisplay: function(w, h, animate, d) {
-		
+
 		// Update Map Display
 		this._updateMapDisplay(animate, d);
 	},
-	
+
 	_initLayout: function() {
-		
+
 		// Create Layout
 		this._el.map_mask 	= VCO.Dom.create("div", "vco-map-mask", this._el.container);
-		
+
 		if (this.options.map_as_image) {
 			this._el.map 	= VCO.Dom.create("div", "vco-map-display vco-mapimage-display", this._el.map_mask);
 		} else {
 			this._el.map 	= VCO.Dom.create("div", "vco-map-display", this._el.map_mask);
 		}
-		
-		
+
+
 	},
-	
+
 	_initData: function() {
 		if (this.data.slides) {
 			this._createMarkers(this.data.slides);
@@ -16286,20 +16286,20 @@ VCO.Map = VCO.Class.extend({
 			this._markers[this.current_marker].active(true);
 			this._loaded.data = true;
 			this._initialMapLocation();
-			
+
 		}
 	},
-	
+
 	_initEvents: function() {
 		var self = this;
-		
+
 		this._el.map.addEventListener('wheel', function(e) {
 			self._onWheel(e);
 		});
-		
+
 		//this.on("wheel", this._onWheel, this);
 	}
-	
+
 });
 
 /*	VCO.MapMarker.Leaflet
@@ -16307,21 +16307,21 @@ VCO.Map = VCO.Class.extend({
 ================================================== */
 
 VCO.MapMarker.Leaflet = VCO.MapMarker.extend({
-	
-	
+
+
 	/*	Create Marker
 	================================================== */
 	_createMarker: function(d, o) {
-		
+
 		var icon = {}; //new L.Icon.Default();
-		
+
 		if (d.location && d.location.lat && d.location.lon) {
 			this.data.real_marker = true;
 			if (o.use_custom_markers && d.location.icon && d.location.icon != "") {
 				this._custom_icon = true;
 				this._custom_icon_url = d.location.icon;
 				this._icon = new L.icon({iconUrl: this._custom_icon_url, iconSize: [48], iconAnchor:[24, 48]});
-			
+
 			} else if (o.use_custom_markers && d.location.image && d.location.image != "") {
 				this._custom_image_icon = true;
 				this._custom_icon_url = d.location.image;
@@ -16329,26 +16329,26 @@ VCO.MapMarker.Leaflet = VCO.MapMarker.extend({
 			} else {
 				this._icon = new L.divIcon({className: 'vco-mapmarker ' + this.media_icon_class, iconAnchor:[10, 10]});
 			}
-			
+
 			this._marker = new L.marker([d.location.lat, d.location.lon], {
 				title: 		d.text.headline,
 				icon: 		this._icon
 			});
-		
+
 			this._marker.on("click", this._onMarkerClick, this); 
-			
+
 			if (o.map_popup) {
 				this._createPopup(d, o);
 			}
 		}
 	},
-	
+
 	_addTo: function(m) {
 		if (this.data.real_marker) {
 			this._marker.addTo(m);
 		}
 	},
-	
+
 	_createPopup: function(d, o) {
 		/*
 		var html = "";
@@ -16356,16 +16356,16 @@ VCO.MapMarker.Leaflet = VCO.MapMarker.extend({
 		this._marker.bindPopup(html, {closeButton:false, offset:[0, 43]});
 		*/
 	},
-	
+
 	_active: function(a) {
 		var self = this;
-		
+
 		if (this.data.media && this.data.media.mediatype) {
 			this.media_icon_class = "vco-mapmarker-icon vco-icon-" + this.data.media.mediatype.type;
 		} else {
 			this.media_icon_class = "vco-mapmarker-icon vco-icon-plaintext";
 		}
-		
+
 		if (this.data.real_marker) {
 			if (a) {
 				this._marker.setZIndexOffset(100);
@@ -16374,7 +16374,7 @@ VCO.MapMarker.Leaflet = VCO.MapMarker.extend({
 				} else {
 					this._icon = new L.divIcon({className: 'vco-mapmarker-active ' + this.media_icon_class, iconAnchor:[10, 10]});
 				}
-				
+
 				//this.timer = setTimeout(function() {self._openPopup();}, this.options.duration + 200);
 				this._setIcon();
 			} else {
@@ -16386,20 +16386,20 @@ VCO.MapMarker.Leaflet = VCO.MapMarker.extend({
 				} else {
 					this._icon = new L.divIcon({className: 'vco-mapmarker ' + this.media_icon_class, iconAnchor:[10, 10]});
 				}
-				
+
 				this._setIcon();
 			}
 		}
 	},
-	
+
 	_openPopup: function() {
 		this._marker.openPopup();
 	},
-	
+
 	_setIcon: function() {
 		this._marker.setIcon(this._icon);
 	},
-	
+
 	_location: function() {
 		if (this.data.real_marker) {
 			return this._marker.getLatLng();
@@ -16407,7 +16407,7 @@ VCO.MapMarker.Leaflet = VCO.MapMarker.extend({
 			return {};
 		}
 	}
-	
+
 });
 
 
@@ -16416,30 +16416,30 @@ VCO.MapMarker.Leaflet = VCO.MapMarker.extend({
 ================================================== */
 
 VCO.Map.Leaflet = VCO.Map.extend({
-	
+
 	includes: [VCO.Events],
-	
+
 	/*	Create the Map
 	================================================== */
 	_createMap: function() {
-		
-		
+
+
 		this._map = new L.map(this._el.map, {scrollWheelZoom:false, zoomControl:!this.options.map_mini});
 		this._map.on("load", this._onMapLoaded, this);
-		
-		
+
+
 		this._map.on("moveend", this._onMapMoveEnd, this);
 		this._map.attributionControl.setPrefix("<a href='http://storymap.knightlab.com/' target='_blank' class='vco-knightlab-brand'><span>&FilledSmallSquare;</span> StoryMapJS</a>");
-			
+
 		var map_type_arr = this.options.map_type.split(':');		
 
 		// Create Tile Layer
 		this._tile_layer = this._createTileLayer(this.options.map_type);
 		this._tile_layer.on("load", this._onTilesLoaded, this);
-		
+
 		// Add Tile Layer
 		this._map.addLayer(this._tile_layer);
-		
+
 		// Add Zoomify Image Layer
 		if (this._image_layer) {
 			this._map.addLayer(this._image_layer);
@@ -16448,32 +16448,32 @@ VCO.Map.Leaflet = VCO.Map.extend({
 		this._line = this._createLine(this._line);
 		this._line.setStyle({color:this.options.line_color_inactive});
 		this._addLineToMap(this._line);
-		
+
 		// Create Active Line
 		this._line_active = this._createLine(this._line_active);
 		this._line_active.setStyle({opacity:1});
 		this._addLineToMap(this._line_active);
-		
+
 		if (this.options.map_as_image) {
 			this._line_active.setStyle({opacity:0});
 			this._line.setStyle({opacity:0});
 		}
 
-		
-		
+
+
 	},
-	
+
 	/*	Create Mini Map
 	================================================== */
 	_createMiniMap: function() {
 		if (this.options.map_as_image) {
 			this.zoom_min_max.min = 0;
 		}
-		
+
 		if (!this.bounds_array) {
 			this.bounds_array = this._getAllMarkersBounds(this._markers);
 		} 
-		
+
 		this._tile_layer_mini = this._createTileLayer(this.options.map_type);
 		this._mini_map = new L.Control.MiniMap(this._tile_layer_mini, {
 			width: 				150,
@@ -16490,15 +16490,15 @@ VCO.Map.Leaflet = VCO.Map.extend({
 				stroke: 		true
 			}
 		}).addTo(this._map);
-		
+
 		this._mini_map.getContainer().style.backgroundColor = this.options.map_background_color;
-		
+
 	},
-	
+
 	/*	Create Background Map
 	================================================== */
 	_createBackgroundMap: function(tiles) {
-		
+
 		// TODO Check width and height 
 		trace("CREATE BACKGROUND MAP");
 		if (!this._image_layer) {
@@ -16506,11 +16506,11 @@ VCO.Map.Leaflet = VCO.Map.extend({
 			this._image_layer = new L.layerGroup();
 			// Add Layer Group to Map
 			this._map.addLayer(this._image_layer);
-			
+
 		} else {
 			this._image_layer.clearLayers();
 		}
-		
+
 		if (tiles) {
 			// Create Image Overlay for each tile in the group
 			for (x in tiles) {
@@ -16527,7 +16527,7 @@ VCO.Map.Leaflet = VCO.Map.extend({
 							end: 	0
 						}
 					};
-					
+
 				if (target_tile.style.left || target_tile.style.top) {
 					if (target_tile.style.left) {
 						tile.x = parseInt(target_tile.style.left.split("px")[0]);
@@ -16537,7 +16537,7 @@ VCO.Map.Leaflet = VCO.Map.extend({
 					}
 				} else if (target_tile.style["-webkit-transform"] || target_tile.style["transform"] || target_tile.style["-ms-transform"]) {
 					var t_array;
-					
+
 					if (target_tile.style["-webkit-transform"]) {
 						t_array = target_tile.style["-webkit-transform"].split("3d(")[1].split(", 0)")[0].split(", ");
 					} else if (target_tile.style["transform"]) {
@@ -16545,12 +16545,12 @@ VCO.Map.Leaflet = VCO.Map.extend({
 					} else if (target_tile.style["-ms-transform"]) {
 						t_array = target_tile.style["-ms-transform"].split("3d(")[1].split(", 0)")[0].split(", ");
 					}
-					
+
 					tile.x = parseInt(t_array[0].split("px")[0]);
 					tile.y = parseInt(t_array[1].split("px")[0]);
 				}
-				
-				
+
+
 				// If using toner, switch to toner lines
 				if (tile.url.match("toner")) {
 					//tile.url = tile.url.replace("/toner-lite/","/toner-lines/");
@@ -16560,15 +16560,15 @@ VCO.Map.Leaflet = VCO.Map.extend({
 
 				tile.pos.start 	= this._map.containerPointToLatLng([tile.x, tile.y]);
 				tile.pos.end 	= this._map.containerPointToLatLng([tile.x + tile.width, tile.y + tile.height]);
-				
+
 				image = new L.imageOverlay(tile.url, [tile.pos.start, tile.pos.end]);
 				this._image_layer.addLayer(image);
-				
+
 			}
 		}
-		
+
 	},
-	
+
 	/*	Create Tile Layer
 	================================================== */
 	_createTileLayer: function(map_type, options) {
@@ -16576,11 +16576,11 @@ VCO.Map.Leaflet = VCO.Map.extend({
 			_map_type_arr = map_type.split(':'),
 			_options = {},
 			_attribution_knightlab = "<a href='http://leafletjs.com' title='A JS library for interactive maps'>Leaflet</a> | "
-		
+
 		if (options) {
 			_options = options;
 		}
-		
+
 		// Set Tiles
 		switch(_map_type_arr[0]) {
 			case 'mapbox':
@@ -16598,7 +16598,7 @@ VCO.Map.Leaflet = VCO.Map.extend({
 				_options.height 		= this.options.zoomify.height;
 				_options.tolerance 		= this.options.zoomify.tolerance;
 				_options.attribution 	= _attribution_knightlab + this.options.zoomify.attribution;
-				
+
 				_tilelayer = new L.tileLayer.zoomify(this.options.zoomify.path, _options);
 				//this._image_layer = new L.imageOverlay(this.options.zoomify.path + "TileGroup0/0-0-0.jpg", _tilelayer.getZoomifyBounds(this._map));
 				break;
@@ -16607,42 +16607,42 @@ VCO.Map.Leaflet = VCO.Map.extend({
 				_options.attribution = _attribution_knightlab + "© <a target='_blank' href='http://www.openstreetmap.org'>OpenStreetMap</a> and contributors, under an <a target='_blank' href='http://www.openstreetmap.org/copyright'>open license</a>";
 				_tilelayer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', _options); 
 				break;
-		    
+
 			case 'http':
 			case 'https':
 				_options.subdomains = this.options.map_subdomains;
 				_tilelayer = new L.TileLayer(this.options.map_type, _options);
 				break;
-		        
+
 			default:
 				_tilelayer = new L.StamenTileLayer('toner', _options);
 				break;		
 		}
-		
+
 		return _tilelayer;
 	},
-	
+
 	/*	Events
 	================================================== */
 	_onMapMoveEnd: function(e) {
-		
+
 	},
-	
+
 	_onTilesLoaded: function(e) {
 		this._createBackgroundMap(e.target._tiles);
 		this._tile_layer.off("load", this._onTilesLoaded, this);
 	},
-	
+
 	_onMapZoomed:function(e) {
 		trace("FIRST ZOOM");
 		this._map.off("zoomend", this._onMapZoomed, this);
-		
+
 	},
-	
+
 	_onMapZoom:function(e) {
-		
+
 	},
-	
+
 	/*	Marker
 	================================================== */
 	_createMarker: function(d) {
@@ -16652,7 +16652,7 @@ VCO.Map.Leaflet = VCO.Map.extend({
 		this._markers.push(marker);
 		marker.marker_number = this._markers.length - 1;
 		this.fire("markerAdded", marker);
-		
+
 	},
 
 	_addMarker: function(marker) {
@@ -16660,60 +16660,60 @@ VCO.Map.Leaflet = VCO.Map.extend({
 	},
 
 	_removeMarker: function(marker) {
-	
+
 	},
-	
+
 	_markerOverview: function() {
 		var _location, _zoom;
 		// Hide Active Line
 		this._line_active.setStyle({opacity:0});
-		
+
 		if (this.options.map_type == "zoomify" && this.options.map_as_image) {
-			
+
 			var _center_zoom 	= this._tile_layer.getCenterZoom(this._map);
-			
+
 			_location = _center_zoom.center;
-			
+
 			if (this.options.map_center_offset && this.options.map_center_offset.left != 0 || this.options.map_center_offset.top != 0) {
 				_center_zoom.zoom = _center_zoom.zoom - 1;
 				_location = this._getMapCenterOffset(_location, _center_zoom.zoom);
 			}
-			
+
 			this._map.setView(_location, _center_zoom.zoom, {
 				pan:{animate: true, duration: this.options.duration/1000, easeLinearity:.10},
 				zoom:{animate: true, duration: this.options.duration/1000, easeLinearity:.10}
 			});
-			
-			
-			
+
+
+
 		} else {
 			this.bounds_array = this._getAllMarkersBounds(this._markers);
-			
+
 			if (this.options.map_center_offset && this.options.map_center_offset.left != 0 || this.options.map_center_offset.top != 0) {
 				var the_bounds 	= new L.latLngBounds(this.bounds_array);
 				_location 		= the_bounds.getCenter();
 				_zoom 			= this._map.getBoundsZoom(the_bounds)
-				
+
 				_location = this._getMapCenterOffset(_location, _zoom - 1);
-				
+
 				this._map.setView(_location, _zoom -1, {
 					pan:{animate: true, duration: this.options.duration/1000, easeLinearity:.10},
 					zoom:{animate: true, duration: this.options.duration/1000, easeLinearity:.10}
 				});
-				
-				
+
+
 			} else {
 				this._map.fitBounds(this.bounds_array, {padding:[15,15]});
 			}
-			
+
 		}
-		
+
 		if (this._mini_map) {
 			this._mini_map.minimize();
 		}
-		
+
 	},
-	
+
 	_getAllMarkersBounds: function(markers_array) {
 		var bounds_array = [];
 		for (var i = 0; i < markers_array.length; i++) {
@@ -16723,10 +16723,10 @@ VCO.Map.Leaflet = VCO.Map.extend({
 		};
 		return bounds_array;
 	},
-	
+
 	_calculateMarkerZooms: function() {
 		for (var i = 0; i < this._markers.length; i++) {
-			
+
 			if (this._markers[i].data.location) {
 				var marker = this._markers[i],
 					prev_marker,
@@ -16735,8 +16735,8 @@ VCO.Map.Leaflet = VCO.Map.extend({
 					prev_marker_zoom,
 					next_marker_zoom,
 					calculated_zoom;
-				
-				
+
+
 				// MARKER LOCATION
 				if (marker.data.type && marker.data.type == "overview") {
 					marker_location = this._getMapCenter(true);
@@ -16750,7 +16750,7 @@ VCO.Map.Leaflet = VCO.Map.extend({
 					prev_marker = this._getMapCenter(true);
 				}
 				prev_marker_zoom = this._calculateZoomChange(prev_marker, marker_location);
-			
+
 				// NEXT MARKER ZOOM
 				if (i < (this._markers.length - 1)) {
 					next_marker = this._markers[i+1].location();
@@ -16758,35 +16758,35 @@ VCO.Map.Leaflet = VCO.Map.extend({
 					next_marker = this._getMapCenter(true);
 				}
 				next_marker_zoom = this._calculateZoomChange(next_marker, marker_location);
-			
-			
+
+
 				if (prev_marker_zoom && prev_marker_zoom < next_marker_zoom) {
 					calculated_zoom = prev_marker_zoom;
 				} else if (next_marker_zoom){
 					calculated_zoom = next_marker_zoom;
-					
+
 				} else {
 					calculated_zoom = prev_marker_zoom;
 				}
-				
+
 				if (this.options.map_center_offset && this.options.map_center_offset.left != 0 || this.options.map_center_offset.top != 0) {
 					calculated_zoom = calculated_zoom -1;
 				}
-			
+
 				marker.data.location.zoom = calculated_zoom;
 			}
-			
+
 
 		};
-		
-		
+
+
 	},
-	
-	
-	
+
+
+
 	/*	Line
 	================================================== */
-	
+
 	_createLine: function(d) {
 		return new L.Polyline([], {
 			clickable: false,
@@ -16797,46 +16797,46 @@ VCO.Map.Leaflet = VCO.Map.extend({
 			lineJoin: 	this.options.line_join,
 			className: 	"vco-map-line"
 		} );
-		
+
 	},
-	
+
 	_addLineToMap: function(line) {
 		this._map.addLayer(line);
 	},
-	
+
 	_addToLine: function(line, d) {
 		line.addLatLng({lon: d.location.lon, lat: d.location.lat});
 	},
-	
+
 	_replaceLines: function(line, array) {
 		line.setLatLngs(array);
 	},
-	
+
 	/*	Map
 	================================================== */
 	_panTo: function(loc, animate) {
 		this._map.panTo({lat:loc.lat, lon:loc.lon}, {animate: true, duration: this.options.duration/1000, easeLinearity:.10});
 	},
-	
+
 	_zoomTo: function(z, animate) {
 		this._map.setZoom(z);
 	},
-	
+
 	_viewTo: function(loc, opts) {
 		var _animate 	= true,
 			_duration 	= this.options.duration/1000,
 			_zoom 		= this._getMapZoom(),
 			_location 	= {lat:loc.lat, lon:loc.lon};
-			
+
 		// Show Active Line
 		if (!this.options.map_as_image) {
 			this._line_active.setStyle({opacity:1});
 		}
-			
+
 		if (loc.zoom) {
 			_zoom = loc.zoom;
 		}
-		
+
 		// Options
 		if (opts) {
 			if (opts.duration) {
@@ -16846,17 +16846,17 @@ VCO.Map.Leaflet = VCO.Map.extend({
 					_duration = duration;
 				}
 			}
-			
+
 			if (opts.zoom && this.options.calculate_zoom) {
 				_zoom = opts.zoom;
 			}
 		}	
-		
+
 		// OFFSET
 		if (this.options.map_center_offset) {
 			_location = this._getMapCenterOffset(_location, _zoom);
 		}
-		
+
 		this._map.setView(
 			_location, 
 			_zoom,
@@ -16865,7 +16865,7 @@ VCO.Map.Leaflet = VCO.Map.extend({
 				zoom:{animate: _animate, duration: _duration, easeLinearity:.10}
 			}
 		)
-		
+
 		if (this._mini_map && this.options.width > this.options.skinny_size) {
 			if ((_zoom - 1) <= this.zoom_min_max.min ) {
 				this._mini_map.minimize();
@@ -16874,40 +16874,40 @@ VCO.Map.Leaflet = VCO.Map.extend({
 				//this._mini_map.updateDisplay(_location, _zoom, _duration);
 			}
 		} 
-		
+
 	},
-	
+
 	_getMapLocation: function(m) {
 		return this._map.latLngToContainerPoint(m);
 	},
-	
+
 	_getMapZoom: function() {
 		return this._map.getZoom();
 	},
-	
+
 	_getMapCenter: function(offset) {
 		if (offset) {
-			
+
 		}
 		return this._map.getCenter();
 	},
-	
+
 	_getMapCenterOffset: function(location, zoom) {
 		var target_point,
 			target_latlng;
-		
+
 		target_point 	= this._map.project(location, zoom).subtract([this.options.map_center_offset.left, this.options.map_center_offset.top]);
 		target_latlng 	= this._map.unproject(target_point, zoom);
-		
+
 		return target_latlng;
 
 	},
-	
+
 	_getBoundsZoom: function(origin, destination, correct_for_center) {
 		var _origin = origin,
 			_padding = [(Math.abs(this.options.map_center_offset.left)*3),(Math.abs(this.options.map_center_offset.top)*3)];
-			
-		
+
+
 		//_padding = [0,0];
 		//_padding = [0,0];
 		if (correct_for_center) {
@@ -16915,7 +16915,7 @@ VCO.Map.Leaflet = VCO.Map.extend({
 				_lng = _origin.lng + (_origin.lng - destination.lng)/2;
 			_origin = new L.LatLng(_lat, _lng);
 		}
-		
+
 		var bounds = new L.LatLngBounds([_origin, destination]);
 		if (this.options.less_bounce) {
 			return this._map.getBoundsZoom(bounds, false, _padding);
@@ -16923,35 +16923,35 @@ VCO.Map.Leaflet = VCO.Map.extend({
 			return this._map.getBoundsZoom(bounds, true, _padding);
 		}
 	},
-	
+
 	_getZoomifyZoom: function() {
 
 	},
-	
+
 	_initialMapLocation: function() {
 		this._map.on("zoomend", this._onMapZoomed, this);
 	},
-	
+
 	/*	Display
 	================================================== */
 	_updateMapDisplay: function(animate, d) {
 		if (animate) {
 			var duration = this.options.duration,
 				self = this;
-				
+
 			if (d) {duration = d };
 			if (this.timer) {clearTimeout(this.timer)};
-			
+
 			this.timer = setTimeout(function() {
 				self._refreshMap();
 			}, duration);
-			
+
 		} else {
 			if (!this.timer) {
 				this._refreshMap();
 			};
 		}
-		
+
 		if (this._mini_map && this._el.container.offsetWidth < this.options.skinny_size ) {
 			this._mini_map.true_hide = true;
 			//this._mini_map.minimize();
@@ -16959,16 +16959,16 @@ VCO.Map.Leaflet = VCO.Map.extend({
 			this._mini_map.true_hide = false;
 		}
 	},
-	
+
 	_refreshMap: function() {
 		if (this._map) {
 			if (this.timer) {
 				clearTimeout(this.timer);
 				this.timer = null;
 			};
-			
+
 			this._map.invalidateSize();
-			
+
 			// Check to see if it's an overview
 			if (this._markers[this.current_marker].data.type && this._markers[this.current_marker].data.type == "overview") {
 				this._markerOverview();
@@ -16977,8 +16977,8 @@ VCO.Map.Leaflet = VCO.Map.extend({
 			}
 		};
 	}
-	
-	
+
+
 });
 
 /*	Overwrite and customize Leaflet functions
@@ -16991,7 +16991,7 @@ L.Map.include({
 
 		return true;
 	},
-	
+
 	_tryAnimatedZoom: function (center, zoom, options) {
 		if (this._animatingZoom) { return true; }
 
@@ -16999,12 +16999,12 @@ L.Map.include({
 
 		// offset is the pixel coords of the zoom origin relative to the current center
 		var scale = this.getZoomScale(zoom),
-		    offset = this._getCenterOffset(center)._divideBy(1 - 1 / scale),
+			offset = this._getCenterOffset(center)._divideBy(1 - 1 / scale),
 			origin = this._getCenterLayerPoint()._add(offset);
 
 		this
-		    .fire('movestart')
-		    .fire('zoomstart');
+			.fire('movestart')
+			.fire('zoomstart');
 
 		this._animateZoom(center, zoom, origin, scale, null, true);
 
@@ -17015,15 +17015,15 @@ L.Map.include({
 		bounds = L.latLngBounds(bounds);
 
 		var zoom = this.getMinZoom() - (inside ? 1 : 0),
-		    minZoom = this.getMinZoom(),
+			minZoom = this.getMinZoom(),
 			maxZoom = this.getMaxZoom(),
-		    size = this.getSize(),
+			size = this.getSize(),
 
-		    nw = bounds.getNorthWest(),
-		    se = bounds.getSouthEast(),
+			nw = bounds.getNorthWest(),
+			se = bounds.getSouthEast(),
 
-		    zoomNotFound = true,
-		    boundsSize,
+			zoomNotFound = true,
+			boundsSize,
 			zoom_array = [],
 			best_zoom = {x:0,y:0},
 			smallest_zoom = {},
@@ -17031,8 +17031,8 @@ L.Map.include({
 
 		padding = L.point(padding || [0, 0]);
 		size = this.getSize();
-		
-		
+
+
 		// Calculate Zoom Level Differences
 		for (var i = 0; i < maxZoom; i++) {
 			zoom++;
@@ -17042,7 +17042,7 @@ L.Map.include({
 				y:Math.abs(size.y - boundsSize.y)
 			})
 		}
-		
+
 		// Determine closest match
 		smallest_zoom = zoom_array[0];
 		for (var j = 0; j < zoom_array.length; j++) {
@@ -17054,13 +17054,13 @@ L.Map.include({
 				smallest_zoom.x = zoom_array[j].x;
 				best_zoom.x = j; 
 			}
-			
+
 		}
 		final_zoom = Math.round((best_zoom.y + best_zoom.x) / 2)
 		return final_zoom;
 
 	}
-	
+
 });
 
 L.TileLayer.include({
@@ -17075,7 +17075,7 @@ L.TileLayer.include({
 	This Source Code Form is subject to the terms of the Mozilla Public
 	License, v. 2.0. If a copy of the MPL was not distributed with this
 	file, You can obtain one at http://mozilla.org/MPL/2.0/.
-	
+
 ================================================== */
 /* 
 	TODO
@@ -17088,232 +17088,232 @@ L.TileLayer.include({
 ================================================== */
 
 // CORE
-	// @codekit-prepend "core/VCO.js";
-	// @codekit-prepend "core/VCO.Util.js";
-	// @codekit-prepend "data/VCO.Data.js";
-	// @codekit-prepend "core/VCO.Class.js";
-	// @codekit-prepend "core/VCO.Events.js";
-	// @codekit-prepend "core/VCO.Browser.js";
-	// @codekit-prepend "core/VCO.Load.js";
+// @codekit-prepend "core/VCO.js";
+// @codekit-prepend "core/VCO.Util.js";
+// @codekit-prepend "data/VCO.Data.js";
+// @codekit-prepend "core/VCO.Class.js";
+// @codekit-prepend "core/VCO.Events.js";
+// @codekit-prepend "core/VCO.Browser.js";
+// @codekit-prepend "core/VCO.Load.js";
 
 // LANGUAGE
-	// @codekit-prepend "language/VCO.Language.js";
-	
+// @codekit-prepend "language/VCO.Language.js";
+
 // LIBRARY
-	// @codekit-prepend "library/VCO.Emoji.js";
+// @codekit-prepend "library/VCO.Emoji.js";
 
 // ANIMATION
-	// @codekit-prepend "animation/VCO.Ease.js";
-	// @codekit-prepend "animation/VCO.Animate.js";
+// @codekit-prepend "animation/VCO.Ease.js";
+// @codekit-prepend "animation/VCO.Animate.js";
 
 // DOM
-	// @codekit-prepend "dom/VCO.Point.js";
-	// @codekit-prepend "dom/VCO.DomMixins.js";
-	// @codekit-prepend "dom/VCO.Dom.js";
-	// @codekit-prepend "dom/VCO.DomUtil.js";
-	// @codekit-prepend "dom/VCO.DomEvent.js";
+// @codekit-prepend "dom/VCO.Point.js";
+// @codekit-prepend "dom/VCO.DomMixins.js";
+// @codekit-prepend "dom/VCO.Dom.js";
+// @codekit-prepend "dom/VCO.DomUtil.js";
+// @codekit-prepend "dom/VCO.DomEvent.js";
 
 // UI
-	// @codekit-prepend "ui/VCO.Draggable.js";
-	// @codekit-prepend "ui/VCO.Swipable.js";
-	// @codekit-prepend "ui/VCO.MenuBar.js";
-	// @codekit-prepend "ui/VCO.Message.js";
+// @codekit-prepend "ui/VCO.Draggable.js";
+// @codekit-prepend "ui/VCO.Swipable.js";
+// @codekit-prepend "ui/VCO.MenuBar.js";
+// @codekit-prepend "ui/VCO.Message.js";
 
 // MEDIA
-	// @codekit-prepend "media/VCO.MediaType.js";
-	// @codekit-prepend "media/VCO.Media.js";
+// @codekit-prepend "media/VCO.MediaType.js";
+// @codekit-prepend "media/VCO.Media.js";
 
 // MEDIA TYPES
-	// @codekit-prepend "media/types/VCO.Media.Blockquote.js";
-	// @codekit-prepend "media/types/VCO.Media.Flickr.js";
-	// @codekit-prepend "media/types/VCO.Media.Instagram.js";
-	// @codekit-prepend "media/types/VCO.Media.Profile.js";
-	// @codekit-prepend "media/types/VCO.Media.GoogleDoc.js";
-	// @codekit-prepend "media/types/VCO.Media.GooglePlus.js";
-	// @codekit-prepend "media/types/VCO.Media.IFrame.js";
-	// @codekit-prepend "media/types/VCO.Media.Image.js";
-	// @codekit-prepend "media/types/VCO.Media.SoundCloud.js";
-	// @codekit-prepend "media/types/VCO.Media.Storify.js";
-	// @codekit-prepend "media/types/VCO.Media.Text.js";
-	// @codekit-prepend "media/types/VCO.Media.Twitter.js";
-	// @codekit-prepend "media/types/VCO.Media.Vimeo.js";
-	// @codekit-prepend "media/types/VCO.Media.DailyMotion.js";
-	// @codekit-prepend "media/types/VCO.Media.Vine.js";
-	// @codekit-prepend "media/types/VCO.Media.Website.js";
-	// @codekit-prepend "media/types/VCO.Media.Wikipedia.js";
-	// @codekit-prepend "media/types/VCO.Media.YouTube.js";
-	// @codekit-prepend "media/types/VCO.Media.Slider.js";
+// @codekit-prepend "media/types/VCO.Media.Blockquote.js";
+// @codekit-prepend "media/types/VCO.Media.Flickr.js";
+// @codekit-prepend "media/types/VCO.Media.Instagram.js";
+// @codekit-prepend "media/types/VCO.Media.Profile.js";
+// @codekit-prepend "media/types/VCO.Media.GoogleDoc.js";
+// @codekit-prepend "media/types/VCO.Media.GooglePlus.js";
+// @codekit-prepend "media/types/VCO.Media.IFrame.js";
+// @codekit-prepend "media/types/VCO.Media.Image.js";
+// @codekit-prepend "media/types/VCO.Media.SoundCloud.js";
+// @codekit-prepend "media/types/VCO.Media.Storify.js";
+// @codekit-prepend "media/types/VCO.Media.Text.js";
+// @codekit-prepend "media/types/VCO.Media.Twitter.js";
+// @codekit-prepend "media/types/VCO.Media.Vimeo.js";
+// @codekit-prepend "media/types/VCO.Media.DailyMotion.js";
+// @codekit-prepend "media/types/VCO.Media.Vine.js";
+// @codekit-prepend "media/types/VCO.Media.Website.js";
+// @codekit-prepend "media/types/VCO.Media.Wikipedia.js";
+// @codekit-prepend "media/types/VCO.Media.YouTube.js";
+// @codekit-prepend "media/types/VCO.Media.Slider.js";
 
 // STORYSLIDER
-	// @codekit-prepend "slider/VCO.Slide.js";
-	// @codekit-prepend "slider/VCO.SlideNav.js";
-	// @codekit-prepend "slider/VCO.StorySlider.js";
+// @codekit-prepend "slider/VCO.Slide.js";
+// @codekit-prepend "slider/VCO.SlideNav.js";
+// @codekit-prepend "slider/VCO.StorySlider.js";
 
 // LEAFLET
-	
-	// LEAFLET SRC
-		// Leaflet Core
-			// @codekit-prepend "map/leaflet/leaflet-src/Leaflet.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/core/Util.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/core/Class.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/core/Events.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/core/Browser.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/geometry/Point.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/geometry/Bounds.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/geometry/Transformation.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/dom/DomUtil.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/geo/LatLng.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/geo/LatLngBounds.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/geo/projection/Projection.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/geo/projection/Projection.SphericalMercator.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/geo/projection/Projection.LonLat.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/geo/crs/CRS.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/geo/crs/CRS.Simple.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/geo/crs/CRS.EPSG3857.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/geo/crs/CRS.EPSG4326.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/map/Map.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/dom/DomEvent.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/dom/Draggable.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/core/Handler.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/control/Control.js";
 
-		// Additonal Projections EPSG:3395 projection (used by some map providers).
-			// "map/leaflet/leaflet-src/geo/projection/Projection.Mercator.js";
-			// "map/leaflet/leaflet-src/geo/crs/CRS.EPSG3395.js";
+// LEAFLET SRC
+// Leaflet Core
+// @codekit-prepend "map/leaflet/leaflet-src/Leaflet.js";
+// @codekit-prepend "map/leaflet/leaflet-src/core/Util.js";
+// @codekit-prepend "map/leaflet/leaflet-src/core/Class.js";
+// @codekit-prepend "map/leaflet/leaflet-src/core/Events.js";
+// @codekit-prepend "map/leaflet/leaflet-src/core/Browser.js";
+// @codekit-prepend "map/leaflet/leaflet-src/geometry/Point.js";
+// @codekit-prepend "map/leaflet/leaflet-src/geometry/Bounds.js";
+// @codekit-prepend "map/leaflet/leaflet-src/geometry/Transformation.js";
+// @codekit-prepend "map/leaflet/leaflet-src/dom/DomUtil.js";
+// @codekit-prepend "map/leaflet/leaflet-src/geo/LatLng.js";
+// @codekit-prepend "map/leaflet/leaflet-src/geo/LatLngBounds.js";
+// @codekit-prepend "map/leaflet/leaflet-src/geo/projection/Projection.js";
+// @codekit-prepend "map/leaflet/leaflet-src/geo/projection/Projection.SphericalMercator.js";
+// @codekit-prepend "map/leaflet/leaflet-src/geo/projection/Projection.LonLat.js";
+// @codekit-prepend "map/leaflet/leaflet-src/geo/crs/CRS.js";
+// @codekit-prepend "map/leaflet/leaflet-src/geo/crs/CRS.Simple.js";
+// @codekit-prepend "map/leaflet/leaflet-src/geo/crs/CRS.EPSG3857.js";
+// @codekit-prepend "map/leaflet/leaflet-src/geo/crs/CRS.EPSG4326.js";
+// @codekit-prepend "map/leaflet/leaflet-src/map/Map.js";
+// @codekit-prepend "map/leaflet/leaflet-src/dom/DomEvent.js";
+// @codekit-prepend "map/leaflet/leaflet-src/dom/Draggable.js";
+// @codekit-prepend "map/leaflet/leaflet-src/core/Handler.js";
+// @codekit-prepend "map/leaflet/leaflet-src/control/Control.js";
 
-		// TileLayerWMS WMS tile layer.
-			// @codekit-prepend "map/leaflet/leaflet-src/layer/tile/TileLayer.js";
+// Additonal Projections EPSG:3395 projection (used by some map providers).
+// "map/leaflet/leaflet-src/geo/projection/Projection.Mercator.js";
+// "map/leaflet/leaflet-src/geo/crs/CRS.EPSG3395.js";
 
-		// TileLayerCanvas Tile layer made from canvases (for custom drawing purposes)
-			// @codekit-prepend "map/leaflet/leaflet-src/layer/tile/TileLayer.Canvas.js";
+// TileLayerWMS WMS tile layer.
+// @codekit-prepend "map/leaflet/leaflet-src/layer/tile/TileLayer.js";
 
-		// ImageOverlay Used to display an image over a particular rectangular area of the map.
-			// @codekit-prepend "map/leaflet/leaflet-src/layer/ImageOverlay.js";
+// TileLayerCanvas Tile layer made from canvases (for custom drawing purposes)
+// @codekit-prepend "map/leaflet/leaflet-src/layer/tile/TileLayer.Canvas.js";
 
-		// Marker Markers to put on the map.
-			// @codekit-prepend "map/leaflet/leaflet-src/layer/marker/Icon.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/layer/marker/Icon.Default.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/layer/marker/Marker.js";
+// ImageOverlay Used to display an image over a particular rectangular area of the map.
+// @codekit-prepend "map/leaflet/leaflet-src/layer/ImageOverlay.js";
 
-		// DivIcon Lightweight div-based icon for markers.
-			// @codekit-prepend "map/leaflet/leaflet-src/layer/marker/DivIcon.js";
+// Marker Markers to put on the map.
+// @codekit-prepend "map/leaflet/leaflet-src/layer/marker/Icon.js";
+// @codekit-prepend "map/leaflet/leaflet-src/layer/marker/Icon.Default.js";
+// @codekit-prepend "map/leaflet/leaflet-src/layer/marker/Marker.js";
 
-		// Popup Used to display the map popup (used mostly for binding HTML data to markers and paths on click).
-			// "map/leaflet/leaflet-src/layer/Popup.js";
-			// "map/leaflet/leaflet-src/layer/marker/Marker.Popup.js";
+// DivIcon Lightweight div-based icon for markers.
+// @codekit-prepend "map/leaflet/leaflet-src/layer/marker/DivIcon.js";
 
-		// LayerGroup Allows grouping several layers to handle them as one.
-			// @codekit-prepend "map/leaflet/leaflet-src/layer/LayerGroup.js";
+// Popup Used to display the map popup (used mostly for binding HTML data to markers and paths on click).
+// "map/leaflet/leaflet-src/layer/Popup.js";
+// "map/leaflet/leaflet-src/layer/marker/Marker.Popup.js";
 
-		// FeatureGroup Extends LayerGroup with mouse events and bindPopup method shared between layers.
-			// @codekit-prepend "map/leaflet/leaflet-src/layer/FeatureGroup.js";
+// LayerGroup Allows grouping several layers to handle them as one.
+// @codekit-prepend "map/leaflet/leaflet-src/layer/LayerGroup.js";
 
-		// Path Vector rendering core (SVG-powered), enables overlaying the map with SVG paths.
-			// @codekit-prepend "map/leaflet/leaflet-src/layer/vector/Path.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/layer/vector/Path.SVG.js";
-			// "map/leaflet/leaflet-src/layer/vector/Path.Popup.js";
+// FeatureGroup Extends LayerGroup with mouse events and bindPopup method shared between layers.
+// @codekit-prepend "map/leaflet/leaflet-src/layer/FeatureGroup.js";
 
-		// PathVML VML fallback for vector rendering core (IE 6-8)
-			// "map/leaflet/leaflet-src/layer/vector/Path.VML.js";
+// Path Vector rendering core (SVG-powered), enables overlaying the map with SVG paths.
+// @codekit-prepend "map/leaflet/leaflet-src/layer/vector/Path.js";
+// @codekit-prepend "map/leaflet/leaflet-src/layer/vector/Path.SVG.js";
+// "map/leaflet/leaflet-src/layer/vector/Path.Popup.js";
 
-		// Path Canvas fallback for vector rendering core (makes it work on Android 2+)
-			// @codekit-prepend "map/leaflet/leaflet-src/layer/vector/canvas/Path.Canvas.js";
+// PathVML VML fallback for vector rendering core (IE 6-8)
+// "map/leaflet/leaflet-src/layer/vector/Path.VML.js";
 
-		// Polyline Polyline overlays.
-			// @codekit-prepend "map/leaflet/leaflet-src/geometry/LineUtil.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/layer/vector/Polyline.js";
+// Path Canvas fallback for vector rendering core (makes it work on Android 2+)
+// @codekit-prepend "map/leaflet/leaflet-src/layer/vector/canvas/Path.Canvas.js";
 
-		// Polygon Polygon overlays
-			// @codekit-prepend "map/leaflet/leaflet-src/geometry/PolyUtil.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/layer/vector/Polygon.js";
+// Polyline Polyline overlays.
+// @codekit-prepend "map/leaflet/leaflet-src/geometry/LineUtil.js";
+// @codekit-prepend "map/leaflet/leaflet-src/layer/vector/Polyline.js";
 
-		// MultiPoly MultiPolygon and MultyPolyline layers.
-			// @codekit-prepend "map/leaflet/leaflet-src/layer/vector/MultiPoly.js";
+// Polygon Polygon overlays
+// @codekit-prepend "map/leaflet/leaflet-src/geometry/PolyUtil.js";
+// @codekit-prepend "map/leaflet/leaflet-src/layer/vector/Polygon.js";
 
-		// Rectangle
-			// @codekit-prepend "map/leaflet/leaflet-src/layer/vector/Rectangle.js";
+// MultiPoly MultiPolygon and MultyPolyline layers.
+// @codekit-prepend "map/leaflet/leaflet-src/layer/vector/MultiPoly.js";
 
-		// Circle
-			// @codekit-prepend "map/leaflet/leaflet-src/layer/vector/Circle.js";
+// Rectangle
+// @codekit-prepend "map/leaflet/leaflet-src/layer/vector/Rectangle.js";
 
-		// CircleMarker
-			// @codekit-prepend "map/leaflet/leaflet-src/layer/vector/CircleMarker.js";
+// Circle
+// @codekit-prepend "map/leaflet/leaflet-src/layer/vector/Circle.js";
 
-		// VectorsCanvas Canvas fallback for vector layers (polygons, polylines, circles, circlemarkers)
-			// @codekit-prepend "map/leaflet/leaflet-src/layer/vector/canvas/Polyline.Canvas.js";
-			// "map/leaflet/leaflet-src/layer/vector/canvas/Polygon.Canvas.js";
-			// "map/leaflet/leaflet-src/layer/vector/canvas/Circle.Canvas.js";
-			// "map/leaflet/leaflet-src/layer/vector/canvas/CircleMarker.Canvas.js";
+// CircleMarker
+// @codekit-prepend "map/leaflet/leaflet-src/layer/vector/CircleMarker.js";
 
-		// GeoJSON GeoJSON layer, parses the data and adds corresponding layers above.
-			// "map/leaflet/leaflet-src/layer/GeoJSON.js";
+// VectorsCanvas Canvas fallback for vector layers (polygons, polylines, circles, circlemarkers)
+// @codekit-prepend "map/leaflet/leaflet-src/layer/vector/canvas/Polyline.Canvas.js";
+// "map/leaflet/leaflet-src/layer/vector/canvas/Polygon.Canvas.js";
+// "map/leaflet/leaflet-src/layer/vector/canvas/Circle.Canvas.js";
+// "map/leaflet/leaflet-src/layer/vector/canvas/CircleMarker.Canvas.js";
 
-		// MapDrag Makes the map draggable (by mouse or touch).
-			// @codekit-prepend "map/leaflet/leaflet-src/map/handler/Map.Drag.js";
+// GeoJSON GeoJSON layer, parses the data and adds corresponding layers above.
+// "map/leaflet/leaflet-src/layer/GeoJSON.js";
 
-		// MouseZoom Scroll wheel zoom and double click zoom on the map.
-			// @codekit-prepend "map/leaflet/leaflet-src/map/handler/Map.DoubleClickZoom.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/map/handler/Map.ScrollWheelZoom.js";
+// MapDrag Makes the map draggable (by mouse or touch).
+// @codekit-prepend "map/leaflet/leaflet-src/map/handler/Map.Drag.js";
 
-		// TouchZoom Enables smooth touch zoom / tap / longhold / doubletap on iOS, IE10, Android
-			// @codekit-prepend "map/leaflet/leaflet-src/dom/DomEvent.DoubleTap.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/dom/DomEvent.Pointer.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/map/handler/Map.TouchZoom.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/map/handler/Map.Tap.js";
+// MouseZoom Scroll wheel zoom and double click zoom on the map.
+// @codekit-prepend "map/leaflet/leaflet-src/map/handler/Map.DoubleClickZoom.js";
+// @codekit-prepend "map/leaflet/leaflet-src/map/handler/Map.ScrollWheelZoom.js";
 
-		// BoxZoom Enables zooming to bounding box by shift-dragging the map.
-			// "map/leaflet/leaflet-src/map/handler/Map.BoxZoom.js";
+// TouchZoom Enables smooth touch zoom / tap / longhold / doubletap on iOS, IE10, Android
+// @codekit-prepend "map/leaflet/leaflet-src/dom/DomEvent.DoubleTap.js";
+// @codekit-prepend "map/leaflet/leaflet-src/dom/DomEvent.Pointer.js";
+// @codekit-prepend "map/leaflet/leaflet-src/map/handler/Map.TouchZoom.js";
+// @codekit-prepend "map/leaflet/leaflet-src/map/handler/Map.Tap.js";
 
-		// Keyboard Enables keyboard pan/zoom when the map is focused.
-			// "map/leaflet/leaflet-src/map/handler/Map.Keyboard.js";
+// BoxZoom Enables zooming to bounding box by shift-dragging the map.
+// "map/leaflet/leaflet-src/map/handler/Map.BoxZoom.js";
 
-		// ControlZoom Basic zoom control with two buttons (zoom in / zoom out).
-			// @codekit-prepend "map/leaflet/leaflet-src/control/Control.Zoom.js";
+// Keyboard Enables keyboard pan/zoom when the map is focused.
+// "map/leaflet/leaflet-src/map/handler/Map.Keyboard.js";
 
-		// ControlAttrib Attribution control.
-			// @codekit-prepend "map/leaflet/leaflet-src/control/Control.Attribution.js";
+// ControlZoom Basic zoom control with two buttons (zoom in / zoom out).
+// @codekit-prepend "map/leaflet/leaflet-src/control/Control.Zoom.js";
 
-		// ControlScale Scale control.
-			// "map/leaflet/leaflet-src/control/Control.Scale.js";
+// ControlAttrib Attribution control.
+// @codekit-prepend "map/leaflet/leaflet-src/control/Control.Attribution.js";
 
-		// ControlLayers Layer Switcher control.
-			// "map/leaflet/leaflet-src/control/Control.Layers.js";
+// ControlScale Scale control.
+// "map/leaflet/leaflet-src/control/Control.Scale.js";
 
-		// AnimationPan Core panning animation support.
-			// @codekit-prepend "map/leaflet/leaflet-src/dom/PosAnimation.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/map/anim/Map.PanAnimation.js";
+// ControlLayers Layer Switcher control.
+// "map/leaflet/leaflet-src/control/Control.Layers.js";
 
-		// AnimationTimer Timer-based pan animation fallback for browsers that don\'t support CSS3 transitions.
-			// @codekit-prepend "map/leaflet/leaflet-src/dom/PosAnimation.Timer.js";
+// AnimationPan Core panning animation support.
+// @codekit-prepend "map/leaflet/leaflet-src/dom/PosAnimation.js";
+// @codekit-prepend "map/leaflet/leaflet-src/map/anim/Map.PanAnimation.js";
 
-		// AnimationZoom Smooth zooming animation. Works only on browsers that support CSS3 Transitions.
-			// @codekit-prepend "map/leaflet/leaflet-src/map/anim/Map.ZoomAnimation.js";
-			// @codekit-prepend "map/leaflet/leaflet-src/layer/tile/TileLayer.Anim.js";
+// AnimationTimer Timer-based pan animation fallback for browsers that don\'t support CSS3 transitions.
+// @codekit-prepend "map/leaflet/leaflet-src/dom/PosAnimation.Timer.js";
 
-		// Geolocation Adds Map#locate method and related events to make geolocation easier.'
-			// "map/leaflet/leaflet-src/map/ext/Map.Geolocation.js";
-	
+// AnimationZoom Smooth zooming animation. Works only on browsers that support CSS3 Transitions.
+// @codekit-prepend "map/leaflet/leaflet-src/map/anim/Map.ZoomAnimation.js";
+// @codekit-prepend "map/leaflet/leaflet-src/layer/tile/TileLayer.Anim.js";
+
+// Geolocation Adds Map#locate method and related events to make geolocation easier.'
+// "map/leaflet/leaflet-src/map/ext/Map.Geolocation.js";
+
 // LEAFLET EXTENTIONS
-	// @codekit-prepend "map/leaflet/extentions/VCO.Leaflet.TileLayer.Zoomify.js";
-	// @codekit-prepend "map/leaflet/extentions/VCO.Leaflet.MiniMap.js";
-	
+// @codekit-prepend "map/leaflet/extentions/VCO.Leaflet.TileLayer.Zoomify.js";
+// @codekit-prepend "map/leaflet/extentions/VCO.Leaflet.MiniMap.js";
+
 // TILES
-	// "map/tile/VCO.TileLayer.Mapbox.js"; NOT READY YET
-	// @codekit-prepend "map/tile/VCO.TileLayer.Stamen.js";
-	
+// "map/tile/VCO.TileLayer.Mapbox.js"; NOT READY YET
+// @codekit-prepend "map/tile/VCO.TileLayer.Stamen.js";
+
 // MAP
-	// @codekit-prepend "map/VCO.MapMarker.js";
-	// @codekit-prepend "map/VCO.Map.js";
+// @codekit-prepend "map/VCO.MapMarker.js";
+// @codekit-prepend "map/VCO.Map.js";
 
 // LEAFLET IMPLIMENTATION
-	// @codekit-prepend "map/leaflet/VCO.MapMarker.Leaflet.js";
-	// @codekit-prepend "map/leaflet/VCO.Map.Leaflet.js";
+// @codekit-prepend "map/leaflet/VCO.MapMarker.Leaflet.js";
+// @codekit-prepend "map/leaflet/VCO.Map.Leaflet.js";
 
 
 VCO.StoryMap = VCO.Class.extend({
-	
+
 	includes: VCO.Events,
-	
+
 	/*	Private Methods
 	================================================== */
 	initialize: function (elem, data, options,listeners) {
@@ -17330,10 +17330,10 @@ VCO.StoryMap = VCO.Class.extend({
 		var self = this;
 		// Version
 		this.version = "0.1.16";
-		
+
 		// Ready
 		this.ready = false;
-		
+
 		// DOM ELEMENTS
 		this._el = {
 			container: {},
@@ -17341,31 +17341,31 @@ VCO.StoryMap = VCO.Class.extend({
 			map: {},
 			menubar: {}
 		};
-		
+
 		// Determine Container Element
 		if (typeof elem === 'object') {
 			this._el.container = elem;
 		} else {
 			this._el.container = VCO.Dom.get(elem);
 		}
-		
+
 		// Slider
 		this._storyslider = {};
-		
+
 		// Map
 		this._map = {};
 		this.map = {}; // For direct access to Leaflet Map
-		
+
 		// Menu Bar
 		this._menubar = {};
-		
+
 		// Loaded State
 		this._loaded = {storyslider:false, map:false};
-		
+
 		// Data Object
 		// Test Data compiled from http://www.pbs.org/marktwain/learnmore/chronology.html
 		this.data = {};
-	
+
 		this.options = {
 			script_path:            "",
 			height: 				this._el.container.offsetHeight,
@@ -17422,32 +17422,32 @@ VCO.StoryMap = VCO.Class.extend({
 			api_key_flickr: 		"f2cc870b4d233dd0a5bfe73fd0d64ef0",
 			language:               "en"		
 		};
-		
+
 		// Current Slide
 		this.current_slide = this.options.start_at_slide;
-		
+
 		// Animation Objects
 		this.animator_map = null;
 		this.animator_storyslider = null;
-		
+
 		// Merge Options
 		VCO.Util.mergeData(this.options, options);
-		
+
 		if (this.options.layout == "landscape") {
 			this.options.map_center_offset = {left: -200, top: 0};
 		}
-		
+
 		// Zoomify Layout
 		if (this.options.map_type == "zoomify" && this.options.map_as_image) {
 			this.options.map_size_sticky = 2;
-			
+
 		}
-		
+
 		// Map as Image 
 		if (this.options.map_as_image) {
 			this.options.calculate_zoom = false;
 		}
-		
+
 		// Use Relative Date Calculations
 		if(this.options.relative_date) {
 			if (typeof(moment) !== 'undefined') {
@@ -17458,35 +17458,35 @@ VCO.StoryMap = VCO.Class.extend({
 					trace("LOAD MOMENTJS")
 				});
 			}
-			
+
 		} else {
 			self._loadLanguage(data);
 		}
-		
+
 		// Emoji Support to Chrome
 		if (VCO.Browser.chrome) {
 			VCO.Load.css(this.options.script_path + "../css/fonts/font.emoji.css", function() {
 				trace("LOADED EMOJI CSS FOR CHROME")
 			});
 		}
-		
+
 		return this;
 	},
-	
+
 	/*	Load Language
 	================================================== */
 	_loadLanguage: function(data) {
 		var self = this;
 		if(this.options.language == 'en') {
-		    this.options.language = VCO.Language;
-		    this._initData(data);
+			this.options.language = VCO.Language;
+			this._initData(data);
 		} else {
 			VCO.Load.js(this.options.script_path + "/locale/" + this.options.language + ".js", function() {
 				self._initData(data);
 			});
 		}
 	},
-	
+
 	/*	Navigation
 	================================================== */
 	goTo: function(n) {
@@ -17502,16 +17502,16 @@ VCO.StoryMap = VCO.Class.extend({
 			this._updateDisplay();
 		}
 	},
-	
+
 	/*	Private Methods
 	================================================== */
-	
+
 	// Initialize the data
 	_initData: function(data) {
 		var self = this;
-		
+
 		if (typeof data === 'string') {
-			
+
 			VCO.getJSON(data, function(d) {
 				if (d && d.storymap) {
 					VCO.Util.mergeData(self.data, d.storymap);
@@ -17529,42 +17529,42 @@ VCO.StoryMap = VCO.Class.extend({
 			self._onDataLoaded();
 		}
 	},
-	
+
 	// Initialize the layout
 	_initLayout: function () {
 		var self = this;
-		
+
 		this._el.container.className += ' vco-storymap';
 		this.options.base_class = this._el.container.className;
-		
+
 		// Create Layout
 		this._el.menubar		= VCO.Dom.create('div', 'vco-menubar', this._el.container);
 		this._el.map 			= VCO.Dom.create('div', 'vco-map', this._el.container);
 		this._el.storyslider 	= VCO.Dom.create('div', 'vco-storyslider', this._el.container);
-		
+
 		// Initial Default Layout
 		this.options.width 				= this._el.container.offsetWidth;
 		this.options.height 			= this._el.container.offsetHeight;
 		this._el.map.style.height 		= "1px";
 		this._el.storyslider.style.top 	= "1px";
-		
+
 		// Create Map using preferred Map API
 		this._map = new VCO.Map.Leaflet(this._el.map, this.data, this.options);
 		this.map = this._map._map; // For access to Leaflet Map.
 		this._map.on('loaded', this._onMapLoaded, this);
-		
+
 		// Map Background Color
 		this._el.map.style.backgroundColor = this.options.map_background_color;
-		
+
 		// Create Menu Bar
 		this._menubar = new VCO.MenuBar(this._el.menubar, this._el.container, this.options);
-		
+
 		// Create StorySlider
 		this._storyslider = new VCO.StorySlider(this._el.storyslider, this.data, this.options);
 		this._storyslider.on('loaded', this._onStorySliderLoaded, this);
 		this._storyslider.on('title', this._onTitle, this);
 		this._storyslider.init();
-		
+
 		// LAYOUT
 		if (this.options.layout == "portrait") {
 			// Set Default Component Sizes
@@ -17578,45 +17578,45 @@ VCO.StoryMap = VCO.Class.extend({
 			this.options.storyslider_height = (this.options.height - this._el.menubar.offsetHeight - 1);
 			this._menubar.setSticky(this.options.menubar_height);
 		}
-		
-		
+
+
 		// Update Display
 		this._updateDisplay(this.options.map_height, true, 2000);
-		
+
 		// Animate Menu Bar to Default Location
 		this._menubar.show(2000);
-		
+
 	},
-	
+
 	_initEvents: function () {
-		
+
 		// Sidebar Events
 		this._menubar.on('collapse', this._onMenuBarCollapse, this);
 		this._menubar.on('back_to_start', this._onBackToStart, this);
 		this._menubar.on('overview', this._onOverview, this);
-		
+
 		// StorySlider Events
 		this._storyslider.on('change', this._onSlideChange, this);
 		this._storyslider.on('colorchange', this._onColorChange, this);
-		
+
 		// Map Events
 		this._map.on('change', this._onMapChange, this);
 	},
-	
+
 	// Update View
 	_updateDisplay: function(map_height, animate, d) {
 		var duration 		= this.options.duration,
 			display_class 	= this.options.base_class,
 			self			= this;
-		
+
 		if (d) {
 			duration = d;
 		}
-		
+
 		// Update width and height
 		this.options.width = this._el.container.offsetWidth;
 		this.options.height = this._el.container.offsetHeight;
-		
+
 		// Check if skinny
 		if (this.options.width <= this.options.skinny_size) {
 			this.options.layout = "portrait";
@@ -17624,40 +17624,40 @@ VCO.StoryMap = VCO.Class.extend({
 		} else {
 			this.options.layout = "landscape";
 		}
-		
-		
+
+
 		// Map Height
 		if (map_height) {
 			this.options.map_height = map_height;
 		}
-		
-		
+
+
 		// Detect Mobile and Update Orientation on Touch devices
 		if (VCO.Browser.touch) {
 			this.options.layout = VCO.Browser.orientation();
 			display_class += " vco-mobile";
 		}
-		
+
 		// LAYOUT
 		if (this.options.layout == "portrait") {
 			display_class += " vco-skinny";
 			// Map Offset
 			this._map.setMapOffset(0, 0);
-			
+
 			this.options.map_height 		= (this.options.height / this.options.map_size_sticky);
 			this.options.storyslider_height = (this.options.height - this.options.map_height - 1);
 			this._menubar.setSticky(0);
-			
+
 			// Portrait
 			display_class += " vco-layout-portrait";
-			
+
 			if (animate) {
-			
+
 				// Animate Map
 				if (this.animator_map) {
 					this.animator_map.stop();
 				}
-			
+
 				this.animator_map = VCO.Animate(this._el.map, {
 					height: 	(this.options.map_height) + "px",
 					duration: 	duration,
@@ -17666,7 +17666,7 @@ VCO.StoryMap = VCO.Class.extend({
 						self._map.updateDisplay(self.options.width, self.options.map_height, animate, d, self.options.menubar_height);
 					}
 				});
-			
+
 				// Animate StorySlider
 				if (this.animator_storyslider) {
 					this.animator_storyslider.stop();
@@ -17676,73 +17676,83 @@ VCO.StoryMap = VCO.Class.extend({
 					duration: 	duration,
 					easing: 	VCO.Ease.easeOutStrong
 				});
-			
+
 			} else {
 				// Map
 				this._el.map.style.height = Math.ceil(this.options.map_height) + "px";
-			
+
 				// StorySlider
 				this._el.storyslider.style.height = this.options.storyslider_height + "px";
 			}
-			
+
 			// Update Component Displays
 			this._menubar.updateDisplay(this.options.width, this.options.height, animate);
 			this._map.updateDisplay(this.options.width, this.options.height, false);
 			this._storyslider.updateDisplay(this.options.width, this.options.storyslider_height, animate, this.options.layout);
-			
+
 		} else {
-			
+
 			// Landscape
 			display_class += " vco-layout-landscape";
-			
+
 			this.options.menubar_height = this._el.menubar.offsetHeight;
-			
+
 			// Set Default Component Sizes
 			this.options.map_height 		= this.options.height;
 			this.options.storyslider_height = this.options.height;
 			this._menubar.setSticky(this.options.menubar_height);
-			
+
 			// Set Sticky state of MenuBar
 			this._menubar.setSticky(this.options.menubar_height);
-			
+
 			this._el.map.style.height = this.options.height + "px";
-			
+
 			// Update Component Displays
 			this._map.setMapOffset(-(this.options.width/4), 0);
-			
+
 			// StorySlider
 			this._el.storyslider.style.top = 0;
 			this._el.storyslider.style.height = this.options.storyslider_height + "px";
-			
+
 			this._menubar.updateDisplay(this.options.width, this.options.height, animate);
 			this._map.updateDisplay(this.options.width, this.options.height, animate, d);
 			this._storyslider.updateDisplay(this.options.width/2, this.options.storyslider_height, animate, this.options.layout);
 		}
-		
-		
-		
+
+
+
 		// Apply class
 		this._el.container.className = display_class;
-		
-		
+
+
 	},
-	
-	
+
+
 	/*	Events
 	================================================== */
-	
+
 	_onDataLoaded: function(e) {
 		this.fire("dataloaded");
 		this._initLayout();
 		this._initEvents();
 		this.ready = true;
-		
+
+		//		var menu = d3.select('.vco-menubar');
+		var menu = document.getElementsByClassName('vco-menubar-button');
+		console.log(menu);
+		//	  var menu = document.getElementsByClassName('vco-menubar');
+		//		console.log(menu);
+		menu[0].insertAdjacentHTML('afterend', "<span class='vco-menubar-button'><a href='../index.html'>Select another story</a></span>");
+
+
+		console.log(menu);
+
 	},
-	
+
 	_onTitle: function(e) {
 		this.fire("title", e);
 	},
-	
+
 	_onColorChange: function(e) {
 		if (e.color || e.image) {
 			this._menubar.setColor(true);
@@ -17750,7 +17760,7 @@ VCO.StoryMap = VCO.Class.extend({
 			this._menubar.setColor(false);
 		}
 	},
-	
+
 	_onSlideChange: function(e) {
 		if (this.current_slide != e.current_slide) {
 			this.current_slide = e.current_slide;
@@ -17758,7 +17768,7 @@ VCO.StoryMap = VCO.Class.extend({
 			this.fire("change", {current_slide: this.current_slide}, this);
 		}
 	},
-	
+
 	_onMapChange: function(e) {
 		if (this.current_slide != e.current_marker) {
 			this.current_slide = e.current_marker;
@@ -17766,26 +17776,26 @@ VCO.StoryMap = VCO.Class.extend({
 			this.fire("change", {current_slide: this.current_slide}, this);
 		}
 	},
-	
+
 	_onOverview: function(e) {
 		this._map.markerOverview();
 	},
-	
+
 	_onBackToStart: function(e) {
 		this.current_slide = 0;
 		this._map.goTo(this.current_slide);
 		this._storyslider.goTo(this.current_slide);
 		this.fire("change", {current_slide: this.current_slide}, this);
 	},
-	
+
 	_onMenuBarCollapse: function(e) {
 		this._updateDisplay(e.y, true);
 	},
-	
+
 	_onMouseClick: function(e) {
-		
+
 	},
-	
+
 	_fireMouseEvent: function (e) {
 		if (!this._loaded) {
 			return;
@@ -17801,30 +17811,30 @@ VCO.StoryMap = VCO.Class.extend({
 		if (type === 'contextmenu') {
 			VCO.DomEvent.preventDefault(e);
 		}
-		
+
 		this.fire(type, {
 			latlng: "something", //this.mouseEventToLatLng(e),
 			layerPoint: "something else" //this.mouseEventToLayerPoint(e)
 		});
 	},
-	
+
 	_onMapLoaded: function() {
 		this._loaded.map = true;
 		this._onLoaded();
 	},
-	
+
 	_onStorySliderLoaded: function() {
 		this._loaded.storyslider = true;
 		this._onLoaded();
 	},
-		
+
 	_onLoaded: function() {
 		if (this._loaded.storyslider && this._loaded.map) {
 			this.fire("loaded", this.data);
 		}
 	}
-	
-	
+
+
 });
 
 
