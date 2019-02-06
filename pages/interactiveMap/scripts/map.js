@@ -328,6 +328,7 @@ $(window).on('load', function() {
 				var healthPoints = L.geoJson(health, {
 					pointToLayer: function (feature, latlng) {
 						function shape(feature) {
+
 							if (feature.properties.Deliveries === "Yes" && feature.properties.ANC === "Yes") {
 								return	"circle"
 							} else if (feature.properties.Deliveries === "Yes" && feature.properties.ANC === "No") {
