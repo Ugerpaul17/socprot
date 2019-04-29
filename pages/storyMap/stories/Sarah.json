@@ -1,0 +1,205 @@
+
+{
+	"storymap":{
+		"test": "test",
+		"slides": [
+			{
+				"type": 					"", 
+
+				"date": 					"1835",
+				"location": {
+					"lat": 				0.3193,
+					"lon": 				32.5953,
+					"name": 				"SARAH",
+					"zoom": 				12,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"SARAH",
+					"text": 				"<p style='text-align:justify;'>Sarah represents girls in Kampala aged 15–19 years living in poor households. Her father left after her youngest sibling was born, so Sarah, her two brothers and younger sister have been raised by their mother. Sarah’s two brothers go to a public school, while her four-year-old sister stays at home with their mother. All the family sleep in the same room in their one-bedroomed house in Kisenyi. <br><br><font size='2'><b>On average, urban poor households have six members and 62 per cent of urban households sleep in one room. </b><br><i>(UNICEF Report: Emerging Global Challenges: Climate-Related Hazards and Urbanization: Protecting Uganda’s Children, 2017) </i></font><br><br>Until last year, Sarah went to a public school and reached primary grade six (average age 12). But last year her mother was unable to afford to pay for Sarah and her brothers’ school breakfast and lunch so Sarah had to drop out of school. Although primary education at public schools is officially free, parents are expected to pay for their children’s  morning porridge and lunch. <font size='2'><i>  (EPRC: Education, Marriage, Fertility and Labour market Experiences of Young Women in Uganda: Evidence from a Qualitative Assessment, 2018) </font><br><br><font size='2'><b>43 per cent of girls aged 15–19 in Kampala have dropped out of school. </b><br><i>(UNICEF Report: Emerging Global Challenges: Climate-Related Hazards and Urbanization: Protecting Uganda’s Children, 2017)</i></font><br><br><a href=https://geo-gecko.github.io/socprot/pages/interactiveMap/index.html>See social infrastructure map for Kampala</a></p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/sarah/Step1.jpg",
+					"credit":				"UNICEF/FRANCIS EMORUT",
+					"caption":			""
+				}
+			},
+ 
+
+            
+            
+			{
+				"uniqueid": 				"",
+				"date": 					"1835",
+				"location": {
+					"lat": 				0.307903,
+					"lon": 				32.572386,
+					"name": 				"4:30am",
+					"zoom": 				17,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"Home",
+					"text": 				"<p style='text-align:justify;'>Sarah wakes up at 4.30 am to get ready for her work as a domestic worker – housegirl – for another family. She got the job earlier in the year through her mother’s friend who also works as a househelp.<br><br>Before she leaves for work and before her mother wakes up, Sarah cleans the house, prepares breakfast for the family and feeds her siblings. If there’s any food left, she has a little breakfast herself. Then she gets her brothers ready for school, gets ready herself and leaves for work.</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/sarah/Step2.jpg",
+					"credit":				"UNICEF/FRANCIS EMORUT",
+					"caption":			""
+				}
+			},
+			{
+				"uniqueid": 				"",
+				"date": 					"1839",
+				"location": {
+					"lat": 				0.309182,
+					"lon": 				32.570795,
+					"name": 				"11:30 p.m",
+					"zoom": 				17,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"Traveling to work",
+					"text": 				"<p style='text-align:justify;'>Because her workplace is on the other side of Kampala, in order to get to work on time Sarah has to take a taxi. At 6 am, she arrives at the taxi stage, hops in and starts her journey.</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/sarah/Step3.jpg",
+					"credit":				"UNICEF/FRANCIS EMORUT",
+					"caption":			""
+				}
+			},
+			{
+				"uniqueid": 				"",
+				"date": 					"1851",
+				"location": {
+					"lat": 				0.370730,
+					"lon": 				32.638231,
+					"zoom": 				17,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"Workplace",
+					"text": 				"<p style='text-align:justify;'>At 7 am, Sarah arrives at her workplace in Naalya. Her employers are leaving for work and a driver has already picked up the children for school. Sarah starts washing their clothes and putting the laundry outside to dry in the sun. </p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/sarah/Step4.jpg",
+					"credit":				"UNICEF/FRANCIS EMORUT",
+					"caption":			""
+				}
+			},
+			{
+				"uniqueid": 				"",
+				"date": 					null,
+				"location": {
+					"lat": 				0.373139,
+					"lon": 				32.636655,
+					"zoom": 				17,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"Market",
+					"text": 				"<p style='text-align:justify;'>When she’s finished doing the laundry, Sarah goes to the market  to buy ingredients for the family’s evening meal.</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/sarah/Step5.jpg",
+					"credit":				"UNICEF/FRANCIS EMORUT",
+					"caption":			""
+				}
+			},
+			{
+				"uniqueid": 				"",
+				"date": 					"1862",
+				"location": {
+					"lat": 				0.370730,
+					"lon": 				32.638231,
+					"zoom": 				17,
+					"line": 				true
+				},
+				"text": {
+					"headline": 			"Workplace",
+					"text": 				"<p style='text-align:justify;'>Upon her return, Sarah cleans the house and then starts cooking matooke, beans and greens. After cooking the evening meal, Sarah brings in the dry laundry and folds it.<br><br>At 6 pm, the driver brings the children back from school. Sarah welcomes the children, helps them with their homework, bathes them and gets them ready for the next day. When the parents arrive at around 8 pm, Sarah serves the evening meal, washes the dishes and gets ready to leave. <font size='2'><i>(EPRC: Education, Marriage, Fertility and Labour market Experiences of Young Women in Uganda: Evidence from a Qualitative Assessment, 2018.)</i></font></p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/sarah/Step6.jpg",
+					"credit":				"UNICEF/FRANCIS EMORUT",
+					"caption":			""
+				}
+			},
+            
+            {
+				"uniqueid": 				"",
+				"date": 					"1862",
+				"location": {
+					"lat": 				0.367310,
+					"lon": 				32.613220,
+					"zoom": 				17,
+					"line": 				true
+				},
+				"text": {
+					"headline": 			"Travelling home",
+					"text": 				"<p style='text-align:justify;'>At around 9 pm, Sarah starts her journey back home. On the way, she thinks about her day. She often feels sad and lonely, and doesn’t feel that she can talk to anyone about her problems. She misses her classmates from school. <br><br> <b>One in five girls in Kampala suffer from depression, and almost 9 out of 10 feel lonely and sad.</b><br><i>(UNICEF Report: Emerging Global Challenges: Climate-Related Hazards and Urbanization: Protecting Uganda’s Children, 2017)</i> <br><br>In the taxi on her way home, Sarah sees Uganda Child Helpline poster advertising the  help available to children and adolescents in difficult situations. She memorizes the child helpline number, <b>116</b>, and decides to call them later.</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/sarah/Step7.jpg",
+					"credit":				"UNICEF/FRANCIS EMORUT",
+					"caption":			""
+				}
+			},
+            
+            {
+				"uniqueid": 				"",
+				"date": 					"1862",
+				"location": {
+					"lat": 				0.307903,
+					"lon": 				32.572386,
+					"zoom": 				17,
+					"line": 				true
+				},
+				"text": {
+					"headline": 			"Home",
+					"text": 				"<p style='text-align:justify;'>Sarah arrives home at 9.45 pm and, as her mother is still at the market selling vegetables, Sarah prepares dinner and helps her younger brothers with their homework. She then has a wash, eats supper with the rest of the family, cleans the kitchen and finally goes to bed. When she is sure that her mother and siblings are asleep, she finds her mother’s phone, goes outside and calls the Child Helpline number. A counsellor responds and asks Sarah if it’s possible for her to visit the Child Helpline office. As Sarah cannot risk getting fired or beaten if she misses work, the counsellor makes an appointment to meet Sarah near her workplace after work the following day. <br><br>The counsellor decides to thoroughly assess Sarah’s situation and remove her from her work, which amounts to child labour and is therefore illegal. Sarah’s employers and the person who gave her up to be a domestic worker will be reported to the police, and Sarah’s case will be referred to organisations that support children and adolescents to go back to school or do vocational training. Although still concerned about her future, Sarah is glad that she called the helpline and received support.</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/sarah/Step8.jpg",
+					"credit":				"UNICEF/FRANCIS EMORUT",
+					"caption":			""
+				}
+			},
+			{
+				"type": 					"", 
+
+				"date": 					"1835",
+				"location": {
+					"lat": 				0.3193,
+					"lon": 				32.5953,
+					"name": 				"END",
+					"zoom": 				12,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+                "headline": "The Uganda Child Helpline",
+                "text": "<p style='text-align:justify;'>The Uganda Child Helpline, also known by its brand name Sauti, offers a toll-free telephone service on the short code 116 which is accessible on all telecommunication networks in the country. The telephone service operates 24/7 and is just one of the ways in which the Child Helpline aims to protect children. Other approaches employed by the Helpline to offer child protection include: <ul><li>Handling walk-in clients</li><li>Responding to cases reported through the U-report platform</li><li>Follow up of child abuse cases reported through various Media (including social media)</li><li>Handling cases that entail Online Child Sexual Abuse</li><li>Community awareness raising campaigns in schools, communities and on radios & television etc.</li></ul></p>"
+            },
+				"media": {
+					"url": 				"css/images/sarah/Step9.jpg",
+					"credit":				"UNICEF/FRANCIS EMORUT",
+					"caption":			""
+				}
+			}
+		]
+	}
+}

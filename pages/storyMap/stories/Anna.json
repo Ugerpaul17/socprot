@@ -1,0 +1,146 @@
+
+{
+	"storymap":{
+		"test": "test",
+		"slides": [
+			{
+				"type": 					"",			
+				"date": 					"1835",
+				"location": {
+					"lat": 				0.3193,
+					"lon": 				32.5953,
+					"name": 				"ANNA",
+					"zoom": 				12,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"Anna",
+					"text": 				"<p style='text-align:justify;'>Anna represents middle-class girls in Kampala aged 10–14 years. She goes to a private school and is in primary grade 4 (average age 10). She lives in a three-bedroomed house in Lukuli with her mother, father and two siblings – an older brother and a younger sister. The family also has a guard dog.</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/anna/Step1.jpg",
+					"credit":				"UNICEF/FRANCIS EMORUT",
+					"caption":			""
+				}
+			},
+            
+			{
+				"uniqueid": 				"",
+				"date": 					"1835",
+				"location": {
+					"lat": 				0.279507,
+					"lon": 				32.603067,
+					"name": 				"5:30am",
+					"zoom": 				17,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"Home",
+					"text": 				"<p style='text-align:justify;'>Anna wakes up at 6 am. After showering, she has some porridge for breakfast, puts on her school uniform and leaves for school. She carries  her school books and the packed lunch the family’s housegirl has prepared for her in her backpack.</p>"
+				
+				},
+				"media": {
+					"url": 				"css/images/anna/Step2.jpg",
+					"credit":				"UNICEF/FRANCIS EMORUT",
+					"caption":			""
+				}
+			},
+            
+			{
+				"uniqueid": 				"",
+				"date": 					"1839",
+				"location": {
+					"lat": 				0.287231,
+					"lon": 				32.596632,
+					"name": 				"11:30 p.m",
+					"zoom": 				17,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"Travelling to school",
+					"text": 				"<p style='text-align:justify;'>In order to get to her school in Nsambya, Anna usually has to walk 5 km along busy roads. The heavy traffic scares her and she’s also frightened that along the way she’ll be harassed or even raped. </br></br><font size='2'><b> 80 per cent of girls in Kampala do not feel safe in public spaces.</b><br> <i>(UNICEF Uganda Urban CSSP Focus Group Discussions, 2018; UNICEF Report: Emerging Global Challenges: Climate-Related Hazards and Urbanization: Protecting Uganda’s Children, 2017)</i><br><br><a href=https://geo-gecko.github.io/socprot/pages/interactiveMap/index.html>See social infrastructure map for Kampala</a></font><br><br>Today, Anna is very tired as last night she didn’t sleep well. So, with the pocket money her parents gave her, she decides to take a boda-boda to school. But the boda drivers at the boda stage make crude and offensive comments about her breasts and buttocks, which frighten and embarrass her. Reluctantly, Anna decides that it’s better to walk to school <I><font size='2'>(UNICEF Uganda Urban CSSP Focus Group Discussions, 2018)</font></I>.<br><br> On her way to school a few months ago Anna met John, a man in his 30s. He gave her his phone number and they started chatting on WhatsApp. She thought it was nice to make a friend outside of school and didn’t think anything bad could happen just chatting on the phone. After a month, John started asking Anna to meet him. She refused because she was scared. He started sending her nude photos, and asked her to send some of herself. Last week she did, and now he is demanding more pictures and has told Anna that he will kill her if she doesn’t agree to send some and meet him. Anna has continued to respond to John’s messages as she’s afraid of what he might do</p>"
+		
+				},
+				"media": {
+					"url": 				"css/images/anna/Step3.jpg",
+					"credit":				"UNICEF/FRANCIS EMORUT",
+					"caption":			""
+				}
+			},
+            
+    
+			{
+				"uniqueid": 				"",
+				"date": 					"1839",
+				"location": {
+					"lat": 				0.291006,
+					"lon": 				32.596290,
+					"name": 				"11:30 p.m",
+					"zoom": 				17,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+                    "headline": 			"School",
+					"text": 				"<p style='text-align:justify;'>Anna feels safe at her school in Nsambya and appreciates the opportunity to learn, discuss and laugh with friends and prepare for her future work. However, sometimes the boys at her school and even the male teachers make her feel uncomfortable by commenting on and laughing at her developing body. She is also scared of the boys who bully and hit the girls. Anna is expecting her periods to start soon and is worried. She knows that some of her classmates have to stay at home when they’re menstruating because they don’t have sanitary pads. <font size='2'><i>(UNICEF Uganda Urban CSSP Focus Group Discussions, 2018.)</i></font><br><br>Anna’s classes include English, maths, integrated science and social studies. When they finish at 4.30 pm, like many of her classmates, she usually stays at school to do her homework. <br><br>Today, members of the Uganda Child Helpline have come along to Anna’s class to introduce their services. They talk about violence against children and about the growing phenomenon of online sexual abuse of children. Anna listens carefully and is surprised to hear that she is not the only one being harassed via her phone. She doesn’t feel so alone. <br><br>After the presentation, Anna explains her situation to one of the counsellors from the Child Helpline, and the counsellor files Anna’s case. The counsellor tells Anna that she doesn’t have to share any pictures with John or meet him, and that his threats are abuse. She explains that the Child Helpline is there to support Anna emotionally and with reporting the abuse to the police if that’s what Anna wants to do. The counsellor advises Anna to save the man’s number and any other information she has about him, like his Facebook profile, to help the police track him down. The counsellor also advises Anna to block the man’s number and avoid him. Anna is relieved to have this support and feels safer and more protected. <br><br>Around 6 pm, Anna is picked up from school by a boda driver paid for by Anna’s parents. Otherwise she would have to walk home when it’s getting dark.</p>"
+			
+				},
+				"media": {
+					"url": 				"css/images/anna/Step4.jpg",
+					"credit":				"UNICEF/FRANCIS EMORUT",
+					"caption":			""
+				}
+			},
+            
+            
+			{
+				"uniqueid": 				"",
+				"date": 					null,
+				"location": {
+					"lat": 				0.279507,
+					"lon": 				32.603067,
+					"zoom": 				17,
+					"line": 				true,
+					"line_color":			"#1e90ff"
+				},
+				"text": {
+					"headline": 			"Home",
+					"text": 				"<p style='text-align:justify;'>When Anna arrives home at around 6.30 pm, her parents are not back from work but her brother and sister are already at home. Anna does more of her homework, plays with her sister and watches TV. Because Anna’s family has a housegirl during the day who does all the cooking and cleaning, Anna doesn’t have any domestic chores when she gets home from school. She showers and prepares for the next day. When her parents get home at about 8 pm, Anna has supper and tea with them and her siblings and goes to bed. </p>"
+			
+				},
+				"media": {
+					"url": 				"css/images/anna/Step5.jpg",
+					"credit":				"UNICEF/FRANCIS EMORUT",
+					"caption":			""
+				}
+			},
+                       
+            {
+            "type": "",
+            "date": "2013",
+            "text": {
+                "headline": "The Uganda Child Helpline",
+                "text": "<p style='text-align:justify;'>The Uganda Child Helpline, also known by its brand name Sauti, offers a toll-free telephone service on the short code 116 which is accessible on all telecommunication networks in the country. The telephone service operates 24/7 and is just one of the ways in which the Child Helpline aims to protect children. Other approaches employed by the Helpline to offer child protection include: <ul><li>Handling walk-in clients</li><li>Responding to cases reported through the U-report platform</li><li>Follow up of child abuse cases reported through various Media (including social media)</li><li>Handling cases that entail Online Child Sexual Abuse</li><li>Community awareness raising campaigns in schools, communities and on radios & television etc.</li></ul></p>"
+            },
+            "location": {
+                "name": "END",
+					"lat": 				0.3193,
+					"lon": 				32.5953,
+                "zoom": 12,
+                "line": true
+            },
+				"media": {
+					"url": 				"css/images/anna/Step6.jpg",
+					"credit":				"UNICEF/FRANCIS EMORUT",
+					"caption":			""
+				}
+        }
+            
+           
+		]
+	}
+}
