@@ -258,20 +258,6 @@ $(window).on('load', function() {
 				refreshCounts();
 				updateLeftPanel(districtList, sectorList, agencyList, donorList, actorTypeList, dataset);
 
-
-
-				var h = (window.innerHeight ||
-						 document.documentElement.clientHeight ||
-						 document.body.clientHeight);
-				if (h > 540) {
-					d3.select(".list-container").style("height", h + "px");
-					d3.select("#d3-map-wrapper").style("height", h + "px");
-				}
-				var w = (window.innerWidth ||
-						 document.documentElement.clientWidth ||
-						 document.body.clientWidth);
-				d3.select(".list-container").style("height", h - 0 + "px")
-
 				L.control.zoom({
 					position:'topright'
 				}).addTo(map);
@@ -282,18 +268,20 @@ $(window).on('load', function() {
 
 				var sidebar1 = L.control.sidebar('sidebar-right', {position: "right"}).addTo(map);
 
-				map.bounds = [],
-					map.setMaxBounds([
-					[4.5,29.5],
-					[-1.5,34.5]
-				]);
-				map.options.maxZoom=12;
-				map.options.minZoom=7;
+				sidebar1.open("home1");
+
+				// map.bounds = [],
+				// 	map.setMaxBounds([
+				// 	[4.5,29.5],
+				// 	[-1.5,34.5]
+				// ]);
+				// map.options.maxZoom=12;
+				// map.options.minZoom=7;
 
 				var ugandaPath;
 				var domain = [+Infinity, -Infinity];
 				var opacity = 0.3;
-				var wrapper = d3.select("#d3-map-wrapper");
+				var wrapper = d3.select("#d3-map-container");
 				var width = wrapper.node().offsetWidth || 960;
 				var height = wrapper.node().offsetHeight || 480;
 				var color = d3.scale.linear().domain(domain) //http://bl.ocks.org/jfreyre/b1882159636cc9e1283a
@@ -364,16 +352,17 @@ $(window).on('load', function() {
 						if (d.name === "key") {
 							var parishDataFilter = districtList.filter(function (k) {
 								if (d.value === k.key) {
-									var str = "<thead><tr><th style='border: 1px solid #ccc!important;text-decoration: none !important; text-align: left;'>Agency Name</th> <th style='text-decoration: none !important; border: 1px solid #ccc!important; text-align: left;'>Project Title</th><th style='text-decoration: none !important; border: 1px solid #ccc!important; text-align: left;'>Project Start</th><th style='text-decoration: none !important; border: 1px solid #ccc!important; text-align: left;'>Project End</th></tr></thead>";
+									var str = "<thead><tr><th style='border: 1px solid #ccc!important; width: 15%; text-decoration: none !important; text-align: left;'>Agency Name</th> <th style='border: 1px solid #ccc!important; width: 65%; text-decoration: none !important; text-align: left;'>Project Title</th><th style='border: 1px solid #ccc!important; width: 10%; text-decoration: none !important; border: 1px solid #ccc!important; text-align: left;'>Project Start</th><th style='border: 1px solid #ccc!important; width: 10%; text-decoration: none !important; border: 1px solid #ccc!important; text-align: left;'>Project End</th></tr></thead>";
 
 									var tooltipList = "";
 									var i = 0;
 									while (i < k.values.length) {
-										tooltipList = tooltipList + ("<tr><td style='border: 1px solid #ccc!important;text-decoration: none !important; text-align: left;'>" + k.values[i]["Agency name"] + "</td> <td style='border: 1px solid #ccc!important; text-decoration: none !important; text-align: left;'>" + k.values[i]["Detailed Activity description"] + "</td><td style='border: 1px solid #ccc!important; text-decoration: none !important; text-align: left;'>" + k.values[i]["Start (month)"] + "</td><td style='border: 1px solid #ccc!important; text-decoration: none !important; width: 2em!important; text-align: left;'>" + k.values[i]["End (month)"] + "</td></tr>");
+										tooltipList = tooltipList + ("<tr><td style='border: 1px solid #ccc!important; width: 15%; text-decoration: none !important; text-align: left;'>" + k.values[i]["Agency Name"] + "</td> <td style='border: 1px solid #ccc!important; width: 65%; text-decoration: none !important; text-align: left;'>" + k.values[i]["Detailed Activity description"] + "</td><td style='border: 1px solid #ccc!important; width: 10%; text-decoration: none !important; text-align: left;'>" + k.values[i]["Start (month)"] + "</td><td style='border: 1px solid #ccc!important; text-decoration: none !important; width: 10%; text-align: left;'>" + k.values[i]["End (month)"] + "</td></tr>");
 										i++
-									}					
-									document.getElementById('modal-header').innerHTML = d.value;
-									document.getElementById('modal-body').innerHTML = str + tooltipList;
+									}				
+									document.getElementById('tbl-title').innerHTML = d.value;
+									document.getElementById('tbl-header').innerHTML = str;
+									document.getElementById('tbl-content').innerHTML = tooltipList;
 									modal.style.display = "block";	
 								}
 							})
@@ -448,16 +437,17 @@ $(window).on('load', function() {
 						if (d.name === "key") {
 							var agencyDataFilter = agencyList.filter(function (k) {
 								if (d.value === k.key) {
-									var str = "<thead><tr><th style='border: 1px solid #ccc!important; text-decoration: none !important; text-align: left;'>Parish</th> <th style='border: 1px solid #ccc!important; text-decoration: none !important; text-align: left;'>Project Title</th><th style='border: 1px solid #ccc!important; text-decoration: none !important; border: 1px solid #ccc!important; text-align: left;'>Project Start</th><th style='border: 1px solid #ccc!important; text-decoration: none !important; border: 1px solid #ccc!important; text-align: left;'>Project End</th></tr></thead>";
+									var str = "<thead><tr><th style='border: 1px solid #ccc!important; width: 15%; text-decoration: none !important; text-align: left;'>Parish</th> <th style='border: 1px solid #ccc!important; width: 65%; text-decoration: none !important; text-align: left;'>Project Title</th><th style='border: 1px solid #ccc!important; width: 10%; text-decoration: none !important; border: 1px solid #ccc!important; text-align: left;'>Project Start</th><th style='border: 1px solid #ccc!important; width: 10%; text-decoration: none !important; border: 1px solid #ccc!important; text-align: left;'>Project End</th></tr></thead>";
 
 									var tooltipList = "";
 									var i = 0;
 									while (i < k.values.length) {
-										tooltipList = tooltipList + ("<tr><td style='border: 1px solid #ccc!important; text-decoration: none !important; text-align: left;'>" + k.values[i]["Parish"] + "</td> <td style='border: 1px solid #ccc!important; text-decoration: none !important; text-align: left;'>" + k.values[i]["Detailed Activity description"] + "</td><td style='border: 1px solid #ccc!important; text-decoration: none !important; text-align: left;'>" + k.values[i]["Start (month)"] + "</td><td style='border: 1px solid #ccc!important; text-decoration: none !important; width: 2em!important; text-align: left;'>" + k.values[i]["End (month)"] + "</td></tr>");
+										tooltipList = tooltipList + ("<tr><td style='border: 1px solid #ccc!important; width: 15%; text-decoration: none !important; text-align: left;'>" + k.values[i]["Parish"] + "</td> <td style='border: 1px solid #ccc!important; width: 65%; text-decoration: none !important; text-align: left;'>" + k.values[i]["Detailed Activity description"] + "</td><td style='border: 1px solid #ccc!important; width: 10%; text-decoration: none !important; text-align: left;'>" + k.values[i]["Start (month)"] + "</td><td style='border: 1px solid #ccc!important; text-decoration: none !important; width: 10%; text-align: left;'>" + k.values[i]["End (month)"] + "</td></tr>");
 										i++
 									}					
-									document.getElementById('modal-header').innerHTML = d.value;
-									document.getElementById('modal-body').innerHTML = str + tooltipList;
+									document.getElementById('tbl-title').innerHTML = d.value;
+									document.getElementById('tbl-header').innerHTML = str;
+									document.getElementById('tbl-content').innerHTML = tooltipList;
 									modal.style.display = "block";	
 								}
 							})
@@ -1175,7 +1165,6 @@ $(window).on('load', function() {
 				var datalayerChildPoverty;
 
 				$.getJSON('data/povertyAndPopulationDensity.geojson', function(data){
-					console.log(data);
 					function getColorPoverty(d) {
 						return d > 5.1  ? 'rgb(23,78,105)' :
 						d > 3.1  ? 'rgb(46,95,120)' :
@@ -1308,11 +1297,13 @@ $(window).on('load', function() {
 
 				// method that we will use to update the control based on feature properties passed
 				info.update = function (props) {
-					this._div.innerHTML = (props ? 'Sub County: <b>' + props.SNAME2014 + '</b><br/>' + 
+					if(props !== undefined){
+						this._div.innerHTML = (props ? 'Sub County: <b>' + props.SNAME2014 + '</b><br/>' + 
 										   'Parish: <b>' + props.dist + '</b><br/><br/>' +
 										   'Number of Organisations: <b>' + props._agencyList.length  + '</b><br/>' +
 										   'Number of Sectors: <b>' + props._sectorList.length + '</b>'
 										   : 'Hover over a parish with data');
+					} else this._div.innerHTML = 'Hover over a parish with data';				
 				};
 
 				info.addTo(map);
@@ -1392,21 +1383,33 @@ $(window).on('load', function() {
 					}
 				});
 
+				var wrapper = d3.select("#d3-map-container");
+				var width = wrapper.node().offsetWidth || 960;
+				var height = wrapper.node().offsetHeight || 480;
+				if (width) {
+					console.log(width)
+					console.log(height)
+					d3.select("#d3-map-container").select("svg")
+						.attr("viewBox", "0 0 " + width + " " + height)
+						.attr("width", width)
+						.attr("height", height);
+				}
 
-				window.addEventListener("resize", function () {
-					var wrapper = d3.select("#d3-map-wrapper");
-					var width = wrapper.node().offsetWidth || 960;
-					var height = wrapper.node().offsetHeight || 480;
-					if (width) {
-						d3.select("#d3-map-wrapper").select("svg")
-							.attr("viewBox", "0 0 " + width + " " + height)
-							.attr("width", width)
-							.attr("height", height);
-					}
-				});
 			} // ready
 
-
+			window.addEventListener("resize", function () {
+				var wrapper = d3.select("#d3-map-container");
+				var width = wrapper.node().offsetWidth || 960;
+				var height = wrapper.node().offsetHeight || 480;
+				if (width) {
+					console.log(width);
+					console.log(height);
+					d3.select("#d3-map-container").select("svg")
+						.attr("viewBox", "0 0 " + width + " " + height)
+						.attr("width", width)
+						.attr("height", height);
+				}
+			});
 
 		})(d3, $, queue, window);
 
@@ -1440,7 +1443,7 @@ $(window).on('load', function() {
 			completePoints = true;
 		}
 
-		centerAndZoomMap(group);
+		// centerAndZoomMap(group);
 
 
 		// Change Map attribution to include author's info + urls
@@ -1454,7 +1457,7 @@ $(window).on('load', function() {
 	   */
 	function changeAttribution() {
 		var attributionHTML = $('.leaflet-control-attribution')[0].innerHTML;
-		var credit = 'Data from <a href="https://www.kcca.go.ug/" target="_blank">KCCA</a>, Vizualisation by <a href="https://www.geogecko.com/" target="_blank">GeoGecko</a>';
+		var credit = 'Data from <a href="https://www.kcca.go.ug/" target="_blank">KCCA</a>, Admin Boundaries from <a href="https://www.ubos.org/" target="_blank">UBOS</a>, Vizualisation by <a href="https://www.geogecko.com/" target="_blank">GeoGecko</a>';
 		var name = getSetting('_authorName');
 		var url = getSetting('_authorURL');
 

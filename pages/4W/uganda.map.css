@@ -110,6 +110,9 @@ p.custom-count {
     height: 100%;
     background: rgb(245, 245, 245);
     position: relative;
+    background-image: url('https://www.kcca.go.ug/images/logo-light.png');
+    background-position: center;
+    /* background-size: cover; */
 }
 
 #d3-map-info-container {
@@ -173,11 +176,11 @@ p.custom-count {
     border-radius: 3px;
     z-index: 500;
 }
-
+/* 
 #d3-map-wrapper {
 	top: 300px !important;
     width: 100%;
-}
+} */
 
 .background {
     fill: none;
@@ -534,11 +537,11 @@ p.custom-list-header .glyphicon {
 
 /* Modal Content */
 .modal-content {
-	
+	z-index: 1001; 
 	border-radius: 2px;
 	overflow-x:hidden; 
-	overflow-y:hidden; 
-    top: 30%;
+	overflow-y:hidden !important; 
+    top: 10%;
 	left: 10%;
     background-color: #fefefe;
     width: 80%;
@@ -576,7 +579,7 @@ p.custom-list-header .glyphicon {
 }
 .modal-content {
 	padding: 2px 16px;
-	height: 300px !important;
+	height: 80% !important;
 	overflow-y: auto;
 }
 
@@ -639,4 +642,13 @@ p.custom-list-header .glyphicon {
     float: left;
     margin-right: 8px;
     opacity: 0.7;
+}
+
+#sidebar-right .sidebar-content {
+    direction: rtl;
+    overflow:auto;
+}
+
+#home1 {
+    direction:ltr;
 }

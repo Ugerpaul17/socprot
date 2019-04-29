@@ -815,6 +815,7 @@ $(window).on('load', function() {
 							global.currentEvent = "district";
 							myFilter(c, global.currentEvent, needRemove);
 							d3.selectAll(".education").style("opacity", 0);
+							d3.selectAll(".education").style("pointer-events", 'none');
 
 							global.selectedDistrict.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
@@ -824,6 +825,7 @@ $(window).on('load', function() {
 										for (var j = 0; j < global.selectedEducation.length; j++) {
 											if(a.values[i].typeTextSchools === global.selectedEducation[j].key) {
 												d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);	
+												d3.selectAll(".education-" + a.values[i].identifier).style("pointer-events", 'auto');	
 											}
 										}	
 									}
@@ -839,6 +841,7 @@ $(window).on('load', function() {
 											for (var j = 0; j < global.selectedDistrict.length; j++) {
 												if(a.values[i].ownershipText === global.selectedDistrict[j].key) {
 													d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);	
+													d3.selectAll(".education-" + a.values[i].identifier).style("pointer-events", 'auto');		
 												}
 											}
 										}
@@ -876,11 +879,13 @@ $(window).on('load', function() {
 							global.currentEvent = "water";
 							myFilter(c, global.currentEvent, needRemove);
 							d3.selectAll(".water").style("opacity", 0);
+							d3.selectAll(".water").style("pointer-events", 'none');
 
 
 							global.selectedWater.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
 									d3.selectAll(".water-" + a.values[i].identifier).style("opacity", 1);	
+									d3.selectAll(".water-" + a.values[i].identifier).style("pointer-events", 'auto');	
 								}
 							});
 							if(global.selectedWater.length === 0){
@@ -916,16 +921,19 @@ $(window).on('load', function() {
 							global.currentEvent = "education";
 							myFilter(c, global.currentEvent, needRemove);
 							d3.selectAll(".education").style("opacity", 0);
+							d3.selectAll(".education").style("pointer-events", 'none');
 							// myFilterBySector(c, needRemove);
 							global.selectedEducation.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
 									if(global.selectedDistrict.length === 0){
 										d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);
+										d3.selectAll(".education-" + a.values[i].identifier).style("pointer-events", 'auto');
 									} else {
 										for (var i = 0;i < a.values.length; i++) {
 											for (var j = 0; j < global.selectedDistrict.length; j++) {
 												if(a.values[i].ownershipText === global.selectedDistrict[j].key) {
-													d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);	
+													d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);
+													d3.selectAll(".education-" + a.values[i].identifier).style("pointer-events", 'auto');	
 												}
 											}
 										}
@@ -937,10 +945,12 @@ $(window).on('load', function() {
 								for (var i = 0;i < a.values.length; i++) {
 									if(global.selectedEducation.length === 0){
 										d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);
+										d3.selectAll(".education-" + a.values[i].identifier).style("pointer-events", 'auto');
 									} else {
 										for (var j = 0; j < global.selectedEducation.length; j++) {
 											if(a.values[i].typeTextSchools === global.selectedEducation[j].key) {
-												d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);	
+												d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);
+												d3.selectAll(".education-" + a.values[i].identifier).style("pointer-events", 'auto');	
 											}
 										}	
 									}
@@ -977,10 +987,12 @@ $(window).on('load', function() {
 							global.currentEvent = "protection"
 							myFilter(c, global.currentEvent, needRemove);
 							d3.selectAll(".protection").style("opacity", 0);
+							d3.selectAll(".protection").style("pointer-events", 'none');
 
 							global.selectedProtection.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
 									d3.selectAll(".protection-" + a.values[i].identifier).style("opacity", 1);	
+									d3.selectAll(".protection-" + a.values[i].identifier).style("pointer-events", 'auto');	
 								}
 							});
 							if(global.selectedProtection.length === 0){
@@ -1011,17 +1023,20 @@ $(window).on('load', function() {
 							global.currentEvent = "donor"
 							myFilter(c, global.currentEvent, needRemove);
 							d3.selectAll(".health").style("opacity", 0);
+							d3.selectAll(".health").style("pointer-events", 'none');
 
 							global.selectedDonor.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
 									if(global.selectedHealth.length === 0){
 										d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+										d3.selectAll(".health-" + a.values[i].identifier).style("pointer-events", 'auto');
 									} else {
 										for (var i = 0;i < a.values.length; i++) {
 											for (var i = 0;i < a.values.length; i++) {
 												for (var j = 0; j < global.selectedHealth.length; j++) {
 													if(a.values[i].typeTextHealth === global.selectedHealth[j].key) {
-														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);	
+														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+														d3.selectAll(".health-" + a.values[i].identifier).style("pointer-events", 'auto');	
 													}
 												}
 											}
@@ -1034,12 +1049,14 @@ $(window).on('load', function() {
 								for (var i = 0;i < a.values.length; i++) {
 									if(global.selectedDonor.length === 0){
 										d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+										d3.selectAll(".health-" + a.values[i].identifier).style("pointer-events", 'auto');
 									} else {
 										for (var i = 0;i < a.values.length; i++) {
 											for (var i = 0;i < a.values.length; i++) {
 												for (var j = 0;j < global.selectedDonor.length; j++) {
 													if(a.values[i].ownershipText === global.selectedDonor[j].key) {
-														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);	
+														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+														d3.selectAll(".health-" + a.values[i].identifier).style("pointer-events", 'auto');	
 													}
 												}
 											}
@@ -1080,17 +1097,20 @@ $(window).on('load', function() {
 							global.currentEvent = "health"
 							myFilter(c, global.currentEvent, needRemove);
 							d3.selectAll(".health").style("opacity", 0);
+							d3.selectAll(".health").style("pointer-events", 'none');
 
 							global.selectedHealth.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
 									if(global.selectedDonor.length === 0){
 										d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+										d3.selectAll(".health-" + a.values[i].identifier).style("pointer-events", 'auto');
 									} else {
 										for (var i = 0;i < a.values.length; i++) {
 											for (var i = 0;i < a.values.length; i++) {
 												for (var j = 0;j < global.selectedDonor.length; j++) {
 													if(a.values[i].ownershipText === global.selectedDonor[j].key) {
-														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);	
+														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+														d3.selectAll(".health-" + a.values[i].identifier).style("pointer-events", 'auto');	
 													}
 												}
 											}
@@ -1103,12 +1123,14 @@ $(window).on('load', function() {
 								for (var i = 0;i < a.values.length; i++) {
 									if(global.selectedHealth.length === 0){
 										d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+										d3.selectAll(".health-" + a.values[i].identifier).style("pointer-events", 'auto');
 									} else {
 										for (var i = 0;i < a.values.length; i++) {
 											for (var i = 0;i < a.values.length; i++) {
 												for (var j = 0; j < global.selectedHealth.length; j++) {
 													if(a.values[i].typeTextHealth === global.selectedHealth[j].key) {
-														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);	
+														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+														d3.selectAll(".health-" + a.values[i].identifier).style("pointer-events", 'auto');	
 													}
 												}
 											}
@@ -1153,15 +1175,18 @@ $(window).on('load', function() {
 							global.currentEvent = "district";
 							myFilter(c, global.currentEvent, needRemove);
 							d3.selectAll(".education").style("opacity", 0);
+							d3.selectAll(".education").style("pointer-events", 'none');
 
 							global.selectedDistrict.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
 									if(global.selectedEducation.length === 0){
 										d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);
+										d3.selectAll(".education-" + a.values[i].identifier).style("pointer-events", 'auto');
 									} else {
 										for (var j = 0; j < global.selectedEducation.length; j++) {
 											if(a.values[i].typeTextSchools === global.selectedEducation[j].key) {
-												d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);	
+												d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);
+												d3.selectAll(".education-" + a.values[i].identifier).style("pointer-events", 'auto');	
 											}
 										}	
 									}
@@ -1172,11 +1197,13 @@ $(window).on('load', function() {
 								for (var i = 0;i < a.values.length; i++) {
 									if(global.selectedDistrict.length === 0){
 										d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);
+										d3.selectAll(".education-" + a.values[i].identifier).style("pointer-events", 'auto');
 									} else {
 										for (var i = 0;i < a.values.length; i++) {
 											for (var j = 0; j < global.selectedDistrict.length; j++) {
 												if(a.values[i].ownershipText === global.selectedDistrict[j].key) {
-													d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);	
+													d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);
+													d3.selectAll(".education-" + a.values[i].identifier).style("pointer-events", 'auto');	
 												}
 											}
 										}
@@ -1206,11 +1233,13 @@ $(window).on('load', function() {
 							global.currentEvent = "water";
 							myFilter(c, global.currentEvent, needRemove);
 							d3.selectAll(".water").style("opacity", 0);
+							d3.selectAll(".water").style("pointer-events", 'none');
 
 
 							global.selectedWater.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
 									d3.selectAll(".water-" + a.values[i].identifier).style("opacity", 1);	
+									d3.selectAll(".water-" + a.values[i].identifier).style("pointer-events", 'auto');	
 								}
 							});
 							if(global.selectedWater.length === 0){
@@ -1235,16 +1264,19 @@ $(window).on('load', function() {
 							global.currentEvent = "education";
 							myFilter(c, global.currentEvent, needRemove);
 							d3.selectAll(".education").style("opacity", 0);
+							d3.selectAll(".education").style("pointer-events", 'none');
 							// myFilterBySector(c, needRemove);
 							global.selectedEducation.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
 									if(global.selectedDistrict.length === 0){
 										d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);
+										d3.selectAll(".education-" + a.values[i].identifier).style("pointer-events", 'auto');
 									} else {
 										for (var i = 0;i < a.values.length; i++) {
 											for (var j = 0; j < global.selectedDistrict.length; j++) {
 												if(a.values[i].ownershipText === global.selectedDistrict[j].key) {
-													d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);	
+													d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);
+													d3.selectAll(".education-" + a.values[i].identifier).style("pointer-events", 'auto');	
 												}
 											}
 										}
@@ -1256,10 +1288,12 @@ $(window).on('load', function() {
 								for (var i = 0;i < a.values.length; i++) {
 									if(global.selectedEducation.length === 0){
 										d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);
+										d3.selectAll(".education-" + a.values[i].identifier).style("pointer-events", 'auto');
 									} else {
 										for (var j = 0; j < global.selectedEducation.length; j++) {
 											if(a.values[i].typeTextSchools === global.selectedEducation[j].key) {
 												d3.selectAll(".education-" + a.values[i].identifier).style("opacity", 1);	
+												d3.selectAll(".education-" + a.values[i].identifier).style("pointer-events", 'auto');
 											}
 										}	
 									}
@@ -1290,10 +1324,12 @@ $(window).on('load', function() {
 							global.currentEvent = "protection"
 							myFilter(c, global.currentEvent, needRemove);
 							d3.selectAll(".protection").style("opacity", 0);
+							d3.selectAll(".protection").style("pointer-events", 'none');
 
 							global.selectedProtection.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
 									d3.selectAll(".protection-" + a.values[i].identifier).style("opacity", 1);	
+									d3.selectAll(".protection-" + a.values[i].identifier).style("pointer-events", 'auto');	
 								}
 							});
 							if(global.selectedProtection.length === 0){
@@ -1316,17 +1352,20 @@ $(window).on('load', function() {
 							global.currentEvent = "donor"
 							myFilter(c, global.currentEvent, needRemove);
 							d3.selectAll(".health").style("opacity", 0);
+							d3.selectAll(".health").style("pointer-events", 'none');
 
 							global.selectedDonor.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
 									if(global.selectedHealth.length === 0){
 										d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+										d3.selectAll(".health-" + a.values[i].identifier).style("pointer-events", 'auto');
 									} else {
 										for (var i = 0;i < a.values.length; i++) {
 											for (var i = 0;i < a.values.length; i++) {
 												for (var j = 0; j < global.selectedHealth.length; j++) {
 													if(a.values[i].typeTextHealth === global.selectedHealth[j].key) {
-														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);	
+														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+														d3.selectAll(".health-" + a.values[i].identifier).style("pointer-events", 'auto');	
 													}
 												}
 											}
@@ -1339,12 +1378,14 @@ $(window).on('load', function() {
 								for (var i = 0;i < a.values.length; i++) {
 									if(global.selectedDonor.length === 0){
 										d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+										d3.selectAll(".health-" + a.values[i].identifier).style("pointer-events", 'auto');
 									} else {
 										for (var i = 0;i < a.values.length; i++) {
 											for (var i = 0;i < a.values.length; i++) {
 												for (var j = 0;j < global.selectedDonor.length; j++) {
 													if(a.values[i].ownershipText === global.selectedDonor[j].key) {
-														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);	
+														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+														d3.selectAll(".health-" + a.values[i].identifier).style("pointer-events", 'auto');	
 													}
 												}
 											}
@@ -1377,17 +1418,20 @@ $(window).on('load', function() {
 							global.currentEvent = "health"
 							myFilter(c, global.currentEvent, needRemove);
 							d3.selectAll(".health").style("opacity", 0);
+							d3.selectAll(".health").style("pointer-events", 'none');
 
 							global.selectedHealth.map(function (a) {
 								for (var i = 0;i < a.values.length; i++) {
 									if(global.selectedDonor.length === 0){
 										d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+										d3.selectAll(".health-" + a.values[i].identifier).style("pointer-events", 'auto');
 									} else {
 										for (var i = 0;i < a.values.length; i++) {
 											for (var i = 0;i < a.values.length; i++) {
 												for (var j = 0;j < global.selectedDonor.length; j++) {
 													if(a.values[i].ownershipText === global.selectedDonor[j].key) {
-														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);	
+														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+														d3.selectAll(".health-" + a.values[i].identifier).style("pointer-events", 'auto');	
 													}
 												}
 											}
@@ -1400,12 +1444,14 @@ $(window).on('load', function() {
 								for (var i = 0;i < a.values.length; i++) {
 									if(global.selectedHealth.length === 0){
 										d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+										d3.selectAll(".health-" + a.values[i].identifier).style("pointer-events", 'auto');
 									} else {
 										for (var i = 0;i < a.values.length; i++) {
 											for (var i = 0;i < a.values.length; i++) {
 												for (var j = 0; j < global.selectedHealth.length; j++) {
 													if(a.values[i].typeTextHealth === global.selectedHealth[j].key) {
-														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);	
+														d3.selectAll(".health-" + a.values[i].identifier).style("opacity", 1);
+														d3.selectAll(".health-" + a.values[i].identifier).style("pointer-events", 'auto');	
 													}
 												}
 											}

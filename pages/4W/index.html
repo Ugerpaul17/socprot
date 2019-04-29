@@ -13,7 +13,6 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7.2/leaflet.ie.css" /><![endif]-->
 
 
-		<link href="uganda.map.css" rel="Stylesheet" type="text/css">
 		<link rel="stylesheet" href="../../assets/sidebar/css/leaflet-sidebar.css">
 
 		<!-- jQuery-->
@@ -75,12 +74,28 @@
 
 			<!-- Modal content -->
 			<div class="modal-content">
-				<div class="modal-header">
-					<span class="close">&times;</span>
-					<p id="modal-header" class="custom-count-header" style="font-size: 16px;">Modal Header</p>
+				<!-- <div class="modal-header">
+					<p id="modal-header" class="custom-count-header" style="font-size: 16px; color: white;">Modal Header</p>
+					<span class="close" style='color: white;'>&times;</span>
 				</div>
 				<table id="modal-body" class="modal-body">
-				</table>
+				</table> -->
+					<!--for demo wrap-->
+					<div style="display:flex;width:100%;background-color: #174e69;color:white;">
+						<h1 id='tbl-title' style="width: 97.5%;">Fixed Table header</h1><span class="close">&times;</span>
+					</div>
+					
+					
+					<div style="width: 100%">
+					  <table  id="tbl-header" cellpadding="0" cellspacing="0" style="width: 100%">
+					  </table>
+					</div>
+					<div style="overflow-y: auto !important; width: 100%">
+					  <table cellpadding="0" cellspacing="0" style="width: 100%">
+						<tbody id="tbl-content" >
+						</tbody>
+					  </table>
+					</div>
 			</div>
 
 		</div>
@@ -233,7 +248,7 @@
 			var map = L.map('d3-map-container', {
 				attributionControl: false,
 				zoomControl: false
-			}).setView([0.3233, 32.5625], 12); // default center is overridden by Google Sheet options and points
+			}).setView([0.3233, 32.5825], 12); // default center is overridden by Google Sheet options and points
 		</script>
 
 
@@ -246,6 +261,9 @@
 		<!--		<script src="../../assets/web/assets/jquery/jquery.min.js"></script>-->
 		<script src="scripts/jquery-ui.min.js"></script>
 		<link href="jquery-ui.css" rel="stylesheet"/>
+
+		
+		<link href="uganda.map.css" rel="Stylesheet" type="text/css">
 
 		<script src="scripts/queue.v1.min.js"></script>
 
