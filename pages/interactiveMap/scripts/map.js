@@ -1480,34 +1480,34 @@ $(window).on('load', function() {
 				var datalayerChildPoverty;
 				var datalayerDensity;
 
-				$.getJSON('data/kampalaParishes_.geojson', function(data){
+				$.getJSON('data/kampalaParishes__.geojson', function(data){
 					function getColorPoverty(d) {
-						return d > 5.1  ? 'rgb(23,78,105)' :
-						d > 3.1  ? 'rgb(46,95,120)' :
-						d > 1.6  ? 'rgb(115,148,165)' :
-						d > 0.6   ? 'rgb(162,184,195)' :
+						return d > 0.565  ? 'rgb(23,78,105)' :
+						d > 0.041  ? 'rgb(46,95,120)' :
+						d > 0.023  ? 'rgb(115,148,165)' :
+						d > 0.017   ? 'rgb(162,184,195)' :
 						'rgb(231,237,240)';
 					}
-
+					
 					function getColorChildPoverty(d) {
-						return d > 5.1  ? 'rgb(23,78,105)' :
-						d > 3.1  ? 'rgb(46,95,120)' :
-						d > 1.6  ? 'rgb(115,148,165)' :
-						d > 0.6   ? 'rgb(162,184,195)' :
+						return d > 0.565  ? 'rgb(23,78,105)' :
+						d > 0.041  ? 'rgb(46,95,120)' :
+						d > 0.023  ? 'rgb(115,148,165)' :
+						d > 0.017   ? 'rgb(162,184,195)' :
 						'rgb(231,237,240)';
 					}
 
 					function getColorPopDensity(d) {
-						return d > 28929.79  ? 'rgb(23,78,105)' :
-						d > 21772.67  ? 'rgb(46,95,120)' :
-						d > 14615.54  ? 'rgb(115,148,165)' :
-						d > 7458.42   ? 'rgb(162,184,195)' :
+						return d > 36087  ? 'rgb(23,78,105)' :
+						d > 15935  ? 'rgb(46,95,120)' :
+						d > 10934  ? 'rgb(115,148,165)' :
+						d > 6229.64   ? 'rgb(162,184,195)' :
 						'rgb(231,237,240)';
 					}
 
 					function stylePoverty(feature) {
 						return {
-							color: getColorPoverty(feature.properties.povertyHH),
+							color: getColorPoverty(feature.properties.HH_Pov),
 							fillOpacity: 0.6,
 							weight: 0.2
 						};
@@ -1519,9 +1519,10 @@ $(window).on('load', function() {
 							weight: 0.2
 						};
 					}
+					
 					function stylePopChildPoverty(feature) {
 						return {
-							color: getColorChildPoverty(feature.properties.povertyChild),
+							color: getColorChildPoverty(feature.properties.childpov),
 							fillOpacity: 0.6,
 							weight: 0.2
 						};
@@ -1598,8 +1599,8 @@ $(window).on('load', function() {
 
 						var overlaymaps = {
 							"Slum Boundaries" : datalayer1,
-							"Child Poverty" : datalayerChildPoverty,
-							"Household Poverty" : datalayerPoverty,
+							"Child Poverty ('16-'17)" : datalayerChildPoverty,
+							"Household Poverty ('16-'17)" : datalayerPoverty,
 							"Population Density" : datalayerDensity
 						};
 
@@ -1665,7 +1666,7 @@ $(window).on('load', function() {
 							refreshMapProtection();
 							refreshMapWater();
 
-							map.setView([0.3233, 32.5625], 12);
+							map.setView([0.3233, 32.5025], 12);
 						})
 
 					});
@@ -1751,7 +1752,6 @@ $(window).on('load', function() {
 				};
 
 				map.on('baselayerchange', function (eventLayer) {
-					console.log(eventLayer);
 					// Switch to the Population legend...
 					if (eventLayer.name === 'Household Poverty') {
 						this.removeControl(populationDensityLegend);

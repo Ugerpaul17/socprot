@@ -5,7 +5,7 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href="css/font-awesome.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="css/leaflet.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7.2/leaflet.ie.css" /><![endif]-->
 
@@ -112,7 +112,7 @@
 -->
 
 		<!--		<link href="clickable-pop-up-boxes.css" rel="stylesheet">-->
-		<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+		<script src="js/jquery-3.3.1.js"></script>
 		<script src="js/leaflet.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -151,34 +151,34 @@
 				var datalayerChildPoverty;
 				var datalayerDensity;
 
-				$.getJSON('data/povertyAndPopulationDensity.geojson', function(data){
+				$.getJSON('data/kampalaParishes__.geojson', function(data){
 					function getColorPoverty(d) {
-						return d > 5.1  ? 'rgb(23,78,105)' :
-						d > 3.1  ? 'rgb(46,95,120)' :
-						d > 1.6  ? 'rgb(115,148,165)' :
-						d > 0.6   ? 'rgb(162,184,195)' :
+						return d > 0.565  ? 'rgb(23,78,105)' :
+						d > 0.041  ? 'rgb(46,95,120)' :
+						d > 0.023  ? 'rgb(115,148,165)' :
+						d > 0.017   ? 'rgb(162,184,195)' :
 						'rgb(231,237,240)';
 					}
 					
 					function getColorChildPoverty(d) {
-						return d > 5.1  ? 'rgb(23,78,105)' :
-						d > 3.1  ? 'rgb(46,95,120)' :
-						d > 1.6  ? 'rgb(115,148,165)' :
-						d > 0.6   ? 'rgb(162,184,195)' :
+						return d > 0.565  ? 'rgb(23,78,105)' :
+						d > 0.041  ? 'rgb(46,95,120)' :
+						d > 0.023  ? 'rgb(115,148,165)' :
+						d > 0.017   ? 'rgb(162,184,195)' :
 						'rgb(231,237,240)';
 					}
 
 					function getColorPopDensity(d) {
-						return d > 28929.79  ? 'rgb(23,78,105)' :
-						d > 21772.67  ? 'rgb(46,95,120)' :
-						d > 14615.54  ? 'rgb(115,148,165)' :
-						d > 7458.42   ? 'rgb(162,184,195)' :
+						return d > 36087  ? 'rgb(23,78,105)' :
+						d > 15935  ? 'rgb(46,95,120)' :
+						d > 10934  ? 'rgb(115,148,165)' :
+						d > 6229.64   ? 'rgb(162,184,195)' :
 						'rgb(231,237,240)';
 					}
 
 					function stylePoverty(feature) {
 						return {
-							color: getColorPoverty(feature.properties.povertyHH),
+							color: getColorPoverty(feature.properties.HH_Pov),
 							fillOpacity: 0.6,
 							weight: 0.2
 						};
@@ -193,7 +193,7 @@
 					
 					function stylePopChildPoverty(feature) {
 						return {
-							color: getColorChildPoverty(feature.properties.povertyChild),
+							color: getColorChildPoverty(feature.properties.childpov),
 							fillOpacity: 0.6,
 							weight: 0.2
 						};
@@ -228,8 +228,8 @@
 
 						var overlaymaps = {
 							"Slum Boundaries" : datalayer1,
-							"Child Poverty" : datalayerChildPoverty,
-							"Household Poverty" : datalayerPoverty,
+							"Child Poverty ('16-'17)" : datalayerChildPoverty,
+							"Household Poverty ('16-'17)" : datalayerPoverty,
 							"Population Density" : datalayerDensity
 						};
 
@@ -291,7 +291,7 @@
 						resetMapButton.on('click', function(){
 							d3.select(".statDist").remove();
 
-							storkmap.map.setView([0.3233, 32.5625], 12);
+							storkmap.map.setView([0.3233, 32.5025], 12);
 						})
 
 					});
@@ -337,10 +337,6 @@
 
 
 						featureLayer.on({
-							click: function(e) {
-								datalayer.setStyle(style());
-								//L.DomEvent.stopPropagation(e); // stop click event from being propagated further
-							},
 							mouseover: highlightFeature,
 							mouseout: resetHighlight
 						});
@@ -423,9 +419,6 @@
 									.text("Parish Averages");
 
 
-
-
-
 								d3.csv('./data/listOfParametersHealth.csv', function (error, list) {
 									var header = [];
 									var values = [];
@@ -480,6 +473,7 @@
 								});
 							}
 						}
+
 
 						for (var i = 0; i < data.features.length; i++) {
 							if(selected[0] === data.features[i].properties.PNAME2014) {
@@ -1196,7 +1190,7 @@
 
 				queryOverpass();
 
-				map.setView([0.3193, 32.5953], 12);
+				map.setView([0.3193, 32.5025], 12);
 
 
 			};
@@ -1264,7 +1258,6 @@
 //				householdPovertyLegend.addTo(map);
 
 				storkmap.map.on('baselayerchange', function (eventLayer) {
-					console.log(eventLayer);
 					// Switch to the Population legend...
 					if (eventLayer.name === 'Household Poverty') {
 						this.removeControl(populationDensityLegend);

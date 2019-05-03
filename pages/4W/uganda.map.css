@@ -522,7 +522,7 @@ p.custom-list-header .glyphicon {
 /*	font-weight: 600;*/
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 2001; /* Sit on top */
+    z-index: 100000 !important; /* Sit on top */
     left: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
@@ -537,14 +537,13 @@ p.custom-list-header .glyphicon {
 
 /* Modal Content */
 .modal-content {
-	z-index: 1001; 
 	border-radius: 2px;
 	overflow-x:hidden; 
 	overflow-y:hidden !important; 
     top: 10%;
 	left: 10%;
     background-color: #fefefe;
-    width: 80%;
+    width: 70% !important;
     -webkit-animation-name: slideIn;
     -webkit-animation-duration: 0.4s;
     animation-name: slideIn;

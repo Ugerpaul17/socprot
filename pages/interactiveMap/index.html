@@ -8,7 +8,7 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href="font-awesome.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="../../assets/web/assets/mobirise-icons/mobirise-icons.css">
 		<!--[if lte IE 8]><link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7.2/leaflet.ie.css" /><![endif]-->
 
@@ -19,7 +19,7 @@
 		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
 
 		<link href="clickable-pop-up-boxes.css" rel="stylesheet">
-		<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+		<script src="jquery-3.3.1.js"></script>
 
 
 		<!-- Leaflet (CSS and JS) -->
@@ -135,6 +135,10 @@
 						<div id="healthLegend" style="background-color: #ffffff;">Legend<br>
 							<table>
 								<tr>
+									<th style="float: left;">
+										<i style="width: 18px !important; height: 18px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#8b0000;"></i> Delivery Services <br></th>
+								</tr>
+								<tr>
 									<th style="float: left;" class="healthIcon1"></th><th style="float: left;"> Antenatal Services <br>
 									</th>
 								</tr>
@@ -144,11 +148,7 @@
 									</th>
 								</tr>
 								<tr>
-									<th style="float: left;">
-										<i style="width: 18px !important; height: 18px !important; display: inline-block;margin-right: 8px;opacity: 0.7;background:#8b0000;"></i> Delivery Services <br></th>
-								</tr>
-								<tr>
-									<th style="float: left;">X&nbsp;&nbsp;&nbsp;&nbsp;</th><th style="float: left;"> Neither Delivery not Antenatal Services <br></th>
+									<th style="float: left;">X&nbsp;&nbsp;&nbsp;&nbsp;</th><th style="float: left;"> Neither Delivery nor Antenatal Services <br></th>
 								</tr>
 							</table>
 						</div>
@@ -322,14 +322,14 @@
 		<script type="text/javascript">
 			var map = L.map('d3-map-container', {
 				attributionControl: false,
-				zoomControl: false,
-				maxBounds: [
-					//south west
-					[0.1458,32.4051],
-					//north east
-					[0.4961, 32.7822]
-				]
-			}).setView([0.3233, 32.5625], 12); // default center is overridden by Google Sheet options and points
+				zoomControl: false
+				// maxBounds: [
+				// 	//south west
+				// 	[0.1458,32.4051],
+				// 	//north east
+				// 	[0.4961, 32.7822]
+				// ]
+			}).setView([0.3233, 32.5025], 12); // default center is overridden by Google Sheet options and points
 		</script>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>

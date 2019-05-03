@@ -84,7 +84,7 @@ form {
 .loader:before,
 .loader:after {
   z-index: 5000 !important;
-  background: #E91D25;
+  background: #000;
   -webkit-animation: load1 1s infinite ease-in-out;
   animation: load1 1s infinite ease-in-out;
   width: 1em;
@@ -102,7 +102,7 @@ form {
   animation-delay: -0.32s;
 }
 .loader {
-  color: #008845;
+  color: #000;
   text-indent: -9999em;
   position: absolute;
   left: 50vw;
