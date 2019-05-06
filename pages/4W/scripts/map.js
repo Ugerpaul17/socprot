@@ -1178,7 +1178,7 @@ $(window).on('load', function() {
 				var datalayer2;
 				var datalayerChildPoverty;
 
-				$.getJSON('data/povertyAndPopulationDensity.geojson', function(data){
+				$.getJSON('data/kampalaParishes__.geojson', function(data){
 					function getColorPoverty(d) {
 						return d > 0.565  ? 'rgb(23,78,105)' :
 						d > 0.041  ? 'rgb(46,95,120)' :
@@ -1367,19 +1367,18 @@ $(window).on('load', function() {
 				householdPovertyLegend.addTo(map);
 
 				map.on('baselayerchange', function (eventLayer) {
-					console.log(eventLayer);
 					// Switch to the Population legend...
-					if (eventLayer.name === 'Household Poverty') {
+					if (eventLayer.name === "Household Poverty ('16-'17)") {
 						this.removeControl(populationDensityLegend);
 						this.removeControl(childPovertyLegend);
 						this.removeControl(slumLegend);
 						householdPovertyLegend.addTo(this);
-					} else if (eventLayer.name === 'Population Density') { // Or switch to the Population Density legend...
+					} else if (eventLayer.name === "Population Density") { // Or switch to the Population Density legend...
 						this.removeControl(householdPovertyLegend);
 						this.removeControl(childPovertyLegend);
 						this.removeControl(slumLegend);
 						populationDensityLegend.addTo(this);
-					} else if (eventLayer.name === 'Child Poverty') { // Or switch to the Child Poverty legend...
+					} else if (eventLayer.name === "Child Poverty ('16-'17)") { // Or switch to the Child Poverty legend...
 						this.removeControl(householdPovertyLegend);
 						this.removeControl(populationDensityLegend);
 						this.removeControl(slumLegend);

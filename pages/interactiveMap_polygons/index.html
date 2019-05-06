@@ -55,10 +55,10 @@
 				<div class="sidebar-pane" id="health">
 					<h4 class="sidebar-header" style="font-size: 0.8em; text-align: left;">Hover on a parish to compare it against the district average
 						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
-					</h4>
-					<p><strong>Selected Parish: </strong><span id='health-parish'></span>
-						<br>
-						<strong>Selected SubCounty: </strong><span id='health-subCounty'></span></p>
+						</h4>
+						<p><strong>Selected Parish: </strong><span id='health-parish'></span>
+							<br>
+							<strong>Selected SubCounty: </strong><span id='health-subCounty'></span></p>
 					<div id="health-statistics-list" class="custom-list" style="top:10px;"></div>
 					<div id="health-statistics-legend" class="custom-list" style = "overflow: hidden; height: 50px;"></div>
 				</div>
@@ -306,10 +306,10 @@
 				$.getJSON('./data/kampalaParishes_.geojson', function(data){
 					function style(feature) {
 						return {
-							color: '#174e69',
-							fillOpacity: 0.5,
+							color: '#00c5ff',
+							fillOpacity: 0,
 							pane:	"parishLayer",
-							opacity: 0.6,
+							opacity: 1,
 							weight: 0.8
 						};
 					}
@@ -1259,17 +1259,17 @@
 
 				storkmap.map.on('baselayerchange', function (eventLayer) {
 					// Switch to the Population legend...
-					if (eventLayer.name === 'Household Poverty') {
+					if (eventLayer.name === "Household Poverty ('16-'17)") {
 						this.removeControl(populationDensityLegend);
 						this.removeControl(childPovertyLegend);
 						this.removeControl(slumLegend);
 						householdPovertyLegend.addTo(this);
-					} else if (eventLayer.name === 'Population Density') { // Or switch to the Population Density legend...
+					} else if (eventLayer.name === "Population Density") { // Or switch to the Population Density legend...
 						this.removeControl(householdPovertyLegend);
 						this.removeControl(childPovertyLegend);
 						this.removeControl(slumLegend);
 						populationDensityLegend.addTo(this);
-					} else if (eventLayer.name === 'Child Poverty') { // Or switch to the Child Poverty legend...
+					} else if (eventLayer.name === "Child Poverty ('16-'17)") { // Or switch to the Child Poverty legend...
 						this.removeControl(householdPovertyLegend);
 						this.removeControl(populationDensityLegend);
 						this.removeControl(slumLegend);
