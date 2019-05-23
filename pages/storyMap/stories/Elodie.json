@@ -8,8 +8,8 @@
 
 				"date": 					"1835",
 				"location": {
-					"lat": 				0.3193,
-					"lon": 				32.5953,
+					"lat": 				0.297019,
+					"lon": 				32.574709,
 					"name": 				"ANNA",
 					"zoom": 				12,
 					"line": 				true,
@@ -32,8 +32,8 @@
 				"uniqueid": 				"",
 				"date": 					"1839",
 				"location": {
-					"lat": 				0.293060,
-					"lon": 				32.580186,
+					"lat": 				0.297019,
+					"lon": 				32.574709,
 					"name": 				"11:30 p.m",
 					"zoom": 				17,
 					"line": 				true,
@@ -54,8 +54,8 @@
 				"uniqueid": 				"",
 				"date": 					"1851",
 				"location": {
-					"lat": 				0.294268,
-					"lon": 				32.581256,
+					"lat": 				0.297019,
+					"lon": 				32.574709,
 					"zoom": 				17,
 					"line": 				true,
 					"line_color":			"#1e90ff"
@@ -76,8 +76,8 @@
 				"uniqueid": 				"",
 				"date": 					"1862",
 				"location": {
-					"lat": 				0.298509,
-					"lon": 				32.577025,
+					"lat": 				0.291552,
+					"lon": 				32.58202,
 					"zoom": 				17,
 					"line": 				true
 				},
@@ -97,8 +97,8 @@
 				"uniqueid": 				"",
 				"date": 					"1862",
 				"location": {
-					"lat": 				0.300779,
-					"lon": 				32.577727,
+					"lat": 				0.291552,
+					"lon": 				32.58202,
 					"zoom": 				17,
 					"line": 				true
 				},
@@ -118,8 +118,8 @@
 				"uniqueid": 				"",
 				"date": 					"1862",
 				"location": {
-					"lat": 				0.298983,
-					"lon": 				32.588235,
+					"lat": 				0.300204,
+					"lon": 				32.587981,
 					"zoom": 				17,
 					"line": 				true
 				},
@@ -140,8 +140,8 @@
 				"uniqueid": 				"",
 				"date": 					"1862",
 				"location": {
-					"lat": 				0.294268,
-					"lon": 				32.581256,
+					"lat": 				0.294755,
+					"lon": 				32.577189,
 					"zoom": 				17,
 					"line": 				true
 				},
@@ -163,8 +163,8 @@
 				"uniqueid": 				"",
 				"date": 					"1862",
 				"location": {
-					"lat": 				0.305936,
-					"lon": 				32.59167,
+					"lat": 				0.297019,
+					"lon": 				32.574709,
 					"zoom": 				17,
 					"line": 				true
 				},
@@ -184,8 +184,8 @@
 				"uniqueid": 				"",
 				"date": 					"1862",
 				"location": {
-					"lat": 				0.305936,
-					"lon": 				32.59167,
+					"lat": 				0.297559,
+					"lon": 				32.603149,
 					"zoom": 				17,
 					"line": 				true
 				},
@@ -206,8 +206,8 @@
 
 				"date": 					"1835",
 				"location": {
-					"lat": 				0.3193,
-					"lon": 				32.5953,
+					"lat": 				0.334995,
+					"lon": 				32.574363,
 					"name": 				"END",
 					"zoom": 				12,
 					"line": 				true,
@@ -218,7 +218,7 @@
                 "text": "<p style='text-align:justify;'>The Uganda Child Helpline, also known by its brand name Sauti, offers a toll-free telephone service on the short code 116 which is accessible on all telecommunication networks in the country. The telephone service operates 24/7 and is just one of the ways in which the Child Helpline aims to protect children. Other approaches employed by the Helpline to offer child protection include: <ul><li>Handling walk-in clients</li><li>Responding to cases reported through the U-report platform</li><li>Follow up of child abuse cases reported through various Media (including social media)</li><li>Handling cases that entail Online Child Sexual Abuse</li><li>Community awareness raising campaigns in schools, communities and on radios & television etc.</li></ul></p>"
             },
 				"media": {
-					"url": 				"css/images/sarah/Step9.jpg",
+					"url": 				"css/images/elodie/StepA.jpg",
 					"credit":				"UNICEF/FRANCIS EMORUT",
 					"caption":			""
 				}

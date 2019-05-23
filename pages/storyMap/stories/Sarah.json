@@ -8,8 +8,8 @@
 
 				"date": 					"1835",
 				"location": {
-					"lat": 				0.3193,
-					"lon": 				32.5953,
+					"lat": 				0.310037,
+					"lon": 				32.565556,
 					"name": 				"SARAH",
 					"zoom": 				12,
 					"line": 				true,
@@ -34,8 +34,8 @@
 				"uniqueid": 				"",
 				"date": 					"1835",
 				"location": {
-					"lat": 				0.307903,
-					"lon": 				32.572386,
+					"lat": 				0.310037,
+					"lon": 				32.565556,
 					"name": 				"4:30am",
 					"zoom": 				17,
 					"line": 				true,
@@ -56,8 +56,8 @@
 				"uniqueid": 				"",
 				"date": 					"1839",
 				"location": {
-					"lat": 				0.309182,
-					"lon": 				32.570795,
+					"lat": 				0.310037,
+					"lon": 				32.565556,
 					"name": 				"11:30 p.m",
 					"zoom": 				17,
 					"line": 				true,
@@ -78,8 +78,8 @@
 				"uniqueid": 				"",
 				"date": 					"1851",
 				"location": {
-					"lat": 				0.370730,
-					"lon": 				32.638231,
+					"lat": 				0.312455,
+					"lon": 				32.576705,
 					"zoom": 				17,
 					"line": 				true,
 					"line_color":			"#1e90ff"
@@ -99,8 +99,8 @@
 				"uniqueid": 				"",
 				"date": 					null,
 				"location": {
-					"lat": 				0.373139,
-					"lon": 				32.636655,
+					"lat": 				0.369109,
+					"lon": 				32.637426,
 					"zoom": 				17,
 					"line": 				true,
 					"line_color":			"#1e90ff"
@@ -120,8 +120,8 @@
 				"uniqueid": 				"",
 				"date": 					"1862",
 				"location": {
-					"lat": 				0.370730,
-					"lon": 				32.638231,
+					"lat": 				0.380378,
+					"lon": 				32.646385,
 					"zoom": 				17,
 					"line": 				true
 				},
@@ -141,8 +141,8 @@
 				"uniqueid": 				"",
 				"date": 					"1862",
 				"location": {
-					"lat": 				0.367310,
-					"lon": 				32.613220,
+					"lat": 				0.369109,
+					"lon": 				32.637426,
 					"zoom": 				17,
 					"line": 				true
 				},
@@ -162,8 +162,8 @@
 				"uniqueid": 				"",
 				"date": 					"1862",
 				"location": {
-					"lat": 				0.307903,
-					"lon": 				32.572386,
+					"lat": 				0.310037,
+					"lon": 				32.565556,
 					"zoom": 				17,
 					"line": 				true
 				},
@@ -183,8 +183,8 @@
 
 				"date": 					"1835",
 				"location": {
-					"lat": 				0.3193,
-					"lon": 				32.5953,
+					"lat": 				0.334995,
+					"lon": 				32.574363,
 					"name": 				"END",
 					"zoom": 				12,
 					"line": 				true,

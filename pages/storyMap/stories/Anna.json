@@ -7,8 +7,8 @@
 				"type": 					"",			
 				"date": 					"1835",
 				"location": {
-					"lat": 				0.3193,
-					"lon": 				32.5953,
+					"lat": 				0.284886,
+					"lon": 				32.588119,
 					"name": 				"ANNA",
 					"zoom": 				12,
 					"line": 				true,
@@ -30,8 +30,8 @@
 				"uniqueid": 				"",
 				"date": 					"1835",
 				"location": {
-					"lat": 				0.279507,
-					"lon": 				32.603067,
+					"lat": 				0.284886,
+					"lon": 				32.588119,
 					"name": 				"5:30am",
 					"zoom": 				17,
 					"line": 				true,
@@ -53,8 +53,8 @@
 				"uniqueid": 				"",
 				"date": 					"1839",
 				"location": {
-					"lat": 				0.287231,
-					"lon": 				32.596632,
+					"lat": 				0.284886,
+					"lon": 				32.588119,
 					"name": 				"11:30 p.m",
 					"zoom": 				17,
 					"line": 				true,
@@ -77,8 +77,8 @@
 				"uniqueid": 				"",
 				"date": 					"1839",
 				"location": {
-					"lat": 				0.291006,
-					"lon": 				32.596290,
+					"lat": 				0.302389,
+					"lon": 				32.585658,
 					"name": 				"11:30 p.m",
 					"zoom": 				17,
 					"line": 				true,
@@ -101,8 +101,8 @@
 				"uniqueid": 				"",
 				"date": 					null,
 				"location": {
-					"lat": 				0.279507,
-					"lon": 				32.603067,
+					"lat": 				0.284886,
+					"lon": 				32.588119,
 					"zoom": 				17,
 					"line": 				true,
 					"line_color":			"#1e90ff"
@@ -128,8 +128,8 @@
             },
             "location": {
                 "name": "END",
-					"lat": 				0.3193,
-					"lon": 				32.5953,
+					"lat": 				0.334995,
+					"lon": 				32.574363,
                 "zoom": 12,
                 "line": true
             },

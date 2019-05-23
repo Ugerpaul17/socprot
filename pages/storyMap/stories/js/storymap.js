@@ -4940,26 +4940,26 @@ VCO.MediaType = function(m) {
 				cls: 		VCO.Media.Image
 			},
 			{
-				type: 		"googlemaps",
-				name: 		"Google Map", 
+				type: 		"flickr",
+				name: 		"Flickr",  
 				match_str: 	"Step7",
 				cls: 		VCO.Media.Image
 			},
 			{
-				type: 		"googleplus",
-				name: 		"Google+", 
+				type: 		"tumblr",
+				name: 		"Tumblr", 
 				match_str: 	"Step8",
-				cls: 		VCO.Media.Image
-			},
-			{
-				type: 		"flickr",
-				name: 		"Flickr", 
-				match_str: 	"Step9",
 				cls: 		VCO.Media.Image
 			},
 			{
 				type: 		"instagram",
 				name: 		"Instagram", 
+				match_str: 	"Step9",
+				cls: 		VCO.Media.Image
+			},
+			{
+				type: 		"pinterest",
+				name: 		"Pinterest", 
 				match_str: 	"StepA",
 				cls: 		VCO.Media.Image
 			},
