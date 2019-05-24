@@ -1,106 +1,119 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>KCCA - UNICEF Interactive Map - Polygons</title>
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<head>
+	<title>KCCA - UNICEF Interactive Map - Polygons</title>
 
-		<link href="css/font-awesome.min.css" rel="stylesheet">
-		<link rel="stylesheet" href="css/leaflet.css" />
-		<!--[if lte IE 8]><link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7.2/leaflet.ie.css" /><![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<link href="css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/leaflet.css" />
+	<!--[if lte IE 8]><link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7.2/leaflet.ie.css" /><![endif]-->
 
 
-		<link rel="stylesheet" href="../../assets/sidebar/css/leaflet-sidebar.css">
-		<link rel="stylesheet" href="css/leaflet-tag-filter-button.css" />
-		<link rel="stylesheet" href="../../assets/web/assets/mobirise-icons/mobirise-icons.css">
-		<link rel="stylesheet" href="../../assets/mobirise/css/mbr-additional.css">
-		<link rel="stylesheet" href="css/map.css">
+	<link rel="stylesheet" href="../../assets/sidebar/css/leaflet-sidebar.css">
+	<link rel="stylesheet" href="css/leaflet-tag-filter-button.css" />
+	<link rel="stylesheet" href="../../assets/web/assets/mobirise-icons/mobirise-icons.css">
+	<link rel="stylesheet" href="../../assets/mobirise/css/mbr-additional.css">
+	<link rel="stylesheet" href="css/map.css">
 
-		<style>
-			body {
-				padding: 0;
-				margin: 0;
-			}
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+		}
 
-			html, body, #map {
-				height: 100%;
-				font-size:  10pt;
-			}
+		html,
+		body,
+		#map {
+			height: 100%;
+			font-size: 10pt;
+		}
 
-			.lorem {
-				font-style: italic;
-				color: #AAA;
-			}
-		</style>
-	</head>
-	<body>
-		<div id="sidebar-left" class="sidebar collapsed">
-			<!-- Nav tabs -->
-			<div class="sidebar-tabs">
-				<ul role="tablist">
-					<li><a href="../../index.html"><i class="mbri-home mbr-iconfont mbr-iconfont-btn"></i></a></li>
-					<li id="healthButton"><a href="#health" role="tab"><img src="data/images/health.svg" alt="Health" title="Health"></a></li>
-					<li id="educationButton"><a href="#education" role="tab"><img src="data/images/education.svg" alt="Education" title="Education"></a></li>
-					<li id="protectionButton"><a href="#protection" role="tab"><img src="data/images/protection.svg" alt="Protection" title="Protection"></a></li>
-					<li id="waterButton"><a href="#water" role="tab"><img src="data/images/water.svg" alt="Water" title="Water"></a></li>
-				</ul>
+		.lorem {
+			font-style: italic;
+			color: #AAA;
+		}
+	</style>
+</head>
 
-				<ul role="tablist">
-					<li><a href="#info" role="tab"><i class="fa fa-info"></i></a></li>
-				</ul>
+<body>
+	<div id="sidebar-left" class="sidebar collapsed">
+		<!-- Nav tabs -->
+		<div class="sidebar-tabs">
+			<ul role="tablist">
+				<li><a href="../../index.html"><i class="mbri-home mbr-iconfont mbr-iconfont-btn"></i></a></li>
+				<li id="healthButton"><a href="#health" role="tab"><img src="data/images/health.svg" alt="Health"
+							title="Health"></a></li>
+				<li id="educationButton"><a href="#education" role="tab"><img src="data/images/education.svg"
+							alt="Education" title="Education"></a></li>
+				<li id="protectionButton"><a href="#protection" role="tab"><img src="data/images/protection.svg"
+							alt="Protection" title="Protection"></a></li>
+				<li id="waterButton"><a href="#water" role="tab"><img src="data/images/water.svg" alt="Water"
+							title="Water"></a></li>
+			</ul>
+
+			<ul role="tablist">
+				<li><a href="#info" role="tab"><i class="fa fa-info"></i></a></li>
+			</ul>
+		</div>
+
+		<!-- Tab panes -->
+		<div class="sidebar-content">
+			<div class="sidebar-pane" id="health">
+				<h4 class="sidebar-header" style="font-size: 0.8em; text-align: left;">Hover on a parish to compare it
+					against the district average
+					<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+				</h4>
+				<p><strong>Selected Parish: </strong><span id='health-parish'></span>
+					<br>
+					<strong>Selected SubCounty: </strong><span id='health-subCounty'></span></p>
+				<div id="health-statistics-list" class="custom-list" style="top:10px;"></div>
+				<div id="health-statistics-legend" class="custom-list" style="overflow: hidden; height: 50px;"></div>
 			</div>
-
-			<!-- Tab panes -->
-			<div class="sidebar-content">
-				<div class="sidebar-pane" id="health">
-					<h4 class="sidebar-header" style="font-size: 0.8em; text-align: left;">Hover on a parish to compare it against the district average
-						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
-						</h4>
-						<p><strong>Selected Parish: </strong><span id='health-parish'></span>
-							<br>
-							<strong>Selected SubCounty: </strong><span id='health-subCounty'></span></p>
-					<div id="health-statistics-list" class="custom-list" style="top:10px;"></div>
-					<div id="health-statistics-legend" class="custom-list" style = "overflow: hidden; height: 50px;"></div>
+			<div class="sidebar-pane" id="education">
+				<h4 class="sidebar-header" style="font-size: 0.8em; text-align: left;">Hover on a parish to compare it
+					against the district average
+					<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+				</h4>
+				<p><strong>Selected Parish: </strong><span id='education-parish'></span>
+					<br>
+					<strong>Selected SubCounty: </strong><span id='education-subCounty'></span></p>
+				<div id="education-statistics-list" class="custom-list" style="top:10px;"></div>
+				<div id="education-statistics-legend" class="custom-list" style="overflow: hidden; height: 50px;"></div>
+			</div>
+			<div class="sidebar-pane" id="protection">
+				<h4 class="sidebar-header" style="font-size: 0.8em; text-align: left;">Hover on a parish to compare it
+					against the district average
+					<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+				</h4>
+				<p><strong>Selected Parish: </strong><span id='protection-parish'></span>
+					<br>
+					<strong>Selected SubCounty: </strong><span id='protection-subCounty'></span></p>
+				<div id="protection-statistics-list" class="custom-list" style="top:10px;"></div>
+				<div id="protection-statistics-legend" class="custom-list" style="overflow: hidden; height: 50px;">
 				</div>
-				<div class="sidebar-pane" id="education">
-					<h4 class="sidebar-header" style="font-size: 0.8em; text-align: left;">Hover on a parish to compare it against the district average
-						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
-					</h4>
-					<p><strong>Selected Parish: </strong><span id='education-parish'></span>
-						<br>
-						<strong>Selected SubCounty: </strong><span id='education-subCounty'></span></p>
-					<div id="education-statistics-list" class="custom-list" style="top:10px;"></div>
-					<div id="education-statistics-legend" class="custom-list" style = "overflow: hidden; height: 50px;"></div>
-				</div>
-				<div class="sidebar-pane" id="protection">
-					<h4 class="sidebar-header" style="font-size: 0.8em; text-align: left;">Hover on a parish to compare it against the district average
-						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
-					</h4>
-					<p><strong>Selected Parish: </strong><span id='protection-parish'></span>
-						<br>
-						<strong>Selected SubCounty: </strong><span id='protection-subCounty'></span></p>
-					<div id="protection-statistics-list" class="custom-list" style="top:10px;"></div>
-					<div id="protection-statistics-legend" class="custom-list" style = "overflow: hidden; height: 50px;"></div>
-				</div>
-				<div class="sidebar-pane" id="water">
-					<h4 class="sidebar-header" style="font-size: 0.8em; text-align: left;">Hover on a parish to compare it against the district average
-						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
-					</h4>
-					<p><strong>Selected Parish: </strong><span id='water-parish'></span>
-						<br>
-						<strong>Selected SubCounty: </strong><span id='water-subCounty'></span></p>
-					<div id="water-statistics-list" class="custom-list" style="top:10px;"></div>
-					<div id="water-statistics-legend" class="custom-list" style = "overflow: hidden; height: 50px;"></div>
-				</div>
-				<div class="sidebar-pane" id="info">
-					<h1 class="sidebar-header">About<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
-					Infrastructure Map at Parish Level
-				</div>
+			</div>
+			<div class="sidebar-pane" id="water">
+				<h4 class="sidebar-header" style="font-size: 0.8em; text-align: left;">Hover on a parish to compare it
+					against the district average
+					<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+				</h4>
+				<p><strong>Selected Parish: </strong><span id='water-parish'></span>
+					<br>
+					<strong>Selected SubCounty: </strong><span id='water-subCounty'></span></p>
+				<div id="water-statistics-list" class="custom-list" style="top:10px;"></div>
+				<div id="water-statistics-legend" class="custom-list" style="overflow: hidden; height: 50px;"></div>
+			</div>
+			<div class="sidebar-pane" id="info">
+				<h1 class="sidebar-header">About<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+				Infrastructure Map at Parish Level
 			</div>
 		</div>
-		<div id="map" class="sidebar-map"></div>
+	</div>
+	<div id="map" class="sidebar-map"></div>
 
-		<!--
+	<!--
 <div id="d3-map-info-container">
 <section class="spaces">
 <button type="button" class="pop-button button3" data-placement="bottom" data-trigger="click" data-toggle="popover" title="Filters" data-content="Use this panel to interact with the map and put points on the map."><span>&#43;</span></button>
@@ -111,291 +124,319 @@
 </div>
 -->
 
-		<!--		<link href="clickable-pop-up-boxes.css" rel="stylesheet">-->
-		<script src="js/jquery-3.3.1.js"></script>
-		<script src="js/leaflet.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-		<script src="../../assets/sidebar/js/leaflet-sidebar.js"></script>
-		<script src="js/d3.v3.min.js"></script>
+	<!--		<link href="clickable-pop-up-boxes.css" rel="stylesheet">-->
+	<script src="js/jquery-3.3.1.js"></script>
+	<script src="js/leaflet.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="../../assets/sidebar/js/leaflet-sidebar.js"></script>
+	<script src="js/d3.v3.min.js"></script>
 
-		<script>       
-
-			$.fn.center = function () {
-				this.css("position","absolute");
-				this.css("bottom", "-5em"
-						);
-				this.css("right", "0px"
-						);
-				return this;
-			}
+	<script>
+		$.fn.center = function () {
+			this.css("position", "absolute");
+			this.css("bottom", "-5em");
+			this.css("right", "0px");
+			return this;
+		}
 
 
 
-			var storkmap = {};
+		var storkmap = {};
 
 
-			function makeMarkers() {
-				var sidebar = L.control.sidebar('sidebar-left');
-				storkmap.map.addControl(sidebar);
+		function makeMarkers() {
+			var sidebar = L.control.sidebar('sidebar-left');
+			storkmap.map.addControl(sidebar);
 
-				sidebar.open('health');
+			sidebar.open('health');
 
-				L.control.zoom({
-					position:'topright'
-				}).addTo(storkmap.map);
+			L.control.zoom({
+				position: 'topright'
+			}).addTo(storkmap.map);
 
-				var datalayer;
-				var datalayer1;
-				var datalayerPoverty;
-				var datalayerChildPoverty;
-				var datalayerDensity;
+			var datalayer;
+			var datalayer1;
+			var datalayerPoverty;
+			var datalayerChildPoverty;
+			var datalayerDensity;
 
-				$.getJSON('data/kampalaParishes__.geojson', function(data){
-					function getColorPoverty(d) {
-						return d > 0.565  ? 'rgb(23,78,105)' :
-						d > 0.041  ? 'rgb(46,95,120)' :
-						d > 0.023  ? 'rgb(115,148,165)' :
-						d > 0.017   ? 'rgb(162,184,195)' :
+			$.getJSON('data/kampalaParishes__temp_20190508_1232.geojson', function (data) {
+				function getColorPoverty(d) {
+					return d > 0.565 ? 'rgb(23,78,105)' :
+						d > 0.041 ? 'rgb(46,95,120)' :
+						d > 0.023 ? 'rgb(115,148,165)' :
+						d > 0.017 ? 'rgb(162,184,195)' :
 						'rgb(231,237,240)';
-					}
-					
-					function getColorChildPoverty(d) {
-						return d > 0.565  ? 'rgb(23,78,105)' :
-						d > 0.041  ? 'rgb(46,95,120)' :
-						d > 0.023  ? 'rgb(115,148,165)' :
-						d > 0.017   ? 'rgb(162,184,195)' :
+				}
+
+				function getColorChildPoverty(d) {
+					return d > 0.565 ? 'rgb(23,78,105)' :
+						d > 0.041 ? 'rgb(46,95,120)' :
+						d > 0.023 ? 'rgb(115,148,165)' :
+						d > 0.017 ? 'rgb(162,184,195)' :
 						'rgb(231,237,240)';
-					}
+				}
 
-					function getColorPopDensity(d) {
-						return d > 36087  ? 'rgb(23,78,105)' :
-						d > 15935  ? 'rgb(46,95,120)' :
-						d > 10934  ? 'rgb(115,148,165)' :
-						d > 6229.64   ? 'rgb(162,184,195)' :
+				function getColorPopDensity(d) {
+					return d > 36087 ? 'rgb(23,78,105)' :
+						d > 15935 ? 'rgb(46,95,120)' :
+						d > 10934 ? 'rgb(115,148,165)' :
+						d > 6229.64 ? 'rgb(162,184,195)' :
 						'rgb(231,237,240)';
-					}
+				}
 
-					function stylePoverty(feature) {
-						return {
-							color: getColorPoverty(feature.properties.HH_Pov),
-							fillOpacity: 0.6,
-							weight: 0.2
-						};
-					}
-					function stylePopDensity(feature) {
-						return {
-							color: getColorPopDensity(feature.properties.populationDensity),
-							fillOpacity: 0.6,
-							weight: 0.2
-						};
-					}
-					
-					function stylePopChildPoverty(feature) {
-						return {
-							color: getColorChildPoverty(feature.properties.childpov),
-							fillOpacity: 0.6,
-							weight: 0.2
-						};
-					}					
+				function stylePoverty(feature) {
+					return {
+						color: getColorPoverty(feature.properties.HH_Pov),
+						fillOpacity: 0.6,
+						weight: 0.2
+					};
+				}
 
-					datalayerPoverty = L.geoJson(data, {
-						style: stylePoverty
-					});
-					datalayerDensity = L.geoJson(data, {
-						style: stylePopDensity
-					});
-					datalayerChildPoverty = L.geoJson(data, {
-						style: stylePopChildPoverty						
-					});
+				function stylePopDensity(feature) {
+					return {
+						color: getColorPopDensity(feature.properties.populationDensity),
+						fillOpacity: 0.6,
+						weight: 0.2
+					};
+				}
 
+				function stylePopChildPoverty(feature) {
+					return {
+						color: getColorChildPoverty(feature.properties.childpov),
+						fillOpacity: 0.6,
+						weight: 0.2
+					};
+				}
 
-
-					$.getJSON('data/kampala_slum_settlement.geojson', function(data){
-						function style1(feature) {
-							return {
-								color: 'green',
-								fillOpacity: 0.4,
-								opacity: 1,
-								weight: 0.8
-							};
-						}
-
-						datalayer1 = L.geoJson(data, {
-							style: style1
-						});
-
-
-						var overlaymaps = {
-							"Slum Boundaries" : datalayer1,
-							"Child Poverty ('16-'17)" : datalayerChildPoverty,
-							"Household Poverty ('16-'17)" : datalayerPoverty,
-							"Population Density" : datalayerDensity
-						};
-
-
-
-						L.control.layers(overlaymaps, null, {autoZIndex: false,collapsed: true, position: 'topleft'}).addTo(storkmap.map);
-
-
-						var layerRemover = L.control({position: 'topleft'});
-
-						layerRemover.onAdd = function () {
-
-							var div = L.DomUtil.create('div', '');
-							div.innerHTML = '<p class="nav nav-tabs" role="tablist">' +
-								'<a class="nav-item"><a id="removeLayers" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true">Remove Layers</a></a>' +
-								'</p>'
-
-							return div;
-						};
-
-						layerRemover.addTo(storkmap.map);
-
-						var removeLayers = d3.select("#removeLayers");
-
-						removeLayers.on('click', function(){
-
-							if(storkmap.map.hasLayer(datalayer1)){
-								storkmap.map.removeControl(slumLegend);	
-							} else if(storkmap.map.hasLayer(datalayerPoverty)){
-								storkmap.map.removeControl(householdPovertyLegend);	
-							} else if(storkmap.map.hasLayer(datalayerDensity)){
-								storkmap.map.removeControl(populationDensityLegend);	
-							} else if(storkmap.map.hasLayer(datalayerChildPoverty)){
-								storkmap.map.removeControl(childPovertyLegend);	
-							}
-							
-							storkmap.map.removeLayer(datalayer1);
-							storkmap.map.removeLayer(datalayerPoverty);
-							storkmap.map.removeLayer(datalayerDensity);
-							storkmap.map.removeLayer(datalayerChildPoverty);
-						})
-
-						var resetMap = L.control({position: 'topleft'});
-
-						resetMap.onAdd = function (map) {
-
-							var div = L.DomUtil.create('div', '');
-							div.innerHTML = '<p class="nav nav-tabs" role="tablist">' +
-								'<a class="nav-item"><a id="resetMap" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true">Reset Map</a></a>' +
-								'</p>'
-
-							return div;
-						};
-
-						resetMap.addTo(storkmap.map);
-
-						var resetMapButton = d3.select("#resetMap");
-
-						resetMapButton.on('click', function(){
-							d3.select(".statDist").remove();
-
-							storkmap.map.setView([0.3233, 32.5025], 12);
-						})
-
-					});
-
-
-
+				datalayerPoverty = L.geoJson(data, {
+					style: stylePoverty
 				});
-				
-				
-				storkmap.map.createPane('parishLayer');
+				datalayerDensity = L.geoJson(data, {
+					style: stylePopDensity
+				});
+				datalayerChildPoverty = L.geoJson(data, {
+					style: stylePopChildPoverty
+				});
 
-				$.getJSON('./data/kampalaParishes_.geojson', function(data){
-					function style(feature) {
+
+
+				$.getJSON('data/kampala_slum_settlement.geojson', function (data) {
+					function style1(feature) {
 						return {
-							color: '#00c5ff',
-							fillOpacity: 0,
-							pane:	"parishLayer",
+							color: 'green',
+							fillOpacity: 0.4,
 							opacity: 1,
 							weight: 0.8
 						};
 					}
 
+					datalayer1 = L.geoJson(data, {
+						style: style1
+					});
 
-					var datalayer;
-					var tooltip = d3.select(storkmap.map.getPanes().overlayPane)
+
+					var overlaymaps = {
+						"Slum Boundaries": datalayer1,
+						"Child Poverty ('16-'17)": datalayerChildPoverty,
+						"Household Poverty ('16-'17)": datalayerPoverty,
+						"Population Density": datalayerDensity
+					};
+
+
+
+					L.control.layers(overlaymaps, null, {
+						autoZIndex: false,
+						collapsed: true,
+						position: 'topleft'
+					}).addTo(storkmap.map);
+
+
+					var layerRemover = L.control({
+						position: 'topleft'
+					});
+
+					layerRemover.onAdd = function () {
+
+						var div = L.DomUtil.create('div', '');
+						div.innerHTML = '<p class="nav nav-tabs" role="tablist">' +
+							'<a class="nav-item"><a id="removeLayers" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true">Remove Layers</a></a>' +
+							'</p>'
+
+						return div;
+					};
+
+					layerRemover.addTo(storkmap.map);
+
+					var removeLayers = d3.select("#removeLayers");
+
+					removeLayers.on('click', function () {
+
+						if (storkmap.map.hasLayer(datalayer1)) {
+							storkmap.map.removeControl(slumLegend);
+						} else if (storkmap.map.hasLayer(datalayerPoverty)) {
+							storkmap.map.removeControl(householdPovertyLegend);
+						} else if (storkmap.map.hasLayer(datalayerDensity)) {
+							storkmap.map.removeControl(populationDensityLegend);
+						} else if (storkmap.map.hasLayer(datalayerChildPoverty)) {
+							storkmap.map.removeControl(childPovertyLegend);
+						}
+
+						storkmap.map.removeLayer(datalayer1);
+						storkmap.map.removeLayer(datalayerPoverty);
+						storkmap.map.removeLayer(datalayerDensity);
+						storkmap.map.removeLayer(datalayerChildPoverty);
+					})
+
+					var resetMap = L.control({
+						position: 'topleft'
+					});
+
+					resetMap.onAdd = function (map) {
+
+						var div = L.DomUtil.create('div', '');
+						div.innerHTML = '<p class="nav nav-tabs" role="tablist">' +
+							'<a class="nav-item"><a id="resetMap" class="nav-link mbr-fonts-style show display-7" role="tab" data-toggle="tab" aria-selected="true">Reset Map</a></a>' +
+							'</p>'
+
+						return div;
+					};
+
+					resetMap.addTo(storkmap.map);
+
+					var resetMapButton = d3.select("#resetMap");
+
+					resetMapButton.on('click', function () {
+						d3.select(".statDist").remove();
+
+						storkmap.map.setView([0.3233, 32.5025], 12);
+					})
+
+				});
+
+
+
+			});
+
+
+			storkmap.map.createPane('parishLayer');
+
+			$.getJSON('./data/kampalaParishes__temp_20190508_1232.geojson', function (data) {
+				function style(feature) {
+					return {
+						color: '#00c5ff',
+						fillOpacity: 0,
+						pane: "parishLayer",
+						opacity: 1,
+						weight: 0.8
+					};
+				}
+
+
+				var datalayer;
+				var tooltip = d3.select(storkmap.map.getPanes().overlayPane)
 					.append("div")
 					.attr("class", "d3-tooltip d3-hide");
-					function selectedStyle(feature) {
-						return {
-							color: '#13988e',
-							fillOpacity: 0.2,
-							pane:	"parishLayer",
-							opacity: 0.2,
-							weight: 2
-						};
-					}
-					var selected;
-					function parishOnEachFeature(feature, featureLayer){
 
-						var popup = L.popup()
+				function selectedStyle(feature) {
+					return {
+						color: '#13988e',
+						fillOpacity: 0.2,
+						pane: "parishLayer",
+						opacity: 0.2,
+						weight: 2
+					};
+				}
+				var selected;
+
+				function parishOnEachFeature(feature, featureLayer) {
+
+					var popup = L.popup()
 						.setContent("<b>" + feature.properties.SNAME2014 + " Division</b></br>" +
-									"<b>Parish: </b>" + feature.properties.PNAME2014 + "</br>");
+							"<b>Parish: </b>" + feature.properties.PNAME2014 + "</br>");
 
 
-						featureLayer.on({
-							mouseover: highlightFeature,
-							mouseout: resetHighlight
-						});
-
-					}
-
-
-					// function that renders a spider chart on to the slide bar
-
-
-					datalayer = L.geoJson(data, {
-						style: style,
-						onEachFeature: parishOnEachFeature
-
+					featureLayer.on({
+						mouseover: highlightFeature,
+						mouseout: resetHighlight
 					});
-					storkmap.map.getPane('parishLayer').style.zIndex = 500;
-					var info = L.control();
 
-					info.onAdd = function (map) {
-						this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-						this.update();
-						return this._div;
-					};
-
-					// method that we will use to update the control based on feature properties passed
-					info.update = function (props) {
-						this._div.innerHTML = (props ? 'Sub County: <b>' + props.SNAME2014 + '</b><br/>' + 
-											   'Parish: <b>' + props.PNAME2014 + '</b>'
-											   : 'Hover over a parish');
-					};
-
-					info.addTo(storkmap.map);
+				}
 
 
-					function highlightFeature(e) {
-						var layer = e.target;
+				// function that renders a spider chart on to the slide bar
 
-						layer.setStyle({
-							weight: 5,
-							color: '#174e69',
-							dashArray: '',
-							fillOpacity: 0.3
-						});
 
-						if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-							layer.bringToFront();
-						}
-						info.update(layer.feature.properties);
+				datalayer = L.geoJson(data, {
+					style: style,
+					onEachFeature: parishOnEachFeature
 
-						selected = [];
-						selected.push(e.target.feature.properties.PNAME2014);
-						e.target.feature.properties.selected = true;
-						e.target.setStyle(selectedStyle());
-						e.target.bringToFront();
+				});
+				storkmap.map.getPane('parishLayer').style.zIndex = 500;
+				var info = L.control();
 
+				info.onAdd = function (map) {
+					this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+					this.update();
+					return this._div;
+				};
+
+				// method that we will use to update the control based on feature properties passed
+				info.update = function (props) {
+					this._div.innerHTML = (props ? 'Sub County: <b>' + props.SNAME2014 + '</b><br/>' +
+						'Parish: <b>' + props.PNAME2014 + '</b>' :
+						'Hover over a parish');
+				};
+
+				info.addTo(storkmap.map);
+
+				var whatIsSelected = "Health";
+
+				d3.select('#healthButton').on('click', function () {
+					whatIsSelected = "Health";
+				})
+
+				d3.select('#educationButton').on('click', function () {
+					whatIsSelected = "Education";
+				})
+
+				d3.select('#protectionButton').on('click', function () {
+					whatIsSelected = "Protection";
+				})
+
+				d3.select('#waterButton').on('click', function () {
+					whatIsSelected = "Water";
+				})
+
+				function highlightFeature(e) {
+					var layer = e.target;
+
+					layer.setStyle({
+						weight: 5,
+						color: '#174e69',
+						dashArray: '',
+						fillOpacity: 0.3
+					});
+
+					if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+						layer.bringToFront();
+					}
+					info.update(layer.feature.properties);
+
+					selected = [];
+					selected.push(e.target.feature.properties.PNAME2014);
+					e.target.feature.properties.selected = true;
+					e.target.setStyle(selectedStyle());
+					e.target.bringToFront();
+
+					if (whatIsSelected === "Health") {
 						for (var i = 0; i < data.features.length; i++) {
-							if(selected[0] === data.features[i].properties.PNAME2014) {
-								document.getElementById('health-parish').innerHTML = data.features[i].properties.PNAME2014;
-								document.getElementById('health-subCounty').innerHTML = data.features[i].properties.SNAME2014;
+							if (selected[0] === data.features[i].properties.PNAME2014) {
+								document.getElementById('health-parish').innerHTML = data.features[i].properties
+									.PNAME2014;
+								document.getElementById('health-subCounty').innerHTML = data.features[i].properties
+									.SNAME2014;
 
 								var ugChart = d3.select(".statUG").selectAll("rect");
 								ugChart.attr("height", "20");
@@ -413,7 +454,7 @@
 								rectangles.append("text")
 									.attr("class", "districtLegend_Health")
 									.attr("x", 6.33)
-									.attr("y",  35)
+									.attr("y", 35)
 									.attr("dy", ".35em")
 									.style('fill', 'white')
 									.text("Parish Averages");
@@ -423,7 +464,7 @@
 									var header = [];
 									var values = [];
 									for (var i = 0; i < data.features.length; i++) {
-										if(selected[0] === data.features[i].properties.PNAME2014) {
+										if (selected[0] === data.features[i].properties.PNAME2014) {
 											for (var k = 0; k < list.length; k++) {
 												header.push(list[k].Column);
 												values.push(data.features[i].properties[list[k].Column]);
@@ -442,43 +483,61 @@
 
 									// accessor functions
 									//             var barLabel = function(d) {  return d; };
-									var barValue = function(d) { return parseFloat(d); };
+									var barValue = function (d) {
+										return parseFloat(d);
+									};
 
 									// scales
-									var yScale = d3.scale.ordinal().domain(d3.range(0, chartDist[0].length)).rangeBands([0, chartDist[0].length * barHeight]);
-									var y = function(d, i) { return yScale(i) * 1.5; };
-									var x = d3.scale.linear().domain([0, 100/*d3.max(data, barValue)*/]).range([0, maxBarWidth]);
+									var yScale = d3.scale.ordinal().domain(d3.range(0, chartDist[0].length))
+										.rangeBands([0, chartDist[0].length * barHeight]);
+									var y = function (d, i) {
+										return yScale(i) * 1.5;
+									};
+									var x = d3.scale.linear().domain([0, 100 /*d3.max(data, barValue)*/ ])
+										.range([0, maxBarWidth]);
 									// svg container element
 									var chart = d3.select('#health-statistics-list').select("svg");
 									// bars
 									var barsContainer = chart.append('g')
-									.attr("class", "statDist_Health")
-									.attr('transform', 'translate(' + barLabelWidth + ',' + (gridLabelHeight + gridChartOffset +10) + ')');
+										.attr("class", "statDist_Health")
+										.attr('transform', 'translate(' + barLabelWidth + ',' + (
+											gridLabelHeight + gridChartOffset + 10) + ')');
 									barsContainer.selectAll("rect").data(chartDist[1]).enter().append("rect")
 										.attr('y', y)
 										.attr('height', yScale.rangeBand() / 2 * 0.8)
-										.attr('width', function(d) { return x(barValue(d)); })
+										.attr('width', function (d) {
+											return x(barValue(d));
+										})
 										.attr('stroke', 'white')
 										.attr('fill', '#13988e');
 									// bar value labels
 									barsContainer.selectAll("text").data(chartDist[1]).enter().append("text")
-										.attr("x", function(d) { return x(barValue(d)); })
+										.attr("x", function (d) {
+											return x(barValue(d));
+										})
 										.attr("y", yText)
 										.attr("dx", 3) // padding-left
 										.attr("dy", "-.3em") // vertical-align: middle
 										.attr("text-anchor", "start") // text-align: right
 										.attr("fill", '#13988e')
 										.attr("stroke", "none")
-										.text(function(d) { return d3.round(barValue(d), 2); });
+										.text(function (d) {
+											return d3.round(barValue(d), 2);
+										});
 								});
 							}
 						}
 
+					}
+
+					if (whatIsSelected === "Education") {
 
 						for (var i = 0; i < data.features.length; i++) {
-							if(selected[0] === data.features[i].properties.PNAME2014) {
-								document.getElementById('education-parish').innerHTML = data.features[i].properties.PNAME2014;
-								document.getElementById('education-subCounty').innerHTML = data.features[i].properties.SNAME2014;
+							if (selected[0] === data.features[i].properties.PNAME2014) {
+								document.getElementById('education-parish').innerHTML = data.features[i].properties
+									.PNAME2014;
+								document.getElementById('education-subCounty').innerHTML = data.features[i].properties
+									.SNAME2014;
 
 								var ugChart = d3.select(".statUG").selectAll("rect");
 								ugChart.attr("height", "20");
@@ -496,7 +555,7 @@
 								rectangles.append("text")
 									.attr("class", "districtLegend_Education")
 									.attr("x", 6.33)
-									.attr("y",  35)
+									.attr("y", 35)
 									.attr("dy", ".35em")
 									.style('fill', 'white')
 									.text("Parish Averages");
@@ -509,7 +568,7 @@
 									var header = [];
 									var values = [];
 									for (var i = 0; i < data.features.length; i++) {
-										if(selected[0] === data.features[i].properties.PNAME2014) {
+										if (selected[0] === data.features[i].properties.PNAME2014) {
 											for (var k = 0; k < list.length; k++) {
 												header.push(list[k].Column);
 												values.push(data.features[i].properties[list[k].Column]);
@@ -528,42 +587,60 @@
 
 									// accessor functions
 									//             var barLabel = function(d) {  return d; };
-									var barValue = function(d) { return parseFloat(d); };
+									var barValue = function (d) {
+										return parseFloat(d);
+									};
 
 									// scales
-									var yScale = d3.scale.ordinal().domain(d3.range(0, chartDist[0].length)).rangeBands([0, chartDist[0].length * barHeight]);
-									var y = function(d, i) { return yScale(i) * 1.5; };
-									var x = d3.scale.linear().domain([0, 100/*d3.max(data, barValue)*/]).range([0, maxBarWidth]);
+									var yScale = d3.scale.ordinal().domain(d3.range(0, chartDist[0].length))
+										.rangeBands([0, chartDist[0].length * barHeight]);
+									var y = function (d, i) {
+										return yScale(i) * 1.5;
+									};
+									var x = d3.scale.linear().domain([0, 100 /*d3.max(data, barValue)*/ ])
+										.range([0, maxBarWidth]);
 									// svg container element
 									var chart = d3.select('#education-statistics-list').select("svg");
 									// bars
 									var barsContainer = chart.append('g')
-									.attr("class", "statDist_Education")
-									.attr('transform', 'translate(' + barLabelWidth + ',' + (gridLabelHeight + gridChartOffset +10) + ')');
+										.attr("class", "statDist_Education")
+										.attr('transform', 'translate(' + barLabelWidth + ',' + (
+											gridLabelHeight + gridChartOffset + 10) + ')');
 									barsContainer.selectAll("rect").data(chartDist[1]).enter().append("rect")
 										.attr('y', y)
 										.attr('height', yScale.rangeBand() / 2 * 0.8)
-										.attr('width', function(d) { return x(barValue(d)); })
+										.attr('width', function (d) {
+											return x(barValue(d));
+										})
 										.attr('stroke', 'white')
 										.attr('fill', '#13988e');
 									// bar value labels
 									barsContainer.selectAll("text").data(chartDist[1]).enter().append("text")
-										.attr("x", function(d) { return x(barValue(d)); })
+										.attr("x", function (d) {
+											return x(barValue(d));
+										})
 										.attr("y", yText)
 										.attr("dx", 3) // padding-left
 										.attr("dy", "-.3em") // vertical-align: middle
 										.attr("text-anchor", "start") // text-align: right
 										.attr("fill", '#13988e')
 										.attr("stroke", "none")
-										.text(function(d) { return d3.round(barValue(d), 2); });
+										.text(function (d) {
+											return d3.round(barValue(d), 2);
+										});
 								});
 							}
 						}
+					}
+
+					if (whatIsSelected === "Protection") {
 
 						for (var i = 0; i < data.features.length; i++) {
-							if(selected[0] === data.features[i].properties.PNAME2014) {
-								document.getElementById('protection-parish').innerHTML = data.features[i].properties.PNAME2014;
-								document.getElementById('protection-subCounty').innerHTML = data.features[i].properties.SNAME2014;
+							if (selected[0] === data.features[i].properties.PNAME2014) {
+								document.getElementById('protection-parish').innerHTML = data.features[i].properties
+									.PNAME2014;
+								document.getElementById('protection-subCounty').innerHTML = data.features[i]
+									.properties.SNAME2014;
 
 								var ugChart = d3.select(".statUG").selectAll("rect");
 								ugChart.attr("height", "20");
@@ -581,7 +658,7 @@
 								rectangles.append("text")
 									.attr("class", "districtLegend_Protection")
 									.attr("x", 6.33)
-									.attr("y",  35)
+									.attr("y", 35)
 									.attr("dy", ".35em")
 									.style('fill', 'white')
 									.text("Parish Averages");
@@ -594,7 +671,7 @@
 									var header = [];
 									var values = [];
 									for (var i = 0; i < data.features.length; i++) {
-										if(selected[0] === data.features[i].properties.PNAME2014) {
+										if (selected[0] === data.features[i].properties.PNAME2014) {
 											for (var k = 0; k < list.length; k++) {
 												header.push(list[k].Column);
 												values.push(data.features[i].properties[list[k].Column]);
@@ -613,42 +690,62 @@
 
 									// accessor functions
 									//             var barLabel = function(d) {  return d; };
-									var barValue = function(d) { return parseFloat(d); };
+									var barValue = function (d) {
+										return parseFloat(d);
+									};
 
 									// scales
-									var yScale = d3.scale.ordinal().domain(d3.range(0, chartDist[0].length)).rangeBands([0, chartDist[0].length * barHeight]);
-									var y = function(d, i) { return yScale(i) * 1.5; };
-									var x = d3.scale.linear().domain([0, 100/*d3.max(data, barValue)*/]).range([0, maxBarWidth]);
+									var yScale = d3.scale.ordinal().domain(d3.range(0, chartDist[0].length))
+										.rangeBands([0, chartDist[0].length * barHeight]);
+									var y = function (d, i) {
+										return yScale(i) * 1.5;
+									};
+									var x = d3.scale.linear().domain([0, 100 /*d3.max(data, barValue)*/ ])
+										.range([0, maxBarWidth]);
 									// svg container element
 									var chart = d3.select('#protection-statistics-list').select("svg");
 									// bars
 									var barsContainer = chart.append('g')
-									.attr("class", "statDist_Protection")
-									.attr('transform', 'translate(' + barLabelWidth + ',' + (gridLabelHeight + gridChartOffset +10) + ')');
+										.attr("class", "statDist_Protection")
+										.attr('transform', 'translate(' + barLabelWidth + ',' + (
+											gridLabelHeight + gridChartOffset + 10) + ')');
 									barsContainer.selectAll("rect").data(chartDist[1]).enter().append("rect")
 										.attr('y', y)
 										.attr('height', yScale.rangeBand() / 2 * 0.8)
-										.attr('width', function(d) { return x(barValue(d)); })
+										.attr('width', function (d) {
+											return x(barValue(d));
+										})
 										.attr('stroke', 'white')
 										.attr('fill', '#13988e');
 									// bar value labels
 									barsContainer.selectAll("text").data(chartDist[1]).enter().append("text")
-										.attr("x", function(d) { return x(barValue(d)); })
+										.attr("x", function (d) {
+											return x(barValue(d));
+										})
 										.attr("y", yText)
 										.attr("dx", 3) // padding-left
 										.attr("dy", "-.3em") // vertical-align: middle
 										.attr("text-anchor", "start") // text-align: right
 										.attr("fill", '#13988e')
 										.attr("stroke", "none")
-										.text(function(d) { return d3.round(barValue(d), 2); });
+										.text(function (d) {
+											return d3.round(barValue(d), 2);
+										});
 								});
 							}
 						}
 
+					}
+
+					if (whatIsSelected === "Water") {
+
+
 						for (var i = 0; i < data.features.length; i++) {
-							if(selected[0] === data.features[i].properties.PNAME2014) {
-								document.getElementById('water-parish').innerHTML = data.features[i].properties.PNAME2014;
-								document.getElementById('water-subCounty').innerHTML = data.features[i].properties.SNAME2014;
+							if (selected[0] === data.features[i].properties.PNAME2014) {
+								document.getElementById('water-parish').innerHTML = data.features[i].properties
+									.PNAME2014;
+								document.getElementById('water-subCounty').innerHTML = data.features[i].properties
+									.SNAME2014;
 
 								var ugChart = d3.select(".statUG").selectAll("rect");
 								ugChart.attr("height", "20");
@@ -666,7 +763,7 @@
 								rectangles.append("text")
 									.attr("class", "districtLegend_Water")
 									.attr("x", 6.33)
-									.attr("y",  35)
+									.attr("y", 35)
 									.attr("dy", ".35em")
 									.style('fill', 'white')
 									.text("Parish Averages");
@@ -679,7 +776,7 @@
 									var header = [];
 									var values = [];
 									for (var i = 0; i < data.features.length; i++) {
-										if(selected[0] === data.features[i].properties.PNAME2014) {
+										if (selected[0] === data.features[i].properties.PNAME2014) {
 											for (var k = 0; k < list.length; k++) {
 												header.push(list[k].Column);
 												values.push(data.features[i].properties[list[k].Column]);
@@ -698,594 +795,735 @@
 
 									// accessor functions
 									//             var barLabel = function(d) {  return d; };
-									var barValue = function(d) { return parseFloat(d); };
+									var barValue = function (d) {
+										return parseFloat(d);
+									};
 
 									// scales
-									var yScale = d3.scale.ordinal().domain(d3.range(0, chartDist[0].length)).rangeBands([0, chartDist[0].length * barHeight]);
-									var y = function(d, i) { return yScale(i) * 1.5; };
-									var x = d3.scale.linear().domain([0, 100/*d3.max(data, barValue)*/]).range([0, maxBarWidth]);
+									var yScale = d3.scale.ordinal().domain(d3.range(0, chartDist[0].length))
+										.rangeBands([0, chartDist[0].length * barHeight]);
+									var y = function (d, i) {
+										return yScale(i) * 1.5;
+									};
+									var x = d3.scale.linear().domain([0, 100 /*d3.max(data, barValue)*/ ])
+										.range([0, maxBarWidth]);
 									// svg container element
 									var chart = d3.select('#water-statistics-list').select("svg");
 									// bars
 									var barsContainer = chart.append('g')
-									.attr("class", "statDist_Water")
-									.attr('transform', 'translate(' + barLabelWidth + ',' + (gridLabelHeight + gridChartOffset +10) + ')');
+										.attr("class", "statDist_Water")
+										.attr('transform', 'translate(' + barLabelWidth + ',' + (
+											gridLabelHeight + gridChartOffset + 10) + ')');
 									barsContainer.selectAll("rect").data(chartDist[1]).enter().append("rect")
 										.attr('y', y)
 										.attr('height', yScale.rangeBand() / 2 * 0.8)
-										.attr('width', function(d) { return x(barValue(d)); })
+										.attr('width', function (d) {
+											return x(barValue(d));
+										})
 										.attr('stroke', 'white')
 										.attr('fill', '#13988e');
 									// bar value labels
 									barsContainer.selectAll("text").data(chartDist[1]).enter().append("text")
-										.attr("x", function(d) { return x(barValue(d)); })
+										.attr("x", function (d) {
+											return x(barValue(d));
+										})
 										.attr("y", yText)
 										.attr("dx", 3) // padding-left
 										.attr("dy", "-.3em") // vertical-align: middle
 										.attr("text-anchor", "start") // text-align: right
 										.attr("fill", '#13988e')
 										.attr("stroke", "none")
-										.text(function(d) { return d3.round(barValue(d), 2); });
+										.text(function (d) {
+											return d3.round(barValue(d), 2);
+										});
 								});
 							}
 						}
 					}
+				}
 
 
-					function resetHighlight(e) {
-						d3.selectAll(".statDist_Health").remove();
-						d3.selectAll(".districtLegend_Health").remove();
-						d3.selectAll(".statDist_Education").remove();
-						d3.selectAll(".districtLegend_Education").remove();
-						d3.selectAll(".statDist_Protection").remove();
-						d3.selectAll(".districtLegend_Protection").remove();
-						d3.selectAll(".statDist_Water").remove();
-						d3.selectAll(".districtLegend_Water").remove();
+				function resetHighlight(e) {
+					d3.selectAll(".statDist_Health").remove();
+					d3.selectAll(".districtLegend_Health").remove();
+					d3.selectAll(".statDist_Education").remove();
+					d3.selectAll(".districtLegend_Education").remove();
+					d3.selectAll(".statDist_Protection").remove();
+					d3.selectAll(".districtLegend_Protection").remove();
+					d3.selectAll(".statDist_Water").remove();
+					d3.selectAll(".districtLegend_Water").remove();
 
-						document.getElementById('health-parish').innerHTML = "N/A"
-						document.getElementById('health-subCounty').innerHTML = "N/A"
-						document.getElementById('education-parish').innerHTML = "N/A"
-						document.getElementById('education-subCounty').innerHTML = "N/A"
-						document.getElementById('protection-parish').innerHTML = "N/A"
-						document.getElementById('protection-subCounty').innerHTML = "N/A"
-						document.getElementById('water-parish').innerHTML = "N/A"
-						document.getElementById('water-subCounty').innerHTML = "N/A"
-						
+					document.getElementById('health-parish').innerHTML = "N/A"
+					document.getElementById('health-subCounty').innerHTML = "N/A"
+					document.getElementById('education-parish').innerHTML = "N/A"
+					document.getElementById('education-subCounty').innerHTML = "N/A"
+					document.getElementById('protection-parish').innerHTML = "N/A"
+					document.getElementById('protection-subCounty').innerHTML = "N/A"
+					document.getElementById('water-parish').innerHTML = "N/A"
+					document.getElementById('water-subCounty').innerHTML = "N/A"
 
-						datalayer.resetStyle(e.target);
-						info.update();
-					}
+
+					datalayer.resetStyle(e.target);
+					info.update();
+				}
 
 				storkmap.map.addLayer(datalayer);
 
 
-				});
+			});
 
 
-				var header = [];
-				var values = [];
+			var header = [];
+			var values = [];
 
-				var chartDataHealth = [["%HH - No Kitchen", "%HH - Make shift Bathroom", "%HH - No bathroom"],
-								 ["37.8", "1.5", "0.7"]];
-				
-				//[headerList].concat([values]);
+			var chartDataHealth = [
+				[
+					"%HH - No Kitchen", 
+					"%HH - Make shift Bathroom", 
+					"%HH - No bathroom",
+					"% of 17 y/o and below that have a birth certificate",
+					"% of females 12-17 y/o that have ever given birth",
+					"% of children that have less than 3 meals a day"
+				],
+				["37.8", "1.5", "0.7", "46.5", "8.5", "56.75"]
+			];
 
-				{
+			//[headerList].concat([values]);
 
-					var valueLabelWidth = 20; // space reserved for value labels (right)
-					var barHeight = 25; // height of one bar
-					var barLabelWidth = 200; // space reserved for bar labels
-					var barLabelPadding = 15; // padding between bar and bar labels (left)
-					var gridLabelHeight = 18; // space reserved for gridline labels
-					var gridChartOffset = 3; // space between start of grid and first bar
-					var maxBarWidth = 175; // width of the bar with the max value
+			{
 
-					// accessor functions
-					var barLabel = function(d) {  return d; };
-					var barValue = function(d) { return parseFloat(d); };
+				var valueLabelWidth = 20; // space reserved for value labels (right)
+				var barHeight = 25; // height of one bar
+				var barLabelWidth = 200; // space reserved for bar labels
+				var barLabelPadding = 15; // padding between bar and bar labels (left)
+				var gridLabelHeight = 18; // space reserved for gridline labels
+				var gridChartOffset = 3; // space between start of grid and first bar
+				var maxBarWidth = 175; // width of the bar with the max value
 
-					// scales
-					var yScale = d3.scale.ordinal().domain(d3.range(0, chartDataHealth[0].length)).rangeBands([0, chartDataHealth[0].length * barHeight]);
-					var y = function(d, i) { return yScale(i) * 1.5; };
-					var yText = function(d, i) { return y(d, i) + yScale.rangeBand() / 2; };
-					var x = d3.scale.linear().domain([0, 100/*d3.max(data, barValue)*/]).range([0, maxBarWidth]);
-					// svg container element
-					var healthChart = d3.select('#health-statistics-list').append("svg")
+				// accessor functions
+				var barLabel = function (d) {
+					return d;
+				};
+				var barValue = function (d) {
+					return parseFloat(d);
+				};
+
+				// scales
+				var yScale = d3.scale.ordinal().domain(d3.range(0, chartDataHealth[0].length)).rangeBands([0, chartDataHealth[
+					0].length * barHeight]);
+				var y = function (d, i) {
+					return yScale(i) * 1.5;
+				};
+				var yText = function (d, i) {
+					return y(d, i) + yScale.rangeBand() / 2;
+				};
+				var x = d3.scale.linear().domain([0, 100 /*d3.max(data, barValue)*/ ]).range([0, maxBarWidth]);
+				// svg container element
+				var healthChart = d3.select('#health-statistics-list').append("svg")
 					.attr('width', maxBarWidth + barLabelWidth + valueLabelWidth)
 					.attr('height', (gridLabelHeight + 20 + gridChartOffset + chartDataHealth[0].length * barHeight) * 1.5);
-					// grid line labels
-					var gridContainer = healthChart.append('g')
+				// grid line labels
+				var gridContainer = healthChart.append('g')
 					.attr('transform', 'translate(' + barLabelWidth + ',' + gridLabelHeight + ')');
-					gridContainer.selectAll("text").data(x.ticks(10)).enter().append("text")
-						.attr("x", x)
-						.attr("dy", -3)
-						.attr("text-anchor", "middle")
-						.text(function(d, i) { if( i === 1 || i === 3 || i === 5 || i === 7 || i === 9 ) { return } else return d});
-					// vertical grid lines
-					gridContainer.selectAll("line").data(x.ticks(10)).enter().append("line")
-						.attr("x1", x)
-						.attr("x2", x)
-						.attr("y1", 0)
-						.attr("y2", (yScale.rangeExtent()[1] + gridChartOffset) * 1.5)
-						.style("stroke", "#ccc");
-					// bar labels
-					var labelsContainer = healthChart.append('g')
-					.attr('transform', 'translate(' + (barLabelWidth - barLabelPadding) + ',' + (gridLabelHeight + gridChartOffset) + ')');
-					labelsContainer.selectAll('text').data(chartDataHealth[0]).enter().append('text')
-						.attr('y', yText)
-						.attr('stroke', 'none')
-						.attr('fill', 'black')
-						.attr("dy", "0em") // vertical-align: middle
-						.attr('text-anchor', 'end')
-						.text(barLabel);
-					// bars
-					var barsContainer = healthChart.append('g')
+				gridContainer.selectAll("text").data(x.ticks(10)).enter().append("text")
+					.attr("x", x)
+					.attr("dy", -3)
+					.attr("text-anchor", "middle")
+					.text(function (d, i) {
+						if (i === 1 || i === 3 || i === 5 || i === 7 || i === 9) {
+							return
+						} else return d
+					});
+				// vertical grid lines
+				gridContainer.selectAll("line").data(x.ticks(10)).enter().append("line")
+					.attr("x1", x)
+					.attr("x2", x)
+					.attr("y1", 0)
+					.attr("y2", (yScale.rangeExtent()[1] + gridChartOffset) * 1.5)
+					.style("stroke", "#ccc");
+				// bar labels
+				var labelsContainer = healthChart.append('g')
+					.attr('transform', 'translate(' + (barLabelWidth - barLabelPadding) + ',' + (gridLabelHeight +
+						gridChartOffset) + ')');
+				labelsContainer.selectAll('text').data(chartDataHealth[0]).enter().append('text')
+					.attr('y', yText)
+					.attr('stroke', 'none')
+					.attr('fill', 'black')
+					.attr("dy", "0em") // vertical-align: middle
+					.attr('text-anchor', 'end')
+					.text(barLabel);
+				// bars
+				var barsContainer = healthChart.append('g')
 					.attr("class", "statUG")
 					.attr("class", "statUG")
 					.attr('transform', 'translate(' + barLabelWidth + ',' + (gridLabelHeight + gridChartOffset) + ')');
-					barsContainer.selectAll("rect").data(chartDataHealth[1]).enter().append("rect")
-						.attr('y', y)
-						.attr('height', yScale.rangeBand() - 5)
-						.attr('width', function(d) { return x(barValue(d)); })
-						.attr('stroke', 'white')
-						.attr('fill', '#174e69');
-					// bar value labels
-					barsContainer.selectAll("text").data(chartDataHealth[1]).enter().append("text")
-						.attr("x", function(d) { return x(barValue(d)); })
-						.attr("y", yText)
-						.attr("dx", 3) // padding-left
-						.attr("dy", "-.3em") // vertical-align: middle
-						.attr("text-anchor", "start") // text-align: right
-						.attr("fill", "#174e69")
-						.attr("stroke", "none")
-						.text(function(d) { return d3.round(barValue(d), 2); });
-					// start line
-					barsContainer.append("line")
-						.attr("y1", -gridChartOffset)
-						.attr("y2", (yScale.rangeExtent()[1] + gridChartOffset) * 1.5)
-						.style("stroke", "#000");
+				barsContainer.selectAll("rect").data(chartDataHealth[1]).enter().append("rect")
+					.attr('y', y)
+					.attr('height', yScale.rangeBand() - 5)
+					.attr('width', function (d) {
+						return x(barValue(d));
+					})
+					.attr('stroke', 'white')
+					.attr('fill', '#174e69');
+				// bar value labels
+				barsContainer.selectAll("text").data(chartDataHealth[1]).enter().append("text")
+					.attr("x", function (d) {
+						return x(barValue(d));
+					})
+					.attr("y", yText)
+					.attr("dx", 3) // padding-left
+					.attr("dy", "-.3em") // vertical-align: middle
+					.attr("text-anchor", "start") // text-align: right
+					.attr("fill", "#174e69")
+					.attr("stroke", "none")
+					.text(function (d) {
+						return d3.round(barValue(d), 2);
+					});
+				// start line
+				barsContainer.append("line")
+					.attr("y1", -gridChartOffset)
+					.attr("y2", (yScale.rangeExtent()[1] + gridChartOffset) * 1.5)
+					.style("stroke", "#000");
 
-					var legend = d3.select('#health-statistics-legend').append("svg")
+				var legend = d3.select('#health-statistics-legend').append("svg")
 					.attr("width", 150)
 					.attr("height", 45);
-					var rectangles = legend.append('g');
+				var rectangles = legend.append('g');
 
 
-					rectangles.append("rect")
-						.attr("width", "150px")
-						.attr("height", "20px")
-						.attr("fill", "#174e69");
-					rectangles.append("text")
-						.attr("x", 3.01)
-						.attr("y",  10)
-						.attr("dy", ".35em")
-						.style('fill', 'white')
-						.text("Kampala Averages");
+				rectangles.append("rect")
+					.attr("width", "150px")
+					.attr("height", "20px")
+					.attr("fill", "#174e69");
+				rectangles.append("text")
+					.attr("x", 3.01)
+					.attr("y", 10)
+					.attr("dy", ".35em")
+					.style('fill', 'white')
+					.text("Kampala Averages");
 
-				}
-				
-				var chartDataEducation = [["%HH - No Toilet facility (bush or polythene bags or bucket)", "%HH - Public taps", "%Distance to Public Primary school (< 5kms)", "%HH - Tenement (Muzigo)"],
-								 ["0.2", "35", "91.7", "52.9"]];
-				
-				{
+			}
 
-					var valueLabelWidth = 20; // space reserved for value labels (right)
-					var barHeight = 25; // height of one bar
-					var barLabelWidth = 200; // space reserved for bar labels
-					var barLabelPadding = 15; // padding between bar and bar labels (left)
-					var gridLabelHeight = 18; // space reserved for gridline labels
-					var gridChartOffset = 3; // space between start of grid and first bar
-					var maxBarWidth = 175; // width of the bar with the max value
+			var chartDataEducation = [
+				[
+					"%HH - Public taps",
+					"%Distance to Public Primary school (< 5kms)",
+					"% of 6-12 y/o Not attending primary school",
+					"% of 13-18 y/o Not attending secondary school",
+					"% of 13 y/o that have never completed Primary",
+					"% of 17 y/o that Never completed O-level",
+					"% of 19 y/o that Never completed A-level"
+				],
+				["35", "91.7", "14.1", "38.6", "85.75", "63.43", "67.9"]
+			];
 
-					// accessor functions
-					var barLabel = function(d) {  return d; };
-					var barValue = function(d) { return parseFloat(d); };
+			{
 
-					// scales
-					var yScale = d3.scale.ordinal().domain(d3.range(0, chartDataEducation[0].length)).rangeBands([0, chartDataEducation[0].length * barHeight]);
-					var y = function(d, i) { return yScale(i) * 1.5; };
-					var yText = function(d, i) { return y(d, i) + yScale.rangeBand() / 2; };
-					var x = d3.scale.linear().domain([0, 100/*d3.max(data, barValue)*/]).range([0, maxBarWidth]);
-					// svg container element
-					var educationChart = d3.select('#education-statistics-list').append("svg")
+				var valueLabelWidth = 20; // space reserved for value labels (right)
+				var barHeight = 25; // height of one bar
+				var barLabelWidth = 200; // space reserved for bar labels
+				var barLabelPadding = 15; // padding between bar and bar labels (left)
+				var gridLabelHeight = 18; // space reserved for gridline labels
+				var gridChartOffset = 3; // space between start of grid and first bar
+				var maxBarWidth = 175; // width of the bar with the max value
+
+				// accessor functions
+				var barLabel = function (d) {
+					return d;
+				};
+				var barValue = function (d) {
+					return parseFloat(d);
+				};
+
+				// scales
+				var yScale = d3.scale.ordinal().domain(d3.range(0, chartDataEducation[0].length)).rangeBands([0,
+					chartDataEducation[0].length * barHeight
+				]);
+				var y = function (d, i) {
+					return yScale(i) * 1.5;
+				};
+				var yText = function (d, i) {
+					return y(d, i) + yScale.rangeBand() / 2;
+				};
+				var x = d3.scale.linear().domain([0, 100 /*d3.max(data, barValue)*/ ]).range([0, maxBarWidth]);
+				// svg container element
+				var educationChart = d3.select('#education-statistics-list').append("svg")
 					.attr('width', maxBarWidth + barLabelWidth + valueLabelWidth)
-					.attr('height', (gridLabelHeight + 20 + gridChartOffset + chartDataEducation[0].length * barHeight) * 1.5);
-					// grid line labels
-					var gridContainer = educationChart.append('g')
+					.attr('height', (gridLabelHeight + 20 + gridChartOffset + chartDataEducation[0].length * barHeight) *
+						1.5);
+				// grid line labels
+				var gridContainer = educationChart.append('g')
 					.attr('transform', 'translate(' + barLabelWidth + ',' + gridLabelHeight + ')');
-					gridContainer.selectAll("text").data(x.ticks(10)).enter().append("text")
-						.attr("x", x)
-						.attr("dy", -3)
-						.attr("text-anchor", "middle")
-						.text(function(d, i) { if( i === 1 || i === 3 || i === 5 || i === 7 || i === 9 ) { return } else return d});
-					// vertical grid lines
-					gridContainer.selectAll("line").data(x.ticks(10)).enter().append("line")
-						.attr("x1", x)
-						.attr("x2", x)
-						.attr("y1", 0)
-						.attr("y2", (yScale.rangeExtent()[1] + gridChartOffset) * 1.5)
-						.style("stroke", "#ccc");
-					// bar labels
-					var labelsContainer = educationChart.append('g')
-					.attr('transform', 'translate(' + (barLabelWidth - barLabelPadding) + ',' + (gridLabelHeight + gridChartOffset) + ')');
-					labelsContainer.selectAll('text').data(chartDataEducation[0]).enter().append('text')
-						.attr('y', yText)
-						.attr('stroke', 'none')
-						.attr('fill', 'black')
-						.attr("dy", "0em") // vertical-align: middle
-						.attr('text-anchor', 'end')
-						.text(barLabel);
-					// bars
-					var barsContainer = educationChart.append('g')
+				gridContainer.selectAll("text").data(x.ticks(10)).enter().append("text")
+					.attr("x", x)
+					.attr("dy", -3)
+					.attr("text-anchor", "middle")
+					.text(function (d, i) {
+						if (i === 1 || i === 3 || i === 5 || i === 7 || i === 9) {
+							return
+						} else return d
+					});
+				// vertical grid lines
+				gridContainer.selectAll("line").data(x.ticks(10)).enter().append("line")
+					.attr("x1", x)
+					.attr("x2", x)
+					.attr("y1", 0)
+					.attr("y2", (yScale.rangeExtent()[1] + gridChartOffset) * 1.5)
+					.style("stroke", "#ccc");
+				// bar labels
+				var labelsContainer = educationChart.append('g')
+					.attr('transform', 'translate(' + (barLabelWidth - barLabelPadding) + ',' + (gridLabelHeight +
+						gridChartOffset) + ')');
+				labelsContainer.selectAll('text').data(chartDataEducation[0]).enter().append('text')
+					.attr('y', yText)
+					.attr('stroke', 'none')
+					.attr('fill', 'black')
+					.attr("dy", "0em") // vertical-align: middle
+					.attr('text-anchor', 'end')
+					.text(barLabel);
+				// bars
+				var barsContainer = educationChart.append('g')
 					.attr("class", "statUG")
 					.attr("class", "statUG")
 					.attr('transform', 'translate(' + barLabelWidth + ',' + (gridLabelHeight + gridChartOffset) + ')');
-					barsContainer.selectAll("rect").data(chartDataEducation[1]).enter().append("rect")
-						.attr('y', y)
-						.attr('height', yScale.rangeBand() - 5)
-						.attr('width', function(d) { return x(barValue(d)); })
-						.attr('stroke', 'white')
-						.attr('fill', '#174e69');
-					// bar value labels
-					barsContainer.selectAll("text").data(chartDataEducation[1]).enter().append("text")
-						.attr("x", function(d) { return x(barValue(d)); })
-						.attr("y", yText)
-						.attr("dx", 3) // padding-left
-						.attr("dy", "-.3em") // vertical-align: middle
-						.attr("text-anchor", "start") // text-align: right
-						.attr("fill", "#174e69")
-						.attr("stroke", "none")
-						.text(function(d) { return d3.round(barValue(d), 2); });
-					// start line
-					barsContainer.append("line")
-						.attr("y1", -gridChartOffset)
-						.attr("y2", (yScale.rangeExtent()[1] + gridChartOffset) * 1.5)
-						.style("stroke", "#000");
+				barsContainer.selectAll("rect").data(chartDataEducation[1]).enter().append("rect")
+					.attr('y', y)
+					.attr('height', yScale.rangeBand() - 5)
+					.attr('width', function (d) {
+						return x(barValue(d));
+					})
+					.attr('stroke', 'white')
+					.attr('fill', '#174e69');
+				// bar value labels
+				barsContainer.selectAll("text").data(chartDataEducation[1]).enter().append("text")
+					.attr("x", function (d) {
+						return x(barValue(d));
+					})
+					.attr("y", yText)
+					.attr("dx", 3) // padding-left
+					.attr("dy", "-.3em") // vertical-align: middle
+					.attr("text-anchor", "start") // text-align: right
+					.attr("fill", "#174e69")
+					.attr("stroke", "none")
+					.text(function (d) {
+						return d3.round(barValue(d), 2);
+					});
+				// start line
+				barsContainer.append("line")
+					.attr("y1", -gridChartOffset)
+					.attr("y2", (yScale.rangeExtent()[1] + gridChartOffset) * 1.5)
+					.style("stroke", "#000");
 
-					var legend = d3.select('#education-statistics-legend').append("svg")
+				var legend = d3.select('#education-statistics-legend').append("svg")
 					.attr("width", 150)
 					.attr("height", 45);
-					var rectangles = legend.append('g');
+				var rectangles = legend.append('g');
 
 
-					rectangles.append("rect")
-						.attr("width", "150px")
-						.attr("height", "20px")
-						.attr("fill", "#174e69");
-					rectangles.append("text")
-						.attr("x", 3.01)
-						.attr("y",  10)
-						.attr("dy", ".35em")
-						.style('fill', 'white')
-						.text("Kampala Averages");
+				rectangles.append("rect")
+					.attr("width", "150px")
+					.attr("height", "20px")
+					.attr("fill", "#174e69");
+				rectangles.append("text")
+					.attr("x", 3.01)
+					.attr("y", 10)
+					.attr("dy", ".35em")
+					.style('fill', 'white')
+					.text("Kampala Averages");
 
-				}
-				
-				var chartDataProtection = [["%HH - Floor (Earth)", "%HH - Floor (Rammed earth)","%HH - Wall (Mud and pole)", "HH poverty"],
-								 ["2.4", "1.5", "2.4", "0.37"]];
-				
-				{
+			}
 
-					var valueLabelWidth = 20; // space reserved for value labels (right)
-					var barHeight = 25; // height of one bar
-					var barLabelWidth = 200; // space reserved for bar labels
-					var barLabelPadding = 15; // padding between bar and bar labels (left)
-					var gridLabelHeight = 18; // space reserved for gridline labels
-					var gridChartOffset = 3; // space between start of grid and first bar
-					var maxBarWidth = 175; // width of the bar with the max value
+			var chartDataProtection = [
+				[
+					"% of HHs headed by children below 18 y/o",
+					"% of 2-17 y/o with a moderate disability", 
+					"% of 2-17 y/o with a severe disability", 
+					"% of 12-17 y/o who have ever been married",
+					"HH poverty"
+				],
+				["0.48", "2.7", "0.4", "3.43", "0.37"]
+			];
 
-					// accessor functions
-					var barLabel = function(d) {  return d; };
-					var barValue = function(d) { return parseFloat(d); };
+			{
 
-					// scales
-					var yScale = d3.scale.ordinal().domain(d3.range(0, chartDataProtection[0].length)).rangeBands([0, chartDataProtection[0].length * barHeight]);
-					var y = function(d, i) { return yScale(i) * 1.5; };
-					var yText = function(d, i) { return y(d, i) + yScale.rangeBand() / 2; };
-					var x = d3.scale.linear().domain([0, 100/*d3.max(data, barValue)*/]).range([0, maxBarWidth]);
-					// svg container element
-					var protectionChart = d3.select('#protection-statistics-list').append("svg")
+				var valueLabelWidth = 20; // space reserved for value labels (right)
+				var barHeight = 25; // height of one bar
+				var barLabelWidth = 200; // space reserved for bar labels
+				var barLabelPadding = 15; // padding between bar and bar labels (left)
+				var gridLabelHeight = 18; // space reserved for gridline labels
+				var gridChartOffset = 3; // space between start of grid and first bar
+				var maxBarWidth = 175; // width of the bar with the max value
+
+				// accessor functions
+				var barLabel = function (d) {
+					return d;
+				};
+				var barValue = function (d) {
+					return parseFloat(d);
+				};
+
+				// scales
+				var yScale = d3.scale.ordinal().domain(d3.range(0, chartDataProtection[0].length)).rangeBands([0,
+					chartDataProtection[0].length * barHeight
+				]);
+				var y = function (d, i) {
+					return yScale(i) * 1.5;
+				};
+				var yText = function (d, i) {
+					return y(d, i) + yScale.rangeBand() / 2;
+				};
+				var x = d3.scale.linear().domain([0, 100 /*d3.max(data, barValue)*/ ]).range([0, maxBarWidth]);
+				// svg container element
+				var protectionChart = d3.select('#protection-statistics-list').append("svg")
 					.attr('width', maxBarWidth + barLabelWidth + valueLabelWidth)
-					.attr('height', (gridLabelHeight + 20 + gridChartOffset + chartDataProtection[0].length * barHeight) * 1.5);
-					// grid line labels
-					var gridContainer = protectionChart.append('g')
+					.attr('height', (gridLabelHeight + 20 + gridChartOffset + chartDataProtection[0].length * barHeight) *
+						1.5);
+				// grid line labels
+				var gridContainer = protectionChart.append('g')
 					.attr('transform', 'translate(' + barLabelWidth + ',' + gridLabelHeight + ')');
-					gridContainer.selectAll("text").data(x.ticks(10)).enter().append("text")
-						.attr("x", x)
-						.attr("dy", -3)
-						.attr("text-anchor", "middle")
-						.text(function(d, i) { if( i === 1 || i === 3 || i === 5 || i === 7 || i === 9 ) { return } else return d});
-					// vertical grid lines
-					gridContainer.selectAll("line").data(x.ticks(10)).enter().append("line")
-						.attr("x1", x)
-						.attr("x2", x)
-						.attr("y1", 0)
-						.attr("y2", (yScale.rangeExtent()[1] + gridChartOffset) * 1.5)
-						.style("stroke", "#ccc");
-					// bar labels
-					var labelsContainer = protectionChart.append('g')
-					.attr('transform', 'translate(' + (barLabelWidth - barLabelPadding) + ',' + (gridLabelHeight + gridChartOffset) + ')');
-					labelsContainer.selectAll('text').data(chartDataProtection[0]).enter().append('text')
-						.attr('y', yText)
-						.attr('stroke', 'none')
-						.attr('fill', 'black')
-						.attr("dy", "0em") // vertical-align: middle
-						.attr('text-anchor', 'end')
-						.text(barLabel);
-					// bars
-					var barsContainer = protectionChart.append('g')
+				gridContainer.selectAll("text").data(x.ticks(10)).enter().append("text")
+					.attr("x", x)
+					.attr("dy", -3)
+					.attr("text-anchor", "middle")
+					.text(function (d, i) {
+						if (i === 1 || i === 3 || i === 5 || i === 7 || i === 9) {
+							return
+						} else return d
+					});
+				// vertical grid lines
+				gridContainer.selectAll("line").data(x.ticks(10)).enter().append("line")
+					.attr("x1", x)
+					.attr("x2", x)
+					.attr("y1", 0)
+					.attr("y2", (yScale.rangeExtent()[1] + gridChartOffset) * 1.5)
+					.style("stroke", "#ccc");
+				// bar labels
+				var labelsContainer = protectionChart.append('g')
+					.attr('transform', 'translate(' + (barLabelWidth - barLabelPadding) + ',' + (gridLabelHeight +
+						gridChartOffset) + ')');
+				labelsContainer.selectAll('text').data(chartDataProtection[0]).enter().append('text')
+					.attr('y', yText)
+					.attr('stroke', 'none')
+					.attr('fill', 'black')
+					.attr("dy", "0em") // vertical-align: middle
+					.attr('text-anchor', 'end')
+					.text(barLabel);
+				// bars
+				var barsContainer = protectionChart.append('g')
 					.attr("class", "statUG")
 					.attr("class", "statUG")
 					.attr('transform', 'translate(' + barLabelWidth + ',' + (gridLabelHeight + gridChartOffset) + ')');
-					barsContainer.selectAll("rect").data(chartDataProtection[1]).enter().append("rect")
-						.attr('y', y)
-						.attr('height', yScale.rangeBand() - 5)
-						.attr('width', function(d) { return x(barValue(d)); })
-						.attr('stroke', 'white')
-						.attr('fill', '#174e69');
-					// bar value labels
-					barsContainer.selectAll("text").data(chartDataProtection[1]).enter().append("text")
-						.attr("x", function(d) { return x(barValue(d)); })
-						.attr("y", yText)
-						.attr("dx", 3) // padding-left
-						.attr("dy", "-.3em") // vertical-align: middle
-						.attr("text-anchor", "start") // text-align: right
-						.attr("fill", "#174e69")
-						.attr("stroke", "none")
-						.text(function(d) { return d3.round(barValue(d), 2); });
-					// start line
-					barsContainer.append("line")
-						.attr("y1", -gridChartOffset)
-						.attr("y2", (yScale.rangeExtent()[1] + gridChartOffset) * 1.5)
-						.style("stroke", "#000");
+				barsContainer.selectAll("rect").data(chartDataProtection[1]).enter().append("rect")
+					.attr('y', y)
+					.attr('height', yScale.rangeBand() - 5)
+					.attr('width', function (d) {
+						return x(barValue(d));
+					})
+					.attr('stroke', 'white')
+					.attr('fill', '#174e69');
+				// bar value labels
+				barsContainer.selectAll("text").data(chartDataProtection[1]).enter().append("text")
+					.attr("x", function (d) {
+						return x(barValue(d));
+					})
+					.attr("y", yText)
+					.attr("dx", 3) // padding-left
+					.attr("dy", "-.3em") // vertical-align: middle
+					.attr("text-anchor", "start") // text-align: right
+					.attr("fill", "#174e69")
+					.attr("stroke", "none")
+					.text(function (d) {
+						return d3.round(barValue(d), 2);
+					});
+				// start line
+				barsContainer.append("line")
+					.attr("y1", -gridChartOffset)
+					.attr("y2", (yScale.rangeExtent()[1] + gridChartOffset) * 1.5)
+					.style("stroke", "#000");
 
-					var legend = d3.select('#protection-statistics-legend').append("svg")
+				var legend = d3.select('#protection-statistics-legend').append("svg")
 					.attr("width", 150)
 					.attr("height", 45);
-					var rectangles = legend.append('g');
+				var rectangles = legend.append('g');
 
 
-					rectangles.append("rect")
-						.attr("width", "150px")
-						.attr("height", "20px")
-						.attr("fill", "#174e69");
-					rectangles.append("text")
-						.attr("x", 3.01)
-						.attr("y",  10)
-						.attr("dy", ".35em")
-						.style('fill', 'white')
-						.text("Kampala Averages");
+				rectangles.append("rect")
+					.attr("width", "150px")
+					.attr("height", "20px")
+					.attr("fill", "#174e69");
+				rectangles.append("text")
+					.attr("x", 3.01)
+					.attr("y", 10)
+					.attr("dy", ".35em")
+					.style('fill', 'white')
+					.text("Kampala Averages");
 
-				}
-				
-				
-				var chartDataWater = [["%HH Head(10-17)", "%Distance to Public Health Facility (< 5kms)", "%Distance to Private Health Facility (< 5kms)"],
-								 ["0.4","90.2", "94.8"]];
+			}
 
-				{
 
-					var valueLabelWidth = 20; // space reserved for value labels (right)
-					var barHeight = 25; // height of one bar
-					var barLabelWidth = 200; // space reserved for bar labels
-					var barLabelPadding = 15; // padding between bar and bar labels (left)
-					var gridLabelHeight = 18; // space reserved for gridline labels
-					var gridChartOffset = 3; // space between start of grid and first bar
-					var maxBarWidth = 175; // width of the bar with the max value
+			var chartDataWater = [
+				[
+					"%HH Head(10-17)",
+					"%Distance to Public Health Facility (< 5kms)",
+					"%Distance to Private Health Facility (< 5kms)",
+					"% of children with no access to safe water"
+				],
+				["0.4", "90.2", "94.8", "5.3"]
+			];
 
-					// accessor functions
-					var barLabel = function(d) {  return d; };
-					var barValue = function(d) { return parseFloat(d); };
+			{
 
-					// scales
-					var yScale = d3.scale.ordinal().domain(d3.range(0, chartDataWater[0].length)).rangeBands([0, chartDataWater[0].length * barHeight]);
-					var y = function(d, i) { return yScale(i) * 1.5; };
-					var yText = function(d, i) { return y(d, i) + yScale.rangeBand() / 2; };
-					var x = d3.scale.linear().domain([0, 100/*d3.max(data, barValue)*/]).range([0, maxBarWidth]);
-					// svg container element
-					var waterChart = d3.select('#water-statistics-list').append("svg")
+				var valueLabelWidth = 20; // space reserved for value labels (right)
+				var barHeight = 25; // height of one bar
+				var barLabelWidth = 200; // space reserved for bar labels
+				var barLabelPadding = 15; // padding between bar and bar labels (left)
+				var gridLabelHeight = 18; // space reserved for gridline labels
+				var gridChartOffset = 3; // space between start of grid and first bar
+				var maxBarWidth = 175; // width of the bar with the max value
+
+				// accessor functions
+				var barLabel = function (d) {
+					return d;
+				};
+				var barValue = function (d) {
+					return parseFloat(d);
+				};
+
+				// scales
+				var yScale = d3.scale.ordinal().domain(d3.range(0, chartDataWater[0].length)).rangeBands([0, chartDataWater[0]
+					.length * barHeight
+				]);
+				var y = function (d, i) {
+					return yScale(i) * 1.5;
+				};
+				var yText = function (d, i) {
+					return y(d, i) + yScale.rangeBand() / 2;
+				};
+				var x = d3.scale.linear().domain([0, 100 /*d3.max(data, barValue)*/ ]).range([0, maxBarWidth]);
+				// svg container element
+				var waterChart = d3.select('#water-statistics-list').append("svg")
 					.attr('width', maxBarWidth + barLabelWidth + valueLabelWidth)
 					.attr('height', (gridLabelHeight + 20 + gridChartOffset + chartDataWater[0].length * barHeight) * 1.5);
-					// grid line labels
-					var gridContainer = waterChart.append('g')
+				// grid line labels
+				var gridContainer = waterChart.append('g')
 					.attr('transform', 'translate(' + barLabelWidth + ',' + gridLabelHeight + ')');
-					gridContainer.selectAll("text").data(x.ticks(10)).enter().append("text")
-						.attr("x", x)
-						.attr("dy", -3)
-						.attr("text-anchor", "middle")
-						.text(function(d, i) { if( i === 1 || i === 3 || i === 5 || i === 7 || i === 9 ) { return } else return d});
-					// vertical grid lines
-					gridContainer.selectAll("line").data(x.ticks(10)).enter().append("line")
-						.attr("x1", x)
-						.attr("x2", x)
-						.attr("y1", 0)
-						.attr("y2", (yScale.rangeExtent()[1] + gridChartOffset) * 1.5)
-						.style("stroke", "#ccc");
-					// bar labels
-					var labelsContainer = waterChart.append('g')
-					.attr('transform', 'translate(' + (barLabelWidth - barLabelPadding) + ',' + (gridLabelHeight + gridChartOffset) + ')');
-					labelsContainer.selectAll('text').data(chartDataWater[0]).enter().append('text')
-						.attr('y', yText)
-						.attr('stroke', 'none')
-						.attr('fill', 'black')
-						.attr("dy", "0em") // vertical-align: middle
-						.attr('text-anchor', 'end')
-						.text(barLabel);
-					// bars
-					var barsContainer = waterChart.append('g')
+				gridContainer.selectAll("text").data(x.ticks(10)).enter().append("text")
+					.attr("x", x)
+					.attr("dy", -3)
+					.attr("text-anchor", "middle")
+					.text(function (d, i) {
+						if (i === 1 || i === 3 || i === 5 || i === 7 || i === 9) {
+							return
+						} else return d
+					});
+				// vertical grid lines
+				gridContainer.selectAll("line").data(x.ticks(10)).enter().append("line")
+					.attr("x1", x)
+					.attr("x2", x)
+					.attr("y1", 0)
+					.attr("y2", (yScale.rangeExtent()[1] + gridChartOffset) * 1.5)
+					.style("stroke", "#ccc");
+				// bar labels
+				var labelsContainer = waterChart.append('g')
+					.attr('transform', 'translate(' + (barLabelWidth - barLabelPadding) + ',' + (gridLabelHeight +
+						gridChartOffset) + ')');
+				labelsContainer.selectAll('text').data(chartDataWater[0]).enter().append('text')
+					.attr('y', yText)
+					.attr('stroke', 'none')
+					.attr('fill', 'black')
+					.attr("dy", "0em") // vertical-align: middle
+					.attr('text-anchor', 'end')
+					.text(barLabel);
+				// bars
+				var barsContainer = waterChart.append('g')
 					.attr("class", "statUG")
 					.attr("class", "statUG")
 					.attr('transform', 'translate(' + barLabelWidth + ',' + (gridLabelHeight + gridChartOffset) + ')');
-					barsContainer.selectAll("rect").data(chartDataWater[1]).enter().append("rect")
-						.attr('y', y)
-						.attr('height', yScale.rangeBand() - 5)
-						.attr('width', function(d) { return x(barValue(d)); })
-						.attr('stroke', 'white')
-						.attr('fill', '#174e69');
-					// bar value labels
-					barsContainer.selectAll("text").data(chartDataWater[1]).enter().append("text")
-						.attr("x", function(d) { return x(barValue(d)); })
-						.attr("y", yText)
-						.attr("dx", 3) // padding-left
-						.attr("dy", "-.3em") // vertical-align: middle
-						.attr("text-anchor", "start") // text-align: right
-						.attr("fill", "#174e69")
-						.attr("stroke", "none")
-						.text(function(d) { return d3.round(barValue(d), 2); });
-					// start line
-					barsContainer.append("line")
-						.attr("y1", -gridChartOffset)
-						.attr("y2", (yScale.rangeExtent()[1] + gridChartOffset) * 1.5)
-						.style("stroke", "#000");
+				barsContainer.selectAll("rect").data(chartDataWater[1]).enter().append("rect")
+					.attr('y', y)
+					.attr('height', yScale.rangeBand() - 5)
+					.attr('width', function (d) {
+						return x(barValue(d));
+					})
+					.attr('stroke', 'white')
+					.attr('fill', '#174e69');
+				// bar value labels
+				barsContainer.selectAll("text").data(chartDataWater[1]).enter().append("text")
+					.attr("x", function (d) {
+						return x(barValue(d));
+					})
+					.attr("y", yText)
+					.attr("dx", 3) // padding-left
+					.attr("dy", "-.3em") // vertical-align: middle
+					.attr("text-anchor", "start") // text-align: right
+					.attr("fill", "#174e69")
+					.attr("stroke", "none")
+					.text(function (d) {
+						return d3.round(barValue(d), 2);
+					});
+				// start line
+				barsContainer.append("line")
+					.attr("y1", -gridChartOffset)
+					.attr("y2", (yScale.rangeExtent()[1] + gridChartOffset) * 1.5)
+					.style("stroke", "#000");
 
-					var legend = d3.select('#water-statistics-legend').append("svg")
+				var legend = d3.select('#water-statistics-legend').append("svg")
 					.attr("width", 150)
 					.attr("height", 45);
-					var rectangles = legend.append('g');
+				var rectangles = legend.append('g');
 
 
-					rectangles.append("rect")
-						.attr("width", "150px")
-						.attr("height", "20px")
-						.attr("fill", "#174e69");
-					rectangles.append("text")
-						.attr("x", 3.01)
-						.attr("y",  10)
-						.attr("dy", ".35em")
-						.style('fill', 'white')
-						.text("Kampala Averages");
+				rectangles.append("rect")
+					.attr("width", "150px")
+					.attr("height", "20px")
+					.attr("fill", "#174e69");
+				rectangles.append("text")
+					.attr("x", 3.01)
+					.attr("y", 10)
+					.attr("dy", ".35em")
+					.style('fill', 'white')
+					.text("Kampala Averages");
 
-				}
+			}
 
-			};
-
-
-
-			function queryOverpass() {
-				//var bbString = formatBBox(),
-				//overpassQuery = encodeURIComponent("node" + '[birds_nest=stork]' + bbString + ";out body;"),
-				overpassURL = './json/interpreter.json'
-
-				$.ajax({
-					url: overpassURL,
-					type: 'GET',
-					crossDomain: true,
-					success: function (data) {
-						storkmap.osmJson = data.elements;
-						makeMarkers();						
-					},
-				});
-			};
-
-			function onMapViewReset(e) {
-				queryOverpass();
-			};
-
-			function onMapMoveEnd(e) {
-				queryOverpass();
-			};
-
-			function makeMap() {
-
-				var map = storkmap.map;
-
-				queryOverpass();
-
-				map.setView([0.3193, 32.5025], 12);
+		};
 
 
-			};
 
-			var attr_osm = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-			var attr_nests = 'data via <a href="http://www.overpass-api.de/" target=”_blank”>Overpass API</a>';
-			var attr_dev = 'web map funded by <a href="https://www.giz.de/en/worldwide/310.html" target=”_blank”>GIZ-Uganda</a> and created by <a href="http://geogecko.com" target=”_blank”>GeoGecko</a>';
+		function queryOverpass() {
+			//var bbString = formatBBox(),
+			//overpassQuery = encodeURIComponent("node" + '[birds_nest=stork]' + bbString + ";out body;"),
+			overpassURL = './json/interpreter.json'
 
-			var layerOSM = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-				subdomains: 'abcd',
-				maxZoom: 19
+			$.ajax({
+				url: overpassURL,
+				type: 'GET',
+				crossDomain: true,
+				success: function (data) {
+					storkmap.osmJson = data.elements;
+					makeMarkers();
+				},
 			});
+		};
 
-			storkmap.map = L.map('map', {
-				attributionControl: false,
-				layers: [layerOSM],
-				zoomControl: false,
-				minZoom: 6
-			});
+		function onMapViewReset(e) {
+			queryOverpass();
+		};
 
+		function onMapMoveEnd(e) {
+			queryOverpass();
+		};
 
+		function makeMap() {
 
+			var map = storkmap.map;
 
-			//			L.control.attribution({position: 'bottomleft'}).addTo(storkmap.map);
-			storkmap.currentTag = "water_point";
+			queryOverpass();
 
-			storkmap.osmJson = {};
-			makeMap();
-
-			var populationDensityLegend = L.control({position: 'bottomright'});
-				var childPovertyLegend = L.control({position: 'bottomright'});
-				var slumLegend = L.control({position: 'bottomright'});
-				var householdPovertyLegend = L.control({position: 'bottomright'});
-
-				householdPovertyLegend.onAdd = function (map) {
-					var div = L.DomUtil.create('div', 'info legend');
-					div.innerHTML +=
-						'<img src="images/povertyLegend.jpeg" alt="legend" width="302" height="215">';
-					return div;
-				};
-
-				populationDensityLegend.onAdd = function (map) {
-					var div = L.DomUtil.create('div', 'info legend');
-					div.innerHTML +=
-						'<img src="images/popDensityLegend.jpeg" alt="legend" width="396" height="222">';
-					return div;
-				};
-				
-				childPovertyLegend.onAdd = function (map) {
-					var div = L.DomUtil.create('div', 'info legend');
-					div.innerHTML +=
-						'<img src="images/povertyChildLegend.jpeg" alt="legend" width="302" height="237">';
-					return div;
-				};
-
-				slumLegend.onAdd = function (map) {
-					var div = L.DomUtil.create('div', 'info legend');
-					div.innerHTML +=
-						'<img src="images/slumSettlement.jpeg" alt="legend" width="182" height="78">';
-					return div;
-				};
-
-				// Add this one (only) for now, as the Population layer is on by default
-//				householdPovertyLegend.addTo(map);
-
-				storkmap.map.on('baselayerchange', function (eventLayer) {
-					// Switch to the Population legend...
-					if (eventLayer.name === "Household Poverty ('16-'17)") {
-						this.removeControl(populationDensityLegend);
-						this.removeControl(childPovertyLegend);
-						this.removeControl(slumLegend);
-						householdPovertyLegend.addTo(this);
-					} else if (eventLayer.name === "Population Density") { // Or switch to the Population Density legend...
-						this.removeControl(householdPovertyLegend);
-						this.removeControl(childPovertyLegend);
-						this.removeControl(slumLegend);
-						populationDensityLegend.addTo(this);
-					} else if (eventLayer.name === "Child Poverty ('16-'17)") { // Or switch to the Child Poverty legend...
-						this.removeControl(householdPovertyLegend);
-						this.removeControl(populationDensityLegend);
-						this.removeControl(slumLegend);
-						childPovertyLegend.addTo(this);
-					} else if (eventLayer.name === 'Slum Boundaries') { // Or switch to the Slum Boundaries legend...
-						this.removeControl(householdPovertyLegend);
-						this.removeControl(populationDensityLegend);
-						this.removeControl(childPovertyLegend);
-						slumLegend.addTo(this);
-					}
-				});
+			map.setView([0.3193, 32.5025], 12);
 
 
-		</script>
+		};
 
-		<!--		<script src="clickable-pop-up-boxes.js"></script>-->
+		var attr_osm = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+		var attr_nests = 'data via <a href="http://www.overpass-api.de/" target=”_blank”>Overpass API</a>';
+		var attr_dev =
+			'web map funded by <a href="https://www.giz.de/en/worldwide/310.html" target=”_blank”>GIZ-Uganda</a> and created by <a href="http://geogecko.com" target=”_blank”>GeoGecko</a>';
 
-	</body>
+		var layerOSM = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+			subdomains: 'abcd',
+			maxZoom: 19
+		});
+
+		storkmap.map = L.map('map', {
+			attributionControl: false,
+			layers: [layerOSM],
+			zoomControl: false,
+			minZoom: 6
+		});
+
+
+
+
+		//			L.control.attribution({position: 'bottomleft'}).addTo(storkmap.map);
+		storkmap.currentTag = "water_point";
+
+		storkmap.osmJson = {};
+		makeMap();
+
+		var populationDensityLegend = L.control({
+			position: 'bottomright'
+		});
+		var childPovertyLegend = L.control({
+			position: 'bottomright'
+		});
+		var slumLegend = L.control({
+			position: 'bottomright'
+		});
+		var householdPovertyLegend = L.control({
+			position: 'bottomright'
+		});
+
+		householdPovertyLegend.onAdd = function (map) {
+			var div = L.DomUtil.create('div', 'info legend');
+			div.innerHTML +=
+				'<img src="images/povertyLegend.jpeg" alt="legend" width="302" height="215">';
+			return div;
+		};
+
+		populationDensityLegend.onAdd = function (map) {
+			var div = L.DomUtil.create('div', 'info legend');
+			div.innerHTML +=
+				'<img src="images/popDensityLegend.jpeg" alt="legend" width="396" height="222">';
+			return div;
+		};
+
+		childPovertyLegend.onAdd = function (map) {
+			var div = L.DomUtil.create('div', 'info legend');
+			div.innerHTML +=
+				'<img src="images/povertyChildLegend.jpeg" alt="legend" width="302" height="237">';
+			return div;
+		};
+
+		slumLegend.onAdd = function (map) {
+			var div = L.DomUtil.create('div', 'info legend');
+			div.innerHTML +=
+				'<img src="images/slumSettlement.jpeg" alt="legend" width="182" height="78">';
+			return div;
+		};
+
+		// Add this one (only) for now, as the Population layer is on by default
+		//				householdPovertyLegend.addTo(map);
+
+		storkmap.map.on('baselayerchange', function (eventLayer) {
+			// Switch to the Population legend...
+			if (eventLayer.name === "Household Poverty ('16-'17)") {
+				this.removeControl(populationDensityLegend);
+				this.removeControl(childPovertyLegend);
+				this.removeControl(slumLegend);
+				householdPovertyLegend.addTo(this);
+			} else if (eventLayer.name === "Population Density") { // Or switch to the Population Density legend...
+				this.removeControl(householdPovertyLegend);
+				this.removeControl(childPovertyLegend);
+				this.removeControl(slumLegend);
+				populationDensityLegend.addTo(this);
+			} else if (eventLayer.name === "Child Poverty ('16-'17)") { // Or switch to the Child Poverty legend...
+				this.removeControl(householdPovertyLegend);
+				this.removeControl(populationDensityLegend);
+				this.removeControl(slumLegend);
+				childPovertyLegend.addTo(this);
+			} else if (eventLayer.name === 'Slum Boundaries') { // Or switch to the Slum Boundaries legend...
+				this.removeControl(householdPovertyLegend);
+				this.removeControl(populationDensityLegend);
+				this.removeControl(childPovertyLegend);
+				slumLegend.addTo(this);
+			}
+		});
+	</script>
+
+	<!--		<script src="clickable-pop-up-boxes.js"></script>-->
+
+</body>
+
 </html>
