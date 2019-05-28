@@ -163,8 +163,8 @@
 				"uniqueid": 				"",
 				"date": 					"1862",
 				"location": {
-					"lat": 				0.297019,
-					"lon": 				32.574709,
+					"lat": 				0.297559,
+					"lon": 				32.603149,
 					"zoom": 				17,
 					"line": 				true
 				},
@@ -184,8 +184,8 @@
 				"uniqueid": 				"",
 				"date": 					"1862",
 				"location": {
-					"lat": 				0.297559,
-					"lon": 				32.603149,
+					"lat": 				0.297019,
+					"lon": 				32.574709,
 					"zoom": 				17,
 					"line": 				true
 				},

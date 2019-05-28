@@ -1479,8 +1479,26 @@ $(window).on('load', function() {
 				var datalayerPoverty;
 				var datalayerChildPoverty;
 				var datalayerDensity;
+				var datalayerPoverty12;
+				var datalayerChildPoverty12;
 
 				$.getJSON('data/kampalaParishes__.geojson', function(data){
+					function getColorPoverty12(d) {
+						return d > 0.565  ? 'rgb(23,78,105)' :
+						d > 0.042  ? 'rgb(46,95,120)' :
+						d > 0.023  ? 'rgb(115,148,165)' :
+						d > 0.016   ? 'rgb(162,184,195)' :
+						'rgb(231,237,240)';
+					}
+					
+					function getColorChildPoverty12(d) {
+						return d > 0.565  ? 'rgb(23,78,105)' :
+						d > 0.042  ? 'rgb(46,95,120)' :
+						d > 0.023  ? 'rgb(115,148,165)' :
+						d > 0.016   ? 'rgb(162,184,195)' :
+						'rgb(231,237,240)';
+					}
+
 					function getColorPoverty(d) {
 						return d > 0.565  ? 'rgb(23,78,105)' :
 						d > 0.041  ? 'rgb(46,95,120)' :
@@ -1503,6 +1521,22 @@ $(window).on('load', function() {
 						d > 10934  ? 'rgb(115,148,165)' :
 						d > 6229.64   ? 'rgb(162,184,195)' :
 						'rgb(231,237,240)';
+					}
+
+					function stylePoverty12(feature) {
+						return {
+							color: getColorPoverty12(feature.properties.povertyHH / 100),
+							fillOpacity: 0.6,
+							weight: 0.2
+						};
+					}
+
+					function stylePopChildPoverty12(feature) {
+						return {
+							color: getColorChildPoverty12(feature.properties.povertyChild / 100),
+							fillOpacity: 0.6,
+							weight: 0.2
+						};
 					}
 
 					function stylePoverty(feature) {
@@ -1579,6 +1613,13 @@ $(window).on('load', function() {
 						style: stylePopChildPoverty						
 					});
 
+					datalayerPoverty12 = L.geoJson(data, {
+						style: stylePoverty12						
+					});
+					datalayerChildPoverty12 = L.geoJson(data, {
+						style: stylePopChildPoverty12						
+					});
+
 					map.getPane('parishLayer').style.zIndex = 300;
 					map.getPanes().overlayPane.style.zIndex = 200;
 
@@ -1599,6 +1640,8 @@ $(window).on('load', function() {
 
 						var overlaymaps = {
 							"Slum Boundaries" : datalayer1,
+							"Child Poverty ('12-'13)" : datalayerChildPoverty12,
+							"Household Poverty ('12-'13)" : datalayerPoverty12,
 							"Child Poverty ('16-'17)" : datalayerChildPoverty,
 							"Household Poverty ('16-'17)" : datalayerPoverty,
 							"Population Density" : datalayerDensity
@@ -1629,11 +1672,11 @@ $(window).on('load', function() {
 							
 							if(map.hasLayer(datalayer1)){
 								map.removeControl(slumLegend);	
-							} else if(map.hasLayer(datalayerPoverty)){
+							} else if(map.hasLayer(datalayerPoverty) || map.hasLayer(datalayerPoverty12)){
 								map.removeControl(householdPovertyLegend);	
 							} else if(map.hasLayer(datalayerDensity)){
 								map.removeControl(populationDensityLegend);	
-							} else if(map.hasLayer(datalayerChildPoverty)){
+							} else if(map.hasLayer(datalayerChildPoverty) || map.hasLayer(datalayerChildPoverty12)){
 								map.removeControl(childPovertyLegend);	
 							}
 
@@ -1641,6 +1684,8 @@ $(window).on('load', function() {
 							map.removeLayer(datalayerChildPoverty);
 							map.removeLayer(datalayerPoverty);
 							map.removeLayer(datalayerDensity);
+							map.removeLayer(datalayerPoverty12);
+							map.removeLayer(datalayerChildPoverty12);
 
 						})
 
@@ -1753,7 +1798,7 @@ $(window).on('load', function() {
 
 				map.on('baselayerchange', function (eventLayer) {
 					// Switch to the Population legend...
-					if (eventLayer.name === "Household Poverty ('16-'17)") {
+					if (eventLayer.name === "Household Poverty ('16-'17)" || eventLayer.name === "Household Poverty ('12-'13)" ) {
 						this.removeControl(populationDensityLegend);
 						this.removeControl(childPovertyLegend);
 						this.removeControl(slumLegend);
@@ -1763,7 +1808,7 @@ $(window).on('load', function() {
 						this.removeControl(childPovertyLegend);
 						this.removeControl(slumLegend);
 						populationDensityLegend.addTo(this);
-					} else if (eventLayer.name === "Child Poverty ('16-'17)") { // Or switch to the Child Poverty legend...
+					} else if (eventLayer.name === "Child Poverty ('16-'17)" || eventLayer.name === "Child Poverty ('12-'13)" ) { // Or switch to the Child Poverty legend...
 						this.removeControl(householdPovertyLegend);
 						this.removeControl(populationDensityLegend);
 						this.removeControl(slumLegend);

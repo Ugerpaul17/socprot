@@ -160,8 +160,26 @@
 			var datalayerPoverty;
 			var datalayerChildPoverty;
 			var datalayerDensity;
+			var datalayerPoverty12;
+			var datalayerChildPoverty12;
 
 			$.getJSON('data/kampalaParishes__temp_20190508_1232.geojson', function (data) {
+				function getColorPoverty12(d) {
+					return d > 0.565 ? 'rgb(23,78,105)' :
+						d > 0.042 ? 'rgb(46,95,120)' :
+						d > 0.023 ? 'rgb(115,148,165)' :
+						d > 0.016 ? 'rgb(162,184,195)' :
+						'rgb(231,237,240)';
+				}
+
+				function getColorChildPoverty12(d) {
+					return d > 0.565 ? 'rgb(23,78,105)' :
+						d > 0.042 ? 'rgb(46,95,120)' :
+						d > 0.023 ? 'rgb(115,148,165)' :
+						d > 0.016 ? 'rgb(162,184,195)' :
+						'rgb(231,237,240)';
+				}
+
 				function getColorPoverty(d) {
 					return d > 0.565 ? 'rgb(23,78,105)' :
 						d > 0.041 ? 'rgb(46,95,120)' :
@@ -184,6 +202,22 @@
 						d > 10934 ? 'rgb(115,148,165)' :
 						d > 6229.64 ? 'rgb(162,184,195)' :
 						'rgb(231,237,240)';
+				}
+
+				function stylePoverty12(feature) {
+					return {
+						color: getColorPoverty12(feature.properties.povertyHH / 100),
+						fillOpacity: 0.6,
+						weight: 0.2
+					};
+				}
+
+				function stylePopChildPoverty12(feature) {
+					return {
+						color: getColorChildPoverty12(feature.properties.povertyChild / 100),
+						fillOpacity: 0.6,
+						weight: 0.2
+					};
 				}
 
 				function stylePoverty(feature) {
@@ -220,6 +254,14 @@
 					style: stylePopChildPoverty
 				});
 
+				datalayerPoverty12 = L.geoJson(data, {
+					style: stylePoverty12
+				});
+				datalayerChildPoverty12 = L.geoJson(data, {
+					style: stylePopChildPoverty12
+				});
+
+
 
 
 				$.getJSON('data/kampala_slum_settlement.geojson', function (data) {
@@ -239,6 +281,8 @@
 
 					var overlaymaps = {
 						"Slum Boundaries": datalayer1,
+						"Child Poverty ('12-'13)": datalayerChildPoverty12,
+						"Household Poverty ('12-'13)": datalayerPoverty12,
 						"Child Poverty ('16-'17)": datalayerChildPoverty,
 						"Household Poverty ('16-'17)": datalayerPoverty,
 						"Population Density": datalayerDensity
@@ -275,11 +319,13 @@
 
 						if (storkmap.map.hasLayer(datalayer1)) {
 							storkmap.map.removeControl(slumLegend);
-						} else if (storkmap.map.hasLayer(datalayerPoverty)) {
+						} else if (storkmap.map.hasLayer(datalayerPoverty) || storkmap.map.hasLayer(
+								datalayerPoverty12)) {
 							storkmap.map.removeControl(householdPovertyLegend);
 						} else if (storkmap.map.hasLayer(datalayerDensity)) {
 							storkmap.map.removeControl(populationDensityLegend);
-						} else if (storkmap.map.hasLayer(datalayerChildPoverty)) {
+						} else if (storkmap.map.hasLayer(datalayerChildPoverty) || storkmap.map
+							.hasLayer(datalayerChildPoverty12)) {
 							storkmap.map.removeControl(childPovertyLegend);
 						}
 
@@ -287,6 +333,8 @@
 						storkmap.map.removeLayer(datalayerPoverty);
 						storkmap.map.removeLayer(datalayerDensity);
 						storkmap.map.removeLayer(datalayerChildPoverty);
+						storkmap.map.removeLayer(datalayerPoverty12);
+						storkmap.map.removeLayer(datalayerChildPoverty12);
 					})
 
 					var resetMap = L.control({
@@ -463,16 +511,23 @@
 								d3.csv('./data/listOfParametersHealth.csv', function (error, list) {
 									var header = [];
 									var values = [];
+									console.log(list);
+									console.log(data.features[0].properties[
+										"Table 12: Ownership of a birth Certificate among Children below 17 years by parish Have a Birth Certificate No %"
+									])
 									for (var i = 0; i < data.features.length; i++) {
 										if (selected[0] === data.features[i].properties.PNAME2014) {
 											for (var k = 0; k < list.length; k++) {
 												header.push(list[k].Column);
-												values.push(data.features[i].properties[list[k].Column]);
+												values.push(parseFloat(data.features[i].properties[list[k]
+													.Column]));
 											}
 										}
 									}
+
 									var chartDist = [header].concat([values]);
-									//									console.log(chartDist);
+									console.log(chartDist);
+
 									var valueLabelWidth = 10; // space reserved for value labels (right)
 									var barHeight = 25; // height of one bar
 									var barLabelWidth = 200; // space reserved for bar labels
@@ -492,6 +547,9 @@
 										.rangeBands([0, chartDist[0].length * barHeight]);
 									var y = function (d, i) {
 										return yScale(i) * 1.5;
+									};
+									var yText = function (d, i) {
+										return y(d, i) + yScale.rangeBand() / 2;
 									};
 									var x = d3.scale.linear().domain([0, 100 /*d3.max(data, barValue)*/ ])
 										.range([0, maxBarWidth]);
@@ -571,7 +629,8 @@
 										if (selected[0] === data.features[i].properties.PNAME2014) {
 											for (var k = 0; k < list.length; k++) {
 												header.push(list[k].Column);
-												values.push(data.features[i].properties[list[k].Column]);
+												values.push(parseFloat(data.features[i].properties[list[k]
+													.Column]));
 											}
 										}
 									}
@@ -596,6 +655,9 @@
 										.rangeBands([0, chartDist[0].length * barHeight]);
 									var y = function (d, i) {
 										return yScale(i) * 1.5;
+									};
+									var yText = function (d, i) {
+										return y(d, i) + yScale.rangeBand() / 2;
 									};
 									var x = d3.scale.linear().domain([0, 100 /*d3.max(data, barValue)*/ ])
 										.range([0, maxBarWidth]);
@@ -674,7 +736,8 @@
 										if (selected[0] === data.features[i].properties.PNAME2014) {
 											for (var k = 0; k < list.length; k++) {
 												header.push(list[k].Column);
-												values.push(data.features[i].properties[list[k].Column]);
+												values.push(parseFloat(data.features[i].properties[list[k]
+													.Column]));
 											}
 										}
 									}
@@ -699,6 +762,9 @@
 										.rangeBands([0, chartDist[0].length * barHeight]);
 									var y = function (d, i) {
 										return yScale(i) * 1.5;
+									};
+									var yText = function (d, i) {
+										return y(d, i) + yScale.rangeBand() / 2;
 									};
 									var x = d3.scale.linear().domain([0, 100 /*d3.max(data, barValue)*/ ])
 										.range([0, maxBarWidth]);
@@ -779,7 +845,8 @@
 										if (selected[0] === data.features[i].properties.PNAME2014) {
 											for (var k = 0; k < list.length; k++) {
 												header.push(list[k].Column);
-												values.push(data.features[i].properties[list[k].Column]);
+												values.push(parseFloat(data.features[i].properties[list[k]
+													.Column]));
 											}
 										}
 									}
@@ -804,6 +871,9 @@
 										.rangeBands([0, chartDist[0].length * barHeight]);
 									var y = function (d, i) {
 										return yScale(i) * 1.5;
+									};
+									var yText = function (d, i) {
+										return y(d, i) + yScale.rangeBand() / 2;
 									};
 									var x = d3.scale.linear().domain([0, 100 /*d3.max(data, barValue)*/ ])
 										.range([0, maxBarWidth]);
@@ -872,14 +942,46 @@
 
 			});
 
+			function wrap(text, width) {
+				// var text1 = [text];
+				console.log(text);
+				// text.each(function () {
+					var text = d3.select(this),
+						words = text[0][0].__data__.split(/\s+/).reverse(),
+						word,
+						line = [],
+						lineNumber = 0,
+						lineHeight = 1.1, // ems
+						y = text.attr("y"),
+						dy = parseFloat(text.attr("dy")),
+						tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+						console.log(text[0][0].__data__);
+						console.log(words);
+					while (word = words.pop()) {
+						line.push(word);
+						tspan.text(line.join(" "));
+						if (tspan.node().getComputedTextLength() > width) {
+							line.pop();
+							tspan.text(line.join(" "));
+							line = [word];
+							tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber *
+								lineHeight + dy + "em").text(word);
+						}
+					}
+					text.append("tspan").text("Hello");
+					return text;
+				// });
+			}
+
+
 
 			var header = [];
 			var values = [];
 
 			var chartDataHealth = [
 				[
-					"%HH - No Kitchen", 
-					"%HH - Make shift Bathroom", 
+					"%HH - No Kitchen",
+					"%HH - Make shift Bathroom",
 					"%HH - No bathroom",
 					"% of 17 y/o and below that have a birth certificate",
 					"% of females 12-17 y/o that have ever given birth",
@@ -952,6 +1054,9 @@
 					.attr("dy", "0em") // vertical-align: middle
 					.attr('text-anchor', 'end')
 					.text(barLabel);
+
+				
+
 				// bars
 				var barsContainer = healthChart.append('g')
 					.attr("class", "statUG")
@@ -979,6 +1084,8 @@
 					.text(function (d) {
 						return d3.round(barValue(d), 2);
 					});
+
+
 				// start line
 				barsContainer.append("line")
 					.attr("y1", -gridChartOffset)
@@ -1136,8 +1243,8 @@
 			var chartDataProtection = [
 				[
 					"% of HHs headed by children below 18 y/o",
-					"% of 2-17 y/o with a moderate disability", 
-					"% of 2-17 y/o with a severe disability", 
+					"% of 2-17 y/o with a moderate disability",
+					"% of 2-17 y/o with a severe disability",
 					"% of 12-17 y/o who have ever been married",
 					"HH poverty"
 				],
@@ -1498,7 +1605,8 @@
 
 		storkmap.map.on('baselayerchange', function (eventLayer) {
 			// Switch to the Population legend...
-			if (eventLayer.name === "Household Poverty ('16-'17)") {
+			if (eventLayer.name === "Household Poverty ('16-'17)" || eventLayer.name ===
+				"Household Poverty ('12-'13)") {
 				this.removeControl(populationDensityLegend);
 				this.removeControl(childPovertyLegend);
 				this.removeControl(slumLegend);
@@ -1508,7 +1616,8 @@
 				this.removeControl(childPovertyLegend);
 				this.removeControl(slumLegend);
 				populationDensityLegend.addTo(this);
-			} else if (eventLayer.name === "Child Poverty ('16-'17)") { // Or switch to the Child Poverty legend...
+			} else if (eventLayer.name === "Child Poverty ('16-'17)" || eventLayer.name ===
+				"Child Poverty ('12-'13)") { // Or switch to the Child Poverty legend...
 				this.removeControl(householdPovertyLegend);
 				this.removeControl(populationDensityLegend);
 				this.removeControl(slumLegend);

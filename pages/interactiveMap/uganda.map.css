@@ -110,6 +110,8 @@ p.custom-count {
     height: 100%;
     background: rgb(245, 245, 245);
     position: relative;
+    background-image: url('https://www.kcca.go.ug/images/logo-light.png');
+    background-position: center;
 }
 #d3-map-info-container {
     position: absolute;
